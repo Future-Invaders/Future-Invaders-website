@@ -47,3 +47,31 @@ function admin_images_search( sort_data = null )
   // Submit the search
   fetch_page('images', 'admin_images_tbody', postdata);
 }
+
+
+
+
+/**
+ * Fetches the preview of an image.
+ *
+ * @param   {int}   image_id    The image's id.
+ * @param   {int}   image_name  The image's name.
+ * @param   {int}   root_path   The path to the root of the website.
+ *
+ * @returns {void}
+ */
+
+function admin_images_preview(  image_id    ,
+                                image_name  ,
+                                root_path   )
+{
+  // Prepare the image
+  image = document.createElement("img");
+  image.setAttribute("src", root_path + image_name);
+
+  // Add the image in the element
+  document.getElementById('admin_image_container_' + image_id).appendChild(image);
+
+  // Prevent the fetch from happening more than once
+  document.getElementById('admin_image_preview_cell_' + image_id).onmouseover = null;
+}
