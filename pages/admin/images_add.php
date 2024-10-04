@@ -55,9 +55,8 @@ if(!$image_add_path)
 if(isset($_POST['image_add']))
 {
   // Gather the postdata
-  $image_add_name_en  = form_fetch_element('image_name_en');
-  $image_add_name_fr  = form_fetch_element('image_name_fr');
-  $image_add_artist   = form_fetch_element('image_artist');
+  $image_add_name   = form_fetch_element('image_name');
+  $image_add_artist = form_fetch_element('image_artist');
 
   // Give the artist a default value if none is provided
   if(!$image_add_artist)
@@ -65,8 +64,7 @@ if(isset($_POST['image_add']))
 
   // Assemble an array with the postdata
   $image_add_data = array(  'image_path'    => $image_add_path    ,
-                            'image_name_en' => $image_add_name_en ,
-                            'image_name_fr' => $image_add_name_fr ,
+                            'image_name'    => $image_add_name    ,
                             'image_artist'  => $image_add_artist  );
 
   // Add the image to the database
@@ -97,13 +95,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <input type="hidden" name="image_path" value="<?=$image_add_path?>">
 
       <div class="smallpadding_bot">
-        <label for="image_name_en"><?=__('admin_image_name_en')?></label>
-        <input class="indiv" type="text" name="image_name_en">
-      </div>
-
-      <div class="smallpadding_bot">
-        <label for="image_name_fr"><?=__('admin_image_name_fr')?></label>
-        <input class="indiv" type="text" name="image_name_fr">
+        <label for="image_name"><?=__('admin_image_name')?></label>
+        <input class="indiv" type="text" name="image_name">
       </div>
 
       <div class="padding_bot">

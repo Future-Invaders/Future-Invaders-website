@@ -107,10 +107,8 @@ ___('admin_image_list_count+',  'FR', "{{1}} images trouvées");
 // Add an image
 ___('admin_image_name_title', 'EN', "Add image");
 ___('admin_image_name_title', 'FR', "Ajouter l'image");
-___('admin_image_name_en',    'EN', "Image name (English)");
-___('admin_image_name_en',    'FR', "Nom de l'image (Anglais)");
-___('admin_image_name_fr',    'EN', "Image name (French)");
-___('admin_image_name_fr',    'FR', "Nom de l'image (Français)");
+___('admin_image_name',       'EN', "Image name");
+___('admin_image_name',       'FR', "Nom de l'image");
 ___('admin_image_artist',     'EN', "Artist");
 ___('admin_image_artist',     'FR', "Artiste");
 ___('admin_image_add_submit', 'EN', "Add image");

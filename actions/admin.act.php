@@ -90,29 +90,27 @@ function admin_images_list( string  $sort_by  = 'path'  ,
   $search_path    = sanitize_array_element($search, 'path', 'string');
   $search_name    = sanitize_array_element($search, 'name', 'string');
   $search_artist  = sanitize_array_element($search, 'artist', 'string');
-  $lang           = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Search through the data
-  $query_search =   ($search_path)    ? " WHERE images.image_path LIKE '%$search_path%' "    : " WHERE 1 = 1 ";
-  $query_search .=  ($search_name)    ? " AND   images.name_$lang LIKE '%$search_name%' "    : "";
-  $query_search .=  ($search_artist)  ? " AND   images.artist     LIKE '%$search_artist%' "  : "";
+  $query_search =   ($search_path)    ? " WHERE images.path   LIKE '%$search_path%' "    : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)    ? " AND   images.name   LIKE '%$search_name%' "    : "";
+  $query_search .=  ($search_artist)  ? " AND   images.artist LIKE '%$search_artist%' "  : "";
 
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'name'    => " ORDER BY images.name_$lang ASC ,
-                            images.image_path ASC ",
-    'artist'  => " ORDER BY images.artist     ASC ,
-                            images.image_path ASC ",
-    default   => " ORDER BY images.image_path ASC ",
+    'name'    => " ORDER BY images.name   ASC ,
+                            images.path   ASC ",
+    'artist'  => " ORDER BY images.artist ASC ,
+                            images.path   ASC ",
+    default   => " ORDER BY images.path   ASC ",
   };
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    images.id         AS 'i_id'       ,
-                                images.image_path AS 'i_path'     ,
-                                images.name_en    AS 'i_name_en'  ,
-                                images.name_fr    AS 'i_name_fr'  ,
-                                images.artist     AS 'i_artist'
+  $qimages = query("  SELECT    images.id     AS 'i_id'   ,
+                                images.path   AS 'i_path' ,
+                                images.name   AS 'i_name' ,
+                                images.artist AS 'i_artist'
                       FROM      images
                       $query_search
                       $query_sort ");
@@ -120,13 +118,11 @@ function admin_images_list( string  $sort_by  = 'path'  ,
   // Prepare the data for display
   for($i = 0; $row = query_row($qimages); $i++)
   {
-    $data[$i]['id']       = sanitize_output($row['i_id']);
-    $data[$i]['path']     = sanitize_output($row['i_path']);
-    $data[$i]['dpath']    = sanitize_output($row['i_path']);
-    $data[$i]['name_en']  = sanitize_output($row['i_name_en']);
-    $data[$i]['name_fr']  = sanitize_output($row['i_name_fr']);
-    $data[$i]['name']     = user_get_language() === 'EN' ? $data[$i]['name_en'] : $data[$i]['name_fr'];
-    $data[$i]['artist']   = sanitize_output($row['i_artist']);
+    $data[$i]['id']     = sanitize_output($row['i_id']);
+    $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
+    $data[$i]['dpath']  = sanitize_output($row['i_path']);
+    $data[$i]['name']   = sanitize_output($row['i_name']);
+    $data[$i]['artist'] = sanitize_output($row['i_artist']);
   }
 
   // Add the number of rows to the data
@@ -171,7 +167,7 @@ function admin_images_list_uncategorized() : array
   $files_to_remove = array('.', '..', 'index.php');
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    image_path  AS 'i_path'
+  $qimages = query("  SELECT    images.path AS 'i_path'
                       FROM      images ");
 
   // Store these images in an array
@@ -197,7 +193,10 @@ function admin_images_list_uncategorized() : array
         $missing_images[] = $image;
 
     // Sort the list alphabetically
-    $missing_images = isset($missing_images) ? sort($missing_images) : array();
+    if(isset($missing_images))
+      sort($missing_images);
+    else
+      $missing_images = array();
   }
 
   // Add the number of rows to the returned data
@@ -206,6 +205,7 @@ function admin_images_list_uncategorized() : array
   // Return the images
   return $missing_images;
 }
+
 
 
 
@@ -224,7 +224,7 @@ function admin_images_add( array $data ) : void
     return;
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    image_path  AS 'i_path'
+  $qimages = query("  SELECT    images.path AS 'i_path'
                       FROM      images ");
 
   // Store these images in an array
@@ -256,15 +256,13 @@ function admin_images_add( array $data ) : void
     return;
 
   // Sanatize the data
-  $image_add_path     = sanitize(mb_substr($image_path, 8), 'string');
-  $image_add_name_en  = sanitize_array_element($data, 'image_name_en', 'string');
-  $image_add_name_fr  = sanitize_array_element($data, 'image_name_fr', 'string');
-  $image_add_artist   = sanitize_array_element($data, 'image_artist', 'string');
+  $image_add_path   = sanitize(mb_substr($image_path, 8), 'string');
+  $image_add_name   = sanitize_array_element($data, 'image_name', 'string');
+  $image_add_artist = sanitize_array_element($data, 'image_artist', 'string');
 
   // Add the image to the database
   query(" INSERT INTO images
-          SET         image_path  = '$image_add_path'     ,
-                      name_en     = '$image_add_name_en'  ,
-                      name_fr     = '$image_add_name_fr'  ,
-                      artist      = '$image_add_artist'   ");
+          SET         images.path   = '$image_add_path'   ,
+                      images.name   = '$image_add_name'   ,
+                      images.artist = '$image_add_artist' ");
 }

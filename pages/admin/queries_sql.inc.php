@@ -575,12 +575,27 @@ if($last_query < 1)
 if($last_query < 2)
 {
   sql_create_table('images');
-  sql_create_field('images', 'image_path', 'TINYTEXT NOT NULL', 'id');
-  sql_create_field('images', 'name_en', 'TINYTEXT NOT NULL', 'image_path');
-  sql_create_field('images', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('images', 'artist', 'TINYTEXT NOT NULL', 'name_fr');
+  sql_create_field('images', 'image_path', 'TEXT NOT NULL', 'id');
+  sql_create_field('images', 'name_en', 'TEXT NOT NULL', 'image_path');
+  sql_create_field('images', 'name_fr', 'TEXT NOT NULL', 'name_en');
+  sql_create_field('images', 'artist', 'TEXT NOT NULL', 'name_fr');
 
   sql_update_query_id(2);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Merge image names
+
+if($last_query < 3)
+{
+  sql_delete_field('images', 'name_fr');
+  sql_rename_field('images', 'name_en', 'name', 'TEXT NOT NULL');
+  sql_rename_field('images', 'image_path', 'path', 'TEXT NOT NULL');
+
+  sql_update_query_id(3);
 }
 
 
