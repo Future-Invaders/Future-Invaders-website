@@ -1,0 +1,4 @@
+AuthName "Authentify"
+AuthType Basic
+AuthUserFile C:\wamp64\www\futureinvaders\pages\admin\.htpasswd
+Require valid-user
