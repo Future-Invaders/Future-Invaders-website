@@ -44,7 +44,7 @@ $card_lang = string_change_case($lang, 'lowercase');
 
   <div class="gallery padding_top padding_bot">
 
-    <?php for($i = 1; $i <= 33; $i++): ?>
+    <?php for($i = 1; file_exists("./../../img/rules/rules_".$card_lang."_".$i.".png"); $i++): ?>
 
     <div class="gallery_cell">
       <a href="./../../img/rules/rules_<?=$card_lang?>_<?=$i?>.png" class="noglow">
