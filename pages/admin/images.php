@@ -29,6 +29,15 @@ $js   = array('admin/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete an image
+
+if(isset($_POST['admin_images_delete']))
+  admin_images_delete(form_fetch_element('admin_images_delete'));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List uncategorized images
 
 $uncategorized_images = admin_images_list_uncategorized();
@@ -133,7 +142,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <?php for($i = 0; $i < $list_images['rows']; $i++): ?>
 
-      <tr>
+      <tr id="admin_images_row_<?=$list_images[$i]['id']?>">
 
         <td class="tooltip_container tooltip_desktop" id="admin_image_preview_cell_<?=$list_images[$i]['id']?>" onmouseover="admin_images_preview('<?=$list_images[$i]['id']?>', '<?=$list_images[$i]['dpath']?>', '<?=$path?>');">
           <?=__link($list_images[$i]['path'], $list_images[$i]['dpath'], 'bold noglow', is_internal: false)?>
@@ -158,7 +167,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
         <td class="align_center nowrap">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials')?>
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials')?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_images_delete('".__('admin_image_delete_confirm')."','".$list_images[$i]['id']."')")?>
         </td>
 
       </tr>

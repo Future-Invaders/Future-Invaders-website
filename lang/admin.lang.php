@@ -98,10 +98,10 @@ ___('admin_image_list_artist',  'EN', "Artist");
 ___('admin_image_list_artist',  'FR', "Artiste");
 ___('admin_image_list_tags',    'EN', "Tags");
 ___('admin_image_list_tags',    'FR', "Tags");
-___('admin_image_list_count',   'EN', "{{1}} image found");
-___('admin_image_list_count',   'FR', "{{1}} image trouvée");
-___('admin_image_list_count+',  'EN', "{{1}} images found");
-___('admin_image_list_count+',  'FR', "{{1}} images trouvées");
+___('admin_image_list_count',   'EN', "{{1}} image");
+___('admin_image_list_count',   'FR', "{{1}} image");
+___('admin_image_list_count+',  'EN', "{{1}} images");
+___('admin_image_list_count+',  'FR', "{{1}} images");
 
 
 // Add an image
@@ -113,3 +113,8 @@ ___('admin_image_artist',     'EN', "Artist");
 ___('admin_image_artist',     'FR', "Artiste");
 ___('admin_image_add_submit', 'EN', "Add image");
 ___('admin_image_add_submit', 'FR', "Ajouter l'image");
+
+
+// Delete an image
+___('admin_image_delete_confirm', 'EN', "Confirm the deletion of this image");
+___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image");

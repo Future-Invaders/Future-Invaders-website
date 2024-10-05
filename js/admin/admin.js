@@ -3,6 +3,8 @@
 /*  admin_menu              Navigates between administration pages.                                                  */
 /*                                                                                                                   */
 /*  admin_images_search     Searches the image list.                                                                 */
+/*  admin_images_preview    Fetches the preview of an image.                                                         */
+/*  admin_images_delete     Triggers the deletion of an entry in the image list.                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -74,4 +76,27 @@ function admin_images_preview(  image_id    ,
 
   // Prevent the fetch from happening more than once
   document.getElementById('admin_image_preview_cell_' + image_id).onmouseover = null;
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the image list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     image_id  The id of the image to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_images_delete( message   ,
+                              image_id  )
+{
+  // Assemble the postdata
+  postdata = 'admin_images_delete=' + fetch_sanitize(image_id);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('images', 'admin_images_tbody', postdata);
 }

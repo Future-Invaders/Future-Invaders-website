@@ -15,6 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_images_list_directories       Lists directories which should be scanned for images                         */
 /*  admin_images_list_uncategorized     Lists images waiting to be added to the database                             */
 /*  admin_images_add                    Adds an image to the database                                                */
+/*  admin_images_delete                 Deletes an image from the database                                           */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -265,4 +266,25 @@ function admin_images_add( array $data ) : void
           SET         images.path   = '$image_add_path'   ,
                       images.name   = '$image_add_name'   ,
                       images.artist = '$image_add_artist' ");
+}
+
+
+
+
+/**
+ * Deletes an image from the database.
+ *
+ * @param   int     $image_id  The id of the image to delete.
+ *
+ * @return  void
+ */
+
+function admin_images_delete( int $image_id ) : void
+{
+  // Sanitize the data
+  $image_id = sanitize($image_id, 'int');
+
+  // Delete the image from the database
+  query(" DELETE FROM images
+          WHERE   images.id = '$image_id' ");
 }
