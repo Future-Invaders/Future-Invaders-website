@@ -115,6 +115,13 @@ ___('admin_image_add_submit', 'EN', "Add image");
 ___('admin_image_add_submit', 'FR', "Ajouter l'image");
 
 
+// Edit an image
+___('admin_image_edit_title',   'EN', "Edit image");
+___('admin_image_edit_title',   'FR', "Modifier l'image");
+___('admin_image_edit_submit',  'EN', "Edit image");
+___('admin_image_edit_submit',  'FR', "Modifier l'image");
+
+
 // Delete an image
 ___('admin_image_delete_confirm', 'EN', "Confirm the deletion of this image");
 ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image");

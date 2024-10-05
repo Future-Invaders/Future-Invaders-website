@@ -11,10 +11,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_notes_get                     Returns admin notes                                                          */
 /*  admin_notes_update                  Updates admin notes                                                          */
 /*                                                                                                                   */
+/*  admin_images_get                    Returns data related to an image                                             */
 /*  admin_images_list                   Lists images in the database                                                 */
 /*  admin_images_list_directories       Lists directories which should be scanned for images                         */
 /*  admin_images_list_uncategorized     Lists images waiting to be added to the database                             */
 /*  admin_images_add                    Adds an image to the database                                                */
+/*  admin_images_edit                   Edits an image in the database                                               */
 /*  admin_images_delete                 Deletes an image from the database                                           */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -76,6 +78,43 @@ function admin_notes_update(  $tasks  = ''  ,
 
 
 /**
+ * Returns data related to an image.
+ *
+ * @param   int         $image_id   The id of the image.
+ *
+ * @return  array|null              An array containing the image's data, or null if the image does not exist.
+ */
+
+function admin_images_get( int $image_id ) : array|null
+{
+  // Sanitize the image's id
+  $image_id = sanitize($image_id, 'int');
+
+  // Return null if the image does not exist
+  if(!database_row_exists('images', $image_id))
+    return null;
+
+  // Fetch the image's data
+  $image_data = query(" SELECT  images.path   AS 'i_path' ,
+                                images.name   AS 'i_name' ,
+                                images.artist AS 'i_artist'
+                        FROM    images
+                        WHERE   images.id = '$image_id' ",
+                        fetch_row: true);
+
+  // Assemble an array with the image's data
+  $data['path']   = sanitize_output($image_data['i_path']);
+  $data['name']   = sanitize_output($image_data['i_name']);
+  $data['artist'] = sanitize_output($image_data['i_artist']);
+
+  // Return the image's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists images in the database.
  *
  * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
@@ -122,6 +161,7 @@ function admin_images_list( string  $sort_by  = 'path'  ,
     $data[$i]['id']     = sanitize_output($row['i_id']);
     $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
     $data[$i]['dpath']  = sanitize_output($row['i_path']);
+    $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
     $data[$i]['name']   = sanitize_output($row['i_name']);
     $data[$i]['artist'] = sanitize_output($row['i_artist']);
   }
@@ -266,6 +306,37 @@ function admin_images_add( array $data ) : void
           SET         images.path   = '$image_add_path'   ,
                       images.name   = '$image_add_name'   ,
                       images.artist = '$image_add_artist' ");
+}
+
+
+
+
+/**
+ * Edits an image in the database.
+ *
+ * @param   int         $image_id   The id of the image to edit.
+ * @param   array       $data       An array containing the image's data.
+ *
+ * @return  void
+ */
+
+function admin_images_edit( int   $image_id ,
+                            array $data     ) : void
+{
+  // Sanitize the data
+  $image_id     = sanitize($image_id, 'int');
+  $image_name   = sanitize_array_element($data, 'image_name', 'string');
+  $image_artist = sanitize_array_element($data, 'image_artist', 'string');
+
+  // Stop here if the image does not exist
+  if(!database_row_exists('images', $image_id))
+    return;
+
+  // Edit the image
+  query(" UPDATE  images
+          SET     images.name   = '$image_name'   ,
+                  images.artist = '$image_artist'
+          WHERE   images.id     = '$image_id' ");
 }
 
 

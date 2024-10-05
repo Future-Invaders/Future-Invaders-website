@@ -38,6 +38,27 @@ if(isset($_POST['admin_images_delete']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit an image
+
+if(isset($_POST['image_edit']))
+{
+  // Grab the image's ID
+  $image_edit_id = form_fetch_element('image_id');
+
+  // Assemble an array with the postdata
+  $image_edit_data = array( 'image_name'    => form_fetch_element('image_name')   ,
+                            'image_artist'  => form_fetch_element('image_artist') );
+
+  // Edit the image
+  admin_images_edit(  $image_edit_id    ,
+                      $image_edit_data  );
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List uncategorized images
 
 $uncategorized_images = admin_images_list_uncategorized();
@@ -105,9 +126,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('artist');")?>
         </th>
         <th>
-          <?=__('admin_image_list_tags')?>
-        </th>
-        <th>
           <?=__('act')?>
         </th>
       </tr>
@@ -123,7 +141,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <input type="text" class="table_search" name="admin_images_search_artist" id="admin_images_search_artist" value="" onkeyup="admin_images_search();">
         </th>
-        <th colspan="2">
+        <th>
           &nbsp;
         </th>
       </tr>
@@ -135,7 +153,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="5" class="uppercase text_light dark bold align_center">
+        <td colspan="4" class="uppercase text_light dark bold align_center">
           <?=__('admin_image_list_count', preset_values: array($list_images['rows']), amount: $list_images['rows'])?>
         </td>
       </tr>
@@ -145,7 +163,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <tr id="admin_images_row_<?=$list_images[$i]['id']?>">
 
         <td class="tooltip_container tooltip_desktop" id="admin_image_preview_cell_<?=$list_images[$i]['id']?>" onmouseover="admin_images_preview('<?=$list_images[$i]['id']?>', '<?=$list_images[$i]['dpath']?>', '<?=$path?>');">
-          <?=__link($list_images[$i]['path'], $list_images[$i]['dpath'], 'bold noglow', is_internal: false)?>
+          <?=__link($list_images[$i]['path'], $list_images[$i]['spath'], 'bold noglow', is_internal: false)?>
           <div class="tooltip image_preview">
             <div class="padding_top padding_bot align_center" id="admin_image_container_<?=$list_images[$i]['id']?>">
               &nbsp;
@@ -161,12 +179,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$list_images[$i]['artist']?>
         </td>
 
-        <td class="align_center">
-          &nbsp;
-        </td>
-
         <td class="align_center nowrap">
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials')?>
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/images_edit?image='.$list_images[$i]['id'])?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_images_delete('".__('admin_image_delete_confirm')."','".$list_images[$i]['id']."')")?>
         </td>
 
