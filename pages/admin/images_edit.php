@@ -29,50 +29,17 @@ $js   = array('admin/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Define the placeholder artist
+// Fetch image data
 
-$placeholder_artist = "Microsoft Image Creator (AI)";
+// Fetch the image's id
+$admin_image_id = (int)form_fetch_element('image', request_type: 'GET');
 
+// Fetch the image data
+$admin_image_data = admin_images_get($admin_image_id);
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Get the image's path
-
-// Fetch the path
-$image_add_path = form_fetch_element('image', request_type: 'GET');
-
-// If there is no path, go back to the image list
-if(!$image_add_path)
-  exit(header("Location: ./images"));
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Add the image
-
-if(isset($_POST['image_add']))
-{
-  // Gather the postdata
-  $image_add_name   = form_fetch_element('image_name');
-  $image_add_artist = form_fetch_element('image_artist');
-
-  // Give the artist a default value if none is provided
-  if(!$image_add_artist)
-    $image_add_artist = $placeholder_artist;
-
-  // Assemble an array with the postdata
-  $image_add_data = array(  'image_path'    => $image_add_path    ,
-                            'image_name'    => $image_add_name    ,
-                            'image_artist'  => $image_add_artist  );
-
-  // Add the image to the database
-  admin_images_add($image_add_data);
-
-  // Redirect to the image list
-  exit(header("Location: ./images"));
-}
+// Stop here if the image does not exist
+if(!$admin_image_data)
+  exit(header("Location: ".$path."pages/admin/images"));
 
 
 
@@ -83,28 +50,32 @@ if(isset($_POST['image_add']))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top padding_bot">
 
-  <h5 class="padding_bot">
-    <?=__('admin_image_name_title', spaces_after: 1).$image_add_path?>
-  </h5>
+  <h1 class="align_center">
+    <?=__link('pages/admin/images', __('admin_image_edit_title'), 'noglow')?>
+  </h1>
 
-  <form action="images_add?image=<?=$image_add_path?>" method="POST">
+  <h4 class="align_center smallpadding_top padding_bot">
+    <?=__link($admin_image_data['path'], $admin_image_data['path'], 'noglow')?>
+  </h4>
+
+  <form action="images" method="POST">
     <fieldset>
 
-      <input type="hidden" name="image_path" value="<?=$image_add_path?>">
+      <input type="hidden" name="image_id" value="<?=$admin_image_id?>">
 
       <div class="smallpadding_bot">
         <label for="image_name"><?=__('admin_image_name')?></label>
-        <input class="indiv" type="text" name="image_name">
+        <input class="indiv" type="text" name="image_name" value="<?=$admin_image_data['name']?>">
       </div>
 
       <div class="padding_bot">
         <label for="image_artist"><?=__('admin_image_artist')?></label>
-        <input class="indiv" type="text" name="image_artist" placeholder="<?=$placeholder_artist?>">
+        <input class="indiv" type="text" name="image_artist" value="<?=$admin_image_data['artist']?>">
       </div>
 
-      <input type="submit" name="image_add" value="<?=__('admin_image_add_submit')?>">
+      <input type="submit" name="image_edit" value="<?=__('admin_image_edit_submit')?>">
 
     </fieldset>
   </form>

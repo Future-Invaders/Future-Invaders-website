@@ -11,10 +11,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_notes_get                     Returns admin notes                                                          */
 /*  admin_notes_update                  Updates admin notes                                                          */
 /*                                                                                                                   */
+/*  admin_images_get                    Returns data related to an image                                             */
 /*  admin_images_list                   Lists images in the database                                                 */
 /*  admin_images_list_directories       Lists directories which should be scanned for images                         */
 /*  admin_images_list_uncategorized     Lists images waiting to be added to the database                             */
 /*  admin_images_add                    Adds an image to the database                                                */
+/*  admin_images_edit                   Edits an image in the database                                               */
+/*  admin_images_delete                 Deletes an image from the database                                           */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -75,6 +78,43 @@ function admin_notes_update(  $tasks  = ''  ,
 
 
 /**
+ * Returns data related to an image.
+ *
+ * @param   int         $image_id   The id of the image.
+ *
+ * @return  array|null              An array containing the image's data, or null if the image does not exist.
+ */
+
+function admin_images_get( int $image_id ) : array|null
+{
+  // Sanitize the image's id
+  $image_id = sanitize($image_id, 'int');
+
+  // Return null if the image does not exist
+  if(!database_row_exists('images', $image_id))
+    return null;
+
+  // Fetch the image's data
+  $image_data = query(" SELECT  images.path   AS 'i_path' ,
+                                images.name   AS 'i_name' ,
+                                images.artist AS 'i_artist'
+                        FROM    images
+                        WHERE   images.id = '$image_id' ",
+                        fetch_row: true);
+
+  // Assemble an array with the image's data
+  $data['path']   = sanitize_output($image_data['i_path']);
+  $data['name']   = sanitize_output($image_data['i_name']);
+  $data['artist'] = sanitize_output($image_data['i_artist']);
+
+  // Return the image's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists images in the database.
  *
  * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
@@ -90,29 +130,27 @@ function admin_images_list( string  $sort_by  = 'path'  ,
   $search_path    = sanitize_array_element($search, 'path', 'string');
   $search_name    = sanitize_array_element($search, 'name', 'string');
   $search_artist  = sanitize_array_element($search, 'artist', 'string');
-  $lang           = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Search through the data
-  $query_search =   ($search_path)    ? " WHERE images.image_path LIKE '%$search_path%' "    : " WHERE 1 = 1 ";
-  $query_search .=  ($search_name)    ? " AND   images.name_$lang LIKE '%$search_name%' "    : "";
-  $query_search .=  ($search_artist)  ? " AND   images.artist     LIKE '%$search_artist%' "  : "";
+  $query_search =   ($search_path)    ? " WHERE images.path   LIKE '%$search_path%' "    : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)    ? " AND   images.name   LIKE '%$search_name%' "    : "";
+  $query_search .=  ($search_artist)  ? " AND   images.artist LIKE '%$search_artist%' "  : "";
 
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'name'    => " ORDER BY images.name_$lang ASC ,
-                            images.image_path ASC ",
-    'artist'  => " ORDER BY images.artist     ASC ,
-                            images.image_path ASC ",
-    default   => " ORDER BY images.image_path ASC ",
+    'name'    => " ORDER BY images.name   ASC ,
+                            images.path   ASC ",
+    'artist'  => " ORDER BY images.artist ASC ,
+                            images.path   ASC ",
+    default   => " ORDER BY images.path   ASC ",
   };
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    images.id         AS 'i_id'       ,
-                                images.image_path AS 'i_path'     ,
-                                images.name_en    AS 'i_name_en'  ,
-                                images.name_fr    AS 'i_name_fr'  ,
-                                images.artist     AS 'i_artist'
+  $qimages = query("  SELECT    images.id     AS 'i_id'   ,
+                                images.path   AS 'i_path' ,
+                                images.name   AS 'i_name' ,
+                                images.artist AS 'i_artist'
                       FROM      images
                       $query_search
                       $query_sort ");
@@ -120,13 +158,12 @@ function admin_images_list( string  $sort_by  = 'path'  ,
   // Prepare the data for display
   for($i = 0; $row = query_row($qimages); $i++)
   {
-    $data[$i]['id']       = sanitize_output($row['i_id']);
-    $data[$i]['path']     = sanitize_output($row['i_path']);
-    $data[$i]['dpath']    = sanitize_output($row['i_path']);
-    $data[$i]['name_en']  = sanitize_output($row['i_name_en']);
-    $data[$i]['name_fr']  = sanitize_output($row['i_name_fr']);
-    $data[$i]['name']     = user_get_language() === 'EN' ? $data[$i]['name_en'] : $data[$i]['name_fr'];
-    $data[$i]['artist']   = sanitize_output($row['i_artist']);
+    $data[$i]['id']     = sanitize_output($row['i_id']);
+    $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
+    $data[$i]['dpath']  = sanitize_output($row['i_path']);
+    $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
+    $data[$i]['name']   = sanitize_output($row['i_name']);
+    $data[$i]['artist'] = sanitize_output($row['i_artist']);
   }
 
   // Add the number of rows to the data
@@ -171,7 +208,7 @@ function admin_images_list_uncategorized() : array
   $files_to_remove = array('.', '..', 'index.php');
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    image_path  AS 'i_path'
+  $qimages = query("  SELECT    images.path AS 'i_path'
                       FROM      images ");
 
   // Store these images in an array
@@ -197,7 +234,10 @@ function admin_images_list_uncategorized() : array
         $missing_images[] = $image;
 
     // Sort the list alphabetically
-    $missing_images = isset($missing_images) ? sort($missing_images) : array();
+    if(isset($missing_images))
+      sort($missing_images);
+    else
+      $missing_images = array();
   }
 
   // Add the number of rows to the returned data
@@ -206,6 +246,7 @@ function admin_images_list_uncategorized() : array
   // Return the images
   return $missing_images;
 }
+
 
 
 
@@ -224,7 +265,7 @@ function admin_images_add( array $data ) : void
     return;
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    image_path  AS 'i_path'
+  $qimages = query("  SELECT    images.path AS 'i_path'
                       FROM      images ");
 
   // Store these images in an array
@@ -256,15 +297,65 @@ function admin_images_add( array $data ) : void
     return;
 
   // Sanatize the data
-  $image_add_path     = sanitize(mb_substr($image_path, 8), 'string');
-  $image_add_name_en  = sanitize_array_element($data, 'image_name_en', 'string');
-  $image_add_name_fr  = sanitize_array_element($data, 'image_name_fr', 'string');
-  $image_add_artist   = sanitize_array_element($data, 'image_artist', 'string');
+  $image_add_path   = sanitize(mb_substr($image_path, 8), 'string');
+  $image_add_name   = sanitize_array_element($data, 'image_name', 'string');
+  $image_add_artist = sanitize_array_element($data, 'image_artist', 'string');
 
   // Add the image to the database
   query(" INSERT INTO images
-          SET         image_path  = '$image_add_path'     ,
-                      name_en     = '$image_add_name_en'  ,
-                      name_fr     = '$image_add_name_fr'  ,
-                      artist      = '$image_add_artist'   ");
+          SET         images.path   = '$image_add_path'   ,
+                      images.name   = '$image_add_name'   ,
+                      images.artist = '$image_add_artist' ");
+}
+
+
+
+
+/**
+ * Edits an image in the database.
+ *
+ * @param   int         $image_id   The id of the image to edit.
+ * @param   array       $data       An array containing the image's data.
+ *
+ * @return  void
+ */
+
+function admin_images_edit( int   $image_id ,
+                            array $data     ) : void
+{
+  // Sanitize the data
+  $image_id     = sanitize($image_id, 'int');
+  $image_name   = sanitize_array_element($data, 'image_name', 'string');
+  $image_artist = sanitize_array_element($data, 'image_artist', 'string');
+
+  // Stop here if the image does not exist
+  if(!database_row_exists('images', $image_id))
+    return;
+
+  // Edit the image
+  query(" UPDATE  images
+          SET     images.name   = '$image_name'   ,
+                  images.artist = '$image_artist'
+          WHERE   images.id     = '$image_id' ");
+}
+
+
+
+
+/**
+ * Deletes an image from the database.
+ *
+ * @param   int     $image_id  The id of the image to delete.
+ *
+ * @return  void
+ */
+
+function admin_images_delete( int $image_id ) : void
+{
+  // Sanitize the data
+  $image_id = sanitize($image_id, 'int');
+
+  // Delete the image from the database
+  query(" DELETE FROM images
+          WHERE   images.id = '$image_id' ");
 }

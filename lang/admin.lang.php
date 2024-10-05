@@ -98,20 +98,30 @@ ___('admin_image_list_artist',  'EN', "Artist");
 ___('admin_image_list_artist',  'FR', "Artiste");
 ___('admin_image_list_tags',    'EN', "Tags");
 ___('admin_image_list_tags',    'FR', "Tags");
-___('admin_image_list_count',   'EN', "{{1}} image found");
-___('admin_image_list_count',   'FR', "{{1}} image trouvée");
-___('admin_image_list_count+',  'EN', "{{1}} images found");
-___('admin_image_list_count+',  'FR', "{{1}} images trouvées");
+___('admin_image_list_count',   'EN', "{{1}} image");
+___('admin_image_list_count',   'FR', "{{1}} image");
+___('admin_image_list_count+',  'EN', "{{1}} images");
+___('admin_image_list_count+',  'FR', "{{1}} images");
 
 
 // Add an image
 ___('admin_image_name_title', 'EN', "Add image");
 ___('admin_image_name_title', 'FR', "Ajouter l'image");
-___('admin_image_name_en',    'EN', "Image name (English)");
-___('admin_image_name_en',    'FR', "Nom de l'image (Anglais)");
-___('admin_image_name_fr',    'EN', "Image name (French)");
-___('admin_image_name_fr',    'FR', "Nom de l'image (Français)");
+___('admin_image_name',       'EN', "Image name");
+___('admin_image_name',       'FR', "Nom de l'image");
 ___('admin_image_artist',     'EN', "Artist");
 ___('admin_image_artist',     'FR', "Artiste");
 ___('admin_image_add_submit', 'EN', "Add image");
 ___('admin_image_add_submit', 'FR', "Ajouter l'image");
+
+
+// Edit an image
+___('admin_image_edit_title',   'EN', "Edit image");
+___('admin_image_edit_title',   'FR', "Modifier l'image");
+___('admin_image_edit_submit',  'EN', "Edit image");
+___('admin_image_edit_submit',  'FR', "Modifier l'image");
+
+
+// Delete an image
+___('admin_image_delete_confirm', 'EN', "Confirm the deletion of this image");
+___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image");
