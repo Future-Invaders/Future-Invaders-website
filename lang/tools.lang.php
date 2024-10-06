@@ -15,8 +15,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 // How to play
 ___('source_code_title',    'EN', "Source code");
 ___('source_code_title',    'FR', "Code source");
-___('source_code_subtitle', 'EN', "Free and open source");
-___('source_code_subtitle', 'FR', "Public et libre de droits");
 ___('source_code_body_1',   'EN', <<<EOD
 Future Invaders' website is open source.
 EOD

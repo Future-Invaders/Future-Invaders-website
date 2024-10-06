@@ -4,14 +4,17 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../lang/tools.lang.php';   # Translations
+include_once './../../lang/social.lang.php';  # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/tools/source";
-$page_title_en    = "Source code";
-$page_title_fr    = "Code source";
-$page_description = "Source code of the strategy sci-fi card battling game Future Invaders";
+$page_url         = "pages/social/copyright";
+$page_title_en    = "Intellectual property";
+$page_title_fr    = "Propriété intellectuelle";
+$page_description = "Intellectual property of the card game Future Invaders";
+
+// Get the current year
+$year = date('Y');
 
 
 
@@ -25,54 +28,28 @@ $page_description = "Source code of the strategy sci-fi card battling game Futur
 <div class="width_50">
 
   <h2>
-    <?=__('source_code_title')?>
+    <?=__('privacy_copyright_title')?>
   </h2>
 
   <p>
-    <?=__('source_code_body_1')?>
+    <?=__('privacy_copyright_body_1')?>
   </p>
 
   <p>
-    <?=__('source_code_body_2')?>
+    <?=__('privacy_copyright_body_2')?>
   </p>
 
   <p>
-    <?=__('source_code_body_3')?>
+    <?=__('privacy_copyright_body_3')?>
   </p>
 
   <p>
-    <?=__('source_code_body_4')?>
-  </p>
-
-  <h5 class="bigpadding_top">
-    <?=__('source_code_stack_title')?>
-  </h5>
-
-  <p>
-    <?=__('source_code_stack_body_1')?>
+    <?=__('privacy_copyright_body_4')?>
   </p>
 
   <p>
-    <?=__('source_code_stack_body_2')?>
+    <?=__('privacy_copyright_body_5', preset_values: array($year))?>
   </p>
-
-  <ul class="smallpadding_top">
-    <li>
-      <?=__('source_code_stack_list_1')?>
-    </li>
-    <li>
-      <?=__('source_code_stack_list_2')?>
-    </li>
-    <li>
-      <?=__('source_code_stack_list_3')?>
-    </li>
-    <li>
-      <?=__('source_code_stack_list_4')?>
-    </li>
-    <li>
-      <?=__('source_code_stack_list_5')?>
-    </li>
-  </ul>
 
 </div>
 
