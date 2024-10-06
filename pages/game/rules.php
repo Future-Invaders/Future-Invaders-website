@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../lang/rules.lang.php';   # Translations
+include_once './../../lang/game.lang.php';    # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
