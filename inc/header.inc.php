@@ -415,10 +415,10 @@ $javascripts .= '
             <?=__('submenu_social_legal')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_mentions'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/legal', __('submenu_social_mentions'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_copyright'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/copyright', __('submenu_social_copyright'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 
