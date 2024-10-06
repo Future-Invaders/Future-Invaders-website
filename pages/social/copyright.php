@@ -8,10 +8,10 @@ include_once './../../lang/social.lang.php';  # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/social/legal";
-$page_title_en    = "Privacy policy";
-$page_title_fr    = "Mentions légales";
-$page_description = "Privacy policy of Future Invader's website";
+$page_url         = "pages/social/copyright";
+$page_title_en    = "Intellectual property";
+$page_title_fr    = "Propriété intellectuelle";
+$page_description = "Intellectual property of the card game Future Invaders";
 
 // Get the current year
 $year = date('Y');
