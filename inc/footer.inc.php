@@ -29,9 +29,9 @@ $copyright_date = date('Y');
 
       <footer>
 
-        <?=__link("pages/doc/privacy", __('footer_legal'), "", true, $path);?><br>
+        <?=__link("pages/doc/privacy", __('footer_legal'), "text_light", true, $path);?><br>
 
-        <?=__link("pages/doc/legal", __('footer_copyright', preset_values: array($copyright_date)), "", true, $path);?><br>
+        <?=__link("pages/doc/legal", __('footer_copyright', preset_values: array($copyright_date)), "text_light", true, $path);?><br>
 
       </footer>
 

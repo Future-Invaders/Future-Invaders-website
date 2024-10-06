@@ -4,14 +4,14 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../lang/game.lang.php';    # Translations
+include_once './../../lang/tools.lang.php';   # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/game/rules";
-$page_title_en    = "Rules";
-$page_title_fr    = "Règles";
-$page_description = "Rules of the strategy sci-fi card battling game Future Invaders";
+$page_url         = "pages/tools/source";
+$page_title_en    = "Source code";
+$page_title_fr    = "Code source";
+$page_description = "Source code of the strategy sci-fi card battling game Future Invaders";
 
 // Prepare the correct language string
 $card_lang = string_change_case($lang, 'lowercase');
@@ -27,34 +27,58 @@ $card_lang = string_change_case($lang, 'lowercase');
 <div class="width_50">
 
   <h2>
-    <?=__('rules_title')?>
+    <?=__('source_code_title')?>
   </h2>
 
+  <h5>
+    <?=__('source_code_subtitle')?>
+  </h5>
+
   <p>
-    <?=__('rules_body_1')?>
+    <?=__('source_code_body_1')?>
   </p>
 
   <p>
-    <?=__('rules_body_2')?>
+    <?=__('source_code_body_2')?>
   </p>
 
-</div>
+  <p>
+    <?=__('source_code_body_3')?>
+  </p>
 
-<div class="width_70 hugepadding_top">
+  <p>
+    <?=__('source_code_body_4')?>
+  </p>
 
-  <div class="gallery padding_top padding_bot">
+  <h5 class="bigpadding_top">
+    <?=__('source_code_stack_title')?>
+  </h5>
 
-    <?php for($i = 1; file_exists("./../../img/rules/rules_".$card_lang."_".$i.".png"); $i++): ?>
+  <p>
+    <?=__('source_code_stack_body_1')?>
+  </p>
 
-    <div class="gallery_cell">
-      <a href="./../../img/rules/rules_<?=$card_lang?>_<?=$i?>.png">
-        <img src="./../../img/rules/rules_<?=$card_lang?>_<?=$i?>.png" alt="<?=__('rules_cards_alt', spaces_after: 1).$i?>">
-      </a>
-    </div>
+  <p>
+    <?=__('source_code_stack_body_2')?>
+  </p>
 
-    <?php endfor; ?>
-
-  </div>
+  <ul class="smallpadding_top">
+    <li>
+      <?=__('source_code_stack_list_1')?>
+    </li>
+    <li>
+      <?=__('source_code_stack_list_2')?>
+    </li>
+    <li>
+      <?=__('source_code_stack_list_3')?>
+    </li>
+    <li>
+      <?=__('source_code_stack_list_4')?>
+    </li>
+    <li>
+      <?=__('source_code_stack_list_5')?>
+    </li>
+  </ul>
 
 </div>
 

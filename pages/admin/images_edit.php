@@ -53,11 +53,11 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 <div class="width_50 padding_top padding_bot">
 
   <h1 class="align_center">
-    <?=__link('pages/admin/images', __('admin_image_edit_title'), 'noglow')?>
+    <?=__link('pages/admin/images', __('admin_image_edit_title'), 'text_light')?>
   </h1>
 
   <h4 class="align_center smallpadding_top padding_bot">
-    <?=__link($admin_image_data['path'], $admin_image_data['path'], 'noglow')?>
+    <?=__link($admin_image_data['path'], $admin_image_data['path'], 'text_light')?>
   </h4>
 
   <form action="images" method="POST">

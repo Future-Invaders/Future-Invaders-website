@@ -47,7 +47,7 @@ $this_page_is_a_404 = '';
     <tbody>
       <tr class="desktop">
         <td class="img404 noborder">
-          <a class="noglow" href="<?=$path?>index">
+          <a href="<?=$path?>index">
             <img class="img404left" src="<?=$path?>img/404/404_left.png" alt="404">
           </a>
         </td>
@@ -55,7 +55,7 @@ $this_page_is_a_404 = '';
           <textarea class="indiv monospace text404" rows="10" id="text404_desktop" readonly></textarea>
         </td>
         <td class="img404 noborder">
-          <a class="noglow" href="<?=$path?>index">
+          <a href="<?=$path?>index">
             <img class="img404right" src="<?=$path?>img/404/404_right.jpg" alt="404">
           </a>
         </td>
@@ -65,17 +65,17 @@ $this_page_is_a_404 = '';
 </div>
 
 <div class="margin_auto align_center mobile">
-  <a class="noglow" href="<?=$path?>index">
+  <a href="<?=$path?>index">
     <img class="img404left" src="<?=$path?>img/404/404_left.png" alt="404">
   </a>
   <textarea class="indiv monospace text404" rows="10" id="text404_mobile" readonly></textarea>
-  <a class="noglow" href="<?=$path?>index">
+  <a href="<?=$path?>index">
     <img class="img404right" src="<?=$path?>img/404/404_right.jpg" alt="404">
   </a>
 </div>
 
 <div class="align_center padding_top padding_bot desktop">
-  <a class="noglow" href="<?=$path?>index">
+  <a href="<?=$path?>index">
     <img src="<?=$path?>img/404/404_cat.png" alt="404">
   </a>
 </div>

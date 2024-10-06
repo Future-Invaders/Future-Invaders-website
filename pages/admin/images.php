@@ -163,7 +163,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <tr id="admin_images_row_<?=$list_images[$i]['id']?>">
 
         <td class="tooltip_container tooltip_desktop" id="admin_image_preview_cell_<?=$list_images[$i]['id']?>" onmouseover="admin_images_preview('<?=$list_images[$i]['id']?>', '<?=$list_images[$i]['dpath']?>', '<?=$path?>');">
-          <?=__link($list_images[$i]['path'], $list_images[$i]['spath'], 'bold noglow', is_internal: false)?>
+          <?=__link($list_images[$i]['path'], $list_images[$i]['spath'], 'text_white bold noglow', is_internal: false)?>
           <div class="tooltip image_preview">
             <div class="padding_top padding_bot align_center" id="admin_image_container_<?=$list_images[$i]['id']?>">
               &nbsp;

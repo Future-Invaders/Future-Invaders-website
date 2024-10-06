@@ -59,13 +59,14 @@ src:  url('./fonts/Open-sans-bold.eot?#iefix') format('embedded-opentype'),
         --future-blue:   #0069C0  ;
         --future-brown:  #795548  ;
         --future-green:  #087F23  ;
+        --future-links:  #3399FF  ;
         --future-false:  #D32F2F  ;
         --future-true:   #388E3C  ;
         --future-footer: #999999; }
 
 /************************************************* GENERIC ELEMENTS **************************************************/
 
-body                    { color: var(--future-white); background-color: var(--future-dark)              ;
+body                    { color: var(--future-white2); background-color: var(--future-dark)             ;
                           font-family: 'FutureF', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif    ;
                           letter-spacing: 0.01rem; line-height: 1.45; font-weight: 300                  ;
                           -webkit-text-size-adjust: 100%; min-height: 100vh;                            }
@@ -309,13 +310,12 @@ hr   { height: 3px;                                                 } }
 
 /******************************************************* LINKS *******************************************************/
 
-a                                               { color: var(--future-light)                              ;
-                                                  text-decoration: none; background-color: transparent    ;
-                                                  filter: drop-shadow(0 0 3px var(--future-light));       }
-a:focus, a:hover                                { color: var(--future-light);                             }
-h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a  { color: var(--future-light);                             }
-a.forced_link                                   { color: var(--future-light); text-decoration: none;      }
-a.forced_link:focus, a.forced_link:hover        { filter: drop-shadow(0 0 5px var(--future-light));       }
+a                                               { color: var(--future-links)                               ;
+                                                  text-decoration: none; background-color: transparent     }
+a:focus, a:hover                                { color: var(--future-purple);                             }
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a  { color: var(--future-links);                              }
+a.forced_link                                   { color: var(--future-links); text-decoration: none;       }
+a.forced_link:focus, a.forced_link:hover        { filter: drop-shadow(0 0 5px var(--future-links));        }
 
 /****************************************************** IMAGES *******************************************************/
 
@@ -654,7 +654,6 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
                                 text-transform: uppercase; font-size: 110%;                                     }
 .header_submenu_item          { padding-bottom: 0.8rem;                                                         }
 .header_submenu_link          { color: var(--future-light); filter: none; font-weight: bold;                    }
-.header_submenu_link:hover    { filter: drop-shadow(0 0 5px var(--future-light));                               }
 .header_submenu_wip           { color: var(--future-purple); filter: none; font-weight: bold;                   }
 .header_submenu_blink         { animation-name: blink-glow; animation-iteration-count: infinite                 ;
                                 animation-duration: 1337ms;                                                     }
@@ -698,7 +697,7 @@ hr                { margin-left: -2.0rem; margin-right: -2.0rem;                
 
 /****************************************************** FOOTER *******************************************************/
 
-footer { width: 100%; text-align: center; color: var(--future-footer)   ;
+footer { width: 100%; text-align: center; color: var(--future-light)    ;
          font-size: 85%; margin-top: 6.0rem; margin-bottom: 3.0rem;     }
 @media (max-width: 992px)                                               {
 footer { font-size: 70%; margin-top: 10.0rem; margin-bottom: 5.0rem;  } }
