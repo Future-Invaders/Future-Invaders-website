@@ -47,7 +47,7 @@ $card_lang = string_change_case($lang, 'lowercase');
     <?php for($i = 1; file_exists("./../../img/rules/rules_".$card_lang."_".$i.".png"); $i++): ?>
 
     <div class="gallery_cell">
-      <a href="./../../img/rules/rules_<?=$card_lang?>_<?=$i?>.png" class="noglow">
+      <a href="./../../img/rules/rules_<?=$card_lang?>_<?=$i?>.png">
         <img src="./../../img/rules/rules_<?=$card_lang?>_<?=$i?>.png" alt="<?=__('rules_cards_alt', spaces_after: 1).$i?>">
       </a>
     </div>
