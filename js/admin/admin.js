@@ -7,6 +7,7 @@
 /*  admin_images_delete     Triggers the deletion of an entry in the image list.                                     */
 /*                                                                                                                   */
 /*  admin_releases_search   Searches the release list.                                                               */
+/*  admin_releases_delete   Triggers the deletion of an entry in the release list.                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -126,5 +127,28 @@ function admin_releases_search( sort_data = null )
   postdata += '&admin_releases_search_name='  + document.getElementById('admin_releases_search_name').value;
 
   // Submit the search
+  fetch_page('releases', 'admin_releases_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the release list.
+ *
+ * @param   {string}  message     The confirmation message which will be displayed.
+ * @param   {int}     release_id  The id of the release to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_releases_delete( message     ,
+                                release_id  )
+{
+  // Assemble the postdata
+  postdata = 'admin_releases_delete=' + fetch_sanitize(release_id);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
   fetch_page('releases', 'admin_releases_tbody', postdata);
 }

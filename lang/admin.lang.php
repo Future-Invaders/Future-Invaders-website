@@ -156,3 +156,8 @@ ___('admin_release_add_date',     'EN', "Date (YYYY-MM-DD)");
 ___('admin_release_add_date',     'FR', "Date (AAAA-MM-JJ)");
 ___('admin_release_add_submit',   'EN', "Add release");
 ___('admin_release_add_submit',   'FR', "Ajouter la version");
+
+
+// Delete a release
+___('admin_release_delete_confirm', 'EN', "Confirm the deletion of this release");
+___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette version");

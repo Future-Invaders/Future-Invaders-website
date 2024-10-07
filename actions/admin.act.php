@@ -21,6 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  admin_releases_list                 Lists releases in the database                                               */
 /*  admin_releases_add                  Adds a release to the database                                               */
+/*  admin_releases_delete               Deletes a release from the database                                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -445,4 +446,25 @@ function admin_releases_add( array $data ) : void
           SET         releases.name_en      = '$release_name_en'  ,
                       releases.name_fr      = '$release_name_fr'  ,
                       releases.release_date = '$release_date'     ");
+}
+
+
+
+
+/**
+ * Deletes a release from the database.
+ *
+ * @param   int     $release_id  The id of the release to delete.
+ *
+ * @return  void
+ */
+
+function admin_releases_delete( int $release_id ) : void
+{
+  // Sanitize the data
+  $release_id = sanitize($release_id, 'int');
+
+  // Delete the release from the database
+  query(" DELETE FROM releases
+          WHERE       releases.id = '$release_id' ");
 }
