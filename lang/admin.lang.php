@@ -138,8 +138,21 @@ ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image
 ___('admin_release_list_date',    'EN', "Date");
 ___('admin_release_list_date',    'FR', "Date");
 ___('admin_release_list_name',    'EN', "Release");
-___('admin_release_list_name',    'FR', "Publication");
+___('admin_release_list_name',    'FR', "Version");
 ___('admin_release_list_count',   'EN', "{{1}} release");
-___('admin_release_list_count',   'FR', "{{1}} publication");
+___('admin_release_list_count',   'FR', "{{1}} version");
 ___('admin_release_list_count+',  'EN', "{{1}} releases");
-___('admin_release_list_count+',  'FR', "{{1}} publications");
+___('admin_release_list_count+',  'FR', "{{1}} versions");
+
+
+// Add a release
+___('admin_release_add_title',    'EN', "New release");
+___('admin_release_add_title',    'FR', "Nouvelle version");
+___('admin_release_add_name_en',  'EN', "Name (English)");
+___('admin_release_add_name_en',  'FR', "Nom (Anglais)");
+___('admin_release_add_name_fr',  'EN', "Name (French)");
+___('admin_release_add_name_fr',  'FR', "Nom (Français)");
+___('admin_release_add_date',     'EN', "Date (YYYY-MM-DD)");
+___('admin_release_add_date',     'FR', "Date (AAAA-MM-JJ)");
+___('admin_release_add_submit',   'EN', "Add release");
+___('admin_release_add_submit',   'FR', "Ajouter la version");

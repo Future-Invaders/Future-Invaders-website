@@ -20,6 +20,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_images_delete                 Deletes an image from the database                                           */
 /*                                                                                                                   */
 /*  admin_releases_list                 Lists releases in the database                                               */
+/*  admin_releases_add                  Adds a release to the database                                               */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -411,7 +412,7 @@ function admin_releases_list( string  $sort_by  = 'path'  ,
     $data[$i]['name_en']  = sanitize_output($row['r_name_en']);
     $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
     $data[$i]['name']     = sanitize_output($row['r_name_'.$search_lang]);
-    $data[$i]['date']     = sanitize_output($row['r_date']);
+    $data[$i]['date']     = sanitize_output(date_to_ddmmyy($row['r_date']));
   }
 
   // Add the number of rows to the data
@@ -419,4 +420,29 @@ function admin_releases_list( string  $sort_by  = 'path'  ,
 
   // Return the prepare data
   return $data;
+}
+
+
+
+
+/**
+ * Adds a release to the database.
+ *
+ * @param   array   $data  An array containing the release's data.
+ *
+ * @return  void
+ */
+
+function admin_releases_add( array $data ) : void
+{
+  // Sanatize the data
+  $release_date     = sanitize_array_element($data, 'date', 'string');
+  $release_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $release_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Add the release to the database
+  query(" INSERT INTO releases
+          SET         releases.name_en      = '$release_name_en'  ,
+                      releases.name_fr      = '$release_name_fr'  ,
+                      releases.release_date = '$release_date'     ");
 }

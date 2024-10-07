@@ -10,7 +10,7 @@ include_once './../../lang/admin.lang.php';   # Admin translations
 // Page summary
 $page_url       = "pages/admin/releases";
 $page_title_en  = "Admin: Releases";
-$page_title_fr  = "Admin : Publications";
+$page_title_fr  = "Admin : Versions";
 
 // Admin menu selection
 $admin_menu['releases'] = 1;
@@ -29,29 +29,22 @@ $js   = array('admin/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Delete an image
+// Add a release
 
-if(isset($_POST['admin_images_delete']))
-  admin_images_delete(form_fetch_element('admin_images_delete'));
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Edit an image
-
-if(isset($_POST['image_edit']))
+if(isset($_POST['release_add']))
 {
-  // Grab the image's ID
-  $image_edit_id = form_fetch_element('image_id');
+  // Gather the postdata
+  $release_add_date     = form_fetch_element('release_date');
+  $release_add_name_en  = form_fetch_element('release_name_en');
+  $release_add_name_fr  = form_fetch_element('release_name_fr');
 
   // Assemble an array with the postdata
-  $image_edit_data = array( 'image_name'    => form_fetch_element('image_name')   ,
-                            'image_artist'  => form_fetch_element('image_artist') );
+  $release_add_data = array(  'date'    => $release_add_date    ,
+                              'name_en' => $release_add_name_en ,
+                              'name_fr' => $release_add_name_fr );
 
-  // Edit the image
-  admin_images_edit(  $image_edit_id    ,
-                      $image_edit_data  );
+  // Add the release to the database
+  admin_releases_add($release_add_data);
 }
 
 
@@ -78,7 +71,7 @@ $releases_list = admin_releases_list( $admin_releases_sort        ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_30 padding_top">
 
   <table>
     <thead>
@@ -89,7 +82,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "admin_releases_search('date_reverse');").__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_releases_search('date');")?>
         </th>
         <th>
-          <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/releases_add')?>
           <?=__('admin_release_list_name')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_releases_search('name');")?>
         </th>
@@ -107,7 +99,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <input type="text" class="table_search" name="admin_releases_search_name" id="admin_releases_search_name" value="" onkeyup="admin_releases_search();">
         </th>
         <th>
-          &nbsp;
+          <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/releases_add')?>
         </th>
       </tr>
 
@@ -131,7 +123,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$releases_list[$i]['date']?>
         </td>
 
-        <td>
+        <td class="align_center">
           <?=$releases_list[$i]['name']?>
         </td>
 
