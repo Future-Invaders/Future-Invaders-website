@@ -602,6 +602,22 @@ if($last_query < 3)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Releases
+
+if($last_query < 4)
+{
+  sql_create_table('releases');
+  sql_create_field('releases', 'name_en', 'TINYTEXT NOT NULL', 'id');
+  sql_create_field('releases', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+  sql_create_field('releases', 'release_date', 'DATE NOT NULL', 'name_fr');
+
+  sql_update_query_id(4);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cards
 /*
 if($last_query < X)
@@ -691,24 +707,6 @@ if($last_query < X)
   query(" INSERT INTO card_rarities SET name_en = 'Standard', name_fr = 'Standard',     max_card_count = 2 ");
   query(" INSERT INTO card_rarities SET name_en = 'Renowned', name_fr = 'Prestigieux',  max_card_count = 1 ");
   query(" INSERT INTO card_rarities SET name_en = 'Pinnacle', name_fr = 'Suprême',      max_card_count = 1 ");
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Releases
-
-/*
-if($last_query < X)
-{
-  sql_create_table('releases');
-  sql_create_field('releases', 'name_en', 'TINYTEXT NOT NULL', 'id');
-  sql_create_field('releases', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('releases', 'release_date', 'DATE NOT NULL', 'name_fr');
 
   sql_update_query_id(X);
 }

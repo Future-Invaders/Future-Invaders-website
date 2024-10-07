@@ -19,6 +19,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_images_edit                   Edits an image in the database                                               */
 /*  admin_images_delete                 Deletes an image from the database                                           */
 /*                                                                                                                   */
+/*  admin_releases_list                 Lists releases in the database                                               */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -358,4 +360,63 @@ function admin_images_delete( int $image_id ) : void
   // Delete the image from the database
   query(" DELETE FROM images
           WHERE   images.id = '$image_id' ");
+}
+
+
+
+
+/**
+ * Lists releases in the database.
+ *
+ * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ *
+ * @return  array   An array containing the releases.
+ */
+
+function admin_releases_list( string  $sort_by  = 'path'  ,
+                              array   $search   = array() ) : array
+{
+  // Sanatize the search data
+  $search_date  = sanitize_array_element($search, 'date', 'string');
+  $search_name  = sanitize_array_element($search, 'name', 'string');
+  $search_lang  = string_change_case(user_get_language(), 'lowercase');
+
+  // Search through the data
+  $query_search  =  ($search_date)  ? " WHERE releases.release_date       LIKE '%$search_date%' " : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)  ? " AND   releases.name_$search_lang  LIKE '%$search_name%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'name'          => " ORDER BY releases.name_$search_lang ASC  ,
+                                  releases.release_date DESC      ",
+    'date_reverse'  => " ORDER BY releases.release_date ASC       ",
+    default         => " ORDER BY releases.release_date DESC      ",
+  };
+
+  // Get a list of all releases in the database
+  $qreleases = query("  SELECT  releases.id           AS 'r_id'       ,
+                                releases.name_en      AS 'r_name_en'  ,
+                                releases.name_fr      AS 'r_name_fr'  ,
+                                releases.release_date AS 'r_date'
+                        FROM    releases
+                        $query_search
+                        $query_sort ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($qreleases); $i++)
+  {
+    $data[$i]['id']       = sanitize_output($row['r_id']);
+    $data[$i]['name_en']  = sanitize_output($row['r_name_en']);
+    $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
+    $data[$i]['name']     = sanitize_output($row['r_name_'.$search_lang]);
+    $data[$i]['date']     = sanitize_output($row['r_date']);
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepare data
+  return $data;
 }

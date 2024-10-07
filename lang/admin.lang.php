@@ -88,7 +88,6 @@ ___('admin_uncategorized_images_title', 'EN', "Uncategorized images");
 ___('admin_uncategorized_images_title', 'FR', "Images non catégorisées");
 
 
-
 // Image list
 ___('admin_image_list_path',    'EN', "Path");
 ___('admin_image_list_path',    'FR', "Chemin");
@@ -125,3 +124,22 @@ ___('admin_image_edit_submit',  'FR', "Modifier l'image");
 // Delete an image
 ___('admin_image_delete_confirm', 'EN', "Confirm the deletion of this image");
 ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     RELEASES                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Release list
+___('admin_release_list_date',    'EN', "Date");
+___('admin_release_list_date',    'FR', "Date");
+___('admin_release_list_name',    'EN', "Release");
+___('admin_release_list_name',    'FR', "Publication");
+___('admin_release_list_count',   'EN', "{{1}} release");
+___('admin_release_list_count',   'FR', "{{1}} publication");
+___('admin_release_list_count+',  'EN', "{{1}} releases");
+___('admin_release_list_count+',  'FR', "{{1}} publications");
