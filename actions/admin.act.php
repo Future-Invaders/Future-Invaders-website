@@ -19,6 +19,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_images_edit                   Edits an image in the database                                               */
 /*  admin_images_delete                 Deletes an image from the database                                           */
 /*                                                                                                                   */
+/*  admin_releases_get                  Returns data related to a release                                            */
+/*  admin_releases_list                 Lists releases in the database                                               */
+/*  admin_releases_add                  Adds a release to the database                                               */
+/*  admin_releases_edit                 Edits a release in the database                                              */
+/*  admin_releases_delete               Deletes a release from the database                                          */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -358,4 +364,182 @@ function admin_images_delete( int $image_id ) : void
   // Delete the image from the database
   query(" DELETE FROM images
           WHERE   images.id = '$image_id' ");
+}
+
+
+
+
+/**
+ * Returns data related to a release.
+ *
+ * @param   int         $release_id   The id of the release.
+ *
+ * @return  array|null              An array containing the release's data, or null if the release does not exist.
+ */
+
+function admin_releases_get( int $release_id ) : array|null
+{
+  // Sanitize the release's id
+  $release_id = sanitize($release_id, 'int');
+
+  // Return null if the release does not exist
+  if(!database_row_exists('releases', $release_id))
+    return null;
+
+  // Fetch the release's data
+  $release_data = query(" SELECT  releases.id           AS 'r_id'       ,
+                                  releases.name_en      AS 'r_name_en'  ,
+                                  releases.name_fr      AS 'r_name_fr'  ,
+                                  releases.release_date AS 'r_date'
+                          FROM    releases
+                          WHERE   releases.id = '$release_id' ",
+                          fetch_row: true);
+
+  // Assemble an array with the release's data
+  $data['id']       = sanitize_output($release_data['r_id']);
+  $data['name_en']  = sanitize_output($release_data['r_name_en']);
+  $data['name_fr']  = sanitize_output($release_data['r_name_fr']);
+  $data['date']     = sanitize_output(date_to_ddmmyy($release_data['r_date']));
+  $data['datesql']  = sanitize_output($release_data['r_date']);
+
+  // Return the release's data
+  return $data;
+}
+
+
+
+
+/**
+ * Lists releases in the database.
+ *
+ * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ *
+ * @return  array   An array containing the releases.
+ */
+
+function admin_releases_list( string  $sort_by  = 'path'  ,
+                              array   $search   = array() ) : array
+{
+  // Sanatize the search data
+  $search_date  = sanitize_array_element($search, 'date', 'string');
+  $search_name  = sanitize_array_element($search, 'name', 'string');
+  $search_lang  = string_change_case(user_get_language(), 'lowercase');
+
+  // Search through the data
+  $query_search  =  ($search_date)  ? " WHERE releases.release_date       LIKE '%$search_date%' " : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)  ? " AND   releases.name_$search_lang  LIKE '%$search_name%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'name'          => " ORDER BY releases.name_$search_lang ASC  ,
+                                  releases.release_date DESC      ",
+    'date_reverse'  => " ORDER BY releases.release_date ASC       ",
+    default         => " ORDER BY releases.release_date DESC      ",
+  };
+
+  // Get a list of all releases in the database
+  $qreleases = query("  SELECT  releases.id           AS 'r_id'       ,
+                                releases.name_en      AS 'r_name_en'  ,
+                                releases.name_fr      AS 'r_name_fr'  ,
+                                releases.release_date AS 'r_date'
+                        FROM    releases
+                        $query_search
+                        $query_sort ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($qreleases); $i++)
+  {
+    $data[$i]['id']       = sanitize_output($row['r_id']);
+    $data[$i]['name_en']  = sanitize_output($row['r_name_en']);
+    $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
+    $data[$i]['name']     = sanitize_output($row['r_name_'.$search_lang]);
+    $data[$i]['date']     = sanitize_output(date_to_ddmmyy($row['r_date']));
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepare data
+  return $data;
+}
+
+
+
+
+/**
+ * Adds a release to the database.
+ *
+ * @param   array   $data  An array containing the release's data.
+ *
+ * @return  void
+ */
+
+function admin_releases_add( array $data ) : void
+{
+  // Sanatize the data
+  $release_date     = sanitize_array_element($data, 'date', 'string');
+  $release_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $release_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Add the release to the database
+  query(" INSERT INTO releases
+          SET         releases.name_en      = '$release_name_en'  ,
+                      releases.name_fr      = '$release_name_fr'  ,
+                      releases.release_date = '$release_date'     ");
+}
+
+
+
+
+/**
+ * Edits a release in the database.
+ *
+ * @param   int         $release_id   The id of the release to edit.
+ * @param   array       $data         An array containing the release's data.
+ *
+ * @return  void
+ */
+
+function admin_releases_edit( int   $release_id ,
+                              array $data       ) : void
+{
+  // Sanitize the data
+  $release_id       = sanitize($release_id, 'int');
+  $release_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $release_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $release_date     = sanitize_array_element($data, 'date', 'string');
+
+  // Stop here if the release does not exist
+  if(!database_row_exists('releases', $release_id))
+    return;
+
+  // Edit the release
+  query(" UPDATE  releases
+          SET     releases.name_en      = '$release_name_en'  ,
+                  releases.name_fr      = '$release_name_fr'  ,
+                  releases.release_date = '$release_date'
+          WHERE   releases.id           = '$release_id' ");
+}
+
+
+
+
+/**
+ * Deletes a release from the database.
+ *
+ * @param   int     $release_id  The id of the release to delete.
+ *
+ * @return  void
+ */
+
+function admin_releases_delete( int $release_id ) : void
+{
+  // Sanitize the data
+  $release_id = sanitize($release_id, 'int');
+
+  // Delete the release from the database
+  query(" DELETE FROM releases
+          WHERE       releases.id = '$release_id' ");
 }
