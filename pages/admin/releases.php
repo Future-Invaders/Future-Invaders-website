@@ -51,6 +51,27 @@ if(isset($_POST['release_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a release
+
+if(isset($_POST['release_edit']))
+{
+  // Grab the release's ID
+  $release_edit_id = form_fetch_element('release_id');
+
+  // Assemble an array with the postdata
+  $release_edit_data = array( 'name_en'    => form_fetch_element('release_name_en') ,
+                              'name_fr'    => form_fetch_element('release_name_fr') ,
+                              'date'       => form_fetch_element('release_date')    );
+
+  // Edit the release
+  admin_releases_edit(  $release_edit_id    ,
+                        $release_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete a release
 
 if(isset($_POST['admin_releases_delete']))

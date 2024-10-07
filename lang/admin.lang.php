@@ -158,6 +158,13 @@ ___('admin_release_add_submit',   'EN', "Add release");
 ___('admin_release_add_submit',   'FR', "Ajouter la version");
 
 
+// Edit a release
+___('admin_release_edit_title',   'EN', "Edit release");
+___('admin_release_edit_title',   'FR', "Modifier la version");
+___('admin_release_edit_submit',  'EN', "Edit release");
+___('admin_release_edit_submit',  'FR', "Modifier la version");
+
+
 // Delete a release
 ___('admin_release_delete_confirm', 'EN', "Confirm the deletion of this release");
 ___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette version");
