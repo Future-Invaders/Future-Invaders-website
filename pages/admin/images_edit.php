@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/admin.act.php'; # Admin actions
+include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
@@ -35,7 +35,7 @@ $js   = array('admin/admin');
 $admin_image_id = (int)form_fetch_element('image', request_type: 'GET');
 
 // Fetch the image data
-$admin_image_data = admin_images_get($admin_image_id);
+$admin_image_data = images_get($admin_image_id);
 
 // Stop here if the image does not exist
 if(!$admin_image_data)

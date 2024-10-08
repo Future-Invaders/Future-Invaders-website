@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/admin.act.php'; # Admin actions
+include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
@@ -35,7 +35,7 @@ $js   = array('admin/admin');
 $admin_release_id = (int)form_fetch_element('release', request_type: 'GET');
 
 // Fetch the release data
-$admin_release_data = admin_releases_get($admin_release_id);
+$admin_release_data = releases_get($admin_release_id);
 
 // Stop here if the release does not exist
 if(!$admin_release_data)
