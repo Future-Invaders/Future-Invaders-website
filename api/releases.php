@@ -4,8 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../inc/includes.inc.php'; # Core
-include_once './../actions/api.act.php';  # Actions
-include_once './../lang/api.lang.php';    # Translations
+include_once './../actions/game.act.php'; # Game actions
 
 
 
@@ -19,7 +18,7 @@ include_once './../lang/api.lang.php';    # Translations
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of releases
 
-$releases_list = api_releases_list();
+$releases_list = releases_list( format: 'api' );
 
 
 

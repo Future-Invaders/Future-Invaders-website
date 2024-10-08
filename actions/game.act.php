@@ -355,12 +355,14 @@ function releases_get( int $release_id ) : array|null
  *
  * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
  * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array   An array containing the releases.
  */
 
 function releases_list( string  $sort_by  = 'path'  ,
-                        array   $search   = array() ) : array
+                        array   $search   = array() ,
+                        string  $format   = 'html'  ) : array
 {
   // Sanatize the search data
   $search_date  = sanitize_array_element($search, 'date', 'string');
@@ -389,18 +391,38 @@ function releases_list( string  $sort_by  = 'path'  ,
                         $query_search
                         $query_sort ");
 
-  // Prepare the data for display
+  // Prepare the data
   for($i = 0; $row = query_row($qreleases); $i++)
   {
-    $data[$i]['id']       = sanitize_output($row['r_id']);
-    $data[$i]['name_en']  = sanitize_output($row['r_name_en']);
-    $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
-    $data[$i]['name']     = sanitize_output($row['r_name_'.$search_lang]);
-    $data[$i]['date']     = sanitize_output(date_to_ddmmyy($row['r_date']));
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']       = sanitize_output($row['r_id']);
+      $data[$i]['name_en']  = sanitize_output($row['r_name_en']);
+      $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
+      $data[$i]['name']     = sanitize_output($row['r_name_'.$search_lang]);
+      $data[$i]['date']     = sanitize_output(date_to_ddmmyy($row['r_date']));
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['id']   = sanitize_json($row['r_id']);
+      $data[$i]['name'] = sanitize_json($row['r_name_en']);
+      $data[$i]['date'] = sanitize_json($row['r_date']);
+    }
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('releases' => $data);
+  }
 
   // Return the prepare data
   return $data;
