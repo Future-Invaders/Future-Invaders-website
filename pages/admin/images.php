@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/admin.act.php'; # Admin actions
+include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
@@ -32,7 +32,7 @@ $js   = array('admin/admin');
 // Delete an image
 
 if(isset($_POST['admin_images_delete']))
-  admin_images_delete(form_fetch_element('admin_images_delete'));
+  images_delete(form_fetch_element('admin_images_delete'));
 
 
 
@@ -50,8 +50,8 @@ if(isset($_POST['image_edit']))
                             'image_artist'  => form_fetch_element('image_artist') );
 
   // Edit the image
-  admin_images_edit(  $image_edit_id    ,
-                      $image_edit_data  );
+  images_edit(  $image_edit_id    ,
+                $image_edit_data  );
 }
 
 
@@ -61,7 +61,7 @@ if(isset($_POST['image_edit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List uncategorized images
 
-$uncategorized_images = admin_images_list_uncategorized();
+$uncategorized_images = images_list_uncategorized();
 
 
 
@@ -76,8 +76,8 @@ $admin_images_search_data = array(  'path'    =>  form_fetch_element('admin_imag
                                     'artist'  =>  form_fetch_element('admin_images_search_artist')  );
 
 // Fetch the images
-$list_images = admin_images_list( $admin_images_sort        ,
-                                  $admin_images_search_data );
+$list_images = images_list( $admin_images_sort        ,
+                            $admin_images_search_data );
 
 
 

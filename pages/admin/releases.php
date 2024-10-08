@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/admin.act.php'; # Admin actions
+include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
@@ -44,7 +44,7 @@ if(isset($_POST['release_add']))
                               'name_fr' => $release_add_name_fr );
 
   // Add the release to the database
-  admin_releases_add($release_add_data);
+  releases_add($release_add_data);
 }
 
 
@@ -64,8 +64,8 @@ if(isset($_POST['release_edit']))
                               'date'       => form_fetch_element('release_date')    );
 
   // Edit the release
-  admin_releases_edit(  $release_edit_id    ,
-                        $release_edit_data  );
+  releases_edit(  $release_edit_id    ,
+                  $release_edit_data  );
 }
 
 
@@ -75,7 +75,7 @@ if(isset($_POST['release_edit']))
 // Delete a release
 
 if(isset($_POST['admin_releases_delete']))
-  admin_releases_delete(form_fetch_element('admin_releases_delete'));
+  releases_delete(form_fetch_element('admin_releases_delete'));
 
 
 
@@ -90,8 +90,8 @@ $admin_releases_search_data = array(  'date'    =>  form_fetch_element('admin_re
                                       'name'    =>  form_fetch_element('admin_releases_search_name')  );
 
 // Fetch the releases
-$releases_list = admin_releases_list( $admin_releases_sort        ,
-                                      $admin_releases_search_data );
+$releases_list = releases_list( $admin_releases_sort        ,
+                                $admin_releases_search_data );
 
 
 

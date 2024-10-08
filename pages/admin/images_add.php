@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/admin.act.php'; # Admin actions
+include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
@@ -68,7 +68,7 @@ if(isset($_POST['image_add']))
                             'image_artist'  => $image_add_artist  );
 
   // Add the image to the database
-  admin_images_add($image_add_data);
+  images_add($image_add_data);
 
   // Redirect to the image list
   exit(header("Location: ./images"));
