@@ -8,13 +8,13 @@ include_once './../../lang/api.lang.php';     # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "api/doc/intro";
-$page_title_en    = "API";
-$page_title_fr    = "API";
+$page_url         = "api/doc/releases";
+$page_title_en    = "API: Releases";
+$page_title_fr    = "API : Versions";
 $page_description = "Future Invaders' API allows you to interact with the website without using a browser.";
 
 // API doc menu selection
-$api_menu['intro'] = true;
+$api_menu['releases'] = true;
 
 // Extra CSS & JS
 $css  = array('api');
@@ -29,48 +29,51 @@ $js   = array('api/doc');
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.php'; /*******/ include './menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top bigpadding_bot">
 
   <h1>
-    <?=__('submenu_tools_api')?>
+    <?=__('api')?>
   </h1>
 
-  <h5>
-    <?=__('api_menu_intro')?>
-  </h5>
+  <h4>
+    <?=__('api_menu_releases')?>
+  </h4>
 
   <p>
-    <?=__('api_intro_body_1')?>
+    <?=__('api_releases_intro')?>
   </p>
+
+  <ul class="tinypadding_top">
+    <li><?=__link('#list_releases', 'GET /api/releases', is_internal: false)?></li>
+  </ul>
+
+</div>
+
+<hr id="list_releases">
+
+<div class="width_50 padding_top">
+
+  <h4>
+    GET /api/releases
+  </h4>
 
   <p>
-    <?=__('api_intro_body_2')?>
+    <?=__('api_releases_list_summary')?>
   </p>
 
-  <h5 class="bigpadding_top">
-    <?=__('api_intro_usage_title')?>
-  </h5>
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
 
-  <p>
-    <?=__('api_intro_usage_body_1', preset_values: array($GLOBALS['website_url']))?>
-  </p>
-
-  <p>
-    <?=__('api_intro_usage_body_2')?>
-  </p>
-
-  <p>
-    <?=__('api_intro_usage_body_3')?>
-  </p>
-
-  <p>
-    <?=__('api_intro_usage_body_4')?>
-  </p>
-
-  <p>
-    <?=__('api_intro_usage_body_5')?>
-  </p>
-
+  <pre>{
+  "releases": [
+    {
+      "id": int,
+      "name": string,
+      "date": string
+    },
+  ]
+}</pre>
 
 </div>
 

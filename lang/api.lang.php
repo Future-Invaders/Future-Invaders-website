@@ -13,6 +13,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 
 // Menu
+___('api',                'EN', "API");
+___('api',                'FR', "API");
 ___('api_menu_title',     'EN', "Future Invaders API");
 ___('api_menu_title',     'FR', "API Future Invaders");
 ___('api_menu_intro',     'EN', "Introduction");
@@ -106,71 +108,27 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                      QUOTES                                                       */
+/*                                                     RELEASES                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Menu entry & introduction
-___('api_quotes_menu',  'EN', "Quotes");
-___('api_quotes_menu',  'FR', "Citations");
-___('api_quotes_intro', 'EN', <<<EOD
-This part of {{link|api/doc/intro|NoBleme's API}} allows you to interact with the {{link|pages/quotes/list|quote database}}.
+// Header
+___('api_releases_intro', 'EN', <<<EOD
+Releases are completed versions of Future Invaders. There might be multiple versions of some content (such as cards), each tied to a separate release.
 EOD
 );
-___('api_quotes_intro', 'FR', <<<EOD
-Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/quotes/list|les citations}}.
+___('api_releases_intro', 'FR', <<<EOD
+Les versions de Future Invaders portent le nom "releases". Il peut y avoir plusieurs versions de certains contenus (comme les cartes), chacune liée à une "release" distincte.
 EOD
 );
 
 
-// List quotes
-___('api_quotes_list_summary',  'EN', <<<EOD
-Retrieves a list of all quotes, in reverse chronological order of addition to the quote database.
+// List releases
+___('api_releases_list_summary',  'EN', <<<EOD
+Retrieves a list of all past releases, in reverse chronological order.
 EOD
 );
-___('api_quotes_list_summary',  'FR', <<<EOD
-Récupère une liste de toutes les citations, dans l'ordre antéchronologique d'addition sur le site.
+___('api_releases_list_summary',  'FR', <<<EOD
+Récupère une liste de toutes les versions passées, dans l'ordre antéchronologique.
 EOD
 );
-___('api_quotes_list_language', 'EN', "Return quotes in the specified ISO 639-1 language (ex. 'en').");
-___('api_quotes_list_language', 'FR', "Renvoie les citations dans la langue spécifiée au format ISO 639-1 (ex. 'fr').");
-___('api_quotes_list_user_id',  'EN', "Return quotes including the specified {{link|api/doc/users|user}}.");
-___('api_quotes_list_user_id',  'FR', "Renvoie les citations contant le {{link|api/doc/users|compte}} spécifié.");
-___('api_quotes_list_search',   'EN', "Return quotes which contain the specified string in their body.");
-___('api_quotes_list_search',   'FR', "Renvoie les citations contenant la chaîne de caractère spécifiée dans leur contenu.");
-___('api_quotes_list_year',     'EN', "Return quotes added to the database in a specific year (ex. '2005').");
-___('api_quotes_list_year',     'FR', "Renvoie les citations ajoutées sur le site une année spécifiée (ex. '2005').");
-___('api_quotes_list_nsfw',     'EN', "Return only SFW (0) or NSFW (1) quotes.");
-___('api_quotes_list_nsfw',     'FR', "Renvoie uniquement les citations SFW (0) ou NSFW (1).");
-
-
-// Get one quote
-___('api_quotes_get_summary', 'EN', <<<EOD
-Retrieves a quote with the specified ID.
-EOD
-);
-___('api_quotes_get_summary', 'FR', <<<EOD
-Récupère une citation, dont l'ID est spécifié.
-EOD
-);
-___('api_quotes_get_id',      'EN', "The desired quote's ID.");
-___('api_quotes_get_id',      'FR', "L'ID de la citation désirée.");
-
-
-// Random quote
-___('api_quotes_random_summary',  'EN', <<<EOD
-Retrieves a random quote.
-EOD
-);
-___('api_quotes_random_summary',  'FR', <<<EOD
-Récupère une citation au hasard.
-EOD
-);
-___('api_quotes_random_language', 'EN', "Choose from quotes in the specified ISO 639-1 language (ex. 'en').");
-___('api_quotes_random_language', 'FR', "Choisit parmi les citations dans la langue spécifiée au format ISO 639-1 (ex. 'fr').");
-___('api_quotes_random_user_id',  'EN', "Choose from quotes including the specified {{link|api/doc/users|user}}.");
-___('api_quotes_random_user_id',  'FR', "Choisit parmi les citations contant le {{link|api/doc/users|compte}} spécifié.");
-___('api_quotes_random_nsfw',     'EN', "Choose solely from SFW (0) or NSFW (1) quotes.");
-___('api_quotes_random_nsfw',     'FR', "Choisit uniquement parmi les citations SFW (0) ou NSFW (1).");
-___('api_quotes_random_year',     'EN', "Choose from quotes added to the database in a specific year (ex. '2005').");
-___('api_quotes_random_year',     'FR', "Choisit parmi les citations ajoutées sur le site une année spécifiée (ex. '2005').");
