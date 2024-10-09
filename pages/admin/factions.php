@@ -34,11 +34,13 @@ $js   = array('admin/admin');
 if(isset($_POST['faction_add']))
 {
   // Gather the postdata
+  $faction_add_order    = form_fetch_element('faction_sorting_order');
   $faction_add_name_en  = form_fetch_element('faction_name_en');
   $faction_add_name_fr  = form_fetch_element('faction_name_fr');
 
   // Assemble an array with the postdata
-  $faction_add_data = array(  'name_en' => $faction_add_name_en ,
+  $faction_add_data = array(  'order'   => $faction_add_order ,
+                              'name_en' => $faction_add_name_en ,
                               'name_fr' => $faction_add_name_fr );
 
   // Add the faction to the database
@@ -67,6 +69,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
     <thead>
 
       <tr class="uppercase">
+        <th class="align_center">
+          <?=__('admin_faction_list_order')?>
+        </th>
         <th>
           <?=__('admin_faction_list_name')?>
         </th>
@@ -80,7 +85,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
     <tbody class="altc2 nowrap" id="admin_factions_tbody">
 
       <tr>
-        <td class="uppercase text_light dark bold align_center">
+        <td colspan="2" class="uppercase text_light dark bold align_center">
           <?=__('admin_faction_list_count', preset_values: array($factions_list['rows']), amount: $factions_list['rows'])?>
         </td>
         <td class="dark bold align_center">
@@ -91,6 +96,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php for($i = 0; $i < $factions_list['rows']; $i++): ?>
 
       <tr id="admin_factions_row_<?=$factions_list[$i]['id']?>">
+
+        <td class="align_center nowrap">
+          <?=$factions_list[$i]['order']?>
+        </td>
 
         <td class="align_center">
           <?=$factions_list[$i]['name']?>

@@ -525,16 +525,18 @@ function factions_list() : array
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the factions
-  $factions = query(" SELECT    factions.id         AS 'f_id' ,
-                                factions.name_$lang AS 'f_name'
+  $factions = query(" SELECT    factions.id             AS 'f_id' ,
+                                factions.sorting_order  AS 'f_order' ,
+                                factions.name_$lang     AS 'f_name'
                       FROM      factions
-                      ORDER BY  factions.name_$lang ASC ");
+                      ORDER BY  factions.sorting_order ASC ");
 
   // Prepare the data for display
   for($i = 0; $row = query_row($factions); $i++)
   {
-    $data[$i]['id']   = sanitize_output($row['f_id']);
-    $data[$i]['name'] = sanitize_output($row['f_name']);
+    $data[$i]['id']     = sanitize_output($row['f_id']);
+    $data[$i]['order']  = sanitize_output($row['f_order']);
+    $data[$i]['name']   = sanitize_output($row['f_name']);
   }
 
   // Add the number of rows to the data
@@ -543,6 +545,8 @@ function factions_list() : array
   // Return the prepared data
   return $data;
 }
+
+
 
 
 /**
@@ -556,11 +560,13 @@ function factions_list() : array
 function factions_add( array $data ) : void
 {
   // Sanitize the data
+  $faction_order    = sanitize_array_element($data, 'order', 'int');
   $faction_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $faction_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
 
   // Add the faction to the database
   query(" INSERT INTO factions
-          SET         factions.name_en = '$faction_name_en' ,
-                      factions.name_fr = '$faction_name_fr' ");
+          SET         factions.sorting_order  = '$faction_order'    ,
+                      factions.name_en        = '$faction_name_en'  ,
+                      factions.name_fr        = '$faction_name_fr'  ");
 }

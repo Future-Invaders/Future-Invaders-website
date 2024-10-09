@@ -38,6 +38,11 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
     <fieldset>
 
       <div class="smallpadding_bot">
+        <label for="faction_sorting_order"><?=__('admin_faction_add_sorting_order')?></label>
+        <input class="indiv" type="text" name="faction_sorting_order">
+      </div>
+
+      <div class="smallpadding_bot">
         <label for="faction_name_en"><?=__('admin_faction_add_name_en')?></label>
         <input class="indiv" type="text" name="faction_name_en">
       </div>

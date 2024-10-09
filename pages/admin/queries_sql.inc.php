@@ -623,7 +623,8 @@ if($last_query < 4)
 if($last_query < 5)
 {
   sql_create_table('factions');
-  sql_create_field('factions', 'name_en', 'TINYTEXT NOT NULL', 'id');
+  sql_create_field('factions', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('factions', 'name_en', 'TINYTEXT NOT NULL', 'sorting_order');
   sql_create_field('factions', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
 
   sql_update_query_id(5);
