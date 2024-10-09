@@ -207,3 +207,8 @@ ___('admin_faction_edit_title',   'EN', "Edit faction");
 ___('admin_faction_edit_title',   'FR', "Modifier une faction");
 ___('admin_faction_edit_submit',  'EN', "Edit faction");
 ___('admin_faction_edit_submit',  'FR', "Modifier une faction");
+
+
+// Delete a faction
+___('admin_faction_delete_confirm', 'EN', "Confirm the deletion of this faction");
+___('admin_faction_delete_confirm', 'FR', "Confirmez la suppression de cette faction");

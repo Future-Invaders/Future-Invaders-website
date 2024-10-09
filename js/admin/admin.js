@@ -9,6 +9,8 @@
 /*  admin_releases_search   Searches the release list.                                                               */
 /*  admin_releases_delete   Triggers the deletion of an entry in the release list.                                   */
 /*                                                                                                                   */
+/*  admin_factions_delete   Triggers the deletion of an entry in the faction list.                                   */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -151,4 +153,27 @@ function admin_releases_delete( message     ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
   fetch_page('releases', 'admin_releases_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the faction list.
+ *
+ * @param   {string}  message     The confirmation message which will be displayed.
+ * @param   {int}     faction_id  The id of the faction to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_factions_delete( message     ,
+                                faction_id  )
+{
+  // Assemble the postdata
+  postdata = 'admin_factions_delete=' + fetch_sanitize(faction_id);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('factions', 'admin_factions_tbody', postdata);
 }

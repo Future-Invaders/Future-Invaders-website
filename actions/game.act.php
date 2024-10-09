@@ -26,6 +26,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  factions_list                   Lists factions in the database                                                   */
 /*  factions_add                    Adds a faction to the database                                                   */
 /*  factions_edit                   Edits a faction in the database                                                  */
+/*  factions_delete                 Deletes a faction from the database                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -557,17 +558,20 @@ function factions_get( int $faction_id ) : array|null
 /**
  * Lists factions in the database.
  *
- * @return  array   An array containing the factions.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the factions.
  */
 
-function factions_list() : array
+function factions_list( string  $format = 'html' ) : array
 {
   // Fetch the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the factions
-  $factions = query(" SELECT    factions.id             AS 'f_id' ,
-                                factions.sorting_order  AS 'f_order' ,
+  $factions = query(" SELECT    factions.id             AS 'f_id'       ,
+                                factions.sorting_order  AS 'f_order'    ,
+                                factions.name_en        AS 'f_name_en'  ,
                                 factions.name_$lang     AS 'f_name'
                       FROM      factions
                       ORDER BY  factions.sorting_order ASC ");
@@ -575,13 +579,32 @@ function factions_list() : array
   // Prepare the data for display
   for($i = 0; $row = query_row($factions); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['f_id']);
-    $data[$i]['order']  = sanitize_output($row['f_order']);
-    $data[$i]['name']   = sanitize_output($row['f_name']);
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($row['f_id']);
+      $data[$i]['order']  = sanitize_output($row['f_order']);
+      $data[$i]['name']   = sanitize_output($row['f_name']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['id']   = sanitize_json($row['f_id']);
+      $data[$i]['name'] = sanitize_json($row['f_name_en']);
+    }
   }
 
-  // Add the number of rows to the data
-  $data['rows'] = $i;
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('factions' => $data);
+  }
 
   // Return the prepared data
   return $data;
@@ -643,4 +666,25 @@ function factions_edit( int   $faction_id ,
                   factions.name_en        = '$faction_name_en'  ,
                   factions.name_fr        = '$faction_name_fr'
           WHERE   factions.id             = '$faction_id' ");
+}
+
+
+
+
+/**
+ * Deletes a faction from the database.
+ *
+ * @param   int     $faction_id  The id of the faction to delete.
+ *
+ * @return  void
+ */
+
+function factions_delete( int $faction_id ) : void
+{
+  // Sanitize the data
+  $faction_id = sanitize($faction_id, 'int');
+
+  // Delete the faction from the database
+  query(" DELETE FROM factions
+          WHERE       factions.id = '$faction_id' ");
 }

@@ -72,6 +72,15 @@ if(isset($_POST['faction_edit']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete a faction
+
+if(isset($_POST['admin_factions_delete']))
+  factions_delete(form_fetch_element('admin_factions_delete'));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of all factions
 
 $factions_list = factions_list();
@@ -105,6 +114,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
     <tbody class="altc2 nowrap" id="admin_factions_tbody">
 
+      <?php endif; ?>
+
       <tr>
         <td colspan="2" class="uppercase text_light dark bold align_center">
           <?=__('admin_faction_list_count', preset_values: array($factions_list['rows']), amount: $factions_list['rows'])?>
@@ -136,6 +147,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endfor; ?>
 
     </tbody>
+
+    <?php if(!page_is_fetched_dynamically()): ?>
+
   </table>
 
 </div>
