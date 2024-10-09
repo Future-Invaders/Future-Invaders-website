@@ -21,6 +21,8 @@ ___('api_menu_intro',     'EN', "Introduction");
 ___('api_menu_intro',     'FR', "Introduction");
 ___('api_menu_releases',  'EN', "Releases");
 ___('api_menu_releases',  'FR', "Versions");
+___('api_menu_factions',  'EN', "Factions");
+___('api_menu_factions',  'FR', "Factions");
 
 
 // Technical terms
@@ -130,5 +132,35 @@ EOD
 );
 ___('api_releases_list_summary',  'FR', <<<EOD
 Récupère une liste de toutes les versions passées, dans l'ordre antéchronologique.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FACTIONS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_factions_intro', 'EN', <<<EOD
+Future Invaders has a limited number of factions. Each card belongs to a specific faction.
+EOD
+);
+___('api_factions_intro', 'FR', <<<EOD
+Future Invaders a un nombre limité de factions. Chaque carte appartient à une faction spécifique.
+EOD
+);
+
+
+// List factions
+___('api_factions_list_summary',  'EN', <<<EOD
+Retrieves a list of all factions.
+EOD
+);
+___('api_factions_list_summary',  'FR', <<<EOD
+Récupère une liste de toutes les factions.
 EOD
 );

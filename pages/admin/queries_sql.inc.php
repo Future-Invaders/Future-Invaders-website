@@ -618,7 +618,24 @@ if($last_query < 4)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Factions
+
+if($last_query < 5)
+{
+  sql_create_table('factions');
+  sql_create_field('factions', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('factions', 'name_en', 'TINYTEXT NOT NULL', 'sorting_order');
+  sql_create_field('factions', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+
+  sql_update_query_id(5);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cards
+
 /*
 if($last_query < X)
 {
@@ -637,29 +654,6 @@ if($last_query < X)
   sql_create_field('cards', 'durability', 'INT UNSIGNED NOT NULL DEFAULT 0', 'weapons');
   sql_create_field('cards', 'body_en', 'LONGTEXT', 'durability');
   sql_create_field('cards', 'body_fr', 'LONGTEXT', 'body_en');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Factions
-
-/*
-if($last_query < X)
-{
-  sql_create_table('factions');
-  sql_create_field('factions', 'name_en', 'TINYTEXT NOT NULL', 'id');
-  sql_create_field('factions', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-
-  query(" INSERT INTO factions SET name_en = 'Terran',   name_fr = 'Terrien'     ");
-  query(" INSERT INTO factions SET name_en = 'Invader',  name_fr = 'Envahisseur' ");
-  query(" INSERT INTO factions SET name_en = 'Organic',  name_fr = 'Organique'   ");
-  query(" INSERT INTO factions SET name_en = 'Pirate',   name_fr = 'Pirate'      ");
-  query(" INSERT INTO factions SET name_en = 'Neutral',  name_fr = 'Neutre'      ");
 
   sql_update_query_id(X);
 }
@@ -1057,6 +1051,23 @@ if($last_query < X)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Card bans
+
+/*
+if($last_query < X)
+{
+  sql_create_table('cards_bans');
+  sql_create_field('cards_bans', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('cards_bans', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
+
+  sql_update_query_id(X);
+}
+*/
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Game formats
 
 /*
@@ -1107,23 +1118,6 @@ if($last_query < X)
   sql_create_field('blogs', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('blogs', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('blogs', 'description_fr', 'TEXT', 'description_en');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Card bans
-
-/*
-if($last_query < X)
-{
-  sql_create_table('cards_bans');
-  sql_create_field('cards_bans', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('cards_bans', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
 
   sql_update_query_id(X);
 }

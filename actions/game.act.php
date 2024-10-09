@@ -22,6 +22,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  releases_edit                   Edits a release in the database                                                  */
 /*  releases_delete                 Deletes a release from the database                                              */
 /*                                                                                                                   */
+/*  factions_get                    Returns data related to a faction                                                */
+/*  factions_list                   Lists factions in the database                                                   */
+/*  factions_add                    Adds a faction to the database                                                   */
+/*  factions_edit                   Edits a faction in the database                                                  */
+/*  factions_delete                 Deletes a faction from the database                                              */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -116,7 +122,7 @@ function images_list( string  $sort_by  = 'path'  ,
   // Add the number of rows to the data
   $data['rows'] = $i;
 
-  // Return the prepare data
+  // Return the prepared data
   return $data;
 }
 
@@ -424,7 +430,7 @@ function releases_list( string  $sort_by  = 'path'  ,
     $data = array('releases' => $data);
   }
 
-  // Return the prepare data
+  // Return the prepared data
   return $data;
 }
 
@@ -505,4 +511,180 @@ function releases_delete( int $release_id ) : void
   // Delete the release from the database
   query(" DELETE FROM releases
           WHERE       releases.id = '$release_id' ");
+}
+
+
+
+
+/**
+ * Returns data related to a faction.
+ *
+ * @param   int         $faction_id   The id of the faction.
+ *
+ * @return  array|null                An array containing the faction's data, or null if the faction does not exist.
+ */
+
+function factions_get( int $faction_id ) : array|null
+{
+  // Sanitize the faction's id
+  $faction_id = sanitize($faction_id, 'int');
+
+  // Return null if the faction does not exist
+  if(!database_row_exists('factions', $faction_id))
+    return null;
+
+  // Fetch the faction's data
+  $faction_data = query(" SELECT  factions.id             AS 'f_id' ,
+                                  factions.sorting_order  AS 'f_order' ,
+                                  factions.name_en        AS 'f_name_en' ,
+                                  factions.name_fr        AS 'f_name_fr'
+                          FROM    factions
+                          WHERE   factions.id = '$faction_id' ",
+                          fetch_row: true);
+
+  // Assemble an array with the faction's data
+  $data['id']       = sanitize_output($faction_data['f_id']);
+  $data['order']    = sanitize_output($faction_data['f_order']);
+  $data['name_en']  = sanitize_output($faction_data['f_name_en']);
+  $data['name_fr']  = sanitize_output($faction_data['f_name_fr']);
+
+  // Return the faction's data
+  return $data;
+}
+
+
+
+
+/**
+ * Lists factions in the database.
+ *
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the factions.
+ */
+
+function factions_list( string  $format = 'html' ) : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch the factions
+  $factions = query(" SELECT    factions.id             AS 'f_id'       ,
+                                factions.sorting_order  AS 'f_order'    ,
+                                factions.name_en        AS 'f_name_en'  ,
+                                factions.name_$lang     AS 'f_name'
+                      FROM      factions
+                      ORDER BY  factions.sorting_order ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($factions); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($row['f_id']);
+      $data[$i]['order']  = sanitize_output($row['f_order']);
+      $data[$i]['name']   = sanitize_output($row['f_name']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['id']   = sanitize_json($row['f_id']);
+      $data[$i]['name'] = sanitize_json($row['f_name_en']);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('factions' => $data);
+  }
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Adds a faction to the database.
+ *
+ * @param   array   $data  An array containing the faction's data.
+ *
+ * @return  void
+ */
+
+function factions_add( array $data ) : void
+{
+  // Sanitize the data
+  $faction_order    = sanitize_array_element($data, 'order', 'int');
+  $faction_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $faction_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Add the faction to the database
+  query(" INSERT INTO factions
+          SET         factions.sorting_order  = '$faction_order'    ,
+                      factions.name_en        = '$faction_name_en'  ,
+                      factions.name_fr        = '$faction_name_fr'  ");
+}
+
+
+
+
+/**
+ * Edits a faction in the database.
+ *
+ * @param   int         $faction_id   The id of the faction to edit.
+ * @param   array       $data         An array containing the faction's data.
+ *
+ * @return  void
+ */
+
+function factions_edit( int   $faction_id ,
+                        array $data       ) : void
+{
+  // Sanitize the data
+  $faction_id       = sanitize($faction_id, 'int');
+  $faction_order    = sanitize_array_element($data, 'order', 'int');
+  $faction_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $faction_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Stop here if the faction does not exist
+  if(!database_row_exists('factions', $faction_id))
+    return;
+
+  // Edit the faction
+  query(" UPDATE  factions
+          SET     factions.sorting_order  = '$faction_order'    ,
+                  factions.name_en        = '$faction_name_en'  ,
+                  factions.name_fr        = '$faction_name_fr'
+          WHERE   factions.id             = '$faction_id' ");
+}
+
+
+
+
+/**
+ * Deletes a faction from the database.
+ *
+ * @param   int     $faction_id  The id of the faction to delete.
+ *
+ * @return  void
+ */
+
+function factions_delete( int $faction_id ) : void
+{
+  // Sanitize the data
+  $faction_id = sanitize($faction_id, 'int');
+
+  // Delete the faction from the database
+  query(" DELETE FROM factions
+          WHERE       factions.id = '$faction_id' ");
 }

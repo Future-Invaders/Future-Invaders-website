@@ -168,3 +168,47 @@ ___('admin_release_edit_submit',  'FR', "Modifier la version");
 // Delete a release
 ___('admin_release_delete_confirm', 'EN', "Confirm the deletion of this release");
 ___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette version");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FACTIONS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Factions list
+___('admin_faction_list_order',   'EN', "Order");
+___('admin_faction_list_order',   'FR', "Ordre");
+___('admin_faction_list_name',    'EN', "Name");
+___('admin_faction_list_name',    'FR', "Nom");
+___('admin_faction_list_count',   'EN', "{{1}} faction");
+___('admin_faction_list_count',   'FR', "{{1}} faction");
+___('admin_faction_list_count+',  'EN', "{{1}} factions");
+___('admin_faction_list_count+',  'FR', "{{1}} factions");
+
+
+// Add a faction
+___('admin_faction_add_title',          'EN', "Add faction");
+___('admin_faction_add_title',          'FR', "Ajouter une faction");
+___('admin_faction_add_sorting_order',  'EN', "Sorting order");
+___('admin_faction_add_sorting_order',  'FR', "Ordre de tri");
+___('admin_faction_add_name_en',        'EN', "Name (English)");
+___('admin_faction_add_name_en',        'FR', "Nom (Anglais)");
+___('admin_faction_add_name_fr',        'EN', "Name (French)");
+___('admin_faction_add_name_fr',        'FR', "Nom (Français)");
+___('admin_faction_add_submit',         'EN', "Add faction");
+___('admin_faction_add_submit',         'FR', "Ajouter une faction");
+
+
+// Edit a faction
+___('admin_faction_edit_title',   'EN', "Edit faction");
+___('admin_faction_edit_title',   'FR', "Modifier une faction");
+___('admin_faction_edit_submit',  'EN', "Edit faction");
+___('admin_faction_edit_submit',  'FR', "Modifier une faction");
+
+
+// Delete a faction
+___('admin_faction_delete_confirm', 'EN', "Confirm the deletion of this faction");
+___('admin_faction_delete_confirm', 'FR', "Confirmez la suppression de cette faction");
