@@ -51,6 +51,27 @@ if(isset($_POST['faction_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a faction
+
+if(isset($_POST['faction_edit']))
+{
+  // Grab the faction's ID
+  $faction_edit_id = form_fetch_element('faction_id');
+
+  // Assemble an array with the postdata
+  $faction_edit_data = array( 'order'   => form_fetch_element('faction_sorting_order') ,
+                              'name_en' => form_fetch_element('faction_name_en') ,
+                              'name_fr' => form_fetch_element('faction_name_fr') );
+
+  // Edit the faction
+  factions_edit(  $faction_edit_id    ,
+                  $faction_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of all factions
 
 $factions_list = factions_list();

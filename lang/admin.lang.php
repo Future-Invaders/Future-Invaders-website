@@ -200,3 +200,10 @@ ___('admin_faction_add_name_fr',        'EN', "Name (French)");
 ___('admin_faction_add_name_fr',        'FR', "Nom (Français)");
 ___('admin_faction_add_submit',         'EN', "Add faction");
 ___('admin_faction_add_submit',         'FR', "Ajouter une faction");
+
+
+// Edit a faction
+___('admin_faction_edit_title',   'EN', "Edit faction");
+___('admin_faction_edit_title',   'FR', "Modifier une faction");
+___('admin_faction_edit_submit',  'EN', "Edit faction");
+___('admin_faction_edit_submit',  'FR', "Modifier une faction");

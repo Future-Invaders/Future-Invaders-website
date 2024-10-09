@@ -22,8 +22,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  releases_edit                   Edits a release in the database                                                  */
 /*  releases_delete                 Deletes a release from the database                                              */
 /*                                                                                                                   */
+/*  factions_get                    Returns data related to a faction                                                */
 /*  factions_list                   Lists factions in the database                                                   */
 /*  factions_add                    Adds a faction to the database                                                   */
+/*  factions_edit                   Edits a faction in the database                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -514,6 +516,45 @@ function releases_delete( int $release_id ) : void
 
 
 /**
+ * Returns data related to a faction.
+ *
+ * @param   int         $faction_id   The id of the faction.
+ *
+ * @return  array|null                An array containing the faction's data, or null if the faction does not exist.
+ */
+
+function factions_get( int $faction_id ) : array|null
+{
+  // Sanitize the faction's id
+  $faction_id = sanitize($faction_id, 'int');
+
+  // Return null if the faction does not exist
+  if(!database_row_exists('factions', $faction_id))
+    return null;
+
+  // Fetch the faction's data
+  $faction_data = query(" SELECT  factions.id             AS 'f_id' ,
+                                  factions.sorting_order  AS 'f_order' ,
+                                  factions.name_en        AS 'f_name_en' ,
+                                  factions.name_fr        AS 'f_name_fr'
+                          FROM    factions
+                          WHERE   factions.id = '$faction_id' ",
+                          fetch_row: true);
+
+  // Assemble an array with the faction's data
+  $data['id']       = sanitize_output($faction_data['f_id']);
+  $data['order']    = sanitize_output($faction_data['f_order']);
+  $data['name_en']  = sanitize_output($faction_data['f_name_en']);
+  $data['name_fr']  = sanitize_output($faction_data['f_name_fr']);
+
+  // Return the faction's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists factions in the database.
  *
  * @return  array   An array containing the factions.
@@ -569,4 +610,37 @@ function factions_add( array $data ) : void
           SET         factions.sorting_order  = '$faction_order'    ,
                       factions.name_en        = '$faction_name_en'  ,
                       factions.name_fr        = '$faction_name_fr'  ");
+}
+
+
+
+
+/**
+ * Edits a faction in the database.
+ *
+ * @param   int         $faction_id   The id of the faction to edit.
+ * @param   array       $data         An array containing the faction's data.
+ *
+ * @return  void
+ */
+
+function factions_edit( int   $faction_id ,
+                        array $data       ) : void
+{
+  // Sanitize the data
+  $faction_id       = sanitize($faction_id, 'int');
+  $faction_order    = sanitize_array_element($data, 'order', 'int');
+  $faction_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $faction_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Stop here if the faction does not exist
+  if(!database_row_exists('factions', $faction_id))
+    return;
+
+  // Edit the faction
+  query(" UPDATE  factions
+          SET     factions.sorting_order  = '$faction_order'    ,
+                  factions.name_en        = '$faction_name_en'  ,
+                  factions.name_fr        = '$faction_name_fr'
+          WHERE   factions.id             = '$faction_id' ");
 }
