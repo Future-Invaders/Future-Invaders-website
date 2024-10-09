@@ -168,3 +168,22 @@ ___('admin_release_edit_submit',  'FR', "Modifier la version");
 // Delete a release
 ___('admin_release_delete_confirm', 'EN', "Confirm the deletion of this release");
 ___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette version");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FACTIONS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Add a faction
+___('admin_faction_add_title',    'EN', "Add faction");
+___('admin_faction_add_title',    'FR', "Ajouter une faction");
+___('admin_faction_add_name_en',  'EN', "Name (English)");
+___('admin_faction_add_name_en',  'FR', "Nom (Anglais)");
+___('admin_faction_add_name_fr',  'EN', "Name (French)");
+___('admin_faction_add_name_fr',  'FR', "Nom (Français)");
+___('admin_faction_add_submit',   'EN', "Add faction");
+___('admin_faction_add_submit',   'FR', "Ajouter une faction");

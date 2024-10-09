@@ -8,7 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare the menu entries
 
-$admin_menu_entries = array('index', 'images', 'cards', 'arsenals', 'rulings', 'bans', 'tags', 'releases', 'formats', 'factions', 'keywords', 'identities', 'hybridizations', 'updates', 'blogs', 'exports', 'queries');
+$admin_menu_entries = array('index', 'images', 'cards', 'arsenals', 'rulings', 'bans', 'tags', 'releases', 'formats', 'factions', 'keywords', 'updates', 'blogs', 'exports', 'queries');
 
 foreach($admin_menu_entries as $admin_menu_entry)
   $admin_menu[$admin_menu_entry] = isset($admin_menu[$admin_menu_entry]) ? ' selected' : '';

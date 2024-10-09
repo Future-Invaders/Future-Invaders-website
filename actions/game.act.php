@@ -22,6 +22,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  releases_edit                   Edits a release in the database                                                  */
 /*  releases_delete                 Deletes a release from the database                                              */
 /*                                                                                                                   */
+/*  factions_add                    Adds a faction to the database                                                   */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -505,4 +507,27 @@ function releases_delete( int $release_id ) : void
   // Delete the release from the database
   query(" DELETE FROM releases
           WHERE       releases.id = '$release_id' ");
+}
+
+
+
+
+/**
+ * Adds a faction to the database.
+ *
+ * @param   array   $data  An array containing the faction's data.
+ *
+ * @return  void
+ */
+
+function factions_add( array $data ) : void
+{
+  // Sanitize the data
+  $faction_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $faction_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Add the faction to the database
+  query(" INSERT INTO factions
+          SET         factions.name_en = '$faction_name_en' ,
+                      factions.name_fr = '$faction_name_fr' ");
 }
