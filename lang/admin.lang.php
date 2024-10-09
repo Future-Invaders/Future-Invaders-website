@@ -178,6 +178,15 @@ ___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette ver
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Factions list
+___('admin_faction_list_name',    'EN', "Name");
+___('admin_faction_list_name',    'FR', "Nom");
+___('admin_faction_list_count',   'EN', "{{1}} faction");
+___('admin_faction_list_count',   'FR', "{{1}} faction");
+___('admin_faction_list_count+',  'EN', "{{1}} factions");
+___('admin_faction_list_count+',  'FR', "{{1}} factions");
+
+
 // Add a faction
 ___('admin_faction_add_title',    'EN', "Add faction");
 ___('admin_faction_add_title',    'FR', "Ajouter une faction");

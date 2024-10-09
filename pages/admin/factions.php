@@ -48,11 +48,67 @@ if(isset($_POST['faction_add']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch a list of all factions
+
+$factions_list = factions_list();
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
+
+<div class="width_30 padding_top">
+
+  <table>
+    <thead>
+
+      <tr class="uppercase">
+        <th>
+          <?=__('admin_faction_list_name')?>
+        </th>
+        <th>
+          <?=__('act')?>
+        </th>
+      </tr>
+
+    </thead>
+
+    <tbody class="altc2 nowrap" id="admin_factions_tbody">
+
+      <tr>
+        <td class="uppercase text_light dark bold align_center">
+          <?=__('admin_faction_list_count', preset_values: array($factions_list['rows']), amount: $factions_list['rows'])?>
+        </td>
+        <td class="dark bold align_center">
+          <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/factions_add')?>
+        </td>
+      </tr>
+
+      <?php for($i = 0; $i < $factions_list['rows']; $i++): ?>
+
+      <tr id="admin_factions_row_<?=$factions_list[$i]['id']?>">
+
+        <td class="align_center">
+          <?=$factions_list[$i]['name']?>
+        </td>
+
+        <td class="align_center nowrap">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/factions_edit?faction='.$factions_list[$i]['id'])?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_factions_delete('".__('admin_faction_delete_confirm')."','".$factions_list[$i]['id']."')")?>
+        </td>
+
+      </tr>
+
+      <?php endfor; ?>
+
+    </tbody>
+  </table>
+
+</div>
 
 
 <?php /***************************************************************************************************************/

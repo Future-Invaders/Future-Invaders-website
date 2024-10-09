@@ -22,6 +22,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  releases_edit                   Edits a release in the database                                                  */
 /*  releases_delete                 Deletes a release from the database                                              */
 /*                                                                                                                   */
+/*  factions_list                   Lists factions in the database                                                   */
 /*  factions_add                    Adds a faction to the database                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -118,7 +119,7 @@ function images_list( string  $sort_by  = 'path'  ,
   // Add the number of rows to the data
   $data['rows'] = $i;
 
-  // Return the prepare data
+  // Return the prepared data
   return $data;
 }
 
@@ -426,7 +427,7 @@ function releases_list( string  $sort_by  = 'path'  ,
     $data = array('releases' => $data);
   }
 
-  // Return the prepare data
+  // Return the prepared data
   return $data;
 }
 
@@ -510,6 +511,38 @@ function releases_delete( int $release_id ) : void
 }
 
 
+
+
+/**
+ * Lists factions in the database.
+ *
+ * @return  array   An array containing the factions.
+ */
+
+function factions_list() : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch the factions
+  $factions = query(" SELECT    factions.id         AS 'f_id' ,
+                                factions.name_$lang AS 'f_name'
+                      FROM      factions
+                      ORDER BY  factions.name_$lang ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($factions); $i++)
+  {
+    $data[$i]['id']   = sanitize_output($row['f_id']);
+    $data[$i]['name'] = sanitize_output($row['f_name']);
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
 
 
 /**
