@@ -1,15 +1,17 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  admin_menu              Navigates between administration pages.                                                  */
+/*  admin_menu                  Navigates between administration pages.                                              */
 /*                                                                                                                   */
-/*  admin_images_search     Searches the image list.                                                                 */
-/*  admin_images_preview    Fetches the preview of an image.                                                         */
-/*  admin_images_delete     Triggers the deletion of an entry in the image list.                                     */
+/*  admin_card_types_delete     Triggers the deletion of an entry in the card type list.                             */
 /*                                                                                                                   */
-/*  admin_releases_search   Searches the release list.                                                               */
-/*  admin_releases_delete   Triggers the deletion of an entry in the release list.                                   */
+/*  admin_images_search         Searches the image list.                                                             */
+/*  admin_images_preview        Fetches the preview of an image.                                                     */
+/*  admin_images_delete         Triggers the deletion of an entry in the image list.                                 */
 /*                                                                                                                   */
-/*  admin_factions_delete   Triggers the deletion of an entry in the faction list.                                   */
+/*  admin_releases_search       Searches the release list.                                                           */
+/*  admin_releases_delete       Triggers the deletion of an entry in the release list.                               */
+/*                                                                                                                   */
+/*  admin_factions_delete       Triggers the deletion of an entry in the faction list.                               */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -26,6 +28,29 @@ function admin_menu()
 
   // Go to the requested page
   window.location.href = page;
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the card type list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     card_type The id of the card type to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_card_types_delete( message   ,
+                                  card_type )
+{
+  // Assemble the postdata
+  postdata = 'admin_card_types_delete=' + fetch_sanitize(card_type);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('card_types', 'admin_card_types_tbody', postdata);
 }
 
 

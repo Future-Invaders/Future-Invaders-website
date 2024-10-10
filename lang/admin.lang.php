@@ -79,6 +79,53 @@ ___('admin_query_ok', 'FR', "Requêtes exécutées avec succès");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       CARDS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Card management
+___('admin_card_management',        'EN', "Card management");
+___('admin_card_management',        'FR', "Gestion des cartes");
+___('admin_card_management_types',  'EN', "Card types");
+___('admin_card_management_types',  'FR', "Types de cartes");
+
+
+// Card types list
+___('admin_card_type_list_name',    'EN', "Name");
+___('admin_card_type_list_name',    'FR', "Nom");
+___('admin_card_type_list_count',   'EN', "{{1}} card type");
+___('admin_card_type_list_count',   'FR', "{{1}} type de carte");
+___('admin_card_type_list_count+',  'EN', "{{1}} card types");
+___('admin_card_type_list_count+',  'FR', "{{1}} types de cartes");
+
+
+// Add a card type
+___('admin_card_type_add_title',    'EN', "Add a card type");
+___('admin_card_type_add_title',    'FR', "Ajouter un type de carte");
+___('admin_card_type_add_name_en',  'EN', "Name (English)");
+___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
+___('admin_card_type_add_name_fr',  'EN', "Name (French)");
+___('admin_card_type_add_name_fr',  'FR', "Nom (Français)");
+___('admin_card_type_add_submit',   'EN', "Add card type");
+___('admin_card_type_add_submit',   'FR', "Ajouter le type de carte");
+
+
+// Edit a card type
+___('admin_card_type_edit_title',   'EN', "Edit card type");
+___('admin_card_type_edit_title',   'FR', "Modifier un type de carte");
+___('admin_card_type_edit_submit',  'EN', "Edit card type");
+___('admin_card_type_edit_submit',  'FR', "Modifier le type de carte");
+
+
+// Delete a card type
+___('admin_card_type_delete_confirm', 'EN', "Confirm the deletion of this card type");
+___('admin_card_type_delete_confirm', 'FR', "Confirmez la suppression de ce type de carte");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      IMAGES                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

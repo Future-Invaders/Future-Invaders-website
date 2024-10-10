@@ -12,7 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare the menu entries
 
-$api_menu_entries = array('intro', 'releases', 'factions');
+$api_menu_entries = array('intro', 'card_types', 'factions', 'releases');
 
 foreach($api_menu_entries as $api_menu_entry)
   $api_menu[$api_menu_entry] = isset($api_menu[$api_menu_entry]) ? ' selected' : '';

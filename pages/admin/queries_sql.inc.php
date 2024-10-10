@@ -656,6 +656,22 @@ if($last_query < 6)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Card types
+
+if($last_query < 7)
+{
+  sql_create_table('card_types');
+  sql_create_field('card_types', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('card_types', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
+  sql_create_field('card_types', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+
+  sql_update_query_id(7);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cards
 
 /*
@@ -677,32 +693,6 @@ if($last_query < X)
   sql_create_field('cards', 'durability', 'INT UNSIGNED NOT NULL DEFAULT 0', 'weapons');
   sql_create_field('cards', 'body_en', 'LONGTEXT', 'durability');
   sql_create_field('cards', 'body_fr', 'LONGTEXT', 'body_en');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Card types
-
-/*
-if($last_query < X)
-{
-  sql_create_table('card_types');
-  sql_create_field('card_types', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('card_types', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
-  sql_create_field('card_types', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-
-  query(" INSERT INTO card_types SET name_en = 'Ship',      name_fr = 'Vaisseau'  ");
-  query(" INSERT INTO card_types SET name_en = 'Structure', name_fr = 'Structure' ");
-  query(" INSERT INTO card_types SET name_en = 'Action',    name_fr = 'Action'    ");
-  query(" INSERT INTO card_types SET name_en = 'Reaction',  name_fr = 'Réaction'  ");
-  query(" INSERT INTO card_types SET name_en = 'Rules',     name_fr = 'Règles'    ");
-  query(" INSERT INTO card_types SET name_en = 'Extra',     name_fr = 'Bonus'     ");
-  query(" INSERT INTO card_types SET name_en = 'Lore',      name_fr = 'Lore'      ");
 
   sql_update_query_id(X);
 }
