@@ -18,7 +18,15 @@ include_once './../actions/game.act.php'; # Game actions
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of factions
 
-$factions_list = factions_list( format: 'api' );
+// Retrieve the search parameters
+$factions_search_lang = form_fetch_element('language', request_type: 'GET', default_value: 'en');
+
+// Assemble the search parameters
+$factions_search = array( 'lang' => $factions_search_lang );
+
+// Fetch the factions
+$factions_list = factions_list( search: $factions_search  ,
+                                format: 'api'             );
 
 
 

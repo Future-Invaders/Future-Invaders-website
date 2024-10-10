@@ -409,7 +409,7 @@ function releases_list( string  $sort_by  = 'path'  ,
       $data[$i]['id']       = sanitize_output($row['r_id']);
       $data[$i]['name_en']  = sanitize_output($row['r_name_en']);
       $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
-      $data[$i]['name']     = sanitize_output($row['r_name_'.$search_lang]);
+      $data[$i]['name']     = sanitize_output($row['r_name_'.$lang]);
       $data[$i]['date']     = sanitize_output(date_to_ddmmyy($row['r_date']));
     }
 
@@ -563,21 +563,27 @@ function factions_get( int $faction_id ) : array|null
 /**
  * Lists factions in the database.
  *
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
  * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                         An array containing the factions.
  */
 
-function factions_list( string  $format = 'html' ) : array
+function factions_list( array   $search = array() ,
+                        string  $format = 'html'  ) : array
 {
   // Fetch the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanatize the search data
+  $search_lang  = sanitize_array_element($search, 'lang', 'string');
 
   // Fetch the factions
   $factions = query(" SELECT    factions.id             AS 'f_id'       ,
                                 factions.uuid           AS 'f_uuid'     ,
                                 factions.sorting_order  AS 'f_order'    ,
                                 factions.name_en        AS 'f_name_en'  ,
+                                factions.name_fr        AS 'f_name_fr'  ,
                                 factions.name_$lang     AS 'f_name'
                       FROM      factions
                       ORDER BY  factions.sorting_order ASC ");
@@ -597,7 +603,8 @@ function factions_list( string  $format = 'html' ) : array
     if($format === 'api')
     {
       $data[$i]['uuid'] = sanitize_json($row['f_uuid']);
-      $data[$i]['name'] = sanitize_json($row['f_name_en']);
+      $temp_name        = ($search_lang == 'fr') ? $row['f_name_fr'] : $row['f_name_en'];
+      $data[$i]['name'] = sanitize_json($temp_name);
     }
   }
 
