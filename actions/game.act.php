@@ -28,6 +28,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  factions_edit                   Edits a faction in the database                                                  */
 /*  factions_delete                 Deletes a faction from the database                                              */
 /*                                                                                                                   */
+/*  card_types_list                 Lists card types in the database                                                 */
 /*  card_types_add                  Adds a card type to the database                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -703,6 +704,71 @@ function factions_delete( int $faction_id ) : void
   // Delete the faction from the database
   query(" DELETE FROM factions
           WHERE       factions.id = '$faction_id' ");
+}
+
+
+
+
+/**
+ * Lists card types in the database.
+ *
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the card types.
+ */
+
+function card_types_list( array   $search = array() ,
+                          string  $format = 'html'  ) : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanatize the search data
+  $search_lang = sanitize_array_element($search, 'lang', 'string');
+
+  // Sort the data
+  $sort_lang = ($search_lang !== null) ? $search_lang : $lang;
+  $query_sort = match($sort_lang)
+  {
+    'fr'    => " ORDER BY card_types.name_fr ASC ",
+    default => " ORDER BY card_types.name_en ASC ",
+  };
+
+  // Fetch the card types
+  $card_types = query(" SELECT    card_types.id         AS 'c_id'       ,
+                                  card_types.uuid       AS 'c_uuid'     ,
+                                  card_types.name_en    AS 'c_name_en'  ,
+                                  card_types.name_fr    AS 'c_name_fr'  ,
+                                  card_types.name_$lang AS 'c_name'
+                        FROM      card_types
+                        $query_sort ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($card_types); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($row['c_id']);
+      $data[$i]['name']   = sanitize_output($row['c_name']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid'] = sanitize_json($row['c_uuid']);
+      $temp_name        = ($search_lang === 'fr') ? $row['c_name_fr'] : $row['c_name_en'];
+      $data[$i]['name'] = sanitize_json($temp_name);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
 }
 
 

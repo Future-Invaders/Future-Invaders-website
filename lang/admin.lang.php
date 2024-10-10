@@ -90,6 +90,15 @@ ___('admin_card_management_types',  'EN', "Card types");
 ___('admin_card_management_types',  'FR', "Types de cartes");
 
 
+// Card types list
+___('admin_card_type_list_name',    'EN', "Name");
+___('admin_card_type_list_name',    'FR', "Nom");
+___('admin_card_type_list_count',   'EN', "{{1}} card type");
+___('admin_card_type_list_count',   'FR', "{{1}} type de carte");
+___('admin_card_type_list_count+',  'EN', "{{1}} card types");
+___('admin_card_type_list_count+',  'FR', "{{1}} types de cartes");
+
+
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */

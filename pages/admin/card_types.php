@@ -47,6 +47,13 @@ if(isset($_POST['card_type_add']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch a list of all card types
+
+$card_types_list = card_types_list();
+
+
+
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -54,7 +61,59 @@ if(isset($_POST['card_type_add']))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
+<div class="width_30 padding_top">
 
+  <table>
+    <thead>
+
+      <tr class="uppercase">
+        <th class="align_center">
+          <?=__('admin_card_type_list_name')?>
+        </th>
+        <th>
+          <?=__('act')?>
+        </th>
+      </tr>
+
+    </thead>
+
+    <tbody class="altc2 nowrap" id="admin_card_types_tbody">
+
+      <?php endif; ?>
+
+      <tr>
+        <td class="uppercase text_light dark bold align_center">
+          <?=__('admin_card_type_list_count', preset_values: array($card_types_list['rows']), amount: $card_types_list['rows'])?>
+        </td>
+        <td class="dark bold align_center">
+          <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/card_types_add')?>
+        </td>
+      </tr>
+
+      <?php for($i = 0; $i < $card_types_list['rows']; $i++): ?>
+
+      <tr id="admin_card_types_row_<?=$card_types_list[$i]['id']?>">
+
+        <td class="align_center nowrap">
+          <?=$card_types_list[$i]['name']?>
+        </td>
+
+        <td class="align_center nowrap">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/card_types_edit?card_type='.$card_types_list[$i]['id'])?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_card_types_delete('".__('admin_card_type_delete_confirm')."','".$card_types_list[$i]['id']."')")?>
+        </td>
+
+      </tr>
+
+      <?php endfor; ?>
+
+    </tbody>
+
+    <?php if(!page_is_fetched_dynamically()): ?>
+
+  </table>
+
+</div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
