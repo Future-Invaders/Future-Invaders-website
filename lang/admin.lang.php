@@ -84,10 +84,12 @@ ___('admin_query_ok', 'FR', "Requêtes exécutées avec succès");
 /*********************************************************************************************************************/
 
 // Card management
-___('admin_card_management',        'EN', "Card management");
-___('admin_card_management',        'FR', "Gestion des cartes");
-___('admin_card_management_types',  'EN', "Card types");
-___('admin_card_management_types',  'FR', "Types de cartes");
+___('admin_card_management',          'EN', "Card management");
+___('admin_card_management',          'FR', "Gestion des cartes");
+___('admin_card_management_types',    'EN', "Card types");
+___('admin_card_management_types',    'FR', "Types de cartes");
+___('admin_card_management_rarities', 'EN', "Card rarities");
+___('admin_card_management_rarities', 'FR', "Raretés de cartes");
 
 
 // Card types list
@@ -120,6 +122,17 @@ ___('admin_card_type_edit_submit',  'FR', "Modifier le type de carte");
 // Delete a card type
 ___('admin_card_type_delete_confirm', 'EN', "Confirm the deletion of this card type");
 ___('admin_card_type_delete_confirm', 'FR', "Confirmez la suppression de ce type de carte");
+
+
+// Card rarities list
+___('admin_card_rarity_list_name',    'EN', "Name");
+___('admin_card_rarity_list_name',    'FR', "Nom");
+___('admin_card_rarity_list_max',     'EN', "Max count");
+___('admin_card_rarity_list_max',     'FR', "Nombre max");
+___('admin_card_rarity_list_count',   'EN', "{{1}} rarity");
+___('admin_card_rarity_list_count',   'FR', "{{1}} rareté");
+___('admin_card_rarity_list_count+',  'EN', "{{1}} rarities");
+___('admin_card_rarity_list_count+',  'FR', "{{1}} raretés");
 
 
 

@@ -34,6 +34,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_types_edit                 Edits a card type in the database                                                */
 /*  card_types_delete               Deletes a card type from the database                                            */
 /*                                                                                                                   */
+/*  card_rarities_list              Lists card rarities in the database                                              */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -893,4 +895,81 @@ function card_types_delete( int $card_type_id ) : void
   // Delete the card type from the database
   query(" DELETE FROM card_types
           WHERE       card_types.id = '$card_type_id' ");
+}
+
+
+
+
+/**
+ * Lists card rarities in the database.
+ *
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the card rarities.
+ */
+
+function card_rarities_list( array   $search = array() ,
+                             string  $format = 'html'  ) : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanatize the search data
+  $search_lang = sanitize_array_element($search, 'lang', 'string');
+
+  // Sort the data
+  $sort_lang = ($search_lang !== null) ? $search_lang : $lang;
+  $query_sort = match($sort_lang)
+  {
+    'fr'    => " ORDER BY card_rarities.max_card_count  DESC  ,
+                          card_rarities.name_fr         ASC   ",
+    default => " ORDER BY card_rarities.max_card_count  DESC  ,
+                          card_rarities.name_en         ASC   ",
+  };
+
+  // Fetch the card rarities
+  $card_rarities = query("  SELECT  card_rarities.id              AS 'r_id'       ,
+                                    card_rarities.uuid            AS 'r_uuid'     ,
+                                    card_rarities.name_en         AS 'r_name_en'  ,
+                                    card_rarities.name_fr         AS 'r_name_fr'  ,
+                                    card_rarities.name_$lang      AS 'r_name'     ,
+                                    card_rarities.max_card_count  AS 'r_max_count'
+                            FROM    card_rarities
+                            $query_sort ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($card_rarities); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']         = sanitize_output($row['r_id']);
+      $data[$i]['name']       = sanitize_output($row['r_name']);
+      $data[$i]['max_count']  = sanitize_output($row['r_max_count']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid']           = sanitize_json($row['r_uuid']);
+      $temp_name                  = ($search_lang === 'fr') ? $row['r_name_fr'] : $row['r_name_en'];
+      $data[$i]['name']           = sanitize_json($temp_name);
+      $data[$i]['max_card_count'] = sanitize_json($row['r_max_count']);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('card_rarities' => $data);
+  }
+
+  // Return the prepared data
+  return $data;
 }

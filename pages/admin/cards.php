@@ -38,6 +38,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
     <li>
       <?=__link('pages/admin/card_types', __('admin_card_management_types'))?>
     </li>
+    <li>
+      <?=__link('pages/admin/card_rarities', __('admin_card_management_rarities'))?>
+    </li>
   </ul>
 
 </div>
