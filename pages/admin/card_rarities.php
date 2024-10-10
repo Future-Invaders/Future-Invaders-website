@@ -49,9 +49,32 @@ if(isset($_POST['card_rarity_add']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a card rarity
+
+if(isset($_POST['card_rarity_edit']))
+{
+  // Gather the postdata
+  $card_rarity_edit_id      = form_fetch_element('card_rarity_id');
+  $card_rarity_edit_name_en = form_fetch_element('card_rarity_name_en');
+  $card_rarity_edit_name_fr = form_fetch_element('card_rarity_name_fr');
+  $card_rarity_edit_max     = form_fetch_element('card_rarity_max_count');
+
+  // Assemble an array with the postdata
+  $card_rarity_edit_data = array(  'name_en' => $card_rarity_edit_name_en ,
+                                   'name_fr' => $card_rarity_edit_name_fr ,
+                                   'max'     => $card_rarity_edit_max     );
+
+  // Edit the card rarity
+  card_rarities_edit(  $card_rarity_edit_id    ,
+                       $card_rarity_edit_data  );
+}
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// List card rarities
+// Fetch a list of all card rarities
 
 $card_rarities_list = card_rarities_list();
 

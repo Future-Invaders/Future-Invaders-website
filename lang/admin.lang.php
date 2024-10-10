@@ -148,6 +148,13 @@ ___('admin_card_rarity_add_submit',     'EN', "Add rarity");
 ___('admin_card_rarity_add_submit',     'FR', "Ajouter la rareté");
 
 
+// Edit a card rarity
+___('admin_card_rarity_edit_title',     'EN', "Edit rarity");
+___('admin_card_rarity_edit_title',     'FR', "Modifier une rareté");
+___('admin_card_rarity_edit_submit',    'EN', "Edit rarity");
+___('admin_card_rarity_edit_submit',    'FR', "Modifier la rareté");
+
+
 
 
 /*********************************************************************************************************************/

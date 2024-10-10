@@ -34,8 +34,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_types_edit                 Edits a card type in the database                                                */
 /*  card_types_delete               Deletes a card type from the database                                            */
 /*                                                                                                                   */
+/*  card_rarities_get               Returns data related to a card rarity                                            */
 /*  card_rarities_list              Lists card rarities in the database                                              */
 /*  card_rarities_add               Adds a card rarity to the database                                               */
+/*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -902,6 +904,46 @@ function card_types_delete( int $card_type_id ) : void
 
 
 /**
+ * Returns data related to a card rarity.
+ *
+ * @param   int         $card_rarity_id   The id of the card rarity.
+ *
+ * @return  array|null                    An array containing the card rarity's data, or null if it does not exist.
+ */
+
+function card_rarities_get( int $card_rarity_id ) : array|null
+{
+  // Sanitize the card rarity's id
+  $card_rarity_id = sanitize($card_rarity_id, 'int');
+
+  // Return null if the card rarity does not exist
+  if(!database_row_exists('card_rarities', $card_rarity_id))
+    return null;
+
+  // Fetch the card rarity's data
+  $card_rarity_data = query(" SELECT  card_rarities.id              AS 'r_id'       ,
+                                      card_rarities.uuid            AS 'r_uuid'     ,
+                                      card_rarities.name_en         AS 'r_name_en'  ,
+                                      card_rarities.name_fr         AS 'r_name_fr'  ,
+                                      card_rarities.max_card_count  AS 'r_max_count'
+                            FROM    card_rarities
+                            WHERE   card_rarities.id = '$card_rarity_id' ",
+                            fetch_row: true);
+
+  // Assemble an array with the card rarity's data
+  $data['id']         = sanitize_output($card_rarity_data['r_id']);
+  $data['name_en']    = sanitize_output($card_rarity_data['r_name_en']);
+  $data['name_fr']    = sanitize_output($card_rarity_data['r_name_fr']);
+  $data['max_count']  = sanitize_output($card_rarity_data['r_max_count']);
+
+  // Return the card rarity's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists card rarities in the database.
  *
  * @param   array   $search   (OPTIONAL)  An array containing the search data.
@@ -999,4 +1041,37 @@ function card_rarities_add( array $data ) : void
                       card_rarities.name_en         = '$card_rarity_name_en'  ,
                       card_rarities.name_fr         = '$card_rarity_name_fr'  ,
                       card_rarities.max_card_count  = '$card_rarity_max'      ");
+}
+
+
+
+
+/**
+ * Edits a card rarity in the database.
+ *
+ * @param   int         $card_rarity_id   The id of the card rarity to edit.
+ * @param   array       $data             An array containing the card rarity's data.
+ *
+ * @return  void
+ */
+
+function card_rarities_edit( int   $card_rarity_id ,
+                             array $data         ) : void
+{
+  // Sanitize the data
+  $card_rarity_id       = sanitize($card_rarity_id, 'int');
+  $card_rarity_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $card_rarity_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $card_rarity_max      = sanitize_array_element($data, 'max', 'int', min: 0, default: 0);
+
+  // Stop here if the card rarity does not exist
+  if(!database_row_exists('card_rarities', $card_rarity_id))
+    return;
+
+  // Edit the card rarity
+  query(" UPDATE  card_rarities
+          SET     card_rarities.name_en         = '$card_rarity_name_en'  ,
+                  card_rarities.name_fr         = '$card_rarity_name_fr'  ,
+                  card_rarities.max_card_count  = '$card_rarity_max'
+          WHERE   card_rarities.id             = '$card_rarity_id' ");
 }
