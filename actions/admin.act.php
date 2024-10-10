@@ -25,8 +25,8 @@ function admin_notes_get() : array
   $notes = query("  SELECT    notes.tasks  AS 'n_tasks'  ,
                               notes.ideas  AS 'n_ideas'  ,
                               notes.lore   AS 'n_lore'
-                    FROM      notes
-                    ORDER BY  notes.id DESC  ", fetch_row: true);
+                    FROM      notes",
+                    fetch_row: true);
 
   // Prepare the data
   $data['tasks']  = sanitize_output($notes['n_tasks']);

@@ -256,7 +256,8 @@ function images_add( array $data ) : void
 
   // Add the image to the database
   query(" INSERT INTO images
-          SET         images.path   = '$image_add_path'   ,
+          SET         images.uuid   = UUID()              ,
+                      images.path   = '$image_add_path'   ,
                       images.name   = '$image_add_name'   ,
                       images.artist = '$image_add_artist' ");
 }
@@ -371,25 +372,27 @@ function releases_list( string  $sort_by  = 'path'  ,
                         string  $format   = 'html'  ) : array
 {
   // Sanatize the search data
+  $search_lang  = sanitize_array_element($search, 'lang', 'string');
   $search_date  = sanitize_array_element($search, 'date', 'string');
   $search_name  = sanitize_array_element($search, 'name', 'string');
-  $search_lang  = string_change_case(user_get_language(), 'lowercase');
+  $lang         = string_change_case(user_get_language(), 'lowercase');
 
   // Search through the data
-  $query_search  =  ($search_date)  ? " WHERE releases.release_date       LIKE '%$search_date%' " : " WHERE 1 = 1 ";
-  $query_search .=  ($search_name)  ? " AND   releases.name_$search_lang  LIKE '%$search_name%' " : "";
+  $query_search  =  ($search_date)  ? " WHERE releases.release_date LIKE '%$search_date%' " : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)  ? " AND   releases.name_$lang   LIKE '%$search_name%' " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'name'          => " ORDER BY releases.name_$search_lang ASC  ,
-                                  releases.release_date DESC      ",
-    'date_reverse'  => " ORDER BY releases.release_date ASC       ",
-    default         => " ORDER BY releases.release_date DESC      ",
+    'name'          => " ORDER BY releases.name_$lang ASC     ,
+                                  releases.release_date DESC  ",
+    'date_reverse'  => " ORDER BY releases.release_date ASC   ",
+    default         => " ORDER BY releases.release_date DESC  ",
   };
 
   // Get a list of all releases in the database
   $qreleases = query("  SELECT  releases.id           AS 'r_id'       ,
+                                releases.uuid         AS 'r_uuid'     ,
                                 releases.name_en      AS 'r_name_en'  ,
                                 releases.name_fr      AS 'r_name_fr'  ,
                                 releases.release_date AS 'r_date'
@@ -406,15 +409,16 @@ function releases_list( string  $sort_by  = 'path'  ,
       $data[$i]['id']       = sanitize_output($row['r_id']);
       $data[$i]['name_en']  = sanitize_output($row['r_name_en']);
       $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
-      $data[$i]['name']     = sanitize_output($row['r_name_'.$search_lang]);
+      $data[$i]['name']     = sanitize_output($row['r_name_'.$lang]);
       $data[$i]['date']     = sanitize_output(date_to_ddmmyy($row['r_date']));
     }
 
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['id']   = sanitize_json($row['r_id']);
-      $data[$i]['name'] = sanitize_json($row['r_name_en']);
+      $data[$i]['uuid'] = sanitize_json($row['r_uuid']);
+      $temp_name        = ($search_lang === 'fr') ? $row['r_name_fr'] : $row['r_name_en'];
+      $data[$i]['name'] = sanitize_json($temp_name);
       $data[$i]['date'] = sanitize_json($row['r_date']);
     }
   }
@@ -454,7 +458,8 @@ function releases_add( array $data ) : void
 
   // Add the release to the database
   query(" INSERT INTO releases
-          SET         releases.name_en      = '$release_name_en'  ,
+          SET         releases.uuid         = UUID()              ,
+                      releases.name_en      = '$release_name_en'  ,
                       releases.name_fr      = '$release_name_fr'  ,
                       releases.release_date = '$release_date'     ");
 }
@@ -558,20 +563,27 @@ function factions_get( int $faction_id ) : array|null
 /**
  * Lists factions in the database.
  *
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
  * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                         An array containing the factions.
  */
 
-function factions_list( string  $format = 'html' ) : array
+function factions_list( array   $search = array() ,
+                        string  $format = 'html'  ) : array
 {
   // Fetch the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
 
+  // Sanatize the search data
+  $search_lang  = sanitize_array_element($search, 'lang', 'string');
+
   // Fetch the factions
   $factions = query(" SELECT    factions.id             AS 'f_id'       ,
+                                factions.uuid           AS 'f_uuid'     ,
                                 factions.sorting_order  AS 'f_order'    ,
                                 factions.name_en        AS 'f_name_en'  ,
+                                factions.name_fr        AS 'f_name_fr'  ,
                                 factions.name_$lang     AS 'f_name'
                       FROM      factions
                       ORDER BY  factions.sorting_order ASC ");
@@ -590,8 +602,9 @@ function factions_list( string  $format = 'html' ) : array
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['id']   = sanitize_json($row['f_id']);
-      $data[$i]['name'] = sanitize_json($row['f_name_en']);
+      $data[$i]['uuid'] = sanitize_json($row['f_uuid']);
+      $temp_name        = ($search_lang == 'fr') ? $row['f_name_fr'] : $row['f_name_en'];
+      $data[$i]['name'] = sanitize_json($temp_name);
     }
   }
 
@@ -630,7 +643,8 @@ function factions_add( array $data ) : void
 
   // Add the faction to the database
   query(" INSERT INTO factions
-          SET         factions.sorting_order  = '$faction_order'    ,
+          SET         factions.uuid           = UUID()              ,
+                      factions.sorting_order  = '$faction_order'    ,
                       factions.name_en        = '$faction_name_en'  ,
                       factions.name_fr        = '$faction_name_fr'  ");
 }

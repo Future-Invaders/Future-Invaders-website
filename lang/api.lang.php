@@ -126,14 +126,10 @@ EOD
 
 
 // List releases
-___('api_releases_list_summary',  'EN', <<<EOD
-Retrieves a list of all past releases, in reverse chronological order.
-EOD
-);
-___('api_releases_list_summary',  'FR', <<<EOD
-Récupère une liste de toutes les versions passées, dans l'ordre antéchronologique.
-EOD
-);
+___('api_releases_list_summary',  'EN', "Retrieves a list of all past releases, in reverse chronological order.");
+___('api_releases_list_summary',  'FR', "Récupère une liste de toutes les versions passées, dans l'ordre antéchronologique.");
+___('api_releases_list_language', 'EN', "Display releases in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
+___('api_releases_list_language', 'FR', "Affiche les versions dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
 
 
 
@@ -156,11 +152,7 @@ EOD
 
 
 // List factions
-___('api_factions_list_summary',  'EN', <<<EOD
-Retrieves a list of all factions.
-EOD
-);
-___('api_factions_list_summary',  'FR', <<<EOD
-Récupère une liste de toutes les factions.
-EOD
-);
+___('api_factions_list_summary',  'EN', "Retrieves a list of all factions.");
+___('api_factions_list_summary',  'FR', "Récupère une liste de toutes les factions.");
+___('api_factions_list_language', 'EN', "Display factions in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
+___('api_factions_list_language', 'FR', "Affiche les factions dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
