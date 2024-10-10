@@ -35,6 +35,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_types_delete               Deletes a card type from the database                                            */
 /*                                                                                                                   */
 /*  card_rarities_list              Lists card rarities in the database                                              */
+/*  card_rarities_add               Adds a card rarity to the database                                               */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -972,4 +973,30 @@ function card_rarities_list( array   $search = array() ,
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Adds a card rarity to the database.
+ *
+ * @param   array   $data  An array containing the card rarity's data.
+ *
+ * @return  void
+ */
+
+function card_rarities_add( array $data ) : void
+{
+  // Sanitize the data
+  $card_rarity_name_en = sanitize_array_element($data, 'name_en', 'string');
+  $card_rarity_name_fr = sanitize_array_element($data, 'name_fr', 'string');
+  $card_rarity_max     = sanitize_array_element($data, 'max', 'int', min: 0, default: 0);
+
+  // Add the card rarity to the database
+  query(" INSERT INTO card_rarities
+          SET         card_rarities.uuid            = UUID()                  ,
+                      card_rarities.name_en         = '$card_rarity_name_en'  ,
+                      card_rarities.name_fr         = '$card_rarity_name_fr'  ,
+                      card_rarities.max_card_count  = '$card_rarity_max'      ");
 }

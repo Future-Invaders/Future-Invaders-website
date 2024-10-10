@@ -135,6 +135,19 @@ ___('admin_card_rarity_list_count+',  'EN', "{{1}} rarities");
 ___('admin_card_rarity_list_count+',  'FR', "{{1}} raretés");
 
 
+// Add a card rarity
+___('admin_card_rarity_add_title',      'EN', "Add a rarity");
+___('admin_card_rarity_add_title',      'FR', "Ajouter une rareté");
+___('admin_card_rarity_add_name_en',    'EN', "Name (English)");
+___('admin_card_rarity_add_name_en',    'FR', "Nom (Anglais)");
+___('admin_card_rarity_add_name_fr',    'EN', "Name (French)");
+___('admin_card_rarity_add_name_fr',    'FR', "Nom (Français)");
+___('admin_card_rarity_add_max_count',  'EN', "Max count per arsenal");
+___('admin_card_rarity_add_max_count',  'FR', "Maximum par arsenal");
+___('admin_card_rarity_add_submit',     'EN', "Add rarity");
+___('admin_card_rarity_add_submit',     'FR', "Ajouter la rareté");
+
+
 
 
 /*********************************************************************************************************************/

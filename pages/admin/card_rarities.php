@@ -29,6 +29,28 @@ $js   = array('admin/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Add a card rarity
+
+if(isset($_POST['card_rarity_add']))
+{
+  // Gather the postdata
+  $card_rarity_add_name_en = form_fetch_element('card_rarity_name_en');
+  $card_rarity_add_name_fr = form_fetch_element('card_rarity_name_fr');
+  $card_rarity_add_max     = form_fetch_element('card_rarity_max_count');
+
+  // Assemble an array with the postdata
+  $card_rarity_add_data = array(  'name_en' => $card_rarity_add_name_en ,
+                                  'name_fr' => $card_rarity_add_name_fr ,
+                                  'max'     => $card_rarity_add_max     );
+
+  // Add the card rarity to the database
+  card_rarities_add($card_rarity_add_data);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List card rarities
 
 $card_rarities_list = card_rarities_list();
