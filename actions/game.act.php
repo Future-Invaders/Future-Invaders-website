@@ -372,21 +372,22 @@ function releases_list( string  $sort_by  = 'path'  ,
                         string  $format   = 'html'  ) : array
 {
   // Sanatize the search data
+  $search_lang  = sanitize_array_element($search, 'lang', 'string');
   $search_date  = sanitize_array_element($search, 'date', 'string');
   $search_name  = sanitize_array_element($search, 'name', 'string');
-  $search_lang  = string_change_case(user_get_language(), 'lowercase');
+  $lang         = string_change_case(user_get_language(), 'lowercase');
 
   // Search through the data
-  $query_search  =  ($search_date)  ? " WHERE releases.release_date       LIKE '%$search_date%' " : " WHERE 1 = 1 ";
-  $query_search .=  ($search_name)  ? " AND   releases.name_$search_lang  LIKE '%$search_name%' " : "";
+  $query_search  =  ($search_date)  ? " WHERE releases.release_date LIKE '%$search_date%' " : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)  ? " AND   releases.name_$lang   LIKE '%$search_name%' " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'name'          => " ORDER BY releases.name_$search_lang ASC  ,
-                                  releases.release_date DESC      ",
-    'date_reverse'  => " ORDER BY releases.release_date ASC       ",
-    default         => " ORDER BY releases.release_date DESC      ",
+    'name'          => " ORDER BY releases.name_$lang ASC     ,
+                                  releases.release_date DESC  ",
+    'date_reverse'  => " ORDER BY releases.release_date ASC   ",
+    default         => " ORDER BY releases.release_date DESC  ",
   };
 
   // Get a list of all releases in the database
@@ -416,7 +417,8 @@ function releases_list( string  $sort_by  = 'path'  ,
     if($format === 'api')
     {
       $data[$i]['uuid'] = sanitize_json($row['r_uuid']);
-      $data[$i]['name'] = sanitize_json($row['r_name_en']);
+      $temp_name        = ($search_lang === 'fr') ? $row['r_name_fr'] : $row['r_name_en'];
+      $data[$i]['name'] = sanitize_json($temp_name);
       $data[$i]['date'] = sanitize_json($row['r_date']);
     }
   }
