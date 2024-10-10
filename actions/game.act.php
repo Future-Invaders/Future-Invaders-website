@@ -256,7 +256,8 @@ function images_add( array $data ) : void
 
   // Add the image to the database
   query(" INSERT INTO images
-          SET         images.path   = '$image_add_path'   ,
+          SET         images.uuid   = UUID()              ,
+                      images.path   = '$image_add_path'   ,
                       images.name   = '$image_add_name'   ,
                       images.artist = '$image_add_artist' ");
 }
@@ -454,7 +455,8 @@ function releases_add( array $data ) : void
 
   // Add the release to the database
   query(" INSERT INTO releases
-          SET         releases.name_en      = '$release_name_en'  ,
+          SET         releases.uuid         = UUID()              ,
+                      releases.name_en      = '$release_name_en'  ,
                       releases.name_fr      = '$release_name_fr'  ,
                       releases.release_date = '$release_date'     ");
 }
@@ -630,7 +632,8 @@ function factions_add( array $data ) : void
 
   // Add the faction to the database
   query(" INSERT INTO factions
-          SET         factions.sorting_order  = '$faction_order'    ,
+          SET         factions.uuid           = UUID()              ,
+                      factions.sorting_order  = '$faction_order'    ,
                       factions.name_en        = '$faction_name_en'  ,
                       factions.name_fr        = '$faction_name_fr'  ");
 }

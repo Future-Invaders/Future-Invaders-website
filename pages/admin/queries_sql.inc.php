@@ -634,13 +634,36 @@ if($last_query < 5)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Add UUIDs (for the API), and delete unnecessary IDs
+
+if($last_query < 6)
+{
+  sql_create_field('factions', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('releases', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('images', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+
+  query(" UPDATE  factions SET factions.uuid = UUID() ");
+  query(" UPDATE  releases SET releases.uuid = UUID() ");
+  query(" UPDATE  images SET images.uuid = UUID() ");
+
+  sql_delete_field('notes', 'id');
+  sql_delete_field('settings', 'id');
+
+  sql_update_query_id(6);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cards
 
 /*
 if($last_query < X)
 {
   sql_create_table('cards');
-  sql_create_field('cards', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('cards', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('cards', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
   sql_create_field('cards', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
   sql_create_field('cards', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images');
   sql_create_field('cards', 'fk_card_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_factions');
@@ -669,7 +692,8 @@ if($last_query < X)
 if($last_query < X)
 {
   sql_create_table('card_types');
-  sql_create_field('card_types', 'name_en', 'TINYTEXT NOT NULL', 'id');
+  sql_create_field('card_types', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('card_types', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
   sql_create_field('card_types', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
 
   query(" INSERT INTO card_types SET name_en = 'Ship',      name_fr = 'Vaisseau'  ");
@@ -694,7 +718,8 @@ if($last_query < X)
 if($last_query < X)
 {
   sql_create_table('card_rarities');
-  sql_create_field('card_rarities', 'name_en', 'TINYTEXT NOT NULL', 'id');
+  sql_create_field('card_rarities', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('card_rarities', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
   sql_create_field('card_rarities', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('card_rarities', 'max_card_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'name_fr');
 
@@ -716,7 +741,8 @@ if($last_query < X)
 if($last_query < X)
 {
   sql_create_table('arsenals');
-  sql_create_field('arsenals', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('arsenals', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('arsenals', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
   sql_create_field('arsenals', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
   sql_create_field('arsenals', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_formats');
   sql_create_field('arsenals', 'image_path', 'TINYTEXT NOT NULL', 'fk_images');
@@ -781,7 +807,8 @@ if($last_query < X)
 if($last_query < X)
 {
   sql_create_table('rulings');
-  sql_create_field('rulings', 'name_en', 'TEXT NOT NULL', 'id');
+  sql_create_field('rulings', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('rulings', 'name_en', 'TEXT NOT NULL', 'uuid');
   sql_create_field('rulings', 'name_fr', 'TEXT NOT NULL', 'name_en');
   sql_create_field('rulings', 'ruling_en', 'LONGTEXT', 'name_fr');
   sql_create_field('rulings', 'ruling_fr', 'LONGTEXT', 'ruling_en');
@@ -818,6 +845,7 @@ if($last_query < X)
 if($last_query < X)
 {
   sql_create_table('tags');
+  sql_create_field('tags', 'uuid', 'VARCHAR(36) NOT NULL', 'uuid');
   sql_create_field('tags', 'fk_tag_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('tags', 'name_en', 'TINYTEXT NOT NULL', 'fk_tag_types');
   sql_create_field('tags', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
@@ -1036,7 +1064,8 @@ if($last_query < X)
 if($last_query < X)
 {
   sql_create_table('bans');
-  sql_create_field('bans', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('bans', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('bans', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
   sql_create_field('bans', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
   sql_create_field('bans', 'date', 'DATE NOT NULL', 'fk_formats');
   sql_create_field('bans', 'is_a_ban', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'date');
@@ -1074,7 +1103,8 @@ if($last_query < X)
 if($last_query < X)
 {
   sql_create_table('formats');
-  sql_create_field('formats', 'name_en', 'TINYTEXT NOT NULL', 'id');
+  sql_create_field('formats', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('formats', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
   sql_create_field('formats', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('formats', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('formats', 'description_fr', 'TEXT', 'description_en');
