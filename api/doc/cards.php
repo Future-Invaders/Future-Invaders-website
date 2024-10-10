@@ -36,16 +36,58 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h1>
 
   <h4>
-    <?=__('api_menu_card_rarities')?>
+    <?=__('api_menu_cards')?>
   </h4>
 
   <p>
-    <?=__('api_card_rarities_intro')?>
+    <?=__('api_cards_intro')?>
   </p>
 
   <ul class="tinypadding_top">
+    <li><?=__link('#list_card_types', 'GET /api/card_types', is_internal: false)?></li>
     <li><?=__link('#list_card_rarities', 'GET /api/card_rarities', is_internal: false)?></li>
   </ul>
+
+</div>
+
+<hr id="list_card_types">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/card_types
+  </h4>
+
+  <p>
+    <?=__('api_card_types_list_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">language</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_releases_list_language')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "card_types": [
+    {
+      "uuid": string,
+      "type": string,
+    },
+  ]
+}</pre>
 
 </div>
 

@@ -19,6 +19,8 @@ ___('api_menu_title',         'EN', "Future Invaders API");
 ___('api_menu_title',         'FR', "API Future Invaders");
 ___('api_menu_intro',         'EN', "Introduction");
 ___('api_menu_intro',         'FR', "Introduction");
+___('api_menu_cards',         'EN', "Cards");
+___('api_menu_cards',         'FR', "Cartes");
 ___('api_menu_releases',      'EN', "Releases");
 ___('api_menu_releases',      'FR', "Versions");
 ___('api_menu_factions',      'EN', "Factions");
@@ -114,6 +116,39 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       CARDS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_cards_intro', 'EN', <<<EOD
+Future Invaders being a card game, there are many different types of cards. The API documentation should help you find what you are looking for, browse it carefully.
+EOD
+);
+___('api_cards_intro', 'FR', <<<EOD
+Future Invaders étant un jeu de cartes, il y a beaucoup de sortes de cartes différentes. La documentation de l'API devrait vous aider à trouver ce que vous cherchez, parcourez-la avec attention.
+EOD
+);
+
+
+// List card types
+___('api_card_types_list_summary',  'EN', "Retrieves a list of all card types.");
+___('api_card_types_list_summary',  'FR', "Récupère une liste de tous les types de cartes.");
+___('api_card_types_list_language', 'EN', "Display card types in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
+___('api_card_types_list_language', 'FR', "Affiche les types de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+
+
+// List card rarities
+___('api_card_rarities_list_summary',  'EN', "Retrieves a list of all card rarities. They determine the maximum number of copies of a single card which you can include in an arsenal.");
+___('api_card_rarities_list_summary',  'FR', "Récupère une liste de toutes les raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.");
+___('api_card_rarities_list_language', 'EN', "Display card rarities in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
+___('api_card_rarities_list_language', 'FR', "Affiche les raretés de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                     RELEASES                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -160,55 +195,3 @@ ___('api_factions_list_summary',  'EN', "Retrieves a list of all factions.");
 ___('api_factions_list_summary',  'FR', "Récupère une liste de toutes les factions.");
 ___('api_factions_list_language', 'EN', "Display factions in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
 ___('api_factions_list_language', 'FR', "Affiche les factions dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                    CARD TYPES                                                     */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Header
-___('api_card_types_intro', 'EN', <<<EOD
-Future Invaders has a limited number of card types.
-EOD
-);
-___('api_card_types_intro', 'FR', <<<EOD
-Future Invaders a un nombre limité de types de cartes.
-EOD
-);
-
-
-// List card types
-___('api_card_types_list_summary',  'EN', "Retrieves a list of all card types.");
-___('api_card_types_list_summary',  'FR', "Récupère une liste de tous les types de cartes.");
-___('api_card_types_list_language', 'EN', "Display card types in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_card_types_list_language', 'FR', "Affiche les types de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                   CARD RARITIES                                                   */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Header
-___('api_card_rarities_intro', 'EN', <<<EOD
-Future Invaders has a limited number of card rarities. They determine the maximum number of copies of a single card which you can include in an arsenal.
-EOD
-);
-___('api_card_rarities_intro', 'FR', <<<EOD
-Future Invaders a un nombre limité de raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.
-EOD
-);
-
-
-// List card rarities
-___('api_card_rarities_list_summary',  'EN', "Retrieves a list of all card rarities.");
-___('api_card_rarities_list_summary',  'FR', "Récupère une liste de toutes les raretés de cartes.");
-___('api_card_rarities_list_language', 'EN', "Display card rarities in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_card_rarities_list_language', 'FR', "Affiche les raretés de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
