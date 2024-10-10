@@ -84,10 +84,12 @@ ___('admin_query_ok', 'FR', "Requêtes exécutées avec succès");
 /*********************************************************************************************************************/
 
 // Card management
-___('admin_card_management',        'EN', "Card management");
-___('admin_card_management',        'FR', "Gestion des cartes");
-___('admin_card_management_types',  'EN', "Card types");
-___('admin_card_management_types',  'FR', "Types de cartes");
+___('admin_card_management',          'EN', "Card management");
+___('admin_card_management',          'FR', "Gestion des cartes");
+___('admin_card_management_types',    'EN', "Card types");
+___('admin_card_management_types',    'FR', "Types de cartes");
+___('admin_card_management_rarities', 'EN', "Card rarities");
+___('admin_card_management_rarities', 'FR', "Raretés de cartes");
 
 
 // Card types list
@@ -120,6 +122,42 @@ ___('admin_card_type_edit_submit',  'FR', "Modifier le type de carte");
 // Delete a card type
 ___('admin_card_type_delete_confirm', 'EN', "Confirm the deletion of this card type");
 ___('admin_card_type_delete_confirm', 'FR', "Confirmez la suppression de ce type de carte");
+
+
+// Card rarities list
+___('admin_card_rarity_list_name',    'EN', "Name");
+___('admin_card_rarity_list_name',    'FR', "Nom");
+___('admin_card_rarity_list_max',     'EN', "Max count");
+___('admin_card_rarity_list_max',     'FR', "Nombre max");
+___('admin_card_rarity_list_count',   'EN', "{{1}} rarity");
+___('admin_card_rarity_list_count',   'FR', "{{1}} rareté");
+___('admin_card_rarity_list_count+',  'EN', "{{1}} rarities");
+___('admin_card_rarity_list_count+',  'FR', "{{1}} raretés");
+
+
+// Add a card rarity
+___('admin_card_rarity_add_title',      'EN', "Add a rarity");
+___('admin_card_rarity_add_title',      'FR', "Ajouter une rareté");
+___('admin_card_rarity_add_name_en',    'EN', "Name (English)");
+___('admin_card_rarity_add_name_en',    'FR', "Nom (Anglais)");
+___('admin_card_rarity_add_name_fr',    'EN', "Name (French)");
+___('admin_card_rarity_add_name_fr',    'FR', "Nom (Français)");
+___('admin_card_rarity_add_max_count',  'EN', "Max count per arsenal");
+___('admin_card_rarity_add_max_count',  'FR', "Maximum par arsenal");
+___('admin_card_rarity_add_submit',     'EN', "Add rarity");
+___('admin_card_rarity_add_submit',     'FR', "Ajouter la rareté");
+
+
+// Edit a card rarity
+___('admin_card_rarity_edit_title',     'EN', "Edit rarity");
+___('admin_card_rarity_edit_title',     'FR', "Modifier une rareté");
+___('admin_card_rarity_edit_submit',    'EN', "Edit rarity");
+___('admin_card_rarity_edit_submit',    'FR', "Modifier la rareté");
+
+
+// Delete a card rarity
+___('admin_card_rarity_delete_confirm', 'EN', "Confirm the deletion of this rarity");
+___('admin_card_rarity_delete_confirm', 'FR', "Confirmez la suppression de cette rareté");
 
 
 

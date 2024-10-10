@@ -4,6 +4,8 @@
 /*                                                                                                                   */
 /*  admin_card_types_delete     Triggers the deletion of an entry in the card type list.                             */
 /*                                                                                                                   */
+/*  admin_card_rarities_delete  Triggers the deletion of an entry in the card rarity list.                           */
+/*                                                                                                                   */
 /*  admin_images_search         Searches the image list.                                                             */
 /*  admin_images_preview        Fetches the preview of an image.                                                     */
 /*  admin_images_delete         Triggers the deletion of an entry in the image list.                                 */
@@ -51,6 +53,29 @@ function admin_card_types_delete( message   ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('card_types', 'admin_card_types_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the card rarity list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     card_rarity The id of the card rarity to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_card_rarities_delete( message   ,
+                                     card_rarity )
+{
+  // Assemble the postdata
+  postdata = 'admin_card_rarities_delete=' + fetch_sanitize(card_rarity);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('card_rarities', 'admin_card_rarities_tbody', postdata);
 }
 
 

@@ -672,6 +672,23 @@ if($last_query < 7)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Card rarities
+
+if($last_query < 8)
+{
+  sql_create_table('card_rarities');
+  sql_create_field('card_rarities', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('card_rarities', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
+  sql_create_field('card_rarities', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+  sql_create_field('card_rarities', 'max_card_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'name_fr');
+
+  sql_update_query_id(8);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cards
 
 /*
@@ -693,29 +710,6 @@ if($last_query < X)
   sql_create_field('cards', 'durability', 'INT UNSIGNED NOT NULL DEFAULT 0', 'weapons');
   sql_create_field('cards', 'body_en', 'LONGTEXT', 'durability');
   sql_create_field('cards', 'body_fr', 'LONGTEXT', 'body_en');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Card rarities
-
-/*
-if($last_query < X)
-{
-  sql_create_table('card_rarities');
-  sql_create_field('card_rarities', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('card_rarities', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
-  sql_create_field('card_rarities', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('card_rarities', 'max_card_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'name_fr');
-
-  query(" INSERT INTO card_rarities SET name_en = 'Standard', name_fr = 'Standard',     max_card_count = 2 ");
-  query(" INSERT INTO card_rarities SET name_en = 'Renowned', name_fr = 'Prestigieux',  max_card_count = 1 ");
-  query(" INSERT INTO card_rarities SET name_en = 'Pinnacle', name_fr = 'Suprême',      max_card_count = 1 ");
 
   sql_update_query_id(X);
 }
