@@ -28,6 +28,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  factions_edit                   Edits a faction in the database                                                  */
 /*  factions_delete                 Deletes a faction from the database                                              */
 /*                                                                                                                   */
+/*  card_types_add                  Adds a card type to the database                                                 */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -701,4 +703,28 @@ function factions_delete( int $faction_id ) : void
   // Delete the faction from the database
   query(" DELETE FROM factions
           WHERE       factions.id = '$faction_id' ");
+}
+
+
+
+
+/**
+ * Adds a card type to the database.
+ *
+ * @param   array   $data  An array containing the card type's data.
+ *
+ * @return  void
+ */
+
+function card_types_add( array $data ) : void
+{
+  // Sanitize the data
+  $card_type_name_en = sanitize_array_element($data, 'name_en', 'string');
+  $card_type_name_fr = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Add the card type to the database
+  query(" INSERT INTO card_types
+          SET         card_types.uuid     = UUID()                ,
+                      card_types.name_en  = '$card_type_name_en'  ,
+                      card_types.name_fr  = '$card_type_name_fr'  ");
 }
