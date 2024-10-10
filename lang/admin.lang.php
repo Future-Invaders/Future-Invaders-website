@@ -99,6 +99,25 @@ ___('admin_card_type_list_count+',  'EN', "{{1}} card types");
 ___('admin_card_type_list_count+',  'FR', "{{1}} types de cartes");
 
 
+// Add a card type
+___('admin_card_type_add_title',    'EN', "Add a card type");
+___('admin_card_type_add_title',    'FR', "Ajouter un type de carte");
+___('admin_card_type_add_name_en',  'EN', "Name (English)");
+___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
+___('admin_card_type_add_name_fr',  'EN', "Name (French)");
+___('admin_card_type_add_name_fr',  'FR', "Nom (Français)");
+___('admin_card_type_add_submit',   'EN', "Add card type");
+___('admin_card_type_add_submit',   'FR', "Ajouter le type de carte");
+
+
+// Edit a card type
+___('admin_card_type_edit_title',   'EN', "Edit card type");
+___('admin_card_type_edit_title',   'FR', "Modifier un type de carte");
+___('admin_card_type_edit_submit',  'EN', "Edit card type");
+___('admin_card_type_edit_submit',  'FR', "Modifier le type de carte");
+
+
+
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -235,22 +254,3 @@ ___('admin_faction_edit_submit',  'FR', "Modifier une faction");
 // Delete a faction
 ___('admin_faction_delete_confirm', 'EN', "Confirm the deletion of this faction");
 ___('admin_faction_delete_confirm', 'FR', "Confirmez la suppression de cette faction");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                    CARD TYPES                                                     */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Add a card type
-___('admin_card_type_add_title',    'EN', "Add a card type");
-___('admin_card_type_add_title',    'FR', "Ajouter un type de carte");
-___('admin_card_type_add_name_en',  'EN', "Name (English)");
-___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
-___('admin_card_type_add_name_fr',  'EN', "Name (French)");
-___('admin_card_type_add_name_fr',  'FR', "Nom (Français)");
-___('admin_card_type_add_submit',   'EN', "Add card type");
-___('admin_card_type_add_submit',   'FR', "Ajouter le type de carte");

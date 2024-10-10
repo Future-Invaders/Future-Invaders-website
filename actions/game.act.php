@@ -28,8 +28,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  factions_edit                   Edits a faction in the database                                                  */
 /*  factions_delete                 Deletes a faction from the database                                              */
 /*                                                                                                                   */
+/*  card_types_get                  Returns data related to a card type                                              */
 /*  card_types_list                 Lists card types in the database                                                 */
 /*  card_types_add                  Adds a card type to the database                                                 */
+/*  card_types_edit                 Edits a card type in the database                                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -710,6 +712,44 @@ function factions_delete( int $faction_id ) : void
 
 
 /**
+ * Returns data related to a card type.
+ *
+ * @param   int         $card_type_id   The id of the card type.
+ *
+ * @return  array|null                  An array containing the card type's data, or null if the card type does not exist.
+ */
+
+function card_types_get( int $card_type_id ) : array|null
+{
+  // Sanitize the card type's id
+  $card_type_id = sanitize($card_type_id, 'int');
+
+  // Return null if the card type does not exist
+  if(!database_row_exists('card_types', $card_type_id))
+    return null;
+
+  // Fetch the card type's data
+  $card_type_data = query(" SELECT  card_types.id           AS 'c_id'       ,
+                                    card_types.uuid         AS 'c_uuid'     ,
+                                    card_types.name_en      AS 'c_name_en'  ,
+                                    card_types.name_fr      AS 'c_name_fr'
+                            FROM    card_types
+                            WHERE   card_types.id = '$card_type_id' ",
+                            fetch_row: true);
+
+  // Assemble an array with the card type's data
+  $data['id']       = sanitize_output($card_type_data['c_id']);
+  $data['name_en']  = sanitize_output($card_type_data['c_name_en']);
+  $data['name_fr']  = sanitize_output($card_type_data['c_name_fr']);
+
+  // Return the card type's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists card types in the database.
  *
  * @param   array   $search   (OPTIONAL)  An array containing the search data.
@@ -793,4 +833,35 @@ function card_types_add( array $data ) : void
           SET         card_types.uuid     = UUID()                ,
                       card_types.name_en  = '$card_type_name_en'  ,
                       card_types.name_fr  = '$card_type_name_fr'  ");
+}
+
+
+
+
+/**
+ * Edits a card type in the database.
+ *
+ * @param   int         $card_type_id   The id of the card type to edit.
+ * @param   array       $data           An array containing the card type's data.
+ *
+ * @return  void
+ */
+
+function card_types_edit( int   $card_type_id ,
+                          array $data         ) : void
+{
+  // Sanitize the data
+  $card_type_id       = sanitize($card_type_id, 'int');
+  $card_type_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $card_type_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+
+  // Stop here if the card type does not exist
+  if(!database_row_exists('card_types', $card_type_id))
+    return;
+
+  // Edit the card type
+  query(" UPDATE  card_types
+          SET     card_types.name_en  = '$card_type_name_en'  ,
+                  card_types.name_fr  = '$card_type_name_fr'
+          WHERE   card_types.id       = '$card_type_id' ");
 }

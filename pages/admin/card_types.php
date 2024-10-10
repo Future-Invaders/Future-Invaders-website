@@ -47,6 +47,29 @@ if(isset($_POST['card_type_add']))
 
 
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a card type
+
+if(isset($_POST['card_type_edit']))
+{
+  // Gather the postdata
+  $card_type_edit_id      = form_fetch_element('card_type_id');
+  $card_type_edit_name_en = form_fetch_element('card_type_name_en');
+  $card_type_edit_name_fr = form_fetch_element('card_type_name_fr');
+
+  // Assemble an array with the postdata
+  $card_type_edit_data = array(  'name_en' => $card_type_edit_name_en ,
+                                 'name_fr' => $card_type_edit_name_fr );
+
+  // Edit the card type
+  card_types_edit(  $card_type_edit_id    ,
+                    $card_type_edit_data  );
+}
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of all card types
 
