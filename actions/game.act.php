@@ -800,13 +800,20 @@ function card_types_list( array   $search = array() ,
     {
       $data[$i]['uuid'] = sanitize_json($row['c_uuid']);
       $temp_name        = ($search_lang === 'fr') ? $row['c_name_fr'] : $row['c_name_en'];
-      $data[$i]['name'] = sanitize_json($temp_name);
+      $data[$i]['type'] = sanitize_json($temp_name);
     }
   }
 
   // Add the number of rows to the returned data
   if($format === 'html')
     $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('card_types' => $data);
+  }
 
   // Return the prepared data
   return $data;
