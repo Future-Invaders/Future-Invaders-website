@@ -117,6 +117,11 @@ ___('admin_card_type_edit_submit',  'EN', "Edit card type");
 ___('admin_card_type_edit_submit',  'FR', "Modifier le type de carte");
 
 
+// Delete a card type
+___('admin_card_type_delete_confirm', 'EN', "Confirm the deletion of this card type");
+___('admin_card_type_delete_confirm', 'FR', "Confirmez la suppression de ce type de carte");
+
+
 
 
 /*********************************************************************************************************************/

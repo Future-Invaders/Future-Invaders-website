@@ -32,6 +32,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_types_list                 Lists card types in the database                                                 */
 /*  card_types_add                  Adds a card type to the database                                                 */
 /*  card_types_edit                 Edits a card type in the database                                                */
+/*  card_types_delete               Deletes a card type from the database                                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -864,4 +865,25 @@ function card_types_edit( int   $card_type_id ,
           SET     card_types.name_en  = '$card_type_name_en'  ,
                   card_types.name_fr  = '$card_type_name_fr'
           WHERE   card_types.id       = '$card_type_id' ");
+}
+
+
+
+
+/**
+ * Deletes a card type from the database.
+ *
+ * @param   int     $card_type_id  The id of the card type to delete.
+ *
+ * @return  void
+ */
+
+function card_types_delete( int $card_type_id ) : void
+{
+  // Sanitize the data
+  $card_type_id = sanitize($card_type_id, 'int');
+
+  // Delete the card type from the database
+  query(" DELETE FROM card_types
+          WHERE       card_types.id = '$card_type_id' ");
 }
