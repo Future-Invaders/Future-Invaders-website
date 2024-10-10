@@ -13,18 +13,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 
 // Menu
-___('api',                  'EN', "API");
-___('api',                  'FR', "API");
-___('api_menu_title',       'EN', "Future Invaders API");
-___('api_menu_title',       'FR', "API Future Invaders");
-___('api_menu_intro',       'EN', "Introduction");
-___('api_menu_intro',       'FR', "Introduction");
-___('api_menu_releases',    'EN', "Releases");
-___('api_menu_releases',    'FR', "Versions");
-___('api_menu_factions',    'EN', "Factions");
-___('api_menu_factions',    'FR', "Factions");
-___('api_menu_card_types',  'EN', "Card types");
-___('api_menu_card_types',  'FR', "Types de cartes");
+___('api',                    'EN', "API");
+___('api',                    'FR', "API");
+___('api_menu_title',         'EN', "Future Invaders API");
+___('api_menu_title',         'FR', "API Future Invaders");
+___('api_menu_intro',         'EN', "Introduction");
+___('api_menu_intro',         'FR', "Introduction");
+___('api_menu_releases',      'EN', "Releases");
+___('api_menu_releases',      'FR', "Versions");
+___('api_menu_factions',      'EN', "Factions");
+___('api_menu_factions',      'FR', "Factions");
+___('api_menu_card_types',    'EN', "Card types");
+___('api_menu_card_types',    'FR', "Types de cartes");
+___('api_menu_card_rarities', 'EN', "Card rarities");
+___('api_menu_card_rarities', 'FR', "Raretés de cartes");
 
 
 // Technical terms
@@ -184,3 +186,29 @@ ___('api_card_types_list_summary',  'EN', "Retrieves a list of all card types.")
 ___('api_card_types_list_summary',  'FR', "Récupère une liste de tous les types de cartes.");
 ___('api_card_types_list_language', 'EN', "Display card types in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
 ___('api_card_types_list_language', 'FR', "Affiche les types de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   CARD RARITIES                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_card_rarities_intro', 'EN', <<<EOD
+Future Invaders has a limited number of card rarities. They determine the maximum number of copies of a single card which you can include in an arsenal.
+EOD
+);
+___('api_card_rarities_intro', 'FR', <<<EOD
+Future Invaders a un nombre limité de raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.
+EOD
+);
+
+
+// List card rarities
+___('api_card_rarities_list_summary',  'EN', "Retrieves a list of all card rarities.");
+___('api_card_rarities_list_summary',  'FR', "Récupère une liste de toutes les raretés de cartes.");
+___('api_card_rarities_list_language', 'EN', "Display card rarities in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
+___('api_card_rarities_list_language', 'FR', "Affiche les raretés de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
