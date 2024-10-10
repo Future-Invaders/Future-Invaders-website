@@ -155,6 +155,11 @@ ___('admin_card_rarity_edit_submit',    'EN', "Edit rarity");
 ___('admin_card_rarity_edit_submit',    'FR', "Modifier la rareté");
 
 
+// Delete a card rarity
+___('admin_card_rarity_delete_confirm', 'EN', "Confirm the deletion of this rarity");
+___('admin_card_rarity_delete_confirm', 'FR', "Confirmez la suppression de cette rareté");
+
+
 
 
 /*********************************************************************************************************************/

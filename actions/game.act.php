@@ -38,6 +38,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_list              Lists card rarities in the database                                              */
 /*  card_rarities_add               Adds a card rarity to the database                                               */
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
+/*  card_rarities_delete            Deletes a card rarity from the database                                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -1074,4 +1075,25 @@ function card_rarities_edit( int   $card_rarity_id ,
                   card_rarities.name_fr         = '$card_rarity_name_fr'  ,
                   card_rarities.max_card_count  = '$card_rarity_max'
           WHERE   card_rarities.id             = '$card_rarity_id' ");
+}
+
+
+
+
+/**
+ * Deletes a card rarity from the database.
+ *
+ * @param   int     $card_rarity_id  The id of the card rarity to delete.
+ *
+ * @return  void
+ */
+
+function card_rarities_delete( int $card_rarity_id ) : void
+{
+  // Sanitize the data
+  $card_rarity_id = sanitize($card_rarity_id, 'int');
+
+  // Delete the card rarity from the database
+  query(" DELETE FROM card_rarities
+          WHERE       card_rarities.id = '$card_rarity_id' ");
 }
