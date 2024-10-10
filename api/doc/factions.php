@@ -68,7 +68,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "factions": [
     {
-      "id": int,
+      "uuid": string,
       "name": string,
     },
   ]

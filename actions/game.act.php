@@ -391,6 +391,7 @@ function releases_list( string  $sort_by  = 'path'  ,
 
   // Get a list of all releases in the database
   $qreleases = query("  SELECT  releases.id           AS 'r_id'       ,
+                                releases.uuid         AS 'r_uuid'     ,
                                 releases.name_en      AS 'r_name_en'  ,
                                 releases.name_fr      AS 'r_name_fr'  ,
                                 releases.release_date AS 'r_date'
@@ -414,7 +415,7 @@ function releases_list( string  $sort_by  = 'path'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['id']   = sanitize_json($row['r_id']);
+      $data[$i]['uuid'] = sanitize_json($row['r_uuid']);
       $data[$i]['name'] = sanitize_json($row['r_name_en']);
       $data[$i]['date'] = sanitize_json($row['r_date']);
     }
@@ -572,6 +573,7 @@ function factions_list( string  $format = 'html' ) : array
 
   // Fetch the factions
   $factions = query(" SELECT    factions.id             AS 'f_id'       ,
+                                factions.uuid           AS 'f_uuid'     ,
                                 factions.sorting_order  AS 'f_order'    ,
                                 factions.name_en        AS 'f_name_en'  ,
                                 factions.name_$lang     AS 'f_name'
@@ -592,7 +594,7 @@ function factions_list( string  $format = 'html' ) : array
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['id']   = sanitize_json($row['f_id']);
+      $data[$i]['uuid'] = sanitize_json($row['f_uuid']);
       $data[$i]['name'] = sanitize_json($row['f_name_en']);
     }
   }
