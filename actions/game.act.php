@@ -16,6 +16,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
+/*  tags_add                        Adds a tag to the database                                                       */
+/*                                                                                                                   */
 /*  releases_get                    Returns data related to a release                                                */
 /*  releases_list                   Lists releases in the database                                                   */
 /*  releases_add                    Adds a release to the database                                                   */
@@ -39,6 +41,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_add               Adds a card rarity to the database                                               */
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*  card_rarities_delete            Deletes a card rarity from the database                                          */
+/*                                                                                                                   */
+/*  tags_list_types                 Lists tag types in the database                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -324,6 +328,34 @@ function images_delete( int $image_id ) : void
   // Delete the image from the database
   query(" DELETE FROM images
           WHERE   images.id = '$image_id' ");
+}
+
+
+
+
+/**
+ * Adds a tag to the database.
+ *
+ * @param   array   $data  An array containing the tag's data.
+ *
+ * @return  void
+ */
+
+function tags_add( array $data ) : void
+{
+  // Sanitize the data
+  $tag_type     = sanitize_array_element($data, 'type', 'int');
+  $tag_name     = sanitize_array_element($data, 'name', 'string');
+  $tag_desc_en  = sanitize_array_element($data, 'desc_en', 'string');
+  $tag_desc_fr  = sanitize_array_element($data, 'desc_fr', 'string');
+
+  // Add the tag to the database
+  query(" INSERT INTO tags
+          SET         tags.uuid           = UUID()          ,
+                      tags.fk_tag_types   = '$tag_type'     ,
+                      tags.name           = '$tag_name'     ,
+                      tags.description_en = '$tag_desc_en'  ,
+                      tags.description_fr = '$tag_desc_fr'  ");
 }
 
 
@@ -1096,4 +1128,35 @@ function card_rarities_delete( int $card_rarity_id ) : void
   // Delete the card rarity from the database
   query(" DELETE FROM card_rarities
           WHERE       card_rarities.id = '$card_rarity_id' ");
+}
+
+
+
+
+/**
+ * Lists tag types in the database.
+ *
+ * @return  array   An array containing the tag types.
+ */
+
+function tags_list_types() : array
+{
+  // Fetch the tag types
+  $tag_types = query("  SELECT    tag_types.id    AS 'tt_id' ,
+                                  tag_types.name  AS 'tt_name'
+                        FROM      tag_types
+                        ORDER BY  tag_types.name ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($tag_types); $i++)
+  {
+    $data[$i]['id']   = sanitize_output($row['tt_id']);
+    $data[$i]['name'] = sanitize_output($row['tt_name']);
+  }
+
+  // Add the number of rows to the returned data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
 }

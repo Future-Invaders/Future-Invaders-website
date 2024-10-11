@@ -215,6 +215,29 @@ ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       TAGS                                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Add a tag
+___('admin_tag_add_title',    'EN', "Add a tag");
+___('admin_tag_add_title',    'FR', "Ajouter un tag");
+___('admin_tag_add_type',     'EN', "Tag type");
+___('admin_tag_add_type',     'FR', "Type de tag");
+___('admin_tag_add_name',     'EN', "Tag name");
+___('admin_tag_add_name',     'FR', "Nom du tag");
+___('admin_tag_add_desc_en',  'EN', "Description (English)");
+___('admin_tag_add_desc_en',  'FR', "Description (Anglais)");
+___('admin_tag_add_desc_fr',  'EN', "Description (French)");
+___('admin_tag_add_desc_fr',  'FR', "Description (Français)");
+___('admin_tag_add_submit',   'EN', "Add tag");
+___('admin_tag_add_submit',   'FR', "Ajouter le tag");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                     RELEASES                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

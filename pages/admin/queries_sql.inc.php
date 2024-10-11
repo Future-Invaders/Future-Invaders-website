@@ -695,10 +695,9 @@ if($last_query < 9)
 {
   sql_create_table('tags');
   sql_create_field('tags', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('tags', 'fk_tag_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('tags', 'name_en', 'TINYTEXT NOT NULL', 'fk_tag_types');
-  sql_create_field('tags', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('tags', 'description_en', 'TEXT', 'name_fr');
+  sql_create_field('tags', 'fk_tag_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_field('tags', 'name', 'TINYTEXT NOT NULL', 'fk_tag_types');
+  sql_create_field('tags', 'description_en', 'TEXT', 'name');
   sql_create_field('tags', 'description_fr', 'TEXT', 'description_en');
 
   sql_create_table('tag_types');
@@ -745,8 +744,7 @@ if($last_query < 10)
 
   sql_create_index('tags', 'tags_uuid', 'uuid');
   sql_create_index('tags', 'tags_type', 'fk_tag_types');
-  sql_create_index('tags', 'tags_name_en', 'name_en(40)');
-  sql_create_index('tags', 'tags_name_fr', 'name_fr(40)');
+  sql_create_index('tags', 'tags_name', 'name(40)');
 
   sql_create_index('tags_images', 'tags_images_image', 'fk_images');
   sql_create_index('tags_images', 'tags_images_tag', 'fk_tags');
