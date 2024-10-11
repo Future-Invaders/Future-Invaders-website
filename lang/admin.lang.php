@@ -219,6 +219,19 @@ ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// List tags
+___('admin_tag_list_type',    'EN', "Type");
+___('admin_tag_list_type',    'FR', "Type");
+___('admin_tag_list_name',    'EN', "Name");
+___('admin_tag_list_name',    'FR', "Nom");
+___('admin_tag_list_desc',    'EN', "Description");
+___('admin_tag_list_desc',    'FR', "Description");
+___('admin_tag_list_count',   'EN', "{{1}} tag");
+___('admin_tag_list_count',   'FR', "{{1}} tag");
+___('admin_tag_list_count+',  'EN', "{{1}} tags");
+___('admin_tag_list_count+',  'FR', "{{1}} tags");
+
+
 // Add a tag
 ___('admin_tag_add_title',    'EN', "Add a tag");
 ___('admin_tag_add_title',    'FR', "Ajouter un tag");

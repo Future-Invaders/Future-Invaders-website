@@ -10,6 +10,8 @@
 /*  admin_images_preview        Fetches the preview of an image.                                                     */
 /*  admin_images_delete         Triggers the deletion of an entry in the image list.                                 */
 /*                                                                                                                   */
+/*  admin_tags_search           Searches the tag list.                                                               */
+/*                                                                                                                   */
 /*  admin_releases_search       Searches the release list.                                                           */
 /*  admin_releases_delete       Triggers the deletion of an entry in the release list.                               */
 /*                                                                                                                   */
@@ -154,6 +156,33 @@ function admin_images_delete( message   ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('images', 'admin_images_tbody', postdata);
+}
+
+
+
+
+/**
+ * Searches for tags.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+ */
+
+function admin_tags_search( sort_data = null )
+{
+  // Update the search input if required
+  if(sort_data)
+    document.getElementById('admin_tags_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata =  'admin_tags_sort='            + document.getElementById('admin_tags_sort').value;
+  postdata += '&admin_tags_search_type='    + document.getElementById('admin_tags_search_type').value;
+  postdata += '&admin_tags_search_name='    + document.getElementById('admin_tags_search_name').value;
+  postdata += '&admin_tags_search_desc='    + document.getElementById('admin_tags_search_desc').value;
+
+  // Submit the search
+  fetch_page('tags', 'admin_tags_tbody', postdata);
 }
 
 

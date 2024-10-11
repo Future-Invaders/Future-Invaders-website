@@ -16,6 +16,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
+/*  tags_list                       Lists tags in the database                                                       */
 /*  tags_add                        Adds a tag to the database                                                       */
 /*                                                                                                                   */
 /*  releases_get                    Returns data related to a release                                                */
@@ -328,6 +329,95 @@ function images_delete( int $image_id ) : void
   // Delete the image from the database
   query(" DELETE FROM images
           WHERE   images.id = '$image_id' ");
+}
+
+
+
+
+/**
+ * Lists tags in the database.
+ *
+ * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the tags.
+ */
+
+function tags_list( string  $sort_by  = 'name'  ,
+                    array   $search   = array() ,
+                    string  $format   = 'html'  ) : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanatize the search data
+  $search_lang  = sanitize_array_element($search, 'lang', 'string');
+  $search_type  = sanitize_array_element($search, 'type', 'int');
+  $search_name  = sanitize_array_element($search, 'name', 'string');
+  $search_desc  = sanitize_array_element($search, 'desc', 'string');
+
+  // Search through the data
+  $query_search  =  ($search_type)  ? " WHERE tags.fk_tag_types       = '$search_type' "      : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)  ? " AND   tags.name               LIKE '%$search_name%' " : "";
+  $query_search .=  ($search_desc)  ? " AND   tags.description_$lang  LIKE '%$search_desc%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'name'  => " ORDER BY tags.name               ASC ,
+                          tag_types.name          ASC ",
+    'desc'  => " ORDER BY tags.description_$lang  ASC ,
+                          tag_types.name          ASC ,
+                          tags.name               ASC ",
+    default => " ORDER BY tag_types.name          ASC ,
+                          tags.name               ASC ",
+  };
+
+  // Fetch the tags
+  $tags = query("  SELECT     tags.id             AS 't_id'       ,
+                              tags.uuid           AS 't_uuid'     ,
+                              tags.name           AS 't_name'     ,
+                              tags.description_en AS 't_desc_en'  ,
+                              tags.description_fr AS 't_desc_fr'  ,
+                              tag_types.id        AS 'tt_id'      ,
+                              tag_types.name      AS 'tt_type'
+                    FROM      tags
+                    LEFT JOIN tag_types ON tags.fk_tag_types = tag_types.id
+                    $query_search
+                    $query_sort ");
+
+  // Reset the number of tag types
+  $tag_types = tags_list_types();
+  for($i = 0; $i < $tag_types['rows']; $i++)
+  {
+    $data['type_name'][$tag_types[$i]['id']]  = $tag_types[$i]['name'];
+    $data['type_count'][$tag_types[$i]['id']] = 0;
+  }
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($tags); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($row['t_id']);
+      $data[$i]['name']   = sanitize_output(string_truncate($row['t_name'], 25, '...'));
+      $data[$i]['fname']  = sanitize_output($row['t_name']);
+      $data[$i]['type']   = sanitize_output($row['tt_type']);
+      $data[$i]['desc']   = sanitize_output(string_truncate($row['t_desc_'.$lang], 50, '...'));
+      $data[$i]['fdesc']  = sanitize_output($row['t_desc_'.$lang], preserve_line_breaks: true);
+    }
+
+    // Count tag types
+    $data['type_count'][$row['tt_id']]++;
+  }
+
+  // Add the number of rows to the returned data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
 }
 
 
