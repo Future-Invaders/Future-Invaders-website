@@ -689,6 +689,136 @@ if($last_query < 8)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tags, tag types, and image tags
+
+if($last_query < 9)
+{
+  sql_create_table('tags');
+  sql_create_field('tags', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('tags', 'fk_tag_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('tags', 'name_en', 'TINYTEXT NOT NULL', 'fk_tag_types');
+  sql_create_field('tags', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+  sql_create_field('tags', 'description_en', 'TEXT', 'name_fr');
+  sql_create_field('tags', 'description_fr', 'TEXT', 'description_en');
+
+  sql_create_table('tag_types');
+  sql_create_field('tag_types', 'name', 'TINYTEXT NOT NULL', 'id');
+
+  query(" INSERT INTO tag_types SET tag_types.name = 'Card' ");
+  query(" INSERT INTO tag_types SET tag_types.name = 'Image' ");
+  query(" INSERT INTO tag_types SET tag_types.name = 'Arsenal' ");
+  query(" INSERT INTO tag_types SET tag_types.name = 'Ruling' ");
+
+  sql_create_table('tags_images');
+  sql_create_field('tags_images', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('tags_images', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images');
+
+  sql_update_query_id(9);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Add some indexes
+
+if($last_query < 10)
+{
+  sql_create_index('images', 'images_uuid', 'uuid');
+  sql_create_index('images', 'images_path', 'path(40)');
+  sql_create_index('images', 'images_name', 'name(40)');
+
+  sql_create_index('releases', 'releases_uuid', 'uuid');
+  sql_create_index('releases', 'releases_date', 'release_date');
+
+  sql_create_index('factions', 'factions_uuid', 'uuid');
+  sql_create_index('factions', 'factions_sort', 'sorting_order');
+
+  sql_create_index('card_types', 'card_types_uuid', 'uuid');
+  sql_create_index('card_types', 'card_types_name_en', 'name_en(40)');
+  sql_create_index('card_types', 'card_types_name_fr', 'name_fr(40)');
+
+  sql_create_index('card_rarities', 'card_rarities_uuid', 'uuid');
+  sql_create_index('card_rarities', 'card_rarities_max', 'max_card_count');
+  sql_create_index('card_rarities', 'card_rarities_name_en', 'name_en(40)');
+  sql_create_index('card_rarities', 'card_rarities_name_fr', 'name_fr(40)');
+
+  sql_create_index('tags', 'tags_uuid', 'uuid');
+  sql_create_index('tags', 'tags_type', 'fk_tag_types');
+  sql_create_index('tags', 'tags_name_en', 'name_en(40)');
+  sql_create_index('tags', 'tags_name_fr', 'name_fr(40)');
+
+  sql_create_index('tags_images', 'tags_images_image', 'fk_images');
+  sql_create_index('tags_images', 'tags_images_tag', 'fk_tags');
+
+  sql_create_index('tags_types', 'tags_types_name', 'name(40)');
+
+  sql_update_query_id(10);
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Card tags
+
+/*
+if($last_query < X)
+{
+  sql_create_table('tags_cards');
+  sql_create_field('tags_cards', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('tags_cards', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
+
+  sql_create_index('tags_cards', 'tags_cards_card', 'fk_cards');
+  sql_create_index('tags_cards', 'tags_cards_tag', 'fk_tags');
+
+  sql_update_query_id(X);
+}
+*/
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Arsenal tags
+
+/*
+if($last_query < X)
+{
+  sql_create_table('tags_arsenals');
+  sql_create_field('tags_arsenals', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('tags_arsenals', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
+
+  sql_create_index('tags_arsenals', 'tags_arsenals_arsenal', 'fk_arsenals');
+  sql_create_index('tags_arsenals', 'tags_arsenals_tag', 'fk_tags');
+
+  sql_update_query_id(X);
+}
+*/
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Rulings tags
+
+/*
+if($last_query < X)
+{
+  sql_create_table('tags_rulings');
+  sql_create_field('tags_rulings', 'fk_rulings', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('tags_rulings', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_rulings');
+
+  sql_create_index('tags_rulings', 'tags_rulings_ruling', 'fk_rulings');
+  sql_create_index('tags_rulings', 'tags_rulings_tag', 'fk_tags');
+
+  sql_update_query_id(X);
+}
+*/
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cards
 
 /*
@@ -710,6 +840,15 @@ if($last_query < X)
   sql_create_field('cards', 'durability', 'INT UNSIGNED NOT NULL DEFAULT 0', 'weapons');
   sql_create_field('cards', 'body_en', 'LONGTEXT', 'durability');
   sql_create_field('cards', 'body_fr', 'LONGTEXT', 'body_en');
+
+  sql_create_index('cards', 'cards_uuid', 'uuid');
+  sql_create_index('cards', 'cards_release', 'fk_releases');
+  sql_create_index('cards', 'cards_image', 'fk_images');
+  sql_create_index('cards', 'cards_faction', 'fk_factions');
+  sql_create_index('cards', 'cards_type', 'fk_card_types');
+  sql_create_index('cards', 'cards_rarity', 'fk_card_rarities');
+  sql_create_index('cards', 'cards_name_en', 'name_en(40)');
+  sql_create_index('cards', 'cards_name_fr', 'name_fr(40)');
 
   sql_update_query_id(X);
 }
@@ -741,6 +880,13 @@ if($last_query < X)
   sql_create_field('arsenals', 'reserves_en', 'LONGTEXT', 'gameplan_fr');
   sql_create_field('arsenals', 'reserves_fr', 'LONGTEXT', 'reserves_en');
 
+  sql_create_index('arsenals', 'arsenals_uuid', 'uuid');
+  sql_create_index('arsenals', 'arsenals_release', 'fk_releases');
+  sql_create_index('arsenals', 'arsenals_format', 'fk_formats');
+  sql_create_index('arsenals', 'arsenals_image', 'fk_images');
+  sql_create_index('arsenals', 'arsenals_name_en', 'name_en(40)');
+  sql_create_index('arsenals', 'arsenals_name_fr', 'name_fr(40)');
+
   sql_update_query_id(X);
 }
 */
@@ -757,6 +903,9 @@ if($last_query < X)
   sql_create_table('arsenals_factions');
   sql_create_field('arsenals_factions', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('arsenals_factions', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
+
+  sql_create_index('arsenals_factions', 'arsenals_factions_arsenal', 'fk_arsenals');
+  sql_create_index('arsenals_factions', 'arsenals_factions_faction', 'fk_factions');
 
   sql_update_query_id(X);
 }
@@ -776,6 +925,10 @@ if($last_query < X)
   sql_create_field('arsenals_compositions', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
   sql_create_field('arsenals_compositions', 'amount', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
   sql_create_field('arsenals_compositions', 'is_in_reserves', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'amount');
+
+  sql_create_index('arsenals_compositions', 'arsenals_compositions_arsenal', 'fk_arsenals');
+  sql_create_index('arsenals_compositions', 'arsenals_compositions_card', 'fk_cards');
+  sql_create_index('arsenals_compositions', 'arsenals_compositions_reserves', 'is_in_reserves');
 
   sql_update_query_id(X);
 }
@@ -798,6 +951,11 @@ if($last_query < X)
   sql_create_field('rulings', 'ruling_fr', 'LONGTEXT', 'ruling_en');
   sql_create_field('rulings', 'date', 'DATE NOT NULL', 'ruling_fr');
 
+  sql_create_index('rulings', 'rulings_uuid', 'uuid');
+  sql_create_index('rulings', 'rulings_name_en', 'name_en(40)');
+  sql_create_index('rulings', 'rulings_name_fr', 'name_fr(40)');
+  sql_create_index('rulings', 'rulings_date', 'date');
+
   sql_update_query_id(X);
 }
 */
@@ -815,116 +973,8 @@ if($last_query < X)
   sql_create_field('cards_rulings', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('cards_rulings', 'fk_rulings', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
 
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Tags
-
-/*
-if($last_query < X)
-{
-  sql_create_table('tags');
-  sql_create_field('tags', 'uuid', 'VARCHAR(36) NOT NULL', 'uuid');
-  sql_create_field('tags', 'fk_tag_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('tags', 'name_en', 'TINYTEXT NOT NULL', 'fk_tag_types');
-  sql_create_field('tags', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('tags', 'description_en', 'TEXT', 'name_fr');
-  sql_create_field('tags', 'description_fr', 'TEXT', 'description_en');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Tag types
-
-/*
-if($last_query < X)
-{
-  sql_create_table('tag_types');
-  sql_create_field('tag_types', 'name_en', 'TINYTEXT NOT NULL', 'id');
-  sql_create_field('tag_types', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-
-  query(" INSERT INTO tag_types SET name_en = 'Card', name_fr = 'Carte' ");
-  query(" INSERT INTO tag_types SET name_en = 'Image', name_fr = 'Image' ");
-  query(" INSERT INTO tag_types SET name_en = 'Arsenal', name_fr = 'Arsenal' ");
-  query(" INSERT INTO tag_types SET name_en = 'Ruling', name_fr = 'Jugement' ");
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Card tags
-
-/*
-if($last_query < X)
-{
-  sql_create_table('tags_cards');
-  sql_create_field('tags_cards', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('tags_cards', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Image tags
-
-/*
-if($last_query < X)
-{
-  sql_create_table('tags_images');
-  sql_create_field('tags_images', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('tags_images', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Arsenal tags
-
-/*
-if($last_query < X)
-{
-  sql_create_table('tags_arsenals');
-  sql_create_field('tags_arsenals', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('tags_arsenals', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Rulings tags
-
-/*
-if($last_query < X)
-{
-  sql_create_table('tags_rulings');
-  sql_create_field('tags_rulings', 'fk_rulings', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('tags_rulings', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_rulings');
+  sql_create_index('cards_rulings', 'cards_rulings_card', 'fk_cards');
+  sql_create_index('cards_rulings', 'cards_rulings_ruling', 'fk_rulings');
 
   sql_update_query_id(X);
 }
@@ -946,6 +996,11 @@ if($last_query < X)
   sql_create_field('keywords', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('keywords', 'description_fr', 'TEXT', 'description_en');
 
+  sql_create_index('keywords', 'keywords_uuid', 'uuid');
+  sql_create_index('keywords', 'keywords_release', 'fk_releases');
+  sql_create_index('keywords', 'keywords_name_en', 'name_en(40)');
+  sql_create_index('keywords', 'keywords_name_fr', 'name_fr(40)');
+
   sql_update_query_id(X);
 }
 */
@@ -962,6 +1017,9 @@ if($last_query < X)
   sql_create_table('keywords_factions');
   sql_create_field('keywords_factions', 'fk_keywords', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('keywords_factions', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_keywords');
+
+  sql_create_index('keywords_factions', 'keywords_factions_keyword', 'fk_keywords');
+  sql_create_index('keywords_factions', 'keywords_factions_faction', 'fk_factions');
 
   sql_update_query_id(X);
 }
@@ -983,6 +1041,11 @@ if($last_query < X)
   sql_create_field('identities', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('identities', 'description_fr', 'TEXT', 'description_en');
 
+  sql_create_index('identities', 'identities_uuid', 'uuid');
+  sql_create_index('identities', 'identities_release', 'fk_releases');
+  sql_create_index('identities', 'identities_name_en', 'name_en(40)');
+  sql_create_index('identities', 'identities_name_fr', 'name_fr(40)');
+
   sql_update_query_id(X);
 }
 */
@@ -999,6 +1062,9 @@ if($last_query < X)
   sql_create_table('factions_identities');
   sql_create_field('factions_identities', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('factions_identities', 'fk_identities', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_factions');
+
+  sql_create_index('factions_identities', 'factions_identities_faction', 'fk_factions');
+  sql_create_index('factions_identities', 'factions_identities_identity', 'fk_identities');
 
   sql_update_query_id(X);
 }
@@ -1017,6 +1083,9 @@ if($last_query < X)
   sql_create_field('hybridizations', 'name_en', 'TINYTEXT NOT NULL', 'id');
   sql_create_field('hybridizations', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
 
+  sql_create_index('hybridizations', 'hybridizations_name_en', 'name_en(40)');
+  sql_create_index('hybridizations', 'hybridizations_name_fr', 'name_fr(40)');
+
   sql_update_query_id(X);
 }
 */
@@ -1033,6 +1102,9 @@ if($last_query < X)
   sql_create_table('factions_hybridizations');
   sql_create_field('factions_hybridizations', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('factions_hybridizations', 'fk_hybridizations', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_factions');
+
+  sql_create_index('factions_hybridizations', 'factions_hybridizations_faction', 'fk_factions');
+  sql_create_index('factions_hybridizations', 'factions_hybridizations_hybridization', 'fk_hybridizations');
 
   sql_update_query_id(X);
 }
@@ -1056,6 +1128,12 @@ if($last_query < X)
   sql_create_field('bans', 'reason_en', 'MEDIUMTEXT', 'is_a_ban');
   sql_create_field('bans', 'reason_fr', 'MEDIUMTEXT', 'reason_en');
 
+  sql_create_index('bans', 'bans_uuid', 'uuid');
+  sql_create_index('bans', 'bans_card', 'fk_cards');
+  sql_create_index('bans', 'bans_format', 'fk_formats');
+  sql_create_index('bans', 'bans_date', 'date');
+  sql_create_index('bans', 'bans_ban', 'is_a_ban');
+
   sql_update_query_id(X);
 }
 */
@@ -1072,6 +1150,9 @@ if($last_query < X)
   sql_create_table('cards_bans');
   sql_create_field('cards_bans', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('cards_bans', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
+
+  sql_create_index('cards_bans', 'cards_bans_card', 'fk_cards');
+  sql_create_index('cards_bans', 'cards_bans_format', 'fk_formats');
 
   sql_update_query_id(X);
 }
@@ -1093,6 +1174,10 @@ if($last_query < X)
   sql_create_field('formats', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('formats', 'description_fr', 'TEXT', 'description_en');
 
+  sql_create_index('formats', 'formats_uuid', 'uuid');
+  sql_create_index('formats', 'formats_name_en', 'name_en(40)');
+  sql_create_index('formats', 'formats_name_fr', 'name_fr(40)');
+
   sql_update_query_id(X);
 }
 */
@@ -1112,6 +1197,8 @@ if($last_query < X)
   sql_create_field('updates', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('updates', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('updates', 'description_fr', 'TEXT', 'description_en');
+
+  sql_create_index('updates', 'updates_datetime', 'datetime');
 
   sql_update_query_id(X);
 }
@@ -1133,6 +1220,8 @@ if($last_query < X)
   sql_create_field('blogs', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('blogs', 'description_fr', 'TEXT', 'description_en');
 
+  sql_create_index('blogs', 'blogs_datetime', 'datetime');
+
   sql_update_query_id(X);
 }
 */
@@ -1151,6 +1240,9 @@ if($last_query < X)
   sql_create_field('card_history', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
   sql_create_field('card_history', 'errata_en', 'LONGTEXT', 'fk_images');
   sql_create_field('card_history', 'errata_fr', 'LONGTEXT', 'errata_en');
+
+  sql_create_index('card_history', 'card_history_card', 'fk_cards');
+  sql_create_index('card_history', 'card_history_image', 'fk_images');
 
   sql_update_query_id(X);
 }
