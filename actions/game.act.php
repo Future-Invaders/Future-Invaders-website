@@ -351,6 +351,10 @@ function images_delete( int $image_id ) : void
   // Delete the image from the database
   query(" DELETE FROM images
           WHERE   images.id = '$image_id' ");
+
+  // Delete the image's tags from the database
+  query(" DELETE FROM tags_images
+          WHERE       tags_images.fk_images = '$image_id' ");
 }
 
 
