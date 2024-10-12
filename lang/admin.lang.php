@@ -254,6 +254,11 @@ ___('admin_tag_edit_submit',  'EN', "Edit tag");
 ___('admin_tag_edit_submit',  'FR', "Modifier le tag");
 
 
+// Delete a tag
+___('admin_tag_delete_confirm', 'EN', "Confirm the deletion of this tag");
+___('admin_tag_delete_confirm', 'FR', "Confirmez la suppression de ce tag");
+
+
 
 
 /*********************************************************************************************************************/

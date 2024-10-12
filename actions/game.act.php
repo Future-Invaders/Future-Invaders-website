@@ -20,6 +20,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  tags_list                       Lists tags in the database                                                       */
 /*  tags_add                        Adds a tag to the database                                                       */
 /*  tags_edit                       Edits a tag in the database                                                      */
+/*  tags_delete                     Deletes a tag from the database                                                  */
 /*                                                                                                                   */
 /*  releases_get                    Returns data related to a release                                                */
 /*  releases_list                   Lists releases in the database                                                   */
@@ -518,6 +519,27 @@ function tags_edit( int   $tag_id ,
                   tags.description_en = '$tag_desc_en'  ,
                   tags.description_fr = '$tag_desc_fr'
           WHERE   tags.id             = '$tag_id' ");
+}
+
+
+
+
+/**
+ * Deletes a tag from the database.
+ *
+ * @param   int     $tag_id  The id of the tag to delete.
+ *
+ * @return  void
+ */
+
+function tags_delete( int $tag_id ) : void
+{
+  // Sanitize the data
+  $tag_id = sanitize($tag_id, 'int');
+
+  // Delete the tag from the database
+  query(" DELETE FROM tags
+          WHERE       tags.id = '$tag_id' ");
 }
 
 

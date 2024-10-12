@@ -11,6 +11,7 @@
 /*  admin_images_delete         Triggers the deletion of an entry in the image list.                                 */
 /*                                                                                                                   */
 /*  admin_tags_search           Searches the tag list.                                                               */
+/*  admin_tags_delete           Triggers the deletion of an entry in the tag list.                                   */
 /*                                                                                                                   */
 /*  admin_releases_search       Searches the release list.                                                           */
 /*  admin_releases_delete       Triggers the deletion of an entry in the release list.                               */
@@ -183,6 +184,29 @@ function admin_tags_search( sort_data = null )
 
   // Submit the search
   fetch_page('tags', 'admin_tags_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the tag list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     tag       The id of the tag to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_tags_delete( message   ,
+                            tag       )
+{
+  // Assemble the postdata
+  postdata = 'admin_tags_delete=' + fetch_sanitize(tag);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('tags', 'admin_tags_tbody', postdata);
 }
 
 
