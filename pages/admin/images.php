@@ -45,9 +45,21 @@ if(isset($_POST['image_edit']))
   // Grab the image's ID
   $image_edit_id = form_fetch_element('image_id');
 
+  // Gather image postdata
+  $image_add_name   = form_fetch_element('image_name');
+  $image_add_artist = form_fetch_element('image_artist');
+
+  // Fetch image tags
+  $image_tags = tags_list(search: array('ftype' => 'Image'));
+
+  // Gather tag postdata
+  for($i = 0; $i < $image_tags['rows']; $i++)
+    $image_add_tags[$image_tags[$i]['id']] = form_fetch_element("image_tag_".$image_tags[$i]['id'], element_exists: true);
+
   // Assemble an array with the postdata
-  $image_edit_data = array( 'image_name'    => form_fetch_element('image_name')   ,
-                            'image_artist'  => form_fetch_element('image_artist') );
+  $image_edit_data = array( 'image_name'    => $image_add_name    ,
+                            'image_artist'  => $image_add_artist  ,
+                            'image_tags'    => $image_add_tags    );
 
   // Edit the image
   images_edit(  $image_edit_id    ,

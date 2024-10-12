@@ -195,6 +195,8 @@ ___('admin_image_name',       'EN', "Image name");
 ___('admin_image_name',       'FR', "Nom de l'image");
 ___('admin_image_artist',     'EN', "Artist");
 ___('admin_image_artist',     'FR', "Artiste");
+___('admin_image_tags',       'EN', "Tags");
+___('admin_image_tags',       'FR', "Tags");
 ___('admin_image_add_submit', 'EN', "Add image");
 ___('admin_image_add_submit', 'FR', "Ajouter l'image");
 
@@ -209,6 +211,54 @@ ___('admin_image_edit_submit',  'FR', "Modifier l'image");
 // Delete an image
 ___('admin_image_delete_confirm', 'EN', "Confirm the deletion of this image");
 ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       TAGS                                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// List tags
+___('admin_tag_list_type',    'EN', "Type");
+___('admin_tag_list_type',    'FR', "Type");
+___('admin_tag_list_name',    'EN', "Name");
+___('admin_tag_list_name',    'FR', "Nom");
+___('admin_tag_list_desc',    'EN', "Description");
+___('admin_tag_list_desc',    'FR', "Description");
+___('admin_tag_list_count',   'EN', "{{1}} tag");
+___('admin_tag_list_count',   'FR', "{{1}} tag");
+___('admin_tag_list_count+',  'EN', "{{1}} tags");
+___('admin_tag_list_count+',  'FR', "{{1}} tags");
+
+
+// Add a tag
+___('admin_tag_add_title',    'EN', "Add a tag");
+___('admin_tag_add_title',    'FR', "Ajouter un tag");
+___('admin_tag_add_type',     'EN', "Tag type");
+___('admin_tag_add_type',     'FR', "Type de tag");
+___('admin_tag_add_name',     'EN', "Tag name");
+___('admin_tag_add_name',     'FR', "Nom du tag");
+___('admin_tag_add_desc_en',  'EN', "Description (English)");
+___('admin_tag_add_desc_en',  'FR', "Description (Anglais)");
+___('admin_tag_add_desc_fr',  'EN', "Description (French)");
+___('admin_tag_add_desc_fr',  'FR', "Description (Français)");
+___('admin_tag_add_submit',   'EN', "Add tag");
+___('admin_tag_add_submit',   'FR', "Ajouter le tag");
+
+
+// Edit a tag
+___('admin_tag_edit_title',   'EN', "Edit tag");
+___('admin_tag_edit_title',   'FR', "Modifier un tag");
+___('admin_tag_edit_submit',  'EN', "Edit tag");
+___('admin_tag_edit_submit',  'FR', "Modifier le tag");
+
+
+// Delete a tag
+___('admin_tag_delete_confirm', 'EN', "Confirm the deletion of this tag");
+___('admin_tag_delete_confirm', 'FR', "Confirmez la suppression de ce tag");
 
 
 

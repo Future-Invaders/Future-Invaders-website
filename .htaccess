@@ -1,2 +1,6 @@
 ErrorDocument 404 https://futureinvaders.com/404
 Options -Indexes
+
+# API
+RewriteEngine On
+RewriteRule ^api/tag/(.*)$ api/tag/tag.php?uuid=$1 [QSA,NC]

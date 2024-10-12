@@ -16,6 +16,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
+/*  tags_get                        Returns data related to a tag                                                    */
+/*  tags_list                       Lists tags in the database                                                       */
+/*  tags_list_types                 Lists tag types in the database                                                  */
+/*  tags_list_images                Lists images linked to a tag                                                     */
+/*  tags_add                        Adds a tag to the database                                                       */
+/*  tags_edit                       Edits a tag in the database                                                      */
+/*  tags_delete                     Deletes a tag from the database                                                  */
+/*                                                                                                                   */
 /*  releases_get                    Returns data related to a release                                                */
 /*  releases_list                   Lists releases in the database                                                   */
 /*  releases_add                    Adds a release to the database                                                   */
@@ -39,6 +47,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_add               Adds a card rarity to the database                                               */
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*  card_rarities_delete            Deletes a card rarity from the database                                          */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    IMAGES                                                         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -71,6 +83,16 @@ function images_get( int $image_id ) : array|null
   $data['path']   = sanitize_output($image_data['i_path']);
   $data['name']   = sanitize_output($image_data['i_name']);
   $data['artist'] = sanitize_output($image_data['i_artist']);
+
+  // Fetch the image's tags
+  $image_tags = query(" SELECT  tags_images.fk_tags AS 'ti_tag'
+                        FROM    tags_images
+                        WHERE   tags_images.fk_images = '$image_id' ");
+
+  // Assemble an array with the image's tags
+  $data['tags'] = array();
+  while($dtags = query_row($image_tags))
+    $data['tags'][] = sanitize_output($dtags['ti_tag']);
 
   // Return the image's data
   return $data;
@@ -261,7 +283,7 @@ function images_add( array $data ) : void
   if(!isset($image_path))
     return;
 
-  // Sanatize the data
+  // Sanatize image data
   $image_add_path   = sanitize(mb_substr($image_path, 8), 'string');
   $image_add_name   = sanitize_array_element($data, 'image_name', 'string');
   $image_add_artist = sanitize_array_element($data, 'image_artist', 'string');
@@ -272,6 +294,22 @@ function images_add( array $data ) : void
                       images.path   = '$image_add_path'   ,
                       images.name   = '$image_add_name'   ,
                       images.artist = '$image_add_artist' ");
+
+  // Get the newly created image's id
+  $image_id = sanitize(query_id(), "int");
+
+  // Fetch a list of image tags
+  $image_tags = tags_list(search: array('ftype' => 'Image'));
+
+  // Add the image's tags to the database
+  for($i = 0; $i < $image_tags['rows']; $i++)
+  {
+    $tag_id = $image_tags[$i]['id'];
+    if($data['image_tags'][$image_tags[$i]['id']])
+      query(" INSERT INTO tags_images
+              SET         tags_images.fk_images = '$image_id' ,
+                          tags_images.fk_tags   = '$tag_id'   ");
+  }
 }
 
 
@@ -303,6 +341,33 @@ function images_edit( int   $image_id ,
           SET     images.name   = '$image_name'   ,
                   images.artist = '$image_artist'
           WHERE   images.id     = '$image_id' ");
+
+  // Fetch a list of image tags
+  $image_tags = tags_list(search: array('ftype' => 'Image'));
+
+  // Update the image's tags in the database
+  for($i = 0; $i < $image_tags['rows']; $i++)
+  {
+    // Check the current status of each tag
+    $tag_id = $image_tags[$i]['id'];
+    $tag_check = query("  SELECT  tags_images.id AS 'ti_id'
+                          FROM    tags_images
+                          WHERE   tags_images.fk_images = '$image_id'
+                          AND     tags_images.fk_tags   = '$tag_id' ",
+                          fetch_row: true);
+
+    // Create missing tags
+    if($data['image_tags'][$image_tags[$i]['id']] && is_null($tag_check))
+      query(" INSERT INTO tags_images
+              SET         tags_images.fk_images = '$image_id' ,
+                          tags_images.fk_tags   = '$tag_id'   ");
+
+    // Delete extraneous tags
+    if(!$data['image_tags'][$image_tags[$i]['id']] && !is_null($tag_check))
+      query(" DELETE FROM tags_images
+              WHERE       tags_images.fk_images = '$image_id'
+              AND         tags_images.fk_tags   = '$tag_id'   ");
+  }
 }
 
 
@@ -324,10 +389,380 @@ function images_delete( int $image_id ) : void
   // Delete the image from the database
   query(" DELETE FROM images
           WHERE   images.id = '$image_id' ");
+
+  // Delete the image's tags from the database
+  query(" DELETE FROM tags_images
+          WHERE       tags_images.fk_images = '$image_id' ");
 }
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    TAGS                                                           */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Returns data related to a tag.
+ *
+ * @param   int         $tag_id   (OPTIONAL)  The id of the tag.
+ * @param   string      $tag_uuid (OPTIONAL)  The uuid of the tag.
+ * @param   string      $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array|null            An array containing the tag's data, or null if the tag does not exist.
+ */
+
+function tags_get(  int     $tag_id   = NULL    ,
+                    string  $tag_uuid = NULL    ,
+                    string  $format   = 'html'  ) : array|null
+{
+  // Return null if there are neither an id nor an uuid
+  if(!$tag_id && !$tag_uuid)
+    return null;
+
+  // Sanitize the tag's id and uuid
+  $tag_id   = sanitize($tag_id, 'int');
+  $tag_uuid = sanitize($tag_uuid, 'string');
+
+  // Return null if the tag does not have a valid ID
+  if($tag_id && !database_row_exists('tags', $tag_id))
+    return null;
+
+  // Return null if the tag does not have a valid UUID
+  if($tag_uuid && !database_entry_exists('tags', 'uuid', $tag_uuid))
+    return null;
+
+  // Prepare the condition for retrieving the tag
+  $query_where = ($tag_id) ? " WHERE tags.id = '$tag_id' " : " WHERE tags.uuid = '$tag_uuid' ";
+
+  // Fetch the tag's data
+  $tag_data = query(" SELECT    tags.uuid           AS 't_uuid'     ,
+                                tags.name           AS 't_name'     ,
+                                tags.description_en AS 't_desc_en'  ,
+                                tags.description_fr AS 't_desc_fr'  ,
+                                tag_types.name      AS 'tt_name'
+                      FROM      tags
+                      LEFT JOIN tag_types ON tags.fk_tag_types = tag_types.id
+                      $query_where ",
+                      fetch_row: true);
+
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['name']     = sanitize_output($tag_data['t_name']);
+    $data['desc_en']  = sanitize_output($tag_data['t_desc_en']);
+    $data['desc_fr']  = sanitize_output($tag_data['t_desc_fr']);
+  }
+
+  // Prepare the data for the API
+  if($format === 'api')
+  {
+    // Get the user's current language
+    $lang = string_change_case(user_get_language(), 'lowercase');
+
+    // Sanitize the data
+    $data['uuid']         = sanitize_json($tag_uuid);
+    $data['type']         = sanitize_json($tag_data['tt_name']);
+    $data['name']         = sanitize_json($tag_data['t_name']);
+    $data['description']  = sanitize_json($tag_data['t_desc_'.$lang]);
+
+    // Fetch linked elements
+    $data['linked_images'] = tags_list_images($tag_uuid);
+
+    // Prepare for the API
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('tag' => $data);
+  }
+
+  // Return the tag's data
+  return $data;
+}
+
+
+
+
+/**
+ * Lists tags in the database.
+ *
+ * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the tags.
+ */
+
+function tags_list( string  $sort_by  = 'name'  ,
+                    array   $search   = array() ,
+                    string  $format   = 'html'  ) : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanatize the search data
+  $search_type  = sanitize_array_element($search, 'type', 'int');
+  $search_ftype = sanitize_array_element($search, 'ftype', 'string');
+  $search_name  = sanitize_array_element($search, 'name', 'string');
+  $search_desc  = sanitize_array_element($search, 'desc', 'string');
+
+  // Search through the data
+  $query_search  =  ($search_type)  ? " WHERE tags.fk_tag_types       = '$search_type' "      : " WHERE 1 = 1 ";
+  $query_search .=  ($search_ftype) ? " AND   tag_types.name          LIKE '$search_ftype' "  : "";
+  $query_search .=  ($search_name)  ? " AND   tags.name               LIKE '%$search_name%' " : "";
+  $query_search .=  ($search_desc)  ? " AND   tags.description_$lang  LIKE '%$search_desc%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'name'  => " ORDER BY tags.name               ASC ,
+                          tag_types.name          ASC ",
+    'desc'  => " ORDER BY tags.description_$lang  ASC ,
+                          tag_types.name          ASC ,
+                          tags.name               ASC ",
+    'api'   => " ORDER BY tag_types.name          ASC ,
+                          tags.name               ASC ",
+    default => " ORDER BY tag_types.name          ASC ,
+                          tags.name               ASC ",
+  };
+
+  // Fetch the tags
+  $tags = query("  SELECT     tags.id             AS 't_id'       ,
+                              tags.uuid           AS 't_uuid'     ,
+                              tags.name           AS 't_name'     ,
+                              tags.description_en AS 't_desc_en'  ,
+                              tags.description_fr AS 't_desc_fr'  ,
+                              tag_types.id        AS 'tt_id'      ,
+                              tag_types.name      AS 'tt_type'
+                    FROM      tags
+                    LEFT JOIN tag_types ON tags.fk_tag_types = tag_types.id
+                    $query_search
+                    $query_sort ");
+
+  // Reset the number of tag types
+  $tag_types = tags_list_types();
+  if($format === 'html')
+  {
+    for($i = 0; $i < $tag_types['rows']; $i++)
+    {
+      $data['type_name'][$tag_types[$i]['id']]  = $tag_types[$i]['name'];
+      $data['type_count'][$tag_types[$i]['id']] = 0;
+    }
+  }
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($tags); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      // Sanatize the data
+      $data[$i]['id']     = sanitize_output($row['t_id']);
+      $data[$i]['name']   = sanitize_output(string_truncate($row['t_name'], 25, '...'));
+      $data[$i]['fname']  = sanitize_output($row['t_name']);
+      $data[$i]['type']   = sanitize_output($row['tt_type']);
+      $data[$i]['desc']   = sanitize_output(string_truncate($row['t_desc_'.$lang], 50, '...'));
+      $data[$i]['fdesc']  = sanitize_output($row['t_desc_'.$lang], preserve_line_breaks: true);
+
+      // Count tag types
+      $data['type_count'][$row['tt_id']]++;
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid']         = sanitize_json($row['t_uuid']);
+      $data[$i]['type']         = sanitize_json($row['tt_type']);
+      $data[$i]['name']         = sanitize_json($row['t_name']);
+      $data[$i]['description']  = sanitize_json($row['t_desc_'.$lang]);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('tags' => $data);
+  }
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Lists tag types in the database.
+ *
+ * @return  array   An array containing the tag types.
+ */
+
+function tags_list_types() : array
+{
+  // Fetch the tag types
+  $tag_types = query("  SELECT    tag_types.id    AS 'tt_id' ,
+                                  tag_types.name  AS 'tt_name'
+                        FROM      tag_types
+                        ORDER BY  tag_types.name ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($tag_types); $i++)
+  {
+    $data[$i]['id']   = sanitize_output($row['tt_id']);
+    $data[$i]['name'] = sanitize_output($row['tt_name']);
+  }
+
+  // Add the number of rows to the returned data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Lists images linked to a tag.
+ *
+ * @param   string  $tag_uuid The uuid of the tag.
+ *
+ * @return  array   An array containing the elements.
+ */
+
+function tags_list_images( string $tag_uuid ) : array
+{
+  // Sanitize the data
+  $tag_uuid = sanitize($tag_uuid, 'string');
+
+  // Fetch the tag's id
+  $tag_id = database_entry_exists('tags', 'uuid', $tag_uuid);
+
+  // Return null if the tag does not exist
+  if(!$tag_id)
+    return null;
+
+  // Fetch linked images
+  $images = query(" SELECT    images.uuid   AS 'i_uuid' ,
+                              images.path   AS 'i_path' ,
+                              images.name   AS 'i_name' ,
+                              images.artist AS 'i_artist'
+                    FROM      images
+                    LEFT JOIN tags_images ON images.id = tags_images.fk_images
+                    WHERE     tags_images.fk_tags = '$tag_id' ");
+
+  // Prepare linked images for display
+  for($i = 0; $row = query_row($images); $i++)
+  {
+    $data[$i]['uuid']    = sanitize_output($row['i_uuid']);
+    $data[$i]['name']    = sanitize_output($row['i_name']);
+    $data[$i]['artist']  = sanitize_output($row['i_artist']);
+    $data[$i]['path']    = $GLOBALS['website_url'].sanitize_output($row['i_path']);
+  }
+
+  // If there are no linked images, return an empty array
+  if(!isset($data))
+    $data = array();
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Adds a tag to the database.
+ *
+ * @param   array   $data  An array containing the tag's data.
+ *
+ * @return  void
+ */
+
+function tags_add( array $data ) : void
+{
+  // Sanitize the data
+  $tag_type     = sanitize_array_element($data, 'type', 'int');
+  $tag_name     = sanitize_array_element($data, 'name', 'string');
+  $tag_desc_en  = sanitize_array_element($data, 'desc_en', 'string');
+  $tag_desc_fr  = sanitize_array_element($data, 'desc_fr', 'string');
+
+  // Add the tag to the database
+  query(" INSERT INTO tags
+          SET         tags.uuid           = UUID()          ,
+                      tags.fk_tag_types   = '$tag_type'     ,
+                      tags.name           = '$tag_name'     ,
+                      tags.description_en = '$tag_desc_en'  ,
+                      tags.description_fr = '$tag_desc_fr'  ");
+}
+
+
+
+
+/**
+ * Edits a tag in the database.
+ *
+ * @param   int         $tag_id   The id of the tag to edit.
+ * @param   array       $data     An array containing the tag's data.
+ *
+ * @return  void
+ */
+
+function tags_edit( int   $tag_id ,
+                    array $data     ) : void
+{
+  // Sanitize the data
+  $tag_id       = sanitize($tag_id, 'int');
+  $tag_name     = sanitize_array_element($data, 'name', 'string');
+  $tag_desc_en  = sanitize_array_element($data, 'desc_en', 'string');
+  $tag_desc_fr  = sanitize_array_element($data, 'desc_fr', 'string');
+
+  // Stop here if the tag does not exist
+  if(!database_row_exists('tags', $tag_id))
+    return;
+
+  // Edit the tag
+  query(" UPDATE  tags
+          SET     tags.name           = '$tag_name'     ,
+                  tags.description_en = '$tag_desc_en'  ,
+                  tags.description_fr = '$tag_desc_fr'
+          WHERE   tags.id             = '$tag_id' ");
+}
+
+
+
+
+/**
+ * Deletes a tag from the database.
+ *
+ * @param   int     $tag_id  The id of the tag to delete.
+ *
+ * @return  void
+ */
+
+function tags_delete( int $tag_id ) : void
+{
+  // Sanitize the data
+  $tag_id = sanitize($tag_id, 'int');
+
+  // Delete the tag from the database
+  query(" DELETE FROM tags
+          WHERE       tags.id = '$tag_id' ");
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     RELEASES                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Returns data related to a release.
@@ -533,6 +968,12 @@ function releases_delete( int $release_id ) : void
 
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FACTIONS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
 /**
  * Returns data related to a faction.
  *
@@ -717,6 +1158,12 @@ function factions_delete( int $faction_id ) : void
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    CARD TYPES                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Returns data related to a card type.
@@ -903,6 +1350,12 @@ function card_types_delete( int $card_type_id ) : void
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   CARD RARITIES                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Returns data related to a card rarity.

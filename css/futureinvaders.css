@@ -393,6 +393,7 @@ input:not([type])                 { background-color: var(--future-dark);       
 /*********************************************** CUSTOM FORM ELEMENTS ************************************************/
 
 textarea.higher                         { min-height: 25.0rem;                                                      }
+textarea.shorter                        { min-height: 6.0rem;                                                       }
 label.label_inline                      { display: inline-block; font-weight: normal; margin-left: 0.2rem           ;
                                           margin-right: 0.3rem;                                                     }
 select.table_search, input.table_search { height: auto; font-weight: normal; width: 100%; text-align: center        ;

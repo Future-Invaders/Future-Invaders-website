@@ -13,22 +13,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 
 // Menu
-___('api',                    'EN', "API");
-___('api',                    'FR', "API");
-___('api_menu_title',         'EN', "Future Invaders API");
-___('api_menu_title',         'FR', "API Future Invaders");
-___('api_menu_intro',         'EN', "Introduction");
-___('api_menu_intro',         'FR', "Introduction");
-___('api_menu_cards',         'EN', "Cards");
-___('api_menu_cards',         'FR', "Cartes");
-___('api_menu_releases',      'EN', "Releases");
-___('api_menu_releases',      'FR', "Versions");
-___('api_menu_factions',      'EN', "Factions");
-___('api_menu_factions',      'FR', "Factions");
-___('api_menu_card_types',    'EN', "Card types");
-___('api_menu_card_types',    'FR', "Types de cartes");
-___('api_menu_card_rarities', 'EN', "Card rarities");
-___('api_menu_card_rarities', 'FR', "Raretés de cartes");
+___('api',                'EN', "API");
+___('api',                'FR', "API");
+___('api_menu_title',     'EN', "Future Invaders API");
+___('api_menu_title',     'FR', "API Future Invaders");
+___('api_menu_intro',     'EN', "Introduction");
+___('api_menu_intro',     'FR', "Introduction");
+___('api_menu_cards',     'EN', "Cards");
+___('api_menu_cards',     'FR', "Cartes");
+___('api_menu_releases',  'EN', "Releases");
+___('api_menu_releases',  'FR', "Versions");
+___('api_menu_factions',  'EN', "Factions");
+___('api_menu_factions',  'FR', "Factions");
+___('api_menu_tags',      'EN', "Tags");
+___('api_menu_tags',      'FR', "Tags");
 
 
 // Technical terms
@@ -195,3 +193,38 @@ ___('api_factions_list_summary',  'EN', "Retrieves a list of all factions.");
 ___('api_factions_list_summary',  'FR', "Récupère une liste de toutes les factions.");
 ___('api_factions_list_language', 'EN', "Display factions in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
 ___('api_factions_list_language', 'FR', "Affiche les factions dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       TAGS                                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_tags_intro', 'EN', <<<EOD
+Some of the contents of the game are tagged. These tags have various uses depending on the element being tagged. They enable specific searches, for example to find all the cards that are tagged with a specific keyword or game action.
+EOD
+);
+___('api_tags_intro', 'FR', <<<EOD
+Certains des contenus du jeu sont taggués. Ces tags ont diverses utilisations en fonction de l'élément taggué. Ils permettent des recherches spécifiques, par exemple pour trouver toutes les cartes tagguées avec une certaine mot-clé ou action de jeu.
+EOD
+);
+
+
+// List tags
+___('api_tags_list_summary',  'EN', "Retrieves a list of all tags.");
+___('api_tags_list_summary',  'FR', "Récupère une liste de tous les tags.");
+___('api_tags_list_type',     'EN', "Search for tags of a specific type ('Card', 'Image', etc.)");
+___('api_tags_list_type',     'FR', "Recherche les tags d'un type spécifique ('Carte', 'Image', etc.)");
+___('api_tags_list_name',     'EN', "Search for tags by name.");
+___('api_tags_list_name',     'FR', "Recherche des tags par nom.");
+
+
+// Get tag
+___('api_tags_get_summary',   'EN', "Retrieves a tag by its UUID.");
+___('api_tags_get_summary',   'FR', "Récupère un tag par son UUID.");
+___('api_tags_get_uuid',      'EN', "The UUID of the tag to retrieve.");
+___('api_tags_get_uuid',      'FR', "L'UUID du tag à récupérer.");
