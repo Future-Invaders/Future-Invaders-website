@@ -8,13 +8,13 @@ include_once './../../lang/api.lang.php';     # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "api/doc/factions";
-$page_title_en    = "API: Factions";
-$page_title_fr    = "API : Factions";
+$page_url         = "api/doc/tags";
+$page_title_en    = "API: Tags";
+$page_title_fr    = "API : Tags";
 $page_description = "Future Invaders' API allows you to interact with the website without using a browser.";
 
 // API doc menu selection
-$api_menu['factions'] = true;
+$api_menu['tags'] = true;
 
 // Extra CSS & JS
 $css  = array('api');
@@ -36,29 +36,29 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h1>
 
   <h4>
-    <?=__('api_menu_factions')?>
+    <?=__('api_menu_tags')?>
   </h4>
 
   <p>
-    <?=__('api_factions_intro')?>
+    <?=__('api_tags_intro')?>
   </p>
 
   <ul class="tinypadding_top">
-    <li><?=__link('#list_factions', 'GET /api/factions', is_internal: false)?></li>
+    <li><?=__link('#list_tags', 'GET /api/tags', is_internal: false)?></li>
   </ul>
 
 </div>
 
-<hr id="list_factions">
+<hr id="list_tags">
 
 <div class="width_50 padding_top">
 
   <h4>
-    GET /api/factions
+    GET /api/tags
   </h4>
 
   <p>
-    <?=__('api_factions_list_summary')?>
+    <?=__('api_tags_list_summary')?>
   </p>
 
   <h6 class="bigpadding_top">
@@ -68,11 +68,21 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <hr class="api_doc_parameters">
 
   <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">language</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+    <span class="bold underlined">type</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_factions_list_language')?>
+    <?=__('api_tags_list_type')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">name</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_tags_list_name')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
@@ -80,10 +90,12 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h6>
 
   <pre>{
-  "factions": [
+  "tags": [
     {
       "uuid": string,
+      "type": string,
       "name": string,
+      "description": string
     },
   ]
 }</pre>

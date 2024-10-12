@@ -458,7 +458,6 @@ function tags_list( string  $sort_by  = 'name'  ,
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Sanatize the search data
-  $search_lang  = sanitize_array_element($search, 'lang', 'string');
   $search_type  = sanitize_array_element($search, 'type', 'int');
   $search_ftype = sanitize_array_element($search, 'ftype', 'string');
   $search_name  = sanitize_array_element($search, 'name', 'string');
@@ -477,6 +476,8 @@ function tags_list( string  $sort_by  = 'name'  ,
                           tag_types.name          ASC ",
     'desc'  => " ORDER BY tags.description_$lang  ASC ,
                           tag_types.name          ASC ,
+                          tags.name               ASC ",
+    'api'   => " ORDER BY tag_types.name          ASC ,
                           tags.name               ASC ",
     default => " ORDER BY tag_types.name          ASC ,
                           tags.name               ASC ",
@@ -497,10 +498,13 @@ function tags_list( string  $sort_by  = 'name'  ,
 
   // Reset the number of tag types
   $tag_types = tags_list_types();
-  for($i = 0; $i < $tag_types['rows']; $i++)
+  if($format === 'html')
   {
-    $data['type_name'][$tag_types[$i]['id']]  = $tag_types[$i]['name'];
-    $data['type_count'][$tag_types[$i]['id']] = 0;
+    for($i = 0; $i < $tag_types['rows']; $i++)
+    {
+      $data['type_name'][$tag_types[$i]['id']]  = $tag_types[$i]['name'];
+      $data['type_count'][$tag_types[$i]['id']] = 0;
+    }
   }
 
   // Prepare the data for display
@@ -509,20 +513,38 @@ function tags_list( string  $sort_by  = 'name'  ,
     // Prepare for display
     if($format === 'html')
     {
+      // Sanatize the data
       $data[$i]['id']     = sanitize_output($row['t_id']);
       $data[$i]['name']   = sanitize_output(string_truncate($row['t_name'], 25, '...'));
       $data[$i]['fname']  = sanitize_output($row['t_name']);
       $data[$i]['type']   = sanitize_output($row['tt_type']);
       $data[$i]['desc']   = sanitize_output(string_truncate($row['t_desc_'.$lang], 50, '...'));
       $data[$i]['fdesc']  = sanitize_output($row['t_desc_'.$lang], preserve_line_breaks: true);
+
+      // Count tag types
+      $data['type_count'][$row['tt_id']]++;
     }
 
-    // Count tag types
-    $data['type_count'][$row['tt_id']]++;
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid']         = sanitize_json($row['t_uuid']);
+      $data[$i]['type']         = sanitize_json($row['tt_type']);
+      $data[$i]['name']         = sanitize_json($row['t_name']);
+      $data[$i]['description']  = sanitize_json($row['t_desc_'.$lang]);
+    }
   }
 
   // Add the number of rows to the returned data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('tags' => $data);
+  }
 
   // Return the prepared data
   return $data;

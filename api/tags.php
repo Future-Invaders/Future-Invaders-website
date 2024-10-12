@@ -16,26 +16,29 @@ include_once './../actions/game.act.php'; # Game actions
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch the list of factions
+// Fetch the list of tags
 
 // Retrieve the search parameters
-$factions_search_lang = form_fetch_element('language', request_type: 'GET', default_value: 'en');
+$tags_search_type = form_fetch_element('type', request_type: 'GET');
+$tags_search_name = form_fetch_element('name', request_type: 'GET');
 
 // Assemble the search parameters
-$factions_search = array( 'lang' => $factions_search_lang );
+$tags_search = array( 'ftype' => $tags_search_type  ,
+                      'name'  => $tags_search_name  );
 
-// Fetch the factions
-$factions_list = factions_list( search: $factions_search  ,
-                                format: 'api'             );
+// Fetch the tags
+$tags_list = tags_list( sort_by:  'api'         ,
+                        search:   $tags_search  ,
+                        format:   'api'        );
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Output the card list as JSON
+// Output the tag list as JSON
 
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
 
-// Output the cards
-echo sanitize_api_output($factions_list);
+// Output the tags
+echo sanitize_api_output($tags_list);

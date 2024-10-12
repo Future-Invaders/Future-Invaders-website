@@ -32,10 +32,10 @@ $releases_list = releases_list( search: $releases_search ,
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Output the quote list as JSON
+// Output the card list as JSON
 
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
 
-// Output the quotes
+// Output the cards
 echo sanitize_api_output($releases_list);
