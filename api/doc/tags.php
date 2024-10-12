@@ -138,7 +138,15 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "uuid": string,
     "type": string,
     "name": string,
-    "description": string
+    "description": string,
+    "linked_images": [
+      {
+        "uuid": string,
+        "name": string,
+        "artist": string,
+        "path": string
+      },
+    ]
   }
 }</pre>
 

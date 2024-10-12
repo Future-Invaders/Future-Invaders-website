@@ -19,11 +19,11 @@ include_once './../../actions/game.act.php'; # Game actions
 // Fetch the tag's data
 
 // Retrieve the search parameters
-$tag_id = form_fetch_element('uuid', request_type: 'GET');
+$tag_uuid = form_fetch_element('uuid', request_type: 'GET');
 
 // Fetch the tag
-$tag_data = tags_get( tag_uuid: $tag_id ,
-                      format:   'api'   );
+$tag_data = tags_get( tag_uuid: $tag_uuid ,
+                      format:   'api'     );
 
 
 
@@ -32,7 +32,7 @@ $tag_data = tags_get( tag_uuid: $tag_id ,
 // Output the tag as JSON
 
 // Throw a 404 if necessary
-if(!$tag_data)
+if(!$tag_data || !$tag_uuid)
   exit(header("HTTP/1.0 404 Not Found"));
 
 // Send headers announcing a json output

@@ -19,6 +19,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  tags_get                        Returns data related to a tag                                                    */
 /*  tags_list                       Lists tags in the database                                                       */
 /*  tags_list_types                 Lists tag types in the database                                                  */
+/*  tags_list_images                Lists images linked to a tag                                                     */
 /*  tags_add                        Adds a tag to the database                                                       */
 /*  tags_edit                       Edits a tag in the database                                                      */
 /*  tags_delete                     Deletes a tag from the database                                                  */
@@ -418,7 +419,7 @@ function tags_get(  int     $tag_id   = NULL    ,
                     string  $format   = 'html'  ) : array|null
 {
   // Return null if there are neither an id nor an uuid
-  if(is_null($tag_id) && is_null($tag_uuid))
+  if(!$tag_id && !$tag_uuid)
     return null;
 
   // Sanitize the tag's id and uuid
@@ -462,10 +463,13 @@ function tags_get(  int     $tag_id   = NULL    ,
     $lang = string_change_case(user_get_language(), 'lowercase');
 
     // Sanitize the data
-    $data['uuid']         = sanitize_json($tag_data['t_uuid']);
+    $data['uuid']         = sanitize_json($tag_uuid);
     $data['type']         = sanitize_json($tag_data['tt_name']);
     $data['name']         = sanitize_json($tag_data['t_name']);
     $data['description']  = sanitize_json($tag_data['t_desc_'.$lang]);
+
+    // Fetch linked elements
+    $data['linked_images'] = tags_list_images($tag_uuid);
 
     // Prepare for the API
     $data = (isset($data)) ? $data : NULL;
@@ -615,6 +619,55 @@ function tags_list_types() : array
 
   // Add the number of rows to the returned data
   $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Lists images linked to a tag.
+ *
+ * @param   string  $tag_uuid The uuid of the tag.
+ *
+ * @return  array   An array containing the elements.
+ */
+
+function tags_list_images( string $tag_uuid ) : array
+{
+  // Sanitize the data
+  $tag_uuid = sanitize($tag_uuid, 'string');
+
+  // Fetch the tag's id
+  $tag_id = database_entry_exists('tags', 'uuid', $tag_uuid);
+
+  // Return null if the tag does not exist
+  if(!$tag_id)
+    return null;
+
+  // Fetch linked images
+  $images = query(" SELECT    images.uuid   AS 'i_uuid' ,
+                              images.path   AS 'i_path' ,
+                              images.name   AS 'i_name' ,
+                              images.artist AS 'i_artist'
+                    FROM      images
+                    LEFT JOIN tags_images ON images.id = tags_images.fk_images
+                    WHERE     tags_images.fk_tags = '$tag_id' ");
+
+  // Prepare linked images for display
+  for($i = 0; $row = query_row($images); $i++)
+  {
+    $data[$i]['uuid']    = sanitize_output($row['i_uuid']);
+    $data[$i]['name']    = sanitize_output($row['i_name']);
+    $data[$i]['artist']  = sanitize_output($row['i_artist']);
+    $data[$i]['path']    = $GLOBALS['website_url'].sanitize_output($row['i_path']);
+  }
+
+  // If there are no linked images, return an empty array
+  if(!isset($data))
+    $data = array();
 
   // Return the prepared data
   return $data;
