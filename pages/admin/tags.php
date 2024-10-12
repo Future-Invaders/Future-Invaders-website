@@ -53,6 +53,30 @@ if(isset($_POST['tag_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a tag
+
+if(isset($_POST['tag_edit']))
+{
+  // Gather the postdata
+  $tag_edit_id      = form_fetch_element('tag_id');
+  $tag_edit_name    = form_fetch_element('tag_name');
+  $tag_edit_desc_en = form_fetch_element('tag_desc_en');
+  $tag_edit_desc_fr = form_fetch_element('tag_desc_fr');
+
+  // Assemble an array with the postdata
+  $tag_edit_data = array(  'name'    => $tag_edit_name    ,
+                           'desc_en' => $tag_edit_desc_en ,
+                           'desc_fr' => $tag_edit_desc_fr );
+
+  // Edit the tag
+  tags_edit(  $tag_edit_id    ,
+              $tag_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of all tags
 
 // Fetch the search data

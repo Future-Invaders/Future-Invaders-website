@@ -16,8 +16,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
+/*  tags_get                        Returns data related to a tag                                                    */
 /*  tags_list                       Lists tags in the database                                                       */
 /*  tags_add                        Adds a tag to the database                                                       */
+/*  tags_edit                       Edits a tag in the database                                                      */
 /*                                                                                                                   */
 /*  releases_get                    Returns data related to a release                                                */
 /*  releases_list                   Lists releases in the database                                                   */
@@ -335,6 +337,43 @@ function images_delete( int $image_id ) : void
 
 
 /**
+ * Returns data related to a tag.
+ *
+ * @param   int         $tag_id   The id of the tag.
+ *
+ * @return  array|null            An array containing the tag's data, or null if the tag does not exist.
+ */
+
+function tags_get( int $tag_id ) : array|null
+{
+  // Sanitize the tag's id
+  $tag_id = sanitize($tag_id, 'int');
+
+  // Return null if the tag does not exist
+  if(!database_row_exists('tags', $tag_id))
+    return null;
+
+  // Fetch the tag's data
+  $tag_data = query(" SELECT    tags.name           AS 't_name'     ,
+                                tags.description_en AS 't_desc_en'  ,
+                                tags.description_fr AS 't_desc_fr'
+                      FROM      tags
+                      WHERE     tags.id = '$tag_id' ",
+                      fetch_row: true);
+
+  // Assemble an array with the tag's data
+  $data['name']     = sanitize_output($tag_data['t_name']);
+  $data['desc_en']  = sanitize_output($tag_data['t_desc_en']);
+  $data['desc_fr']  = sanitize_output($tag_data['t_desc_fr']);
+
+  // Return the tag's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists tags in the database.
  *
  * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
@@ -446,6 +485,39 @@ function tags_add( array $data ) : void
                       tags.name           = '$tag_name'     ,
                       tags.description_en = '$tag_desc_en'  ,
                       tags.description_fr = '$tag_desc_fr'  ");
+}
+
+
+
+
+/**
+ * Edits a tag in the database.
+ *
+ * @param   int         $tag_id   The id of the tag to edit.
+ * @param   array       $data     An array containing the tag's data.
+ *
+ * @return  void
+ */
+
+function tags_edit( int   $tag_id ,
+                    array $data     ) : void
+{
+  // Sanitize the data
+  $tag_id       = sanitize($tag_id, 'int');
+  $tag_name     = sanitize_array_element($data, 'name', 'string');
+  $tag_desc_en  = sanitize_array_element($data, 'desc_en', 'string');
+  $tag_desc_fr  = sanitize_array_element($data, 'desc_fr', 'string');
+
+  // Stop here if the tag does not exist
+  if(!database_row_exists('tags', $tag_id))
+    return;
+
+  // Edit the tag
+  query(" UPDATE  tags
+          SET     tags.name           = '$tag_name'     ,
+                  tags.description_en = '$tag_desc_en'  ,
+                  tags.description_fr = '$tag_desc_fr'
+          WHERE   tags.id             = '$tag_id' ");
 }
 
 

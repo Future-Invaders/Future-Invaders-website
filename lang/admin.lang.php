@@ -247,6 +247,13 @@ ___('admin_tag_add_submit',   'EN', "Add tag");
 ___('admin_tag_add_submit',   'FR', "Ajouter le tag");
 
 
+// Edit a tag
+___('admin_tag_edit_title',   'EN', "Edit tag");
+___('admin_tag_edit_title',   'FR', "Modifier un tag");
+___('admin_tag_edit_submit',  'EN', "Edit tag");
+___('admin_tag_edit_submit',  'FR', "Modifier le tag");
+
+
 
 
 /*********************************************************************************************************************/
