@@ -44,6 +44,19 @@ if(!$admin_image_data)
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch image tags
+
+// Fetch a list of all tags
+$image_tags = tags_list(search: array('ftype' => 'Image'));
+
+// Check the checkboxes of the tags that are already assigned to the image
+for($i = 0; $i < $image_tags['rows']; $i++)
+  $admin_image_tag_checked[$image_tags[$i]['id']] = (in_array($image_tags[$i]['id'], $admin_image_data['tags'])) ? ' checked': '';
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -73,6 +86,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <div class="padding_bot">
         <label for="image_artist"><?=__('admin_image_artist')?></label>
         <input class="indiv" type="text" name="image_artist" value="<?=$admin_image_data['artist']?>">
+      </div>
+
+      <div class="padding_bot">
+        <label><?=__('admin_image_tags')?></label>
+        <?php for($i = 0; $i < $image_tags['rows']; $i++): ?>
+        <div class="tooltip_container">
+          <input type="checkbox" name="image_tag_<?=$image_tags[$i]['id']?>"<?=$admin_image_tag_checked[$image_tags[$i]['id']]?>>
+          <label class="label_inline" for="image_tag_<?=$image_tags[$i]['id']?>"><?=$image_tags[$i]['name']?></label>
+          <div class="tooltip">
+            <?=$image_tags[$i]['fdesc']?>
+          </div>
+        </div>
+        <?php endfor; ?>
       </div>
 
       <input type="submit" name="image_edit" value="<?=__('admin_image_edit_submit')?>">

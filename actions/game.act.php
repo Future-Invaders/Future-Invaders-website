@@ -83,6 +83,16 @@ function images_get( int $image_id ) : array|null
   $data['name']   = sanitize_output($image_data['i_name']);
   $data['artist'] = sanitize_output($image_data['i_artist']);
 
+  // Fetch the image's tags
+  $image_tags = query(" SELECT  tags_images.fk_tags AS 'ti_tag'
+                        FROM    tags_images
+                        WHERE   tags_images.fk_images = '$image_id' ");
+
+  // Assemble an array with the image's tags
+  $data['tags'] = array();
+  while($dtags = query_row($image_tags))
+    $data['tags'][] = sanitize_output($dtags['ti_tag']);
+
   // Return the image's data
   return $data;
 }
@@ -330,6 +340,33 @@ function images_edit( int   $image_id ,
           SET     images.name   = '$image_name'   ,
                   images.artist = '$image_artist'
           WHERE   images.id     = '$image_id' ");
+
+  // Fetch a list of image tags
+  $image_tags = tags_list(search: array('ftype' => 'Image'));
+
+  // Update the image's tags in the database
+  for($i = 0; $i < $image_tags['rows']; $i++)
+  {
+    // Check the current status of each tag
+    $tag_id = $image_tags[$i]['id'];
+    $tag_check = query("  SELECT  tags_images.id AS 'ti_id'
+                          FROM    tags_images
+                          WHERE   tags_images.fk_images = '$image_id'
+                          AND     tags_images.fk_tags   = '$tag_id' ",
+                          fetch_row: true);
+
+    // Create missing tags
+    if($data['image_tags'][$image_tags[$i]['id']] && is_null($tag_check))
+      query(" INSERT INTO tags_images
+              SET         tags_images.fk_images = '$image_id' ,
+                          tags_images.fk_tags   = '$tag_id'   ");
+
+    // Delete extraneous tags
+    if(!$data['image_tags'][$image_tags[$i]['id']] && !is_null($tag_check))
+      query(" DELETE FROM tags_images
+              WHERE       tags_images.fk_images = '$image_id'
+              AND         tags_images.fk_tags   = '$tag_id'   ");
+  }
 }
 
 
