@@ -18,6 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  tags_get                        Returns data related to a tag                                                    */
 /*  tags_list                       Lists tags in the database                                                       */
+/*  tags_list_types                 Lists tag types in the database                                                  */
 /*  tags_add                        Adds a tag to the database                                                       */
 /*  tags_edit                       Edits a tag in the database                                                      */
 /*  tags_delete                     Deletes a tag from the database                                                  */
@@ -46,7 +47,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*  card_rarities_delete            Deletes a card rarity from the database                                          */
 /*                                                                                                                   */
-/*  tags_list_types                 Lists tag types in the database                                                  */
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    IMAGES                                                         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -269,7 +272,7 @@ function images_add( array $data ) : void
   if(!isset($image_path))
     return;
 
-  // Sanatize the data
+  // Sanatize image data
   $image_add_path   = sanitize(mb_substr($image_path, 8), 'string');
   $image_add_name   = sanitize_array_element($data, 'image_name', 'string');
   $image_add_artist = sanitize_array_element($data, 'image_artist', 'string');
@@ -280,6 +283,22 @@ function images_add( array $data ) : void
                       images.path   = '$image_add_path'   ,
                       images.name   = '$image_add_name'   ,
                       images.artist = '$image_add_artist' ");
+
+  // Get the newly created image's id
+  $image_id = sanitize(query_id(), "int");
+
+  // Fetch a list of image tags
+  $image_tags = tags_list(search: array('ftype' => 'Image'));
+
+  // Add the image's tags to the database
+  for($i = 0; $i < $image_tags['rows']; $i++)
+  {
+    $tag_id = $image_tags[$i]['id'];
+    if($data['image_tags'][$image_tags[$i]['id']])
+      query(" INSERT INTO tags_images
+              SET         tags_images.fk_images = '$image_id' ,
+                          tags_images.fk_tags   = '$tag_id'   ");
+  }
 }
 
 
@@ -336,6 +355,12 @@ function images_delete( int $image_id ) : void
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    TAGS                                                           */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Returns data related to a tag.
@@ -394,11 +419,13 @@ function tags_list( string  $sort_by  = 'name'  ,
   // Sanatize the search data
   $search_lang  = sanitize_array_element($search, 'lang', 'string');
   $search_type  = sanitize_array_element($search, 'type', 'int');
+  $search_ftype = sanitize_array_element($search, 'ftype', 'string');
   $search_name  = sanitize_array_element($search, 'name', 'string');
   $search_desc  = sanitize_array_element($search, 'desc', 'string');
 
   // Search through the data
   $query_search  =  ($search_type)  ? " WHERE tags.fk_tag_types       = '$search_type' "      : " WHERE 1 = 1 ";
+  $query_search .=  ($search_ftype) ? " AND   tag_types.name          LIKE '$search_ftype' "  : "";
   $query_search .=  ($search_name)  ? " AND   tags.name               LIKE '%$search_name%' " : "";
   $query_search .=  ($search_desc)  ? " AND   tags.description_$lang  LIKE '%$search_desc%' " : "";
 
@@ -451,6 +478,37 @@ function tags_list( string  $sort_by  = 'name'  ,
 
     // Count tag types
     $data['type_count'][$row['tt_id']]++;
+  }
+
+  // Add the number of rows to the returned data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Lists tag types in the database.
+ *
+ * @return  array   An array containing the tag types.
+ */
+
+function tags_list_types() : array
+{
+  // Fetch the tag types
+  $tag_types = query("  SELECT    tag_types.id    AS 'tt_id' ,
+                                  tag_types.name  AS 'tt_name'
+                        FROM      tag_types
+                        ORDER BY  tag_types.name ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($tag_types); $i++)
+  {
+    $data[$i]['id']   = sanitize_output($row['tt_id']);
+    $data[$i]['name'] = sanitize_output($row['tt_name']);
   }
 
   // Add the number of rows to the returned data
@@ -544,6 +602,12 @@ function tags_delete( int $tag_id ) : void
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     RELEASES                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Returns data related to a release.
@@ -749,6 +813,12 @@ function releases_delete( int $release_id ) : void
 
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FACTIONS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
 /**
  * Returns data related to a faction.
  *
@@ -933,6 +1003,12 @@ function factions_delete( int $faction_id ) : void
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    CARD TYPES                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Returns data related to a card type.
@@ -1119,6 +1195,12 @@ function card_types_delete( int $card_type_id ) : void
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   CARD RARITIES                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Returns data related to a card rarity.
@@ -1312,35 +1394,4 @@ function card_rarities_delete( int $card_rarity_id ) : void
   // Delete the card rarity from the database
   query(" DELETE FROM card_rarities
           WHERE       card_rarities.id = '$card_rarity_id' ");
-}
-
-
-
-
-/**
- * Lists tag types in the database.
- *
- * @return  array   An array containing the tag types.
- */
-
-function tags_list_types() : array
-{
-  // Fetch the tag types
-  $tag_types = query("  SELECT    tag_types.id    AS 'tt_id' ,
-                                  tag_types.name  AS 'tt_name'
-                        FROM      tag_types
-                        ORDER BY  tag_types.name ASC ");
-
-  // Prepare the data for display
-  for($i = 0; $row = query_row($tag_types); $i++)
-  {
-    $data[$i]['id']   = sanitize_output($row['tt_id']);
-    $data[$i]['name'] = sanitize_output($row['tt_name']);
-  }
-
-  // Add the number of rows to the returned data
-  $data['rows'] = $i;
-
-  // Return the prepared data
-  return $data;
 }

@@ -195,6 +195,8 @@ ___('admin_image_name',       'EN', "Image name");
 ___('admin_image_name',       'FR', "Nom de l'image");
 ___('admin_image_artist',     'EN', "Artist");
 ___('admin_image_artist',     'FR', "Artiste");
+___('admin_image_tags',       'EN', "Tags");
+___('admin_image_tags',       'FR', "Tags");
 ___('admin_image_add_submit', 'EN', "Add image");
 ___('admin_image_add_submit', 'FR', "Ajouter l'image");
 
