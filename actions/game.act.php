@@ -406,32 +406,71 @@ function images_delete( int $image_id ) : void
 /**
  * Returns data related to a tag.
  *
- * @param   int         $tag_id   The id of the tag.
+ * @param   int         $tag_id   (OPTIONAL)  The id of the tag.
+ * @param   string      $tag_uuid (OPTIONAL)  The uuid of the tag.
+ * @param   string      $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array|null            An array containing the tag's data, or null if the tag does not exist.
  */
 
-function tags_get( int $tag_id ) : array|null
+function tags_get(  int     $tag_id   = NULL    ,
+                    string  $tag_uuid = NULL    ,
+                    string  $format   = 'html'  ) : array|null
 {
-  // Sanitize the tag's id
-  $tag_id = sanitize($tag_id, 'int');
-
-  // Return null if the tag does not exist
-  if(!database_row_exists('tags', $tag_id))
+  // Return null if there are neither an id nor an uuid
+  if(is_null($tag_id) && is_null($tag_uuid))
     return null;
 
+  // Sanitize the tag's id and uuid
+  $tag_id   = sanitize($tag_id, 'int');
+  $tag_uuid = sanitize($tag_uuid, 'string');
+
+  // Return null if the tag does not have a valid ID
+  if($tag_id && !database_row_exists('tags', $tag_id))
+    return null;
+
+  // Return null if the tag does not have a valid UUID
+  if($tag_uuid && !database_entry_exists('tags', 'uuid', $tag_uuid))
+    return null;
+
+  // Prepare the condition for retrieving the tag
+  $query_where = ($tag_id) ? " WHERE tags.id = '$tag_id' " : " WHERE tags.uuid = '$tag_uuid' ";
+
   // Fetch the tag's data
-  $tag_data = query(" SELECT    tags.name           AS 't_name'     ,
+  $tag_data = query(" SELECT    tags.uuid           AS 't_uuid'     ,
+                                tags.name           AS 't_name'     ,
                                 tags.description_en AS 't_desc_en'  ,
-                                tags.description_fr AS 't_desc_fr'
+                                tags.description_fr AS 't_desc_fr'  ,
+                                tag_types.name      AS 'tt_name'
                       FROM      tags
-                      WHERE     tags.id = '$tag_id' ",
+                      LEFT JOIN tag_types ON tags.fk_tag_types = tag_types.id
+                      $query_where ",
                       fetch_row: true);
 
-  // Assemble an array with the tag's data
-  $data['name']     = sanitize_output($tag_data['t_name']);
-  $data['desc_en']  = sanitize_output($tag_data['t_desc_en']);
-  $data['desc_fr']  = sanitize_output($tag_data['t_desc_fr']);
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['name']     = sanitize_output($tag_data['t_name']);
+    $data['desc_en']  = sanitize_output($tag_data['t_desc_en']);
+    $data['desc_fr']  = sanitize_output($tag_data['t_desc_fr']);
+  }
+
+  // Prepare the data for the API
+  if($format === 'api')
+  {
+    // Get the user's current language
+    $lang = string_change_case(user_get_language(), 'lowercase');
+
+    // Sanitize the data
+    $data['uuid']         = sanitize_json($tag_data['t_uuid']);
+    $data['type']         = sanitize_json($tag_data['tt_name']);
+    $data['name']         = sanitize_json($tag_data['t_name']);
+    $data['description']  = sanitize_json($tag_data['t_desc_'.$lang]);
+
+    // Prepare for the API
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('tag' => $data);
+  }
 
   // Return the tag's data
   return $data;

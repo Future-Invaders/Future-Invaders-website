@@ -221,3 +221,10 @@ ___('api_tags_list_type',     'EN', "Search for tags of a specific type ('Card',
 ___('api_tags_list_type',     'FR', "Recherche les tags d'un type spécifique ('Carte', 'Image', etc.)");
 ___('api_tags_list_name',     'EN', "Search for tags by name.");
 ___('api_tags_list_name',     'FR', "Recherche des tags par nom.");
+
+
+// Get tag
+___('api_tags_get_summary',   'EN', "Retrieves a tag by its UUID.");
+___('api_tags_get_summary',   'FR', "Récupère un tag par son UUID.");
+___('api_tags_get_uuid',      'EN', "The UUID of the tag to retrieve.");
+___('api_tags_get_uuid',      'FR', "L'UUID du tag à récupérer.");

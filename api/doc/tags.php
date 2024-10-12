@@ -45,13 +45,14 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <ul class="tinypadding_top">
     <li><?=__link('#list_tags', 'GET /api/tags', is_internal: false)?></li>
+    <li><?=__link('#get_tag', 'GET /api/tag/{uuid}', is_internal: false)?></li>
   </ul>
 
 </div>
 
 <hr id="list_tags">
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top bigpadding_bot">
 
   <h4>
     GET /api/tags
@@ -98,6 +99,47 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "description": string
     },
   ]
+}</pre>
+
+</div>
+
+<hr id="get_tag">
+
+<div class="width_50 padding_top">
+
+  <h4>
+    GET /api/tag/{uuid}
+  </h4>
+
+  <p>
+    <?=__('api_tags_get_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">uuid</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_tags_get_uuid')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "tag": {
+    "uuid": string,
+    "type": string,
+    "name": string,
+    "description": string
+  }
 }</pre>
 
 </div>
