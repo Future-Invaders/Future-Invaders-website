@@ -700,6 +700,7 @@ function tags_list( string  $sort_by  = 'name'  ,
       $data[$i]['name']               = sanitize_json($row['t_name']);
       $data[$i]['description']['en']  = sanitize_json($row['t_desc_en']);
       $data[$i]['description']['fr']  = sanitize_json($row['t_desc_fr']);
+      $data[$i]['endpoint']           = sanitize_json($GLOBALS['website_url'].'api/tag/'.$row['t_uuid']);
     }
   }
 
@@ -785,11 +786,11 @@ function tags_list_images( string $tag_uuid ) : array
   // Prepare linked images for display
   for($i = 0; $row = query_row($images); $i++)
   {
-    $data[$i]['uuid']     = sanitize_output($row['i_uuid']);
-    $data[$i]['language'] = sanitize_output($row['i_lang']);
-    $data[$i]['name']     = sanitize_output($row['i_name']);
-    $data[$i]['artist']   = sanitize_output($row['i_artist']);
-    $data[$i]['path']     = $GLOBALS['website_url'].sanitize_output($row['i_path']);
+    $data[$i]['uuid']     = sanitize_json($row['i_uuid']);
+    $data[$i]['language'] = sanitize_json($row['i_lang']);
+    $data[$i]['name']     = sanitize_json($row['i_name']);
+    $data[$i]['artist']   = sanitize_json($row['i_artist']);
+    $data[$i]['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path']);
   }
 
   // If there are no linked images, return an empty array

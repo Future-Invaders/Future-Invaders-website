@@ -110,6 +110,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "en": string,
         "fr": string
       }
+      "endpoint": string
     },
   ]
 }</pre>
