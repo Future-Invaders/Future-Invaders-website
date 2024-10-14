@@ -2,6 +2,8 @@
 /*                                                                                                                   */
 /*  admin_menu                  Navigates between administration pages.                                              */
 /*                                                                                                                   */
+/*  admin_card_hide_stats       Hides stats for extra cards.                                                         */
+/*                                                                                                                   */
 /*  admin_card_types_delete     Triggers the deletion of an entry in the card type list.                             */
 /*                                                                                                                   */
 /*  admin_card_rarities_delete  Triggers the deletion of an entry in the card rarity list.                           */
@@ -33,6 +35,27 @@ function admin_menu()
 
   // Go to the requested page
   window.location.href = page;
+}
+
+
+
+
+/**
+ * Hides stats for extra cards.
+ *
+ * @returns {void}
+ */
+
+function admin_card_hide_stats()
+{
+  // Fetch the checkbox
+  hide_stats = (document.getElementById('card_extra').checked) ? 0 : 1;
+
+  // Toggle the stats
+  if(hide_stats)
+    toggle_element_oneway('card_stats', 1);
+  else
+    toggle_element_oneway('card_stats', 0);
 }
 
 

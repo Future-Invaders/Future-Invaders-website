@@ -765,8 +765,9 @@ if($last_query < 11)
   sql_create_table('cards');
   sql_create_field('cards', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
   sql_create_field('cards', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
-  sql_create_field('cards', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
-  sql_create_field('cards', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images');
+  sql_create_field('cards', 'fk_images_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
+  sql_create_field('cards', 'fk_images_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_en');
+  sql_create_field('cards', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_fr');
   sql_create_field('cards', 'fk_card_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_factions');
   sql_create_field('cards', 'fk_card_rarities', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_types');
   sql_create_field('cards', 'is_extra_card', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_rarities');
@@ -782,7 +783,8 @@ if($last_query < 11)
 
   sql_create_index('cards', 'cards_uuid', 'uuid');
   sql_create_index('cards', 'cards_release', 'fk_releases');
-  sql_create_index('cards', 'cards_image', 'fk_images');
+  sql_create_index('cards', 'cards_image_en', 'fk_images_en');
+  sql_create_index('cards', 'cards_image_fr', 'fk_images_fr');
   sql_create_index('cards', 'cards_faction', 'fk_factions');
   sql_create_index('cards', 'cards_type', 'fk_card_types');
   sql_create_index('cards', 'cards_rarity', 'fk_card_rarities');
@@ -854,8 +856,9 @@ if($last_query < X)
   sql_create_field('arsenals', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
   sql_create_field('arsenals', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
   sql_create_field('arsenals', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
-  sql_create_field('arsenals', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_formats');
-  sql_create_field('arsenals', 'image_path', 'TINYTEXT NOT NULL', 'fk_images');
+  sql_create_field('arsenals', 'fk_images_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_formats');
+  sql_create_field('arsenals', 'fk_images_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_en');
+  sql_create_field('arsenals', 'image_path', 'TINYTEXT NOT NULL', 'fk_images_fr');
   sql_create_field('arsenals', 'name_en', 'TINYTEXT NOT NULL', 'image_path');
   sql_create_field('arsenals', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('arsenals', 'playstyle_en', 'TINYTEXT', 'name_fr');
@@ -870,7 +873,8 @@ if($last_query < X)
   sql_create_index('arsenals', 'arsenals_uuid', 'uuid');
   sql_create_index('arsenals', 'arsenals_release', 'fk_releases');
   sql_create_index('arsenals', 'arsenals_format', 'fk_formats');
-  sql_create_index('arsenals', 'arsenals_image', 'fk_images');
+  sql_create_index('arsenals', 'arsenals_image_en', 'fk_images_en');
+  sql_create_index('arsenals', 'arsenals_image_fr', 'fk_images_fr')
   sql_create_index('arsenals', 'arsenals_name_en', 'name_en(40)');
   sql_create_index('arsenals', 'arsenals_name_fr', 'name_fr(40)');
 
@@ -1224,12 +1228,14 @@ if($last_query < X)
 {
   sql_create_table('card_history');
   sql_create_field('card_history', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('card_history', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
-  sql_create_field('card_history', 'errata_en', 'LONGTEXT', 'fk_images');
+  sql_create_field('card_history', 'fk_images_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
+  sql_create_field('card_history', 'fk_images_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_en');
+  sql_create_field('card_history', 'errata_en', 'LONGTEXT', 'fk_images_fr');
   sql_create_field('card_history', 'errata_fr', 'LONGTEXT', 'errata_en');
 
   sql_create_index('card_history', 'card_history_card', 'fk_cards');
-  sql_create_index('card_history', 'card_history_image', 'fk_images');
+  sql_create_index('card_history', 'card_history_image_en', 'fk_images_en');
+  sql_create_index('card_history', 'card_history_image_fr', 'fk_images_fr');
 
   sql_update_query_id(X);
 }

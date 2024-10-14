@@ -8,6 +8,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  cards_add                       Adds a card to the database                                                      */
+/*                                                                                                                   */
 /*  images_get                      Returns data related to an image                                                 */
 /*  images_list                     Lists images in the database                                                     */
 /*  images_list_directories         Lists directories which should be scanned for images                             */
@@ -48,6 +50,80 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*  card_rarities_delete            Deletes a card rarity from the database                                          */
 /*                                                                                                                   */
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       CARDS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Adds a card to the database.
+ *
+ * @param   array   $data  An array containing the card's data.
+ *
+ * @return  void
+ */
+
+function cards_add( array $data ) : void
+{
+  // Sanitize the data
+  $card_name_en     = sanitize_array_element($data, 'name_en', 'string');
+  $card_name_fr     = sanitize_array_element($data, 'name_fr', 'string');
+  $card_type        = sanitize_array_element($data, 'type', 'int');
+  $card_faction     = sanitize_array_element($data, 'faction', 'int');
+  $card_rarity      = sanitize_array_element($data, 'rarity', 'int');
+  $card_release     = sanitize_array_element($data, 'release', 'int');
+  $card_image_en    = sanitize_array_element($data, 'image_en', 'int', default: 0);
+  $card_image_fr    = sanitize_array_element($data, 'image_fr', 'int', default: 0);
+  $card_hidden      = sanitize_array_element($data, 'hidden', 'bool', default: false);
+  $card_extra       = sanitize_array_element($data, 'extra', 'bool', default: false);
+  $card_weapons     = sanitize_array_element($data, 'weapons', 'int');
+  $card_durability  = sanitize_array_element($data, 'durability', 'int');
+  $card_cost        = sanitize_array_element($data, 'cost', 'string');
+  $card_income      = sanitize_array_element($data, 'income', 'string');
+  $card_body_en     = sanitize_array_element($data, 'body_en', 'string');
+  $card_body_fr     = sanitize_array_element($data, 'body_fr', 'string');
+
+  // Add the card to the database
+  query(" INSERT INTO cards
+          SET         cards.uuid              = UUID()              ,
+                      cards.fk_releases       = '$card_release'     ,
+                      cards.fk_images_en      = '$card_image_en'    ,
+                      cards.fk_images_fr      = '$card_image_fr'    ,
+                      cards.fk_factions       = '$card_faction'     ,
+                      cards.fk_card_types     = '$card_type'        ,
+                      cards.fk_card_rarities  = '$card_rarity'      ,
+                      cards.is_extra_card     = '$card_extra'       ,
+                      cards.is_hidden         = '$card_hidden'      ,
+                      cards.name_en           = '$card_name_en'     ,
+                      cards.name_fr           = '$card_name_fr'     ,
+                      cards.cost              = '$card_cost'        ,
+                      cards.income            = '$card_income'      ,
+                      cards.weapons           = '$card_weapons'     ,
+                      cards.durability        = '$card_durability'  ,
+                      cards.body_en           = '$card_body_en'     ,
+                      cards.body_fr           = '$card_body_fr'     ");
+
+  // Get the newly created card's id
+  $card_id = sanitize(query_id(), "int");
+
+  // Fetch a list of card tags
+  $card_tags = tags_list(search: array('ftype' => 'Card'));
+
+  // Add the card's tags to the database
+  for($i = 0; $i < $card_tags['rows']; $i++)
+  {
+    $tag_id = $card_tags[$i]['id'];
+    if($data['card_tags'][$card_tags[$i]['id']])
+      query(" INSERT INTO tags_cards
+              SET         tags_cards.fk_cards = '$card_id' ,
+                          tags_cards.fk_tags   = '$tag_id'   ");
+  }
+}
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    IMAGES                                                         */

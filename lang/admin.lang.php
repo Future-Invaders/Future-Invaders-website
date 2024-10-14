@@ -83,6 +83,49 @@ ___('admin_query_ok', 'FR', "Requêtes exécutées avec succès");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Add a card
+___('admin_card_add_title',       'EN', "Add a card");
+___('admin_card_add_title',       'FR', "Ajouter une carte");
+___('admin_card_add_release',     'EN', "Release");
+___('admin_card_add_release',     'FR', "Version");
+___('admin_card_add_image_en',    'EN', "Image (English)");
+___('admin_card_add_image_en',    'FR', "Image (Anglais)");
+___('admin_card_add_image_fr',    'EN', "Image (French)");
+___('admin_card_add_image_fr',    'FR', "Image (Français)");
+___('admin_card_add_name_en',     'EN', "Name (English)");
+___('admin_card_add_name_en',     'FR', "Nom (Anglais)");
+___('admin_card_add_name_fr',     'EN', "Name (French)");
+___('admin_card_add_name_fr',     'FR', "Nom (Français)");
+___('admin_card_add_type',        'EN', "Type");
+___('admin_card_add_type',        'FR', "Type");
+___('admin_card_add_faction',     'EN', "Faction");
+___('admin_card_add_faction',     'FR', "Faction");
+___('admin_card_add_rarity',      'EN', "Rarity");
+___('admin_card_add_rarity',      'FR', "Rareté");
+___('admin_card_add_properties',  'EN', "Properties");
+___('admin_card_add_properties',  'FR', "Propriétés");
+___('admin_card_add_extra',       'EN', "Extra card (rules, tools, etc.)");
+___('admin_card_add_extra',       'FR', "Carte supplémentaire (règles, outils, etc.)");
+___('admin_card_add_hidden',      'EN', "Hidden from the public");
+___('admin_card_add_hidden',      'FR', "Cachée du public");
+___('admin_card_add_cost',        'EN', "Cost");
+___('admin_card_add_cost',        'FR', "Coût");
+___('admin_card_add_income',      'EN', "Income");
+___('admin_card_add_income',      'FR', "Revenu");
+___('admin_card_add_weapons',     'EN', "Weapons");
+___('admin_card_add_weapons',     'FR', "Armes");
+___('admin_card_add_durability',  'EN', "Durability");
+___('admin_card_add_durability',  'FR', "Durabilité");
+___('admin_card_add_body_en',     'EN', "Card text (English)");
+___('admin_card_add_body_en',     'FR', "Texte de la carte (Anglais)");
+___('admin_card_add_body_fr',     'EN', "Card text (French)");
+___('admin_card_add_body_fr',     'FR', "Texte de la carte (Français)");
+___('admin_card_add_tags',        'EN', "Tags");
+___('admin_card_add_tags',        'FR', "Tags");
+___('admin_card_add_submit',      'EN', "Add card");
+___('admin_card_add_submit',      'FR', "Ajouter la carte");
+
+
 // Card management
 ___('admin_card_management',          'EN', "Card management");
 ___('admin_card_management',          'FR', "Gestion des cartes");
