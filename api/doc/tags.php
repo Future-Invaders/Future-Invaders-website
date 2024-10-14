@@ -86,6 +86,16 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <?=__('api_tags_list_name')?>
   </p>
 
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">description</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_tags_list_desc')?>
+  </p>
+
   <h6 class="bigpadding_top smallpadding_bot">
     <?=__('api_response_schema')?>
   </h6>
@@ -96,6 +106,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "uuid": string,
       "type": string,
       "name": string,
+      "description": {
+        "en": string,
+        "fr": string
+      }
     },
   ]
 }</pre>
@@ -137,8 +151,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "uuid": string,
     "type": string,
     "name": string,
-    "description_en": string,
-    "description_fr": string,
+    "description": {
+      "en": string,
+      "fr": string
+    },
     "linked_images": [
       {
         "uuid": string,

@@ -18,15 +18,7 @@ include_once './../actions/game.act.php'; # Game actions
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of releases
 
-// Retrieve the search parameters
-$releases_search_lang = form_fetch_element('language', request_type: 'GET', default_value: 'en');
-
-// Assemble the search parameters
-$releases_search = array( 'lang' => $releases_search_lang );
-
-// Fetch the releases
-$releases_list = releases_list( search: $releases_search ,
-                                format: 'api'            );
+$releases_list = releases_list( format: 'api' );
 
 
 

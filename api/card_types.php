@@ -18,15 +18,7 @@ include_once './../actions/game.act.php'; # Game actions
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of card types
 
-// Retrieve the search parameters
-$card_types_search_lang = form_fetch_element('language', request_type: 'GET', default_value: 'en');
-
-// Assemble the search parameters
-$card_types_search = array( 'lang' => $card_types_search_lang );
-
-// Fetch the card types
-$card_types_list = card_types_list( search: $card_types_search  ,
-                                    format: 'api'               );
+$card_types_list = card_types_list( format: 'api' );
 
 
 

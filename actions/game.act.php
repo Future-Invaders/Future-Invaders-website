@@ -539,11 +539,11 @@ function tags_get(  int     $tag_id   = NULL    ,
     $lang = string_change_case(user_get_language(), 'lowercase');
 
     // Sanitize the data
-    $data['uuid']           = sanitize_json($tag_uuid);
-    $data['type']           = sanitize_json($tag_data['tt_name']);
-    $data['name']           = sanitize_json($tag_data['t_name']);
-    $data['description_en'] = sanitize_json($tag_data['t_desc_en']);
-    $data['description_fr'] = sanitize_json($tag_data['t_desc_fr']);
+    $data['uuid']               = sanitize_json($tag_uuid);
+    $data['type']               = sanitize_json($tag_data['tt_name']);
+    $data['name']               = sanitize_json($tag_data['t_name']);
+    $data['description']['en']  = sanitize_json($tag_data['t_desc_en']);
+    $data['description']['fr']  = sanitize_json($tag_data['t_desc_fr']);
 
     // Fetch linked elements
     $data['linked_images'] = tags_list_images($tag_uuid);
@@ -584,10 +584,11 @@ function tags_list( string  $sort_by  = 'name'  ,
   $search_desc  = sanitize_array_element($search, 'desc', 'string');
 
   // Search through the data
-  $query_search  =  ($search_type)  ? " WHERE tags.fk_tag_types       = '$search_type' "      : " WHERE 1 = 1 ";
-  $query_search .=  ($search_ftype) ? " AND   tag_types.name          LIKE '$search_ftype' "  : "";
-  $query_search .=  ($search_name)  ? " AND   tags.name               LIKE '%$search_name%' " : "";
-  $query_search .=  ($search_desc)  ? " AND   tags.description_$lang  LIKE '%$search_desc%' " : "";
+  $query_search  =  ($search_type)  ? " WHERE tags.fk_tag_types   =    '$search_type' "     : " WHERE 1 = 1 ";
+  $query_search .=  ($search_ftype) ? " AND   tag_types.name      LIKE '$search_ftype' "    : "";
+  $query_search .=  ($search_name)  ? " AND   tags.name           LIKE '%$search_name%' "   : "";
+  $query_search .=  ($search_desc)  ? " AND ( tags.description_en LIKE '%$search_desc%'
+                                        OR    tags.description_fr LIKE '%$search_desc%' ) " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -648,9 +649,11 @@ function tags_list( string  $sort_by  = 'name'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid'] = sanitize_json($row['t_uuid']);
-      $data[$i]['type'] = sanitize_json($row['tt_type']);
-      $data[$i]['name'] = sanitize_json($row['t_name']);
+      $data[$i]['uuid']               = sanitize_json($row['t_uuid']);
+      $data[$i]['type']               = sanitize_json($row['tt_type']);
+      $data[$i]['name']               = sanitize_json($row['t_name']);
+      $data[$i]['description']['en']  = sanitize_json($row['t_desc_en']);
+      $data[$i]['description']['fr']  = sanitize_json($row['t_desc_fr']);
     }
   }
 
@@ -895,7 +898,6 @@ function releases_list( string  $sort_by  = 'path'  ,
                         string  $format   = 'html'  ) : array
 {
   // Sanatize the search data
-  $search_lang  = sanitize_array_element($search, 'lang', 'string');
   $search_date  = sanitize_array_element($search, 'date', 'string');
   $search_name  = sanitize_array_element($search, 'name', 'string');
   $lang         = string_change_case(user_get_language(), 'lowercase');
@@ -939,10 +941,10 @@ function releases_list( string  $sort_by  = 'path'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid'] = sanitize_json($row['r_uuid']);
-      $temp_name        = ($search_lang === 'fr') ? $row['r_name_fr'] : $row['r_name_en'];
-      $data[$i]['name'] = sanitize_json($temp_name);
-      $data[$i]['date'] = sanitize_json($row['r_date']);
+      $data[$i]['uuid']       = sanitize_json($row['r_uuid']);
+      $data[$i]['date']       = sanitize_json($row['r_date']);
+      $data[$i]['name']['en'] = sanitize_json($row['r_name_en']);
+      $data[$i]['name']['fr'] = sanitize_json($row['r_name_fr']);
     }
   }
 
@@ -1092,21 +1094,15 @@ function factions_get( int $faction_id ) : array|null
 /**
  * Lists factions in the database.
  *
- * @param   array   $search   (OPTIONAL)  An array containing the search data.
  * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                         An array containing the factions.
  */
 
-function factions_list( array   $search = array() ,
-                        string  $format = 'html'  ) : array
+function factions_list( string $format = 'html' ) : array
 {
   // Fetch the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
-
-  // Sanatize the search data
-  $search_lang  = sanitize_array_element($search, 'lang', 'string');
-
   // Fetch the factions
   $factions = query(" SELECT    factions.id             AS 'f_id'       ,
                                 factions.uuid           AS 'f_uuid'     ,
@@ -1131,9 +1127,9 @@ function factions_list( array   $search = array() ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid'] = sanitize_json($row['f_uuid']);
-      $temp_name        = ($search_lang == 'fr') ? $row['f_name_fr'] : $row['f_name_en'];
-      $data[$i]['name'] = sanitize_json($temp_name);
+      $data[$i]['uuid']       = sanitize_json($row['f_uuid']);
+      $data[$i]['name']['en'] = sanitize_json($row['f_name_en']);
+      $data[$i]['name']['fr'] = sanitize_json($row['f_name_fr']);
     }
   }
 
@@ -1282,28 +1278,15 @@ function card_types_get( int $card_type_id ) : array|null
 /**
  * Lists card types in the database.
  *
- * @param   array   $search   (OPTIONAL)  An array containing the search data.
  * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                         An array containing the card types.
  */
 
-function card_types_list( array   $search = array() ,
-                          string  $format = 'html'  ) : array
+function card_types_list( string $format = 'html' ) : array
 {
   // Fetch the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
-
-  // Sanatize the search data
-  $search_lang = sanitize_array_element($search, 'lang', 'string');
-
-  // Sort the data
-  $sort_lang = ($search_lang !== null) ? $search_lang : $lang;
-  $query_sort = match($sort_lang)
-  {
-    'fr'    => " ORDER BY card_types.name_fr ASC ",
-    default => " ORDER BY card_types.name_en ASC ",
-  };
 
   // Fetch the card types
   $card_types = query(" SELECT    card_types.id         AS 'c_id'       ,
@@ -1312,7 +1295,7 @@ function card_types_list( array   $search = array() ,
                                   card_types.name_fr    AS 'c_name_fr'  ,
                                   card_types.name_$lang AS 'c_name'
                         FROM      card_types
-                        $query_sort ");
+                        ORDER BY  card_types.name_en ASC");
 
   // Prepare the data for display
   for($i = 0; $row = query_row($card_types); $i++)
@@ -1327,9 +1310,9 @@ function card_types_list( array   $search = array() ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid'] = sanitize_json($row['c_uuid']);
-      $temp_name        = ($search_lang === 'fr') ? $row['c_name_fr'] : $row['c_name_en'];
-      $data[$i]['type'] = sanitize_json($temp_name);
+      $data[$i]['uuid']       = sanitize_json($row['c_uuid']);
+      $data[$i]['type']['en'] = sanitize_json($row['c_name_en']);
+      $data[$i]['type']['fr'] = sanitize_json($row['c_name_fr']);
     }
   }
 
@@ -1476,40 +1459,26 @@ function card_rarities_get( int $card_rarity_id ) : array|null
 /**
  * Lists card rarities in the database.
  *
- * @param   array   $search   (OPTIONAL)  An array containing the search data.
  * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                         An array containing the card rarities.
  */
 
-function card_rarities_list( array   $search = array() ,
-                             string  $format = 'html'  ) : array
+function card_rarities_list( string  $format = 'html'  ) : array
 {
   // Fetch the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
 
-  // Sanatize the search data
-  $search_lang = sanitize_array_element($search, 'lang', 'string');
-
-  // Sort the data
-  $sort_lang = ($search_lang !== null) ? $search_lang : $lang;
-  $query_sort = match($sort_lang)
-  {
-    'fr'    => " ORDER BY card_rarities.max_card_count  DESC  ,
-                          card_rarities.name_fr         ASC   ",
-    default => " ORDER BY card_rarities.max_card_count  DESC  ,
-                          card_rarities.name_en         ASC   ",
-  };
-
   // Fetch the card rarities
-  $card_rarities = query("  SELECT  card_rarities.id              AS 'r_id'       ,
-                                    card_rarities.uuid            AS 'r_uuid'     ,
-                                    card_rarities.name_en         AS 'r_name_en'  ,
-                                    card_rarities.name_fr         AS 'r_name_fr'  ,
-                                    card_rarities.name_$lang      AS 'r_name'     ,
-                                    card_rarities.max_card_count  AS 'r_max_count'
-                            FROM    card_rarities
-                            $query_sort ");
+  $card_rarities = query("  SELECT    card_rarities.id              AS 'r_id'       ,
+                                      card_rarities.uuid            AS 'r_uuid'     ,
+                                      card_rarities.name_en         AS 'r_name_en'  ,
+                                      card_rarities.name_fr         AS 'r_name_fr'  ,
+                                      card_rarities.name_$lang      AS 'r_name'     ,
+                                      card_rarities.max_card_count  AS 'r_max_count'
+                            FROM      card_rarities
+                            ORDER BY  card_rarities.max_card_count  DESC  ,
+                                      card_rarities.name_en         ASC   ");
 
   // Prepare the data for display
   for($i = 0; $row = query_row($card_rarities); $i++)
@@ -1526,9 +1495,9 @@ function card_rarities_list( array   $search = array() ,
     if($format === 'api')
     {
       $data[$i]['uuid']           = sanitize_json($row['r_uuid']);
-      $temp_name                  = ($search_lang === 'fr') ? $row['r_name_fr'] : $row['r_name_en'];
-      $data[$i]['name']           = sanitize_json($temp_name);
       $data[$i]['max_card_count'] = sanitize_json($row['r_max_count']);
+      $data[$i]['name']['en']     = sanitize_json($row['r_name_fr']);
+      $data[$i]['name']['fr']     = sanitize_json($row['r_name_en']);
     }
   }
 

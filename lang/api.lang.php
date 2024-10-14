@@ -132,15 +132,11 @@ EOD
 // List card types
 ___('api_card_types_list_summary',  'EN', "Retrieves a list of all card types.");
 ___('api_card_types_list_summary',  'FR', "Récupère une liste de tous les types de cartes.");
-___('api_card_types_list_language', 'EN', "Display card types in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_card_types_list_language', 'FR', "Affiche les types de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
 
 
 // List card rarities
 ___('api_card_rarities_list_summary',  'EN', "Retrieves a list of all card rarities. They determine the maximum number of copies of a single card which you can include in an arsenal.");
 ___('api_card_rarities_list_summary',  'FR', "Récupère une liste de toutes les raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.");
-___('api_card_rarities_list_language', 'EN', "Display card rarities in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_card_rarities_list_language', 'FR', "Affiche les raretés de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
 
 
 
@@ -191,8 +187,6 @@ EOD
 // List factions
 ___('api_factions_list_summary',  'EN', "Retrieves a list of all factions.");
 ___('api_factions_list_summary',  'FR', "Récupère une liste de toutes les factions.");
-___('api_factions_list_language', 'EN', "Display factions in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_factions_list_language', 'FR', "Affiche les factions dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
 
 
 
@@ -221,6 +215,8 @@ ___('api_tags_list_type',     'EN', "Search for tags of a specific type ('Card',
 ___('api_tags_list_type',     'FR', "Recherche les tags d'un type spécifique ('Carte', 'Image', etc.)");
 ___('api_tags_list_name',     'EN', "Search for tags by name.");
 ___('api_tags_list_name',     'FR', "Recherche des tags par nom.");
+___('api_tags_list_desc',     'EN', "Search the description of tags, in all languages.");
+___('api_tags_list_desc',     'FR', "Recherche dans la description des tags, dans toutes les langues.");
 
 
 // Get tag

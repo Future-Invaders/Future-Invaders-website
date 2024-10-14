@@ -21,10 +21,12 @@ include_once './../actions/game.act.php'; # Game actions
 // Retrieve the search parameters
 $tags_search_type = form_fetch_element('type', request_type: 'GET');
 $tags_search_name = form_fetch_element('name', request_type: 'GET');
+$tags_search_desc = form_fetch_element('description', request_type: 'GET');
 
 // Assemble the search parameters
 $tags_search = array( 'ftype' => $tags_search_type  ,
-                      'name'  => $tags_search_name  );
+                      'name'  => $tags_search_name  ,
+                      'desc'  => $tags_search_desc  );
 
 // Fetch the tags
 $tags_list = tags_list( sort_by:  'api'         ,
