@@ -96,7 +96,6 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "uuid": string,
       "type": string,
       "name": string,
-      "description": string
     },
   ]
 }</pre>
@@ -138,7 +137,8 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "uuid": string,
     "type": string,
     "name": string,
-    "description": string,
+    "description_en": string,
+    "description_fr": string,
     "linked_images": [
       {
         "uuid": string,

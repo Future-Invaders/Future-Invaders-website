@@ -463,10 +463,11 @@ function tags_get(  int     $tag_id   = NULL    ,
     $lang = string_change_case(user_get_language(), 'lowercase');
 
     // Sanitize the data
-    $data['uuid']         = sanitize_json($tag_uuid);
-    $data['type']         = sanitize_json($tag_data['tt_name']);
-    $data['name']         = sanitize_json($tag_data['t_name']);
-    $data['description']  = sanitize_json($tag_data['t_desc_'.$lang]);
+    $data['uuid']           = sanitize_json($tag_uuid);
+    $data['type']           = sanitize_json($tag_data['tt_name']);
+    $data['name']           = sanitize_json($tag_data['t_name']);
+    $data['description_en'] = sanitize_json($tag_data['t_desc_en']);
+    $data['description_fr'] = sanitize_json($tag_data['t_desc_fr']);
 
     // Fetch linked elements
     $data['linked_images'] = tags_list_images($tag_uuid);
@@ -571,10 +572,9 @@ function tags_list( string  $sort_by  = 'name'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid']         = sanitize_json($row['t_uuid']);
-      $data[$i]['type']         = sanitize_json($row['tt_type']);
-      $data[$i]['name']         = sanitize_json($row['t_name']);
-      $data[$i]['description']  = sanitize_json($row['t_desc_'.$lang]);
+      $data[$i]['uuid'] = sanitize_json($row['t_uuid']);
+      $data[$i]['type'] = sanitize_json($row['tt_type']);
+      $data[$i]['name'] = sanitize_json($row['t_name']);
     }
   }
 
