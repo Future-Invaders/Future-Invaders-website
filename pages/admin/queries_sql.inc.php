@@ -756,12 +756,41 @@ if($last_query < 10)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Card tags
 
-/*
-if($last_query < X)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Cards, card tags
+
+if($last_query < 11)
 {
+  sql_create_table('cards');
+  sql_create_field('cards', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('cards', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_field('cards', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
+  sql_create_field('cards', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images');
+  sql_create_field('cards', 'fk_card_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_factions');
+  sql_create_field('cards', 'fk_card_rarities', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_types');
+  sql_create_field('cards', 'is_extra_card', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_rarities');
+  sql_create_field('cards', 'is_hidden', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_extra_card');
+  sql_create_field('cards', 'name_en', 'TEXT NOT NULL', 'is_hidden');
+  sql_create_field('cards', 'name_fr', 'TEXT NOT NULL', 'name_en');
+  sql_create_field('cards', 'cost', 'TINYTEXT', 'name_fr');
+  sql_create_field('cards', 'income', 'TINYTEXT', 'cost');
+  sql_create_field('cards', 'weapons', 'INT UNSIGNED NOT NULL DEFAULT 0', 'income');
+  sql_create_field('cards', 'durability', 'INT UNSIGNED NOT NULL DEFAULT 0', 'weapons');
+  sql_create_field('cards', 'body_en', 'LONGTEXT', 'durability');
+  sql_create_field('cards', 'body_fr', 'LONGTEXT', 'body_en');
+
+  sql_create_index('cards', 'cards_uuid', 'uuid');
+  sql_create_index('cards', 'cards_release', 'fk_releases');
+  sql_create_index('cards', 'cards_image', 'fk_images');
+  sql_create_index('cards', 'cards_faction', 'fk_factions');
+  sql_create_index('cards', 'cards_type', 'fk_card_types');
+  sql_create_index('cards', 'cards_rarity', 'fk_card_rarities');
+  sql_create_index('cards', 'cards_extra', 'is_extra_card');
+  sql_create_index('cards', 'cards_hidden', 'is_hidden');
+  sql_create_index('cards', 'cards_name_en', 'name_en(40)');
+  sql_create_index('cards', 'cards_name_fr', 'name_fr(40)');
+
   sql_create_table('tags_cards');
   sql_create_field('tags_cards', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('tags_cards', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
@@ -769,9 +798,8 @@ if($last_query < X)
   sql_create_index('tags_cards', 'tags_cards_card', 'fk_cards');
   sql_create_index('tags_cards', 'tags_cards_tag', 'fk_tags');
 
-  sql_update_query_id(X);
+  sql_update_query_id(11);
 }
-*/
 
 
 
@@ -808,45 +836,6 @@ if($last_query < X)
 
   sql_create_index('tags_rulings', 'tags_rulings_ruling', 'fk_rulings');
   sql_create_index('tags_rulings', 'tags_rulings_tag', 'fk_tags');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Cards
-
-/*
-if($last_query < X)
-{
-  sql_create_table('cards');
-  sql_create_field('cards', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('cards', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
-  sql_create_field('cards', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
-  sql_create_field('cards', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images');
-  sql_create_field('cards', 'fk_card_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_factions');
-  sql_create_field('cards', 'fk_card_rarities', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_types');
-  sql_create_field('cards', 'is_extra_card', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_rarities');
-  sql_create_field('cards', 'name_en', 'TEXT NOT NULL', 'is_extra_card');
-  sql_create_field('cards', 'name_fr', 'TEXT NOT NULL', 'name_en');
-  sql_create_field('cards', 'cost', 'TINYTEXT', 'name_fr');
-  sql_create_field('cards', 'income', 'TINYTEXT', 'cost');
-  sql_create_field('cards', 'weapons', 'INT UNSIGNED NOT NULL DEFAULT 0', 'income');
-  sql_create_field('cards', 'durability', 'INT UNSIGNED NOT NULL DEFAULT 0', 'weapons');
-  sql_create_field('cards', 'body_en', 'LONGTEXT', 'durability');
-  sql_create_field('cards', 'body_fr', 'LONGTEXT', 'body_en');
-
-  sql_create_index('cards', 'cards_uuid', 'uuid');
-  sql_create_index('cards', 'cards_release', 'fk_releases');
-  sql_create_index('cards', 'cards_image', 'fk_images');
-  sql_create_index('cards', 'cards_faction', 'fk_factions');
-  sql_create_index('cards', 'cards_type', 'fk_card_types');
-  sql_create_index('cards', 'cards_rarity', 'fk_card_rarities');
-  sql_create_index('cards', 'cards_name_en', 'name_en(40)');
-  sql_create_index('cards', 'cards_name_fr', 'name_fr(40)');
 
   sql_update_query_id(X);
 }
