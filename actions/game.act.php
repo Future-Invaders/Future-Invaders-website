@@ -134,44 +134,99 @@ function cards_add( array $data ) : void
 /**
  * Returns data related to an image.
  *
- * @param   int         $image_id   The id of the image.
+ * @param   int         $image_id     (OPTIONAL)  The id of the image.
+ * @param   string      $image_uuid   (OPTIONAL)  The uuid of the image.
+ * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array|null              An array containing the image's data, or null if the image does not exist.
  */
 
-function images_get( int $image_id ) : array|null
+function images_get(  ?int    $image_id   = null    ,
+                      ?string $image_uuid = null    ,
+                      string  $format     = 'html'  ) : array|null
 {
-  // Sanitize the image's id
-  $image_id = sanitize($image_id, 'int');
-
-  // Return null if the image does not exist
-  if(!database_row_exists('images', $image_id))
+  // Return null if there are neither an id nor an uuid
+  if(!$image_id && !$image_uuid)
     return null;
 
+  // Sanitize the image's id and uuid
+  $image_id   = sanitize($image_id, 'int');
+  $image_uuid = sanitize($image_uuid, 'string');
+
+  // Return null if the tag does not have a valid ID
+  if($image_id && !database_row_exists('images', $image_id))
+    return null;
+
+  // Return null if the tag does not have a valid UUID
+  if($image_uuid && !database_entry_exists('images', 'uuid', $image_uuid))
+    return null;
+
+  // Prepare the condition for retrieving the image
+  $query_where = ($image_id) ? " WHERE images.id = '$image_id' " : " WHERE images.uuid = '$image_uuid' ";
+
   // Fetch the image's data
-  $image_data = query(" SELECT  images.path     AS 'i_path' ,
+  $image_data = query(" SELECT  images.id       AS 'i_id'   ,
+                                images.uuid     AS 'i_uuid' ,
+                                images.path     AS 'i_path' ,
                                 images.name     AS 'i_name' ,
                                 images.language AS 'i_lang' ,
                                 images.artist   AS 'i_artist'
                         FROM    images
-                        WHERE   images.id = '$image_id' ",
+                        $query_where ",
                         fetch_row: true);
 
-  // Assemble an array with the image's data
-  $data['path']   = sanitize_output($image_data['i_path']);
-  $data['name']   = sanitize_output($image_data['i_name']);
-  $data['lang']   = sanitize_output($image_data['i_lang']);
-  $data['artist'] = sanitize_output($image_data['i_artist']);
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['path']   = sanitize_output($image_data['i_path']);
+    $data['name']   = sanitize_output($image_data['i_name']);
+    $data['lang']   = sanitize_output($image_data['i_lang']);
+    $data['artist'] = sanitize_output($image_data['i_artist']);
+  }
+
+  // Prepare the data for the API
+  if($format === 'api')
+  {
+    $data['uuid']     = sanitize_json($image_data['i_uuid']);
+    $data['name']     = sanitize_json($image_data['i_name']);
+    $data['language'] = sanitize_json($image_data['i_lang']);
+    $data['artist']   = sanitize_json($image_data['i_artist']);
+    $data['path']     = sanitize_json($GLOBALS['website_url'].$image_data['i_path']);
+  }
 
   // Fetch the image's tags
-  $image_tags = query(" SELECT  tags_images.fk_tags AS 'ti_tag'
-                        FROM    tags_images
-                        WHERE   tags_images.fk_images = '$image_id' ");
+  $image_id = sanitize($image_data['i_id'], 'int');
+  $image_tags = query(" SELECT    tags_images.fk_tags AS 'ti_tag'     ,
+                                  tags.uuid           AS 't_uuid'     ,
+                                  tags.name           AS 't_name'     ,
+                                  tags.description_en AS 't_desc_en'  ,
+                                  tags.description_fr AS 't_desc_fr'
+                        FROM      tags_images
+                        LEFT JOIN tags ON tags_images.fk_tags = tags.id
+                        WHERE     tags_images.fk_images = '$image_id' ");
 
   // Assemble an array with the image's tags
   $data['tags'] = array();
-  while($dtags = query_row($image_tags))
-    $data['tags'][] = sanitize_output($dtags['ti_tag']);
+  for($i = 0; $dtags = query_row($image_tags); $i++)
+  {
+    if($format === 'html')
+      $data['tags'][$i] = sanitize_output($dtags['ti_tag']);
+    if($format === 'api')
+    {
+      $data['tags'][$i]['uuid']               = sanitize_json($dtags['t_uuid']);
+      $data['tags'][$i]['name']               = sanitize_json($dtags['t_name']);
+      $data['tags'][$i]['description']['en']  = sanitize_json($dtags['t_desc_en']);
+      $data['tags'][$i]['description']['fr']  = sanitize_json($dtags['t_desc_fr']);
+      $data['tags'][$i]['endpoint']           = sanitize_json($GLOBALS['website_url'].'api/tag/'.$dtags['t_uuid']);
+    }
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('tag' => $data);
+  }
 
   // Return the image's data
   return $data;
@@ -185,12 +240,14 @@ function images_get( int $image_id ) : array|null
  *
  * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
  * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array   An array containing the images.
  */
 
 function images_list( string  $sort_by  = 'path'  ,
-                      array   $search   = array() ) : array
+                      array   $search   = array() ,
+                      string  $format   = 'html'  ) : array
 {
   // Sanatize the search data
   $search_path    = sanitize_array_element($search, 'path', 'string');
@@ -221,6 +278,7 @@ function images_list( string  $sort_by  = 'path'  ,
 
   // Get a list of all images in the database
   $qimages = query("  SELECT    images.id       AS 'i_id'   ,
+                                images.uuid     AS 'i_uuid' ,
                                 images.path     AS 'i_path' ,
                                 images.name     AS 'i_name' ,
                                 images.language AS 'i_lang' ,
@@ -232,18 +290,41 @@ function images_list( string  $sort_by  = 'path'  ,
   // Prepare the data for display
   for($i = 0; $row = query_row($qimages); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['i_id']);
-    $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
-    $data[$i]['dpath']  = sanitize_output($row['i_path']);
-    $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
-    $data[$i]['name']   = sanitize_output($row['i_name']);
-    $data[$i]['lang']   = sanitize_output($row['i_lang']);
-    $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
-    $data[$i]['artist'] = sanitize_output($row['i_artist']);
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($row['i_id']);
+      $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
+      $data[$i]['dpath']  = sanitize_output($row['i_path']);
+      $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
+      $data[$i]['name']   = sanitize_output($row['i_name']);
+      $data[$i]['lang']   = sanitize_output($row['i_lang']);
+      $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
+      $data[$i]['artist'] = sanitize_output($row['i_artist']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid']     = sanitize_json($row['i_uuid']);
+      $data[$i]['name']     = sanitize_json($row['i_name']);
+      $data[$i]['language'] = sanitize_json($row['i_lang']);
+      $data[$i]['artist']   = sanitize_json($row['i_artist']);
+      $data[$i]['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path']);
+      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid']);
+    }
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('images' => $data);
+  }
 
   // Return the prepared data
   return $data;
@@ -539,8 +620,8 @@ function images_delete( int $image_id ) : void
  * @return  array|null            An array containing the tag's data, or null if the tag does not exist.
  */
 
-function tags_get(  int     $tag_id   = NULL    ,
-                    string  $tag_uuid = NULL    ,
+function tags_get(  ?int    $tag_id   = NULL    ,
+                    ?string $tag_uuid = NULL    ,
                     string  $format   = 'html'  ) : array|null
 {
   // Return null if there are neither an id nor an uuid
