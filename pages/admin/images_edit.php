@@ -83,6 +83,11 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <input class="indiv" type="text" name="image_name" value="<?=$admin_image_data['name']?>">
       </div>
 
+      <div class="smallpadding_bot">
+        <label for="image_language"><?=__('admin_image_language')?></label>
+        <input class="indiv" type="text" name="image_language" value="<?=$admin_image_data['lang']?>">
+      </div>
+
       <div class="padding_bot">
         <label for="image_artist"><?=__('admin_image_artist')?></label>
         <input class="indiv" type="text" name="image_artist" value="<?=$admin_image_data['artist']?>">

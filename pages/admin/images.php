@@ -46,20 +46,22 @@ if(isset($_POST['image_edit']))
   $image_edit_id = form_fetch_element('image_id');
 
   // Gather image postdata
-  $image_add_name   = form_fetch_element('image_name');
-  $image_add_artist = form_fetch_element('image_artist');
+  $image_edit_name    = form_fetch_element('image_name');
+  $image_edit_lang    = form_fetch_element('image_language');
+  $image_edit_artist  = form_fetch_element('image_artist');
 
   // Fetch image tags
   $image_tags = tags_list(search: array('ftype' => 'Image'));
 
   // Gather tag postdata
   for($i = 0; $i < $image_tags['rows']; $i++)
-    $image_add_tags[$image_tags[$i]['id']] = form_fetch_element("image_tag_".$image_tags[$i]['id'], element_exists: true);
+    $image_edit_tags[$image_tags[$i]['id']] = form_fetch_element("image_tag_".$image_tags[$i]['id'], element_exists: true);
 
   // Assemble an array with the postdata
-  $image_edit_data = array( 'image_name'    => $image_add_name    ,
-                            'image_artist'  => $image_add_artist  ,
-                            'image_tags'    => $image_add_tags    );
+  $image_edit_data = array( 'image_name'    => $image_edit_name   ,
+                            'image_artist'  => $image_edit_artist ,
+                            'image_lang'    => $image_edit_lang   ,
+                            'image_tags'    => $image_edit_tags   );
 
   // Edit the image
   images_edit(  $image_edit_id    ,
@@ -79,12 +81,21 @@ $uncategorized_images = images_list_uncategorized();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List image languages
+
+$image_languages = images_list_languages();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of all images
 
 // Fetch the search data
 $admin_images_sort        = form_fetch_element('admin_images_sort', 'path');
 $admin_images_search_data = array(  'path'    =>  form_fetch_element('admin_images_search_path')    ,
                                     'name'    =>  form_fetch_element('admin_images_search_name')    ,
+                                    'lang'    =>  form_fetch_element('admin_images_search_lang')    ,
                                     'artist'  =>  form_fetch_element('admin_images_search_artist')  );
 
 // Fetch the images
@@ -130,6 +141,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('path');")?>
         </th>
         <th>
+          <?=__('admin_image_list_language')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('lang');")?>
+        </th>
+        <th>
           <?=__('admin_image_list_name')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('name');")?>
         </th>
@@ -146,6 +161,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <input type="hidden" name="admin_images_sort" id="admin_images_sort" value="path">
           <input type="text" class="table_search" name="admin_images_search_path" id="admin_images_search_path" value="" onkeyup="admin_images_search();">
+        </th>
+        <th>
+          <select class="table_search" name="admin_images_search_lang" id="admin_images_search_lang" onchange="admin_images_search();">
+            <option value="">&nbsp;</option>
+            <?php for($i = 0; $i < $image_languages['rows']; $i++): ?>
+            <option value="<?=$image_languages[$i]['lang']?>"><?=$image_languages[$i]['blang']?></option>
+            <?php endfor; ?>
+            <option value="none"><?=__('admin_images_nolang')?></option>
+          </select>
         </th>
         <th>
           <input type="text" class="table_search" name="admin_images_search_name" id="admin_images_search_name" value="" onkeyup="admin_images_search();">
@@ -165,7 +189,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="4" class="uppercase text_light dark bold align_center">
+        <td colspan="5" class="uppercase text_light dark bold align_center">
           <?=__('admin_image_list_count', preset_values: array($list_images['rows']), amount: $list_images['rows'])?>
         </td>
       </tr>
@@ -181,6 +205,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
               &nbsp;
             </div>
           </div>
+        </td>
+
+        <td class="align_center bold">
+          <?=$list_images[$i]['blang']?>
         </td>
 
         <td>

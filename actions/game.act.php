@@ -14,6 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_list                     Lists images in the database                                                     */
 /*  images_list_directories         Lists directories which should be scanned for images                             */
 /*  images_list_uncategorized       Lists images waiting to be added to the database                                 */
+/*  images_list_languages           Lists languages with which images are tagged                                     */
 /*  images_add                      Adds an image to the database                                                    */
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
@@ -148,9 +149,10 @@ function images_get( int $image_id ) : array|null
     return null;
 
   // Fetch the image's data
-  $image_data = query(" SELECT  images.path   AS 'i_path' ,
-                                images.name   AS 'i_name' ,
-                                images.artist AS 'i_artist'
+  $image_data = query(" SELECT  images.path     AS 'i_path' ,
+                                images.name     AS 'i_name' ,
+                                images.language AS 'i_lang' ,
+                                images.artist   AS 'i_artist'
                         FROM    images
                         WHERE   images.id = '$image_id' ",
                         fetch_row: true);
@@ -158,6 +160,7 @@ function images_get( int $image_id ) : array|null
   // Assemble an array with the image's data
   $data['path']   = sanitize_output($image_data['i_path']);
   $data['name']   = sanitize_output($image_data['i_name']);
+  $data['lang']   = sanitize_output($image_data['i_lang']);
   $data['artist'] = sanitize_output($image_data['i_artist']);
 
   // Fetch the image's tags
@@ -192,28 +195,36 @@ function images_list( string  $sort_by  = 'path'  ,
   // Sanatize the search data
   $search_path    = sanitize_array_element($search, 'path', 'string');
   $search_name    = sanitize_array_element($search, 'name', 'string');
+  $search_lang    = sanitize_array_element($search, 'lang', 'string');
   $search_artist  = sanitize_array_element($search, 'artist', 'string');
 
   // Search through the data
-  $query_search =   ($search_path)    ? " WHERE images.path   LIKE '%$search_path%' "    : " WHERE 1 = 1 ";
-  $query_search .=  ($search_name)    ? " AND   images.name   LIKE '%$search_name%' "    : "";
-  $query_search .=  ($search_artist)  ? " AND   images.artist LIKE '%$search_artist%' "  : "";
+  $query_search =  ($search_path)             ? " WHERE images.path     LIKE '%$search_path%' "   : " WHERE 1 = 1 ";
+  $query_search .= ($search_name)             ? " AND   images.name     LIKE '%$search_name%' "   : "";
+  $query_search .= ($search_lang && $search_lang !== "none")
+                                              ? " AND   images.language = '$search_lang' "        : "";
+  $query_search .= ($search_lang === "none")  ? " AND   images.language = '' "                    : "";
+  $query_search .= ($search_artist)           ? " AND   images.artist   LIKE '%$search_artist%' " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'name'    => " ORDER BY images.name   ASC ,
-                            images.path   ASC ",
-    'artist'  => " ORDER BY images.artist ASC ,
-                            images.path   ASC ",
-    default   => " ORDER BY images.path   ASC ",
+    'name'    => " ORDER BY images.name     ASC   ,
+                            images.path     ASC   ",
+    'lang'    => " ORDER BY images.language = ''  ,
+                            images.language ASC   ,
+                            images.path     ASC   ",
+    'artist'  => " ORDER BY images.artist   ASC   ,
+                            images.path     ASC   ",
+    default   => " ORDER BY images.path     ASC   ",
   };
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    images.id     AS 'i_id'   ,
-                                images.path   AS 'i_path' ,
-                                images.name   AS 'i_name' ,
-                                images.artist AS 'i_artist'
+  $qimages = query("  SELECT    images.id       AS 'i_id'   ,
+                                images.path     AS 'i_path' ,
+                                images.name     AS 'i_name' ,
+                                images.language AS 'i_lang' ,
+                                images.artist   AS 'i_artist'
                       FROM      images
                       $query_search
                       $query_sort ");
@@ -226,6 +237,8 @@ function images_list( string  $sort_by  = 'path'  ,
     $data[$i]['dpath']  = sanitize_output($row['i_path']);
     $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
     $data[$i]['name']   = sanitize_output($row['i_name']);
+    $data[$i]['lang']   = sanitize_output($row['i_lang']);
+    $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
     $data[$i]['artist'] = sanitize_output($row['i_artist']);
   }
 
@@ -314,6 +327,38 @@ function images_list_uncategorized() : array
 
 
 /**
+ * Lists languages with which images are tagged.
+ *
+ * @return  array   An array containing the languages.
+ */
+
+function images_list_languages() : array
+{
+  // Fetch image languages
+  $image_languages = query("  SELECT    images.language AS 'i_lang'
+                              FROM      images
+                              WHERE     images.language != ''
+                              GROUP BY  images.language
+                              ORDER BY  images.language ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($image_languages); $i++)
+  {
+    $data[$i]['lang']   = sanitize_output($row['i_lang']);
+    $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
+  }
+
+  // Add the number of rows to the returned data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
  * Adds an image to the database.
  *
  * @param   array   $data  An array containing the image's data.
@@ -362,14 +407,16 @@ function images_add( array $data ) : void
   // Sanatize image data
   $image_add_path   = sanitize(mb_substr($image_path, 8), 'string');
   $image_add_name   = sanitize_array_element($data, 'image_name', 'string');
+  $image_add_lang   = sanitize_array_element($data, 'image_lang', 'string');
   $image_add_artist = sanitize_array_element($data, 'image_artist', 'string');
 
   // Add the image to the database
   query(" INSERT INTO images
-          SET         images.uuid   = UUID()              ,
-                      images.path   = '$image_add_path'   ,
-                      images.name   = '$image_add_name'   ,
-                      images.artist = '$image_add_artist' ");
+          SET         images.uuid     = UUID()              ,
+                      images.path     = '$image_add_path'   ,
+                      images.name     = '$image_add_name'   ,
+                      images.language = '$image_add_lang' ,
+                      images.artist   = '$image_add_artist' ");
 
   // Get the newly created image's id
   $image_id = sanitize(query_id(), "int");
@@ -406,6 +453,7 @@ function images_edit( int   $image_id ,
   // Sanitize the data
   $image_id     = sanitize($image_id, 'int');
   $image_name   = sanitize_array_element($data, 'image_name', 'string');
+  $image_lang   = sanitize_array_element($data, 'image_lang', 'string');
   $image_artist = sanitize_array_element($data, 'image_artist', 'string');
 
   // Stop here if the image does not exist
@@ -414,9 +462,10 @@ function images_edit( int   $image_id ,
 
   // Edit the image
   query(" UPDATE  images
-          SET     images.name   = '$image_name'   ,
-                  images.artist = '$image_artist'
-          WHERE   images.id     = '$image_id' ");
+          SET     images.name     = '$image_name'   ,
+                  images.language = '$image_lang' ,
+                  images.artist   = '$image_artist'
+          WHERE   images.id       = '$image_id' ");
 
   // Fetch a list of image tags
   $image_tags = tags_list(search: array('ftype' => 'Image'));
@@ -535,9 +584,6 @@ function tags_get(  int     $tag_id   = NULL    ,
   // Prepare the data for the API
   if($format === 'api')
   {
-    // Get the user's current language
-    $lang = string_change_case(user_get_language(), 'lowercase');
-
     // Sanitize the data
     $data['uuid']               = sanitize_json($tag_uuid);
     $data['type']               = sanitize_json($tag_data['tt_name']);
@@ -727,10 +773,11 @@ function tags_list_images( string $tag_uuid ) : array
     return null;
 
   // Fetch linked images
-  $images = query(" SELECT    images.uuid   AS 'i_uuid' ,
-                              images.path   AS 'i_path' ,
-                              images.name   AS 'i_name' ,
-                              images.artist AS 'i_artist'
+  $images = query(" SELECT    images.uuid     AS 'i_uuid' ,
+                              images.path     AS 'i_path' ,
+                              images.name     AS 'i_name' ,
+                              images.language AS 'i_lang' ,
+                              images.artist   AS 'i_artist'
                     FROM      images
                     LEFT JOIN tags_images ON images.id = tags_images.fk_images
                     WHERE     tags_images.fk_tags = '$tag_id' ");
@@ -738,10 +785,11 @@ function tags_list_images( string $tag_uuid ) : array
   // Prepare linked images for display
   for($i = 0; $row = query_row($images); $i++)
   {
-    $data[$i]['uuid']    = sanitize_output($row['i_uuid']);
-    $data[$i]['name']    = sanitize_output($row['i_name']);
-    $data[$i]['artist']  = sanitize_output($row['i_artist']);
-    $data[$i]['path']    = $GLOBALS['website_url'].sanitize_output($row['i_path']);
+    $data[$i]['uuid']     = sanitize_output($row['i_uuid']);
+    $data[$i]['language'] = sanitize_output($row['i_lang']);
+    $data[$i]['name']     = sanitize_output($row['i_name']);
+    $data[$i]['artist']   = sanitize_output($row['i_artist']);
+    $data[$i]['path']     = $GLOBALS['website_url'].sanitize_output($row['i_path']);
   }
 
   // If there are no linked images, return an empty array

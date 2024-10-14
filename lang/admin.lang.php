@@ -217,18 +217,22 @@ ___('admin_uncategorized_images_title', 'FR', "Images non catégorisées");
 
 
 // Image list
-___('admin_image_list_path',    'EN', "Path");
-___('admin_image_list_path',    'FR', "Chemin");
-___('admin_image_list_name',    'EN', "Name");
-___('admin_image_list_name',    'FR', "Nom");
-___('admin_image_list_artist',  'EN', "Artist");
-___('admin_image_list_artist',  'FR', "Artiste");
-___('admin_image_list_tags',    'EN', "Tags");
-___('admin_image_list_tags',    'FR', "Tags");
-___('admin_image_list_count',   'EN', "{{1}} image");
-___('admin_image_list_count',   'FR', "{{1}} image");
-___('admin_image_list_count+',  'EN', "{{1}} images");
-___('admin_image_list_count+',  'FR', "{{1}} images");
+___('admin_image_list_path',      'EN', "Path");
+___('admin_image_list_path',      'FR', "Chemin");
+___('admin_image_list_name',      'EN', "Name");
+___('admin_image_list_name',      'FR', "Nom");
+___('admin_image_list_language',  'EN', "Lang");
+___('admin_image_list_language',  'FR', "Lang");
+___('admin_image_list_artist',    'EN', "Artist");
+___('admin_image_list_artist',    'FR', "Artiste");
+___('admin_image_list_tags',      'EN', "Tags");
+___('admin_image_list_tags',      'FR', "Tags");
+___('admin_image_list_count',     'EN', "{{1}} image");
+___('admin_image_list_count',     'FR', "{{1}} image");
+___('admin_image_list_count+',    'EN', "{{1}} images");
+___('admin_image_list_count+',    'FR', "{{1}} images");
+___('admin_images_nolang',        'EN', "None");
+___('admin_images_nolang',        'FR', "Aucune");
 
 
 // Add an image
@@ -236,6 +240,8 @@ ___('admin_image_name_title', 'EN', "Add image");
 ___('admin_image_name_title', 'FR', "Ajouter l'image");
 ___('admin_image_name',       'EN', "Image name");
 ___('admin_image_name',       'FR', "Nom de l'image");
+___('admin_image_language',   'EN', "Language (ISO 639-1: 'en', 'fr', etc.)");
+___('admin_image_language',   'FR', "Langue (ISO 639-1 : 'en', 'fr', etc.)");
 ___('admin_image_artist',     'EN', "Artist");
 ___('admin_image_artist',     'FR', "Artiste");
 ___('admin_image_tags',       'EN', "Tags");

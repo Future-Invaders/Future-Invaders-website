@@ -758,7 +758,7 @@ if($last_query < 10)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Cards, card tags
+// Cards, card tags, and image languages
 
 if($last_query < 11)
 {
@@ -799,6 +799,10 @@ if($last_query < 11)
 
   sql_create_index('tags_cards', 'tags_cards_card', 'fk_cards');
   sql_create_index('tags_cards', 'tags_cards_tag', 'fk_tags');
+
+  sql_create_field('images', 'language', 'TINYTEXT NOT NULL', 'path');
+
+  sql_create_index('images', 'images_language', 'language(10)');
 
   sql_update_query_id(11);
 }
