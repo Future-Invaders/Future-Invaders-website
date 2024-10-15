@@ -136,7 +136,7 @@ function cards_add( array $data ) : void
  * @param   int         $image_id     (OPTIONAL)  The id of the image.
  * @param   string      $image_uuid   (OPTIONAL)  The uuid of the image.
  * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
- * @param   bool        $no_tags      (OPTIONAL)  If set, tags will not be included in the output.
+ * @param   bool        $no_depth     (OPTIONAL)  Whether to include elements linked to the image in the API.
  *
  * @return  array|null              An array containing the image's data, or null if the image does not exist.
  */
@@ -144,7 +144,7 @@ function cards_add( array $data ) : void
 function images_get(  ?int    $image_id   = null    ,
                       ?string $image_uuid = null    ,
                       string  $format     = 'html'  ,
-                      bool    $no_tags    = false   ) : array|null
+                      bool    $no_depth   = false   ) : array|null
 {
   // Return null if there are neither an id nor an uuid
   if(!$image_id && !$image_uuid)
@@ -193,35 +193,25 @@ function images_get(  ?int    $image_id   = null    ,
     $data['language'] = sanitize_json($image_data['i_lang']);
     $data['artist']   = sanitize_json($image_data['i_artist']);
     $data['path']     = sanitize_json($GLOBALS['website_url'].$image_data['i_path']);
-  }
 
-  // Fetch the image's tags
-  $image_id = sanitize($image_data['i_id'], 'int');
-  $image_tags = query(" SELECT    tags_images.fk_tags AS 'ti_tag'     ,
-                                  tags.uuid           AS 't_uuid'     ,
-                                  tags.name           AS 't_name'     ,
-                                  tags.description_en AS 't_desc_en'  ,
-                                  tags.description_fr AS 't_desc_fr'
-                        FROM      tags_images
-                        LEFT JOIN tags ON tags_images.fk_tags = tags.id
-                        WHERE     tags_images.fk_images = '$image_id' ");
-
-  // Assemble an array with the image's tags
-  if(!$no_tags)
-  {
-    $data['tags'] = array();
-    for($i = 0; $dtags = query_row($image_tags); $i++)
+    // Add linked tags
+    if(!$no_depth)
     {
-      if($format === 'html')
-        $data['tags'][$i] = sanitize_output($dtags['ti_tag']);
-      if($format === 'api')
-      {
-        $data['tags'][$i]['uuid']               = sanitize_json($dtags['t_uuid']);
-        $data['tags'][$i]['name']               = sanitize_json($dtags['t_name']);
-        $data['tags'][$i]['description']['en']  = sanitize_json($dtags['t_desc_en']);
-        $data['tags'][$i]['description']['fr']  = sanitize_json($dtags['t_desc_fr']);
-        $data['tags'][$i]['endpoint']           = sanitize_json($GLOBALS['website_url'].'api/tag/'.$dtags['t_uuid']);
-      }
+      // Fetch linked images
+      $image_id = sanitize($image_data['i_id'], 'int');
+      $qtags = query("  SELECT  tags_images.fk_tags AS 'it_id'
+                        FROM    tags_images
+                        WHERE   tags_images.fk_images = '$image_id' ");
+
+      // Prepare linked images for display
+      for($i = 0; $dtags = query_row($qtags); $i++)
+        $data['tags'][$i] = tags_get( tag_id:   $dtags['it_id'] ,
+                                      format:   'api'           ,
+                                      no_depth:  true           );
+
+      // If there are no linked images, show an empty array
+      if($i === 0)
+        $data['tags'] = array();
     }
   }
 
@@ -620,13 +610,15 @@ function images_delete( int $image_id ) : void
  * @param   int         $tag_id   (OPTIONAL)  The id of the tag.
  * @param   string      $tag_uuid (OPTIONAL)  The uuid of the tag.
  * @param   string      $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_depth (OPTIONAL)  Whether to include elements linked to the tag.
  *
  * @return  array|null            An array containing the tag's data, or null if the tag does not exist.
  */
 
 function tags_get(  ?int    $tag_id   = NULL    ,
                     ?string $tag_uuid = NULL    ,
-                    string  $format   = 'html'  ) : array|null
+                    string  $format   = 'html'  ,
+                    bool    $no_depth = false   ) : array|null
 {
   // Return null if there are neither an id nor an uuid
   if(!$tag_id && !$tag_uuid)
@@ -671,7 +663,7 @@ function tags_get(  ?int    $tag_id   = NULL    ,
   if($format === 'api')
   {
     // Sanitize the data
-    $data['uuid']               = sanitize_json($tag_uuid);
+    $data['uuid']               = sanitize_json($tag_data['t_uuid']);
     $data['type']               = sanitize_json($tag_data['tt_name']);
     $data['name']               = sanitize_json($tag_data['t_name']);
     $data['description']['en']  = sanitize_json($tag_data['t_desc_en']);
@@ -680,20 +672,24 @@ function tags_get(  ?int    $tag_id   = NULL    ,
     // Sanitize the tag's id
     $tag_id = sanitize($tag_data['t_id'], 'int');
 
-    // Fetch linked images
-    $qimages = query("  SELECT  tags_images.fk_images AS 'ti_id'
-                        FROM    tags_images
-                        WHERE   tags_images.fk_tags = '$tag_id' ");
+    // Add linked images
+    if(!$no_depth)
+    {
+      // Fetch linked images
+      $qimages = query("  SELECT  tags_images.fk_images AS 'ti_id'
+                          FROM    tags_images
+                          WHERE   tags_images.fk_tags = '$tag_id' ");
 
-    // Prepare linked images for display
-    for($i = 0; $dimages = query_row($qimages); $i++)
-      $data['linked_images'][$i] = images_get(  image_id: $dimages['ti_id'] ,
-                                                format:   'api'         ,
-                                                no_tags:  true          );
+      // Prepare linked images for display
+      for($i = 0; $dimages = query_row($qimages); $i++)
+        $data['linked_images'][$i] = images_get(  image_id: $dimages['ti_id'] ,
+                                                  format:   'api'         ,
+                                                  no_depth: true          );
 
-    // If there are no linked images, show an empty array
-    if($i === 0)
-      $data['linked_images'] = array();
+      // If there are no linked images, show an empty array
+      if($i === 0)
+        $data['linked_images'] = array();
+    }
 
     // Prepare for the API
     $data = (isset($data)) ? $data : NULL;

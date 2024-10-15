@@ -154,14 +154,15 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "path": string,
     "tags": [
       {
-        "uuid": string,
-        "name": string,
-        "description": {
-          "en": string,
-          "fr": string
-        },
-        "endpoint": string
-      },
+        "tag": {
+          "uuid": string,
+          "type": string,
+          "name": string,
+          "description": {
+            "en": string,
+            "fr": string
+          },
+        }
     ]
   }
 }</pre>
