@@ -47,12 +47,18 @@ if(!$admin_image_data)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch image tags
 
-// Fetch a list of all tags
-$image_tags = tags_list(search: array('ftype' => 'Image'));
+// Fetch a list of all tags and of the tags assigned to the image
+$image_all_tags = tags_list(search: array('ftype' => 'Image'));
+$image_tags     = tags_list(search: array('ftype' => 'Image', 'image_id' => $admin_image_id));
 
 // Check the checkboxes of the tags that are already assigned to the image
-for($i = 0; $i < $image_tags['rows']; $i++)
-  $admin_image_tag_checked[$image_tags[$i]['id']] = (in_array($image_tags[$i]['id'], $admin_image_data['tags'])) ? ' checked': '';
+for($i = 0; $i < $image_all_tags['rows']; $i++)
+{
+  $admin_image_tag_checked[$image_all_tags[$i]['id']] = '';
+  for($j = 0; $j < $image_tags['rows']; $j++)
+    if($image_all_tags[$i]['id'] === $image_tags[$j]['id'])
+      $admin_image_tag_checked[$image_all_tags[$i]['id']] = ' checked';
+}
 
 
 
@@ -95,12 +101,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <div class="padding_bot">
         <label><?=__('admin_image_tags')?></label>
-        <?php for($i = 0; $i < $image_tags['rows']; $i++): ?>
+        <?php for($i = 0; $i < $image_all_tags['rows']; $i++): ?>
         <div class="tooltip_container">
-          <input type="checkbox" name="image_tag_<?=$image_tags[$i]['id']?>"<?=$admin_image_tag_checked[$image_tags[$i]['id']]?>>
-          <label class="label_inline" for="image_tag_<?=$image_tags[$i]['id']?>"><?=$image_tags[$i]['name']?></label>
+          <input type="checkbox" name="image_tag_<?=$image_all_tags[$i]['id']?>"<?=$admin_image_tag_checked[$image_all_tags[$i]['id']]?>>
+          <label class="label_inline" for="image_tag_<?=$image_all_tags[$i]['id']?>"><?=$image_all_tags[$i]['name']?></label>
           <div class="tooltip">
-            <?=$image_tags[$i]['fdesc']?>
+            <?=$image_all_tags[$i]['fdesc']?>
           </div>
         </div>
         <?php endfor; ?>
