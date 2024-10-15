@@ -770,8 +770,7 @@ if($last_query < 11)
   sql_create_field('cards', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_fr');
   sql_create_field('cards', 'fk_card_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_factions');
   sql_create_field('cards', 'fk_card_rarities', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_types');
-  sql_create_field('cards', 'tag_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_rarities');
-  sql_create_field('cards', 'is_extra_card', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'tag_count');
+  sql_create_field('cards', 'is_extra_card', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_card_rarities');
   sql_create_field('cards', 'is_hidden', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_extra_card');
   sql_create_field('cards', 'name_en', 'TEXT NOT NULL', 'is_hidden');
   sql_create_field('cards', 'name_fr', 'TEXT NOT NULL', 'name_en');
@@ -789,7 +788,6 @@ if($last_query < 11)
   sql_create_index('cards', 'cards_faction', 'fk_factions');
   sql_create_index('cards', 'cards_type', 'fk_card_types');
   sql_create_index('cards', 'cards_rarity', 'fk_card_rarities');
-  sql_create_index('cards', 'cards_tag_count', 'tag_count');
   sql_create_index('cards', 'cards_extra', 'is_extra_card');
   sql_create_index('cards', 'cards_hidden', 'is_hidden');
   sql_create_index('cards', 'cards_name_en', 'name_en(40)');
@@ -802,13 +800,9 @@ if($last_query < 11)
   sql_create_index('tags_cards', 'tags_cards_card', 'fk_cards');
   sql_create_index('tags_cards', 'tags_cards_tag', 'fk_tags');
 
-  sql_create_field('images', 'tag_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
   sql_create_field('images', 'language', 'TINYTEXT NOT NULL', 'path');
 
-  sql_create_index('images', 'images_tag_count', 'tag_count');
   sql_create_index('images', 'images_language', 'language(10)');
-
-  sql_create_field('tags', 'tagged_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_tag_types');
 
   sql_update_query_id(11);
 }

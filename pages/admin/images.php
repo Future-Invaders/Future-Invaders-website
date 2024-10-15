@@ -29,6 +29,14 @@ $js   = array('admin/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch image tags
+
+$image_tags = tags_list(search: array('ftype' => 'Image'));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete an image
 
 if(isset($_POST['admin_images_delete']))
@@ -49,9 +57,6 @@ if(isset($_POST['image_edit']))
   $image_edit_name    = form_fetch_element('image_name');
   $image_edit_lang    = form_fetch_element('image_language');
   $image_edit_artist  = form_fetch_element('image_artist');
-
-  // Fetch image tags
-  $image_tags = tags_list(search: array('ftype' => 'Image'));
 
   // Gather tag postdata
   for($i = 0; $i < $image_tags['rows']; $i++)
@@ -96,7 +101,8 @@ $admin_images_sort        = form_fetch_element('admin_images_sort', 'path');
 $admin_images_search_data = array(  'path'    =>  form_fetch_element('admin_images_search_path')    ,
                                     'name'    =>  form_fetch_element('admin_images_search_name')    ,
                                     'lang'    =>  form_fetch_element('admin_images_search_lang')    ,
-                                    'artist'  =>  form_fetch_element('admin_images_search_artist')  );
+                                    'artist'  =>  form_fetch_element('admin_images_search_artist')  ,
+                                    'tag_id'  =>  form_fetch_element('admin_images_search_tags')    );
 
 // Fetch the images
 $list_images = images_list( $admin_images_sort        ,
@@ -153,6 +159,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('artist');")?>
         </th>
         <th>
+          <?=__('admin_image_list_tags')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('tags');")?>
+        </th>
+        <th>
           <?=__('act')?>
         </th>
       </tr>
@@ -178,6 +188,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <input type="text" class="table_search" name="admin_images_search_artist" id="admin_images_search_artist" value="" onkeyup="admin_images_search();">
         </th>
         <th>
+          <select class="table_search" name="admin_images_search_tags" id="admin_images_search_tags" onchange="admin_images_search();">
+            <option value="">&nbsp;</option>
+            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <?php for($i = 0; $i < $image_tags['rows']; $i++): ?>
+            <option value="<?=$image_tags[$i]['id']?>"><?=$image_tags[$i]['name']?></option>
+            <?php endfor; ?>
+          </select>
+        </th>
+        <th>
           &nbsp;
         </th>
       </tr>
@@ -189,7 +208,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="5" class="uppercase text_light dark bold align_center">
+        <td colspan="6" class="uppercase text_light dark bold align_center">
           <?=__('admin_image_list_count', preset_values: array($list_images['rows']), amount: $list_images['rows'])?>
         </td>
       </tr>
@@ -218,6 +237,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <td>
           <?=$list_images[$i]['artist']?>
         </td>
+
+        <?php if($list_images[$i]['tags']): ?>
+        <td class="align_center tooltip_container">
+          <span class="bold"><?=$list_images[$i]['ntags']?></span>
+          <div class="tooltip">
+            <?=$list_images[$i]['tags']?>
+          </div>
+        </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php endif; ?>
 
         <td class="align_center nowrap">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/images_edit?image='.$list_images[$i]['id'])?>

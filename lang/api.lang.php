@@ -217,6 +217,8 @@ ___('api_images_list_language', 'EN', "Search for images by ISO-639-1 language c
 ___('api_images_list_language', 'FR', "Recherche des images par code de langue ISO-639-1 (par ex. 'en', 'fr').");
 ___('api_images_list_artist',   'EN', "Search for images by artist name.");
 ___('api_images_list_artist',   'FR', "Recherche des images par nom d'artiste.");
+___('api_images_list_tag',      'EN', "Search for images with a specific tag.");
+___('api_images_list_tag',      'FR', "Recherche des images avec un tag spécifique.");
 
 
 // Get image

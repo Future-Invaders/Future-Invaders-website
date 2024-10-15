@@ -96,6 +96,16 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <?=__('api_images_list_artist')?>
   </p>
 
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">tag</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_images_list_tag')?>
+  </p>
+
   <h6 class="bigpadding_top smallpadding_bot">
     <?=__('api_response_schema')?>
   </h6>
@@ -108,6 +118,11 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "language": string,
       "artist": string,
       "path": string,
+      "tags": [
+        "tag1",
+        "tag2",
+        ...
+      ],
       "endpoint": string
     },
   ]

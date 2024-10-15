@@ -22,11 +22,13 @@ include_once './../actions/game.act.php'; # Game actions
 $images_search_name   = form_fetch_element('name', request_type: 'GET');
 $images_search_lang   = form_fetch_element('language', request_type: 'GET');
 $images_search_artist = form_fetch_element('artist', request_type: 'GET');
+$images_search_tag    = form_fetch_element('tag', request_type: 'GET');
 
 // Assemble the search parameters
 $images_search = array( 'name'    => $images_search_name   ,
                         'lang'    => $images_search_lang   ,
-                        'artist'  => $images_search_artist );
+                        'artist'  => $images_search_artist ,
+                        'tag'     => $images_search_tag    );
 
 // Fetch the images
 $images_list = images_list( search:   $images_search  ,

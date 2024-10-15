@@ -9,7 +9,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  cards_add                       Adds a card to the database                                                      */
-/*  cards_recount_tags              Recompute the number of tags linked to a card                                    */
 /*                                                                                                                   */
 /*  images_get                      Returns data related to an image                                                 */
 /*  images_list                     Lists images in the database                                                     */
@@ -19,7 +18,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_add                      Adds an image to the database                                                    */
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
-/*  images_recount_tags             Recompute the number of tags linked to an image                                  */
 /*                                                                                                                   */
 /*  tags_get                        Returns data related to a tag                                                    */
 /*  tags_list                       Lists tags in the database                                                       */
@@ -27,7 +25,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  tags_add                        Adds a tag to the database                                                       */
 /*  tags_edit                       Edits a tag in the database                                                      */
 /*  tags_delete                     Deletes a tag from the database                                                  */
-/*  tags_recount                    Recomputes the number of elements linked to a tag                                */
 /*                                                                                                                   */
 /*  releases_get                    Returns data related to a release                                                */
 /*  releases_list                   Lists releases in the database                                                   */
@@ -121,43 +118,7 @@ function cards_add( array $data ) : void
       query(" INSERT INTO tags_cards
               SET         tags_cards.fk_cards = '$card_id' ,
                           tags_cards.fk_tags   = '$tag_id'   ");
-    // Recount tagged cards
-    tags_recount($tag_id);
   }
-
-  // Count tags linked to the card
-  cards_recount_tags($card_id);
-}
-
-
-
-
-/**
- * Recomputes the number of tags linked to an card.
- *
- * @param   int     $card_id The id of the card.
- *
- * @return  void
- */
-
-function cards_recount_tags( int $card_id ) : void
-{
-  // Sanitize the data
-  $card_id = sanitize($card_id, 'int');
-
-  // Get the list of tags linked to the card
-  $tags = query(" SELECT  COUNT(*) AS 'tc_count'
-                  FROM    tags_cards
-                  WHERE   tags_cards.fk_cards = '$card_id' ",
-                  fetch_row: true);
-
-  // Count the tags linked to the card
-  $tag_count = sanitize($tags['tc_count'], 'int');
-
-  // Update the tag's linked element count
-  query(" UPDATE  cards
-          SET     cards.tag_count = '$tag_count'
-          WHERE   cards.id        = '$card_id' ");
 }
 
 
@@ -287,6 +248,8 @@ function images_list( string  $sort_by  = 'path'  ,
   $search_name    = sanitize_array_element($search, 'name', 'string');
   $search_lang    = sanitize_array_element($search, 'lang', 'string');
   $search_artist  = sanitize_array_element($search, 'artist', 'string');
+  $search_tag_id  = sanitize_array_element($search, 'tag_id', 'int');
+  $search_tag     = sanitize_array_element($search, 'tag', 'string');
 
   // Search through the data
   $query_search =  ($search_path)             ? " WHERE images.path     LIKE '%$search_path%' "   : " WHERE 1 = 1 ";
@@ -295,6 +258,10 @@ function images_list( string  $sort_by  = 'path'  ,
                                               ? " AND   images.language = '$search_lang' "        : "";
   $query_search .= ($search_lang === "none")  ? " AND   images.language = '' "                    : "";
   $query_search .= ($search_artist)           ? " AND   images.artist   LIKE '%$search_artist%' " : "";
+  $query_search .= ($search_tag_id && $search_tag_id !== -1)
+                                              ? " AND   tags.id         = '$search_tag_id' "      : "";
+  $query_search .= ($search_tag_id === -1)    ? " AND   tags.id         IS NULL "                 : "";
+  $query_search .= ($search_tag)              ? " AND   tags.name       LIKE '$search_tag' "      : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -306,18 +273,26 @@ function images_list( string  $sort_by  = 'path'  ,
                             images.path     ASC   ",
     'artist'  => " ORDER BY images.artist   ASC   ,
                             images.path     ASC   ",
+    'tags'    => " ORDER BY COUNT(tags.id)  DESC  ,
+                            images.path     ASC   ",
     default   => " ORDER BY images.path     ASC   ",
   };
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    images.id       AS 'i_id'   ,
-                                images.uuid     AS 'i_uuid' ,
-                                images.path     AS 'i_path' ,
-                                images.name     AS 'i_name' ,
-                                images.language AS 'i_lang' ,
-                                images.artist   AS 'i_artist'
+  $qimages = query("  SELECT    images.id       AS 'i_id'     ,
+                                images.uuid     AS 'i_uuid'   ,
+                                images.path     AS 'i_path'   ,
+                                images.name     AS 'i_name'   ,
+                                images.language AS 'i_lang'   ,
+                                images.artist   AS 'i_artist' ,
+                                COUNT(tags.id)  AS 'it_count' ,
+                                GROUP_CONCAT(tags.name SEPARATOR ', ')
+                                                AS 'it_names'
                       FROM      images
+                      LEFT JOIN tags_images ON tags_images.fk_images = images.id
+                      LEFT JOIN tags        ON tags.id = tags_images.fk_tags
                       $query_search
+                      GROUP BY  images.id
                       $query_sort ");
 
   // Prepare the data for display
@@ -334,6 +309,8 @@ function images_list( string  $sort_by  = 'path'  ,
       $data[$i]['lang']   = sanitize_output($row['i_lang']);
       $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
       $data[$i]['artist'] = sanitize_output($row['i_artist']);
+      $data[$i]['ntags']  = sanitize_output($row['it_count']);
+      $data[$i]['tags']   = sanitize_output($row['it_names']);
     }
 
     // Prepare for the API
@@ -344,6 +321,7 @@ function images_list( string  $sort_by  = 'path'  ,
       $data[$i]['language'] = sanitize_json($row['i_lang']);
       $data[$i]['artist']   = sanitize_json($row['i_artist']);
       $data[$i]['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path']);
+      $data[$i]['tags']     = ($row['it_names']) ? explode(', ', $row['it_names']) : array();
       $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid']);
     }
   }
@@ -546,12 +524,7 @@ function images_add( array $data ) : void
       query(" INSERT INTO tags_images
               SET         tags_images.fk_images = '$image_id' ,
                           tags_images.fk_tags   = '$tag_id'   ");
-    // Recount tagged images
-    tags_recount($tag_id);
   }
-
-  // Count tags linked to the image
-  images_recount_tags($image_id);
 }
 
 
@@ -611,13 +584,7 @@ function images_edit( int   $image_id ,
       query(" DELETE FROM tags_images
               WHERE       tags_images.fk_images = '$image_id'
               AND         tags_images.fk_tags   = '$tag_id'   ");
-
-    // Recount images linked to the tag
-    tags_recount($tag_id);
   }
-
-  // Recount tags linked to the image
-  images_recount_tags($image_id);
 }
 
 
@@ -636,11 +603,6 @@ function images_delete( int $image_id ) : void
   // Sanitize the data
   $image_id = sanitize($image_id, 'int');
 
-  // Get a list of the image's tags
-  $tags = query(" SELECT  tags_images.fk_tags AS 'ti_id'
-                  FROM    tags_images
-                  WHERE   tags_images.fk_images = '$image_id' ");
-
   // Delete the image from the database
   query(" DELETE FROM images
           WHERE   images.id = '$image_id' ");
@@ -648,41 +610,6 @@ function images_delete( int $image_id ) : void
   // Delete the image's tags from the database
   query(" DELETE FROM tags_images
           WHERE       tags_images.fk_images = '$image_id' ");
-
-  // Recompute counts for tags lined to the delete images
-  while($row = query_row($tags))
-    tags_recount($row['ti_id']);
-}
-
-
-
-
-/**
- * Recomputes the number of tags linked to an image.
- *
- * @param   int     $image_id The id of the image.
- *
- * @return  void
- */
-
-function images_recount_tags( int $image_id ) : void
-{
-  // Sanitize the data
-  $image_id = sanitize($image_id, 'int');
-
-  // Get the list of tags linked to the image
-  $tags = query("  SELECT  COUNT(*) AS 'ti_count'
-                  FROM    tags_images
-                  WHERE   tags_images.fk_images = '$image_id' ",
-                  fetch_row: true);
-
-  // Count the tags linked to the image
-  $tag_count = sanitize($tags['ti_count'], 'int');
-
-  // Update the tag's linked element count
-  query(" UPDATE  images
-          SET     images.tag_count = '$tag_count'
-          WHERE   images.id        = '$image_id' ");
 }
 
 
@@ -1024,43 +951,6 @@ function tags_delete( int $tag_id ) : void
   // Delete the tag from the database
   query(" DELETE FROM tags
           WHERE       tags.id = '$tag_id' ");
-}
-
-
-
-
-/**
- * Recomputes the number of elements linked to a tag.
- *
- * @param   int     $tag_id  The id of the tag.
- *
- * @return  void
- */
-
-function tags_recount( int $tag_id ) : void
-{
-  // Sanitize the data
-  $tag_id = sanitize($tag_id, 'int');
-
-  // Get the list of images linked to the tag
-  $images = query(" SELECT  COUNT(*) AS 'ti_count'
-                    FROM    tags_images
-                    WHERE   tags_images.fk_tags = '$tag_id' ",
-                    fetch_row: true);
-
-  // Get the list of cards linked to the tag
-  $cards = query("  SELECT  COUNT(*) AS 'tc_count'
-                    FROM    tags_cards
-                    WHERE   tags_cards.fk_tags = '$tag_id' ",
-                    fetch_row: true);
-
-  // Count the elements linked to the tag
-  $tag_count = sanitize($images['ti_count'] + $cards['tc_count'], 'int');
-
-  // Update the tag's linked element count
-  query(" UPDATE  tags
-          SET     tags.tagged_count = '$tag_count'
-          WHERE   tags.id           = '$tag_id' ");
 }
 
 
