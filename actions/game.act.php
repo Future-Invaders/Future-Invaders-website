@@ -22,7 +22,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  tags_get                        Returns data related to a tag                                                    */
 /*  tags_list                       Lists tags in the database                                                       */
 /*  tags_list_types                 Lists tag types in the database                                                  */
-/*  tags_list_images                Lists images linked to a tag                                                     */
 /*  tags_add                        Adds a tag to the database                                                       */
 /*  tags_edit                       Edits a tag in the database                                                      */
 /*  tags_delete                     Deletes a tag from the database                                                  */
@@ -137,13 +136,15 @@ function cards_add( array $data ) : void
  * @param   int         $image_id     (OPTIONAL)  The id of the image.
  * @param   string      $image_uuid   (OPTIONAL)  The uuid of the image.
  * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_tags      (OPTIONAL)  If set, tags will not be included in the output.
  *
  * @return  array|null              An array containing the image's data, or null if the image does not exist.
  */
 
 function images_get(  ?int    $image_id   = null    ,
                       ?string $image_uuid = null    ,
-                      string  $format     = 'html'  ) : array|null
+                      string  $format     = 'html'  ,
+                      bool    $no_tags    = false   ) : array|null
 {
   // Return null if there are neither an id nor an uuid
   if(!$image_id && !$image_uuid)
@@ -206,18 +207,21 @@ function images_get(  ?int    $image_id   = null    ,
                         WHERE     tags_images.fk_images = '$image_id' ");
 
   // Assemble an array with the image's tags
-  $data['tags'] = array();
-  for($i = 0; $dtags = query_row($image_tags); $i++)
+  if(!$no_tags)
   {
-    if($format === 'html')
-      $data['tags'][$i] = sanitize_output($dtags['ti_tag']);
-    if($format === 'api')
+    $data['tags'] = array();
+    for($i = 0; $dtags = query_row($image_tags); $i++)
     {
-      $data['tags'][$i]['uuid']               = sanitize_json($dtags['t_uuid']);
-      $data['tags'][$i]['name']               = sanitize_json($dtags['t_name']);
-      $data['tags'][$i]['description']['en']  = sanitize_json($dtags['t_desc_en']);
-      $data['tags'][$i]['description']['fr']  = sanitize_json($dtags['t_desc_fr']);
-      $data['tags'][$i]['endpoint']           = sanitize_json($GLOBALS['website_url'].'api/tag/'.$dtags['t_uuid']);
+      if($format === 'html')
+        $data['tags'][$i] = sanitize_output($dtags['ti_tag']);
+      if($format === 'api')
+      {
+        $data['tags'][$i]['uuid']               = sanitize_json($dtags['t_uuid']);
+        $data['tags'][$i]['name']               = sanitize_json($dtags['t_name']);
+        $data['tags'][$i]['description']['en']  = sanitize_json($dtags['t_desc_en']);
+        $data['tags'][$i]['description']['fr']  = sanitize_json($dtags['t_desc_fr']);
+        $data['tags'][$i]['endpoint']           = sanitize_json($GLOBALS['website_url'].'api/tag/'.$dtags['t_uuid']);
+      }
     }
   }
 
@@ -225,7 +229,7 @@ function images_get(  ?int    $image_id   = null    ,
   if($format === 'api')
   {
     $data = (isset($data)) ? $data : NULL;
-    $data = array('tag' => $data);
+    $data = array('image' => $data);
   }
 
   // Return the image's data
@@ -644,7 +648,8 @@ function tags_get(  ?int    $tag_id   = NULL    ,
   $query_where = ($tag_id) ? " WHERE tags.id = '$tag_id' " : " WHERE tags.uuid = '$tag_uuid' ";
 
   // Fetch the tag's data
-  $tag_data = query(" SELECT    tags.uuid           AS 't_uuid'     ,
+  $tag_data = query(" SELECT    tags.id             AS 't_id'       ,
+                                tags.uuid           AS 't_uuid'     ,
                                 tags.name           AS 't_name'     ,
                                 tags.description_en AS 't_desc_en'  ,
                                 tags.description_fr AS 't_desc_fr'  ,
@@ -672,8 +677,23 @@ function tags_get(  ?int    $tag_id   = NULL    ,
     $data['description']['en']  = sanitize_json($tag_data['t_desc_en']);
     $data['description']['fr']  = sanitize_json($tag_data['t_desc_fr']);
 
-    // Fetch linked elements
-    $data['linked_images'] = tags_list_images($tag_uuid);
+    // Sanitize the tag's id
+    $tag_id = sanitize($tag_data['t_id'], 'int');
+
+    // Fetch linked images
+    $qimages = query("  SELECT  tags_images.fk_images AS 'ti_id'
+                        FROM    tags_images
+                        WHERE   tags_images.fk_tags = '$tag_id' ");
+
+    // Prepare linked images for display
+    for($i = 0; $dimages = query_row($qimages); $i++)
+      $data['linked_images'][$i] = images_get(  image_id: $dimages['ti_id'] ,
+                                                format:   'api'         ,
+                                                no_tags:  true          );
+
+    // If there are no linked images, show an empty array
+    if($i === 0)
+      $data['linked_images'] = array();
 
     // Prepare for the API
     $data = (isset($data)) ? $data : NULL;
@@ -826,57 +846,6 @@ function tags_list_types() : array
 
   // Add the number of rows to the returned data
   $data['rows'] = $i;
-
-  // Return the prepared data
-  return $data;
-}
-
-
-
-
-/**
- * Lists images linked to a tag.
- *
- * @param   string  $tag_uuid The uuid of the tag.
- *
- * @return  array   An array containing the elements.
- */
-
-function tags_list_images( string $tag_uuid ) : array
-{
-  // Sanitize the data
-  $tag_uuid = sanitize($tag_uuid, 'string');
-
-  // Fetch the tag's id
-  $tag_id = database_entry_exists('tags', 'uuid', $tag_uuid);
-
-  // Return null if the tag does not exist
-  if(!$tag_id)
-    return null;
-
-  // Fetch linked images
-  $images = query(" SELECT    images.uuid     AS 'i_uuid' ,
-                              images.path     AS 'i_path' ,
-                              images.name     AS 'i_name' ,
-                              images.language AS 'i_lang' ,
-                              images.artist   AS 'i_artist'
-                    FROM      images
-                    LEFT JOIN tags_images ON images.id = tags_images.fk_images
-                    WHERE     tags_images.fk_tags = '$tag_id' ");
-
-  // Prepare linked images for display
-  for($i = 0; $row = query_row($images); $i++)
-  {
-    $data[$i]['uuid']     = sanitize_json($row['i_uuid']);
-    $data[$i]['language'] = sanitize_json($row['i_lang']);
-    $data[$i]['name']     = sanitize_json($row['i_name']);
-    $data[$i]['artist']   = sanitize_json($row['i_artist']);
-    $data[$i]['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path']);
-  }
-
-  // If there are no linked images, return an empty array
-  if(!isset($data))
-    $data = array();
 
   // Return the prepared data
   return $data;

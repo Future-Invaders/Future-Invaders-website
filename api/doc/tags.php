@@ -158,13 +158,14 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     },
     "linked_images": [
       {
-        "uuid": string,
-        "language": string,
-        "name": string,
-        "artist": string,
-        "path": string
-      },
-    ]
+        "image": {
+          "uuid": string,
+          "name": string,
+          "language": string,
+          "artist": string,
+          "path": string
+        }
+      }
   }
 }</pre>
 
