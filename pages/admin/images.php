@@ -117,7 +117,7 @@ $list_images = images_list( $admin_images_sort        ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_60 padding_top">
 
   <?php if($uncategorized_images['rows']): ?>
 
@@ -217,8 +217,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr id="admin_images_row_<?=$list_images[$i]['id']?>">
 
-        <td class="tooltip_container tooltip_desktop" id="admin_image_preview_cell_<?=$list_images[$i]['id']?>" onmouseover="admin_images_preview('<?=$list_images[$i]['id']?>', '<?=$list_images[$i]['dpath']?>', '<?=$path?>');">
-          <?=__link($list_images[$i]['path'], $list_images[$i]['spath'], 'text_white bold noglow', is_internal: false)?>
+        <td class="tooltip_container tooltip_desktop" id="admin_image_preview_cell_<?=$list_images[$i]['id']?>" onmouseover="admin_images_preview('<?=$list_images[$i]['id']?>', '<?=$list_images[$i]['dpath']?>', '<?=$list_images[$i]['bpath']?>', '<?=$path?>');">
+          <?=__link($list_images[$i]['path'], $list_images[$i]['ppath'], 'text_white bold noglow', is_internal: false)?>
           <div class="tooltip image_preview">
             <div class="padding_top padding_bot align_center" id="admin_image_container_<?=$list_images[$i]['id']?>">
               &nbsp;
@@ -230,9 +230,18 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$list_images[$i]['blang']?>
         </td>
 
+        <?php if($list_images[$i]['name'] === $list_images[$i]['fname']): ?>
         <td>
           <?=$list_images[$i]['name']?>
         </td>
+        <?php else: ?>
+        <td class="tooltip_container">
+          <?=$list_images[$i]['name']?>
+          <div class="tooltip">
+            <?=$list_images[$i]['fname']?>
+          </div>
+        </td>
+        <?php endif; ?>
 
         <td>
           <?=$list_images[$i]['artist']?>

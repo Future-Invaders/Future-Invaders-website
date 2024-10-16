@@ -83,6 +83,15 @@ ___('admin_query_ok', 'FR', "Requêtes exécutées avec succès");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Card list
+___('admin_card_list_name',       'EN', "Name");
+___('admin_card_list_name',       'FR', "Nom");
+___('admin_card_list_count',      'EN', "{{1}} card");
+___('admin_card_list_count',      'FR', "{{1}} carte");
+___('admin_card_list_count+',     'EN', "{{1}} cards");
+___('admin_card_list_count+',     'FR', "{{1}} cartes");
+
+
 // Add a card
 ___('admin_card_add_title',       'EN', "Add a card");
 ___('admin_card_add_title',       'FR', "Ajouter une carte");
@@ -251,8 +260,8 @@ ___('admin_image_add_submit', 'FR', "Ajouter l'image");
 
 
 // Edit an image
-___('admin_image_edit_title',   'EN', "Edit image");
-___('admin_image_edit_title',   'FR', "Modifier l'image");
+___('admin_image_edit_title',   'EN', "Edit image {{1}}");
+___('admin_image_edit_title',   'FR', "Modifier l'image {{1}}");
 ___('admin_image_edit_submit',  'EN', "Edit image");
 ___('admin_image_edit_submit',  'FR', "Modifier l'image");
 

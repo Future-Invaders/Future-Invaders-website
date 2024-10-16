@@ -943,6 +943,8 @@ ___('submenu_guides_rules',   'EN', "Game rules");
 ___('submenu_guides_rules',   'FR', "Règles du jeu");
 ___('submenu_guides_howto',   'EN', "How to play");
 ___('submenu_guides_howto',   'FR', "Comment jouer");
+___('submenu_guides_lore',    'EN', "Lore");
+___('submenu_guides_lore',    'FR', "Univers");
 ___('submenu_guides_vocab',   'EN', "Vocabulary");
 ___('submenu_guides_vocab',   'FR', "Vocabulaire");
 ___('submenu_guides_rulings', 'EN', "Rulings");

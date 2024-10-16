@@ -141,6 +141,7 @@ function admin_images_search( sort_data = null )
  *
  * @param   {int}   image_id    The image's id.
  * @param   {int}   image_name  The image's name.
+ * @param   {int}   short_name  The image's short name.
  * @param   {int}   root_path   The path to the root of the website.
  *
  * @returns {void}
@@ -148,6 +149,7 @@ function admin_images_search( sort_data = null )
 
 function admin_images_preview(  image_id    ,
                                 image_name  ,
+                                short_name  ,
                                 root_path   )
 {
   // Prepare the image
@@ -155,6 +157,9 @@ function admin_images_preview(  image_id    ,
   image.setAttribute("src", root_path + image_name);
 
   // Add the image in the element
+  document.getElementById('admin_image_container_' + image_id).innerHTML = short_name;
+  document.getElementById('admin_image_container_' + image_id).appendChild(document.createElement("br"));
+  document.getElementById('admin_image_container_' + image_id).appendChild(document.createElement("br"));
   document.getElementById('admin_image_container_' + image_id).appendChild(image);
 
   // Prevent the fetch from happening more than once

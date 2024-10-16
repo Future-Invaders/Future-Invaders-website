@@ -54,6 +54,9 @@ $image_add_path = form_fetch_element('image', request_type: 'GET');
 if(!$image_add_path)
   exit(header("Location: ./images"));
 
+// Get the image's full path
+$image_full_path = images_get_full_path($image_add_path);
+
 
 
 
@@ -100,9 +103,13 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
 <div class="width_50 padding_top">
 
-  <h5 class="padding_bot">
+  <h5 class="align_center smallpadding_bot">
     <?=__('admin_image_name_title', spaces_after: 1).$image_add_path?>
   </h5>
+
+  <div class="align_center smallpadding_bot">
+    <img src="<?=$image_full_path?>" class="image_preview">
+  </div>
 
   <form action="images_add?image=<?=$image_add_path?>" method="POST">
     <fieldset>

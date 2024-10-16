@@ -8,9 +8,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  cards_list                      Lists cards in the database                                                      */
 /*  cards_add                       Adds a card to the database                                                      */
 /*                                                                                                                   */
 /*  images_get                      Returns data related to an image                                                 */
+/*  images_get_full_path            Returns the full path of an image waititng to be added to the database           */
 /*  images_list                     Lists images in the database                                                     */
 /*  images_list_directories         Lists directories which should be scanned for images                             */
 /*  images_list_uncategorized       Lists images waiting to be added to the database                                 */
@@ -55,6 +57,82 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                       CARDS                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Lists cards in the database.
+ *
+ * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the cards.
+ */
+
+function cards_list( string  $sort_by  = 'name'  ,
+                     array   $search   = array() ,
+                     string  $format   = 'html'  ) : array
+{
+  // Get the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanitize the search data
+  $search_name  = sanitize_array_element($search, 'name', 'string');
+
+  // Search through the data
+  $query_search  =  ($search_name)  ? " WHERE cards.name   LIKE '%$search_name%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'type'    => " ORDER BY cards.fk_card_types ASC ",
+    default   => " ORDER BY cards.name_$lang ASC ",
+  };
+
+  // Fetch the cards
+  $cards = query("  SELECT  cards.id          AS 'c_id'   ,
+                            cards.uuid        AS 'c_uuid' ,
+                            cards.name_$lang  AS 'c_name'
+                    FROM    cards
+                    $query_search
+                    $query_sort ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($cards); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($row['c_id']);
+      $data[$i]['name']   = sanitize_output($row['c_name']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid']   = sanitize_json($row['c_uuid']);
+      $data[$i]['name']   = sanitize_json($row['c_name']);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('cards' => $data);
+  }
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+
 
 /**
  * Adds a card to the database.
@@ -228,6 +306,48 @@ function images_get(  ?int    $image_id   = null    ,
 
 
 
+/**
+ * Returns the full path of an image waititng to be added to the database.
+ *
+ * @param   string      $name   The image's name.
+ *
+ * @return  string|null         The full path to the image, or null if it can't be found.
+ */
+
+function images_get_full_path( string $name ) : ?string
+{
+  // Get a list of all images in the database
+  $qimages = query("  SELECT    images.path AS 'i_path'
+                      FROM      images ");
+
+  // Store these images in an array
+  $images_list = array();
+  while($dimages = query_row($qimages, 'both'))
+    $images_list[] = $dimages['i_path'];
+
+  // Get the full path to the image
+  $directories = images_list_directories();
+  foreach($directories as $directory)
+  {
+    // Define the image's full path
+    $temp_path = './../../img/'.$directory.'/'.$name;
+
+    // Check if the image exists
+    if(file_exists($temp_path))
+    {
+      // If it does, check if it's already in the database
+      if(!in_array($temp_path, $images_list))
+      {
+        // If not, grab the image's path
+        $image_full_path = $temp_path;
+      }
+    }
+  }
+
+  return (isset($image_full_path)) ? $image_full_path : null;
+}
+
+
 
 /**
  * Lists images in the database.
@@ -305,7 +425,10 @@ function images_list( string  $sort_by  = 'path'  ,
       $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
       $data[$i]['dpath']  = sanitize_output($row['i_path']);
       $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
-      $data[$i]['name']   = sanitize_output($row['i_name']);
+      $data[$i]['ppath']  = sanitize_output(string_truncate($row['i_path'], 25, '...'));
+      $data[$i]['bpath']  = sanitize_output(basename($row['i_path']));
+      $data[$i]['name']   = sanitize_output(string_truncate($row['i_name'], 20, '...'));
+      $data[$i]['fname']  = sanitize_output($row['i_name']);
       $data[$i]['lang']   = sanitize_output($row['i_lang']);
       $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
       $data[$i]['artist'] = sanitize_output($row['i_artist']);
@@ -351,8 +474,12 @@ function images_list( string  $sort_by  = 'path'  ,
 
 function images_list_directories() : array
 {
-  // Decide in which directories to look for images
-  $directories = array('rules');
+  $directories = array( 'rules'     ,
+                        'lore'      ,
+                        'cards/en'  ,
+                        'cards/fr'  ,
+                        'extras/en' ,
+                        'extras/fr' );
 
   // Return the directories
   return $directories;
@@ -385,11 +512,13 @@ function images_list_uncategorized() : array
     $images_list[] = './../../'.$dimages['i_path'];
 
   // Look for images that aren't in the database
-
   foreach($directories as $directory)
   {
     // Fetch the images in the directory
-    $images_in_directory = scandir('./../../img/'.$directory);
+    if(is_dir('./../../img/'.$directory))
+      $images_in_directory = scandir('./../../img/'.$directory);
+    else
+      $images_in_directory = array();
 
     // Remove some files from the list
     foreach($files_to_remove as $file)
@@ -409,7 +538,7 @@ function images_list_uncategorized() : array
   }
 
   // Add the number of rows to the returned data
-  $missing_images['rows'] = count($missing_images);
+  $missing_images['rows'] = isset($missing_images) ? count($missing_images) : 0;
 
   // Return the images
   return $missing_images;
@@ -464,36 +593,11 @@ function images_add( array $data ) : void
   if(!isset($data['image_path']))
     return;
 
-  // Get a list of all images in the database
-  $qimages = query("  SELECT    images.path AS 'i_path'
-                      FROM      images ");
-
-  // Store these images in an array
-  $images_list = array();
-  while($dimages = query_row($qimages, 'both'))
-    $images_list[] = $dimages['i_path'];
-
-  // Ensure the image exists and isn't already in the database
-  $directories = images_list_directories();
-  foreach($directories as $directory)
-  {
-    // Define the image's full path
-    $temp_path = './../../img/'.$directory.'/'.$data['image_path'];
-
-    // Check if the image exists
-    if(file_exists($temp_path))
-    {
-      // If it does, check if it's already in the database
-      if(!in_array($temp_path, $images_list))
-      {
-        // If not, grab the image's path
-        $image_path = $temp_path;
-      }
-    }
-  }
+  // Get the image's full path
+  $image_path = images_get_full_path($data['image_path']);
 
   // Stop here if the image is already in the database or doesn't exist
-  if(!isset($image_path))
+  if(!$image_path)
     return;
 
   // Sanatize image data

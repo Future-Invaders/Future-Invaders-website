@@ -84,13 +84,21 @@ if(isset($_POST['card_add']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of cards
+
+$cards_list = cards_list();
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_30 padding_top">
 
   <h5>
     <?=__('admin_card_management').__(':')?>
@@ -104,6 +112,64 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?=__link('pages/admin/card_rarities', __('admin_card_management_rarities'))?>
     </li>
   </ul>
+
+  <table>
+    <thead>
+
+      <tr class="uppercase">
+        <th class="align_center">
+          <?=__('admin_card_list_name')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_cards_search('name');")?>
+        </th>
+        <th>
+          <?=__('act')?>
+        </th>
+      </tr>
+
+      <tr>
+        <th>
+          <input type="hidden" name="admin_cards_sort" id="admin_cards_sort" value="name">
+          <input type="text" class="table_search" name="admin_cards_search_name" id="admin_cards_search_name" value="" onkeyup="admin_cards_search();">
+        </th>
+        <th>
+          <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/cards_add')?>
+        </th>
+      </tr>
+
+    </thead>
+
+    <tbody class="altc2 nowrap" id="admin_cards_tbody">
+
+      <?php endif; ?>
+
+      <tr>
+        <td colspan="2" class="uppercase text_light dark bold align_center">
+          <?=__('admin_card_list_count', preset_values: array($cards_list['rows']), amount: $cards_list['rows'])?>
+        </td>
+      </tr>
+
+      <?php for($i = 0; $i < $cards_list['rows']; $i++): ?>
+
+      <tr id="admin_cards_row_<?=$cards_list[$i]['id']?>">
+
+        <td class="align_center nowrap">
+          <?=$cards_list[$i]['name']?>
+        </td>
+
+        <td class="align_center nowrap">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/cards_edit?card='.$cards_list[$i]['id'])?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_cards_delete('".__('admin_card_delete_confirm')."','".$cards_list[$i]['id']."')")?>
+        </td>
+
+      </tr>
+
+      <?php endfor; ?>
+
+    </tbody>
+
+    <?php if(!page_is_fetched_dynamically()): ?>
+
+  </table>
 
 </div>
 
