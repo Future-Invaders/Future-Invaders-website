@@ -87,7 +87,15 @@ if(isset($_POST['card_add']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of cards
 
-$cards_list = cards_list();
+// Fetch the sorting order
+$admin_cards_sort = form_fetch_element('admin_cards_sort', 'name');
+
+// Assemble the search data
+$admin_cards_search = array( 'name' => form_fetch_element('admin_cards_search_name') );
+
+// Fetch the cards
+$cards_list = cards_list( $admin_cards_sort  ,
+                          $admin_cards_search );
 
 
 

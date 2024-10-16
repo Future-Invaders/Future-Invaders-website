@@ -34,11 +34,13 @@ $js   = array('admin/admin');
 if(isset($_POST['card_type_add']))
 {
   // Gather the postdata
-  $card_type_add_name_en = form_fetch_element('card_type_name_en');
-  $card_type_add_name_fr = form_fetch_element('card_type_name_fr');
+  $card_type_add_order    = form_fetch_element('card_type_order');
+  $card_type_add_name_en  = form_fetch_element('card_type_name_en');
+  $card_type_add_name_fr  = form_fetch_element('card_type_name_fr');
 
   // Assemble an array with the postdata
-  $card_type_add_data = array(  'name_en' => $card_type_add_name_en ,
+  $card_type_add_data = array(  'order'   => $card_type_add_order   ,
+                                'name_en' => $card_type_add_name_en ,
                                 'name_fr' => $card_type_add_name_fr );
 
   // Add the card type to the database
@@ -55,12 +57,14 @@ if(isset($_POST['card_type_edit']))
 {
   // Gather the postdata
   $card_type_edit_id      = form_fetch_element('card_type_id');
+  $card_type_edit_order   = form_fetch_element('card_type_order');
   $card_type_edit_name_en = form_fetch_element('card_type_name_en');
   $card_type_edit_name_fr = form_fetch_element('card_type_name_fr');
 
   // Assemble an array with the postdata
-  $card_type_edit_data = array(  'name_en' => $card_type_edit_name_en ,
-                                 'name_fr' => $card_type_edit_name_fr );
+  $card_type_edit_data = array( 'order'   => $card_type_edit_order   ,
+                                'name_en' => $card_type_edit_name_en ,
+                                'name_fr' => $card_type_edit_name_fr );
 
   // Edit the card type
   card_types_edit(  $card_type_edit_id    ,
@@ -95,12 +99,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
 <div class="width_30 padding_top">
 
+  <h2 class="align_center padding_bot">
+    <?=__link('pages/admin/cards', __('admin_card_type_list_title'), style: 'text_light')?>
+  </h2>
+
   <table>
     <thead>
 
       <tr class="uppercase">
         <th class="align_center">
           <?=__('admin_card_type_list_name')?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_card_type_list_order')?>
         </th>
         <th>
           <?=__('act')?>
@@ -114,7 +125,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td class="uppercase text_light dark bold align_center">
+        <td colspan="2" class="uppercase text_light dark bold align_center">
           <?=__('admin_card_type_list_count', preset_values: array($card_types_list['rows']), amount: $card_types_list['rows'])?>
         </td>
         <td class="dark bold align_center">
@@ -128,6 +139,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
         <td class="align_center nowrap">
           <?=$card_types_list[$i]['name']?>
+        </td>
+
+        <td class="align_center nowrap">
+          <?=$card_types_list[$i]['order']?>
         </td>
 
         <td class="align_center nowrap">

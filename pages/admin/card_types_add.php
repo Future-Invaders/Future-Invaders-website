@@ -31,11 +31,16 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 <div class="width_50 padding_top padding_bot">
 
   <h2 class="padding_bot">
-    <?=__('admin_card_type_add_title')?>
+    <?=__link('pages/admin/card_types', __('admin_card_type_add_title'), 'text_light')?>
   </h2>
 
   <form action="card_types" method="POST">
     <fieldset>
+
+      <div class="smallpadding_bot">
+        <label for="card_type_order"><?=__('admin_card_type_add_order')?></label>
+        <input class="indiv" type="text" name="card_type_order">
+      </div>
 
       <div class="smallpadding_bot">
         <label for="card_type_name_en"><?=__('admin_card_type_add_name_en')?></label>

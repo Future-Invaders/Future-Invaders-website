@@ -758,7 +758,7 @@ if($last_query < 10)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Cards, card tags, image languages, and stored tag data
+// Cards, card tags, image languages, sorting order for card types and rarities
 
 if($last_query < 11)
 {
@@ -796,13 +796,17 @@ if($last_query < 11)
   sql_create_table('tags_cards');
   sql_create_field('tags_cards', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('tags_cards', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
-
   sql_create_index('tags_cards', 'tags_cards_card', 'fk_cards');
   sql_create_index('tags_cards', 'tags_cards_tag', 'fk_tags');
 
   sql_create_field('images', 'language', 'TINYTEXT NOT NULL', 'path');
-
   sql_create_index('images', 'images_language', 'language(10)');
+
+  sql_create_field('card_types', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_index('card_types', 'card_types_sorting_order', 'sorting_order');
+
+  sql_create_field('card_rarities', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_index('card_rarities', 'card_rarities_sorting_order', 'sorting_order');
 
   sql_update_query_id(11);
 }

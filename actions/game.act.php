@@ -79,7 +79,8 @@ function cards_list( string  $sort_by  = 'name'  ,
   $search_name  = sanitize_array_element($search, 'name', 'string');
 
   // Search through the data
-  $query_search  =  ($search_name)  ? " WHERE cards.name   LIKE '%$search_name%' " : "";
+  $query_search  =  ($search_name)  ? " WHERE cards.name_en LIKE '%$search_name%'
+                                        OR    cards.name_fr LIKE '%$search_name%' " : " WHERE 1 = 1 ";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -1478,16 +1479,18 @@ function card_types_get( int $card_type_id ) : array|null
     return null;
 
   // Fetch the card type's data
-  $card_type_data = query(" SELECT  card_types.id           AS 'c_id'       ,
-                                    card_types.uuid         AS 'c_uuid'     ,
-                                    card_types.name_en      AS 'c_name_en'  ,
-                                    card_types.name_fr      AS 'c_name_fr'
+  $card_type_data = query(" SELECT  card_types.id             AS 'c_id'       ,
+                                    card_types.uuid           AS 'c_uuid'     ,
+                                    card_types.sorting_order  AS 'c_order'    ,
+                                    card_types.name_en        AS 'c_name_en'  ,
+                                    card_types.name_fr        AS 'c_name_fr'
                             FROM    card_types
                             WHERE   card_types.id = '$card_type_id' ",
                             fetch_row: true);
 
   // Assemble an array with the card type's data
   $data['id']       = sanitize_output($card_type_data['c_id']);
+  $data['order']    = sanitize_output($card_type_data['c_order']);
   $data['name_en']  = sanitize_output($card_type_data['c_name_en']);
   $data['name_fr']  = sanitize_output($card_type_data['c_name_fr']);
 
@@ -1512,13 +1515,14 @@ function card_types_list( string $format = 'html' ) : array
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the card types
-  $card_types = query(" SELECT    card_types.id         AS 'c_id'       ,
-                                  card_types.uuid       AS 'c_uuid'     ,
-                                  card_types.name_en    AS 'c_name_en'  ,
-                                  card_types.name_fr    AS 'c_name_fr'  ,
-                                  card_types.name_$lang AS 'c_name'
+  $card_types = query(" SELECT    card_types.id             AS 'c_id'       ,
+                                  card_types.uuid           AS 'c_uuid'     ,
+                                  card_types.sorting_order  AS 'c_order'    ,
+                                  card_types.name_en        AS 'c_name_en'  ,
+                                  card_types.name_fr        AS 'c_name_fr'  ,
+                                  card_types.name_$lang     AS 'c_name'
                         FROM      card_types
-                        ORDER BY  card_types.name_en ASC");
+                        ORDER BY  card_types.sorting_order ASC ");
 
   // Prepare the data for display
   for($i = 0; $row = query_row($card_types); $i++)
@@ -1527,6 +1531,7 @@ function card_types_list( string $format = 'html' ) : array
     if($format === 'html')
     {
       $data[$i]['id']     = sanitize_output($row['c_id']);
+      $data[$i]['order']  = sanitize_output($row['c_order']);
       $data[$i]['name']   = sanitize_output($row['c_name']);
     }
 
@@ -1568,14 +1573,16 @@ function card_types_list( string $format = 'html' ) : array
 function card_types_add( array $data ) : void
 {
   // Sanitize the data
-  $card_type_name_en = sanitize_array_element($data, 'name_en', 'string');
-  $card_type_name_fr = sanitize_array_element($data, 'name_fr', 'string');
+  $card_type_order    = sanitize_array_element($data, 'order', 'int');
+  $card_type_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $card_type_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
 
   // Add the card type to the database
   query(" INSERT INTO card_types
-          SET         card_types.uuid     = UUID()                ,
-                      card_types.name_en  = '$card_type_name_en'  ,
-                      card_types.name_fr  = '$card_type_name_fr'  ");
+          SET         card_types.uuid           = UUID()                ,
+                      card_types.sorting_order  = '$card_type_order'    ,
+                      card_types.name_en        = '$card_type_name_en'  ,
+                      card_types.name_fr        = '$card_type_name_fr'  ");
 }
 
 
@@ -1595,6 +1602,7 @@ function card_types_edit( int   $card_type_id ,
 {
   // Sanitize the data
   $card_type_id       = sanitize($card_type_id, 'int');
+  $card_type_order    = sanitize_array_element($data, 'order', 'int');
   $card_type_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $card_type_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
 
@@ -1604,9 +1612,10 @@ function card_types_edit( int   $card_type_id ,
 
   // Edit the card type
   query(" UPDATE  card_types
-          SET     card_types.name_en  = '$card_type_name_en'  ,
-                  card_types.name_fr  = '$card_type_name_fr'
-          WHERE   card_types.id       = '$card_type_id' ");
+          SET     card_types.sorting_order  = '$card_type_order'    ,
+                  card_types.name_en        = '$card_type_name_en'  ,
+                  card_types.name_fr        = '$card_type_name_fr'
+          WHERE   card_types.id             = '$card_type_id' ");
 }
 
 
@@ -1659,6 +1668,7 @@ function card_rarities_get( int $card_rarity_id ) : array|null
   // Fetch the card rarity's data
   $card_rarity_data = query(" SELECT  card_rarities.id              AS 'r_id'       ,
                                       card_rarities.uuid            AS 'r_uuid'     ,
+                                      card_rarities.sorting_order   AS 'r_order'    ,
                                       card_rarities.name_en         AS 'r_name_en'  ,
                                       card_rarities.name_fr         AS 'r_name_fr'  ,
                                       card_rarities.max_card_count  AS 'r_max_count'
@@ -1668,6 +1678,7 @@ function card_rarities_get( int $card_rarity_id ) : array|null
 
   // Assemble an array with the card rarity's data
   $data['id']         = sanitize_output($card_rarity_data['r_id']);
+  $data['order']      = sanitize_output($card_rarity_data['r_order']);
   $data['name_en']    = sanitize_output($card_rarity_data['r_name_en']);
   $data['name_fr']    = sanitize_output($card_rarity_data['r_name_fr']);
   $data['max_count']  = sanitize_output($card_rarity_data['r_max_count']);
@@ -1695,13 +1706,13 @@ function card_rarities_list( string  $format = 'html'  ) : array
   // Fetch the card rarities
   $card_rarities = query("  SELECT    card_rarities.id              AS 'r_id'       ,
                                       card_rarities.uuid            AS 'r_uuid'     ,
+                                      card_rarities.sorting_order   AS 'r_order'    ,
                                       card_rarities.name_en         AS 'r_name_en'  ,
                                       card_rarities.name_fr         AS 'r_name_fr'  ,
                                       card_rarities.name_$lang      AS 'r_name'     ,
                                       card_rarities.max_card_count  AS 'r_max_count'
                             FROM      card_rarities
-                            ORDER BY  card_rarities.max_card_count  DESC  ,
-                                      card_rarities.name_en         ASC   ");
+                            ORDER BY  card_rarities.sorting_order ASC ");
 
   // Prepare the data for display
   for($i = 0; $row = query_row($card_rarities); $i++)
@@ -1711,6 +1722,7 @@ function card_rarities_list( string  $format = 'html'  ) : array
     {
       $data[$i]['id']         = sanitize_output($row['r_id']);
       $data[$i]['name']       = sanitize_output($row['r_name']);
+      $data[$i]['order']      = sanitize_output($row['r_order']);
       $data[$i]['max_count']  = sanitize_output($row['r_max_count']);
     }
 
@@ -1753,13 +1765,15 @@ function card_rarities_list( string  $format = 'html'  ) : array
 function card_rarities_add( array $data ) : void
 {
   // Sanitize the data
-  $card_rarity_name_en = sanitize_array_element($data, 'name_en', 'string');
-  $card_rarity_name_fr = sanitize_array_element($data, 'name_fr', 'string');
-  $card_rarity_max     = sanitize_array_element($data, 'max', 'int', min: 0, default: 0);
+  $card_rarity_order    = sanitize_array_element($data, 'order', 'int');
+  $card_rarity_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $card_rarity_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $card_rarity_max      = sanitize_array_element($data, 'max', 'int', min: 0, default: 0);
 
   // Add the card rarity to the database
   query(" INSERT INTO card_rarities
           SET         card_rarities.uuid            = UUID()                  ,
+                      card_rarities.sorting_order   = '$card_rarity_order'    ,
                       card_rarities.name_en         = '$card_rarity_name_en'  ,
                       card_rarities.name_fr         = '$card_rarity_name_fr'  ,
                       card_rarities.max_card_count  = '$card_rarity_max'      ");
@@ -1782,6 +1796,7 @@ function card_rarities_edit( int   $card_rarity_id ,
 {
   // Sanitize the data
   $card_rarity_id       = sanitize($card_rarity_id, 'int');
+  $card_rarity_order    = sanitize_array_element($data, 'order', 'int');
   $card_rarity_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $card_rarity_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
   $card_rarity_max      = sanitize_array_element($data, 'max', 'int', min: 0, default: 0);
@@ -1792,10 +1807,11 @@ function card_rarities_edit( int   $card_rarity_id ,
 
   // Edit the card rarity
   query(" UPDATE  card_rarities
-          SET     card_rarities.name_en         = '$card_rarity_name_en'  ,
+          SET     card_rarities.sorting_order   = '$card_rarity_order'    ,
+                  card_rarities.name_en         = '$card_rarity_name_en'  ,
                   card_rarities.name_fr         = '$card_rarity_name_fr'  ,
                   card_rarities.max_card_count  = '$card_rarity_max'
-          WHERE   card_rarities.id             = '$card_rarity_id' ");
+          WHERE   card_rarities.id              = '$card_rarity_id' ");
 }
 
 

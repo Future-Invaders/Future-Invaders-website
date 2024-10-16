@@ -145,8 +145,12 @@ ___('admin_card_management_rarities', 'FR', "Raretés de cartes");
 
 
 // Card types list
+___('admin_card_type_list_title',   'EN', "Card types");
+___('admin_card_type_list_title',   'FR', "Types de cartes");
 ___('admin_card_type_list_name',    'EN', "Name");
 ___('admin_card_type_list_name',    'FR', "Nom");
+___('admin_card_type_list_order',   'EN', "Order");
+___('admin_card_type_list_order',   'FR', "Ordre");
 ___('admin_card_type_list_count',   'EN', "{{1}} card type");
 ___('admin_card_type_list_count',   'FR', "{{1}} type de carte");
 ___('admin_card_type_list_count+',  'EN', "{{1}} card types");
@@ -156,6 +160,8 @@ ___('admin_card_type_list_count+',  'FR', "{{1}} types de cartes");
 // Add a card type
 ___('admin_card_type_add_title',    'EN', "Add a card type");
 ___('admin_card_type_add_title',    'FR', "Ajouter un type de carte");
+___('admin_card_type_add_order',    'EN', "Sorting order");
+___('admin_card_type_add_order',    'FR', "Ordre de tri");
 ___('admin_card_type_add_name_en',  'EN', "Name (English)");
 ___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
 ___('admin_card_type_add_name_fr',  'EN', "Name (French)");
@@ -177,8 +183,12 @@ ___('admin_card_type_delete_confirm', 'FR', "Confirmez la suppression de ce type
 
 
 // Card rarities list
+___('admin_card_rarity_list_title',   'EN', "Card rarities");
+___('admin_card_rarity_list_title',   'FR', "Raretés de cartes");
 ___('admin_card_rarity_list_name',    'EN', "Name");
 ___('admin_card_rarity_list_name',    'FR', "Nom");
+___('admin_card_rarity_list_order',   'EN', "Order");
+___('admin_card_rarity_list_order',   'FR', "Ordre");
 ___('admin_card_rarity_list_max',     'EN', "Max count");
 ___('admin_card_rarity_list_max',     'FR', "Nombre max");
 ___('admin_card_rarity_list_count',   'EN', "{{1}} rarity");
@@ -190,6 +200,8 @@ ___('admin_card_rarity_list_count+',  'FR', "{{1}} raretés");
 // Add a card rarity
 ___('admin_card_rarity_add_title',      'EN', "Add a rarity");
 ___('admin_card_rarity_add_title',      'FR', "Ajouter une rareté");
+___('admin_card_rarity_add_order',      'EN', "Sorting order");
+___('admin_card_rarity_add_order',      'FR', "Ordre de tri");
 ___('admin_card_rarity_add_name_en',    'EN', "Name (English)");
 ___('admin_card_rarity_add_name_en',    'FR', "Nom (Anglais)");
 ___('admin_card_rarity_add_name_fr',    'EN', "Name (French)");

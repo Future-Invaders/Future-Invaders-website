@@ -62,6 +62,11 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <input type="hidden" name="card_type_id" value="<?=$admin_card_type_id?>">
 
       <div class="smallpadding_bot">
+        <label for="card_type_order"><?=__('admin_card_type_add_order')?></label>
+        <input class="indiv" type="text" name="card_type_order" value="<?=$admin_card_type_data['order']?>">
+      </div>
+
+      <div class="smallpadding_bot">
         <label for="card_type_name_en"><?=__('admin_card_type_add_name_en')?></label>
         <input class="indiv" type="text" name="card_type_name_en" value="<?=$admin_card_type_data['name_en']?>">
       </div>

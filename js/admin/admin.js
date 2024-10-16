@@ -2,6 +2,8 @@
 /*                                                                                                                   */
 /*  admin_menu                  Navigates between administration pages.                                              */
 /*                                                                                                                   */
+/*  admin_cards_search          Searches the card list.                                                              */
+/*                                                                                                                   */
 /*  admin_card_hide_stats       Hides stats for extra cards.                                                         */
 /*                                                                                                                   */
 /*  admin_card_types_delete     Triggers the deletion of an entry in the card type list.                             */
@@ -35,6 +37,30 @@ function admin_menu()
 
   // Go to the requested page
   window.location.href = page;
+}
+
+
+
+/**
+ * Searches for cards.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+ */
+
+function admin_cards_search( sort_data = null )
+{
+  // Update the search input if required
+  if(sort_data)
+    document.getElementById('admin_cards_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata =  'admin_cards_sort='            + document.getElementById('admin_cards_sort').value;
+  postdata += '&admin_cards_search_name='    + document.getElementById('admin_cards_search_name').value;
+
+  // Submit the search
+  fetch_page('cards', 'admin_cards_tbody', postdata);
 }
 
 

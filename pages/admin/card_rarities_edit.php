@@ -62,6 +62,11 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <input type="hidden" name="card_rarity_id" value="<?=$admin_card_rarity_id?>">
 
       <div class="smallpadding_bot">
+        <label for="card_rarity_order"><?=__('admin_card_rarity_add_order')?></label>
+        <input class="indiv" type="text" name="card_rarity_order" value="<?=$admin_card_rarity_data['order']?>">
+      </div>
+
+      <div class="smallpadding_bot">
         <label for="card_rarity_name_en"><?=__('admin_card_rarity_add_name_en')?></label>
         <input class="indiv" type="text" name="card_rarity_name_en" value="<?=$admin_card_rarity_data['name_en']?>">
       </div>
