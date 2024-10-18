@@ -40,29 +40,34 @@ src:  url('./fonts/Open-sans-bold.eot?#iefix') format('embedded-opentype'),
 
 /**************************************************** VARIABLES ******************************************************/
 
-:root { --future-dark:   #121212  ;
-        --future-dark2:  #181818  ;
-        --future-dark3:  #212121  ;
-        --future-dark4:  #282828  ;
-        --future-dark5:  #323232  ;
-        --future-dark6:  #454545  ;
-        --future-dark7:  #555555  ;
-        --future-grey:   #888888  ;
-        --future-black:  #000000  ;
-        --future-white:  #FFFFFF  ;
-        --future-white2: #EEEEEE  ;
-        --future-light:  #CACACA  ;
-        --future-yellow: #C8B900  ;
-        --future-orange: #C66900  ;
-        --future-red:    #B00B1E  ;
-        --future-purple: #673AB7  ;
-        --future-blue:   #0069C0  ;
-        --future-brown:  #795548  ;
-        --future-green:  #087F23  ;
-        --future-links:  #3399FF  ;
-        --future-false:  #D32F2F  ;
-        --future-true:   #388E3C  ;
-        --future-footer: #999999; }
+:root { --future-dark:      #121212 ;
+        --future-dark2:     #181818 ;
+        --future-dark3:     #212121 ;
+        --future-dark4:     #282828 ;
+        --future-dark5:     #323232 ;
+        --future-dark6:     #454545 ;
+        --future-dark7:     #555555 ;
+        --future-grey:      #888888 ;
+        --future-black:     #000000 ;
+        --future-white:     #FFFFFF ;
+        --future-white2:    #EEEEEE ;
+        --future-light:     #CACACA ;
+        --future-yellow:    #C8B900 ;
+        --future-orange:    #C66900 ;
+        --future-red:       #B00B1E ;
+        --future-purple:    #673AB7 ;
+        --future-blue:      #0069C0 ;
+        --future-brown:     #795548 ;
+        --future-green:     #087F23 ;
+        --future-links:     #3399FF ;
+        --future-false:     #D32F2F ;
+        --future-true:      #388E3C ;
+        --future-footer:    #999999 ;
+        --future-terrans:   #DC6300 ;
+        --future-invaders:  #60432F ;
+        --future-organics:  #015E0B ;
+        --future-pirates:   #999999 ;
+        --future-neutrals:  #7C008D ; }
 
 /************************************************* GENERIC ELEMENTS **************************************************/
 
@@ -103,51 +108,71 @@ hr   { height: 3px;                                                 } }
 
 /****************************************************** COLORS *******************************************************/
 
-.background               { background-color: var(--future-dark)   !important; }
-.dark                     { background-color: var(--future-dark)   !important; }
-.black                    { background-color: var(--future-black)  !important; }
-.white                    { background-color: var(--future-white)  !important; }
-.light                    { background-color: var(--future-light)  !important; }
-.yellow                   { background-color: var(--future-yellow) !important; }
-.orange                   { background-color: var(--future-orange) !important; }
-.red                      { background-color: var(--future-red)    !important; }
-.purple                   { background-color: var(--future-purple) !important; }
-.blue                     { background-color: var(--future-blue)   !important; }
-.brown                    { background-color: var(--future-brown)  !important; }
-.green                    { background-color: var(--future-green)  !important; }
-.dark_hover:hover         { background-color: var(--future-dark)   !important; }
-.black_hover:hover        { background-color: var(--future-black)  !important; }
-.white_hover:hover        { background-color: var(--future-white)  !important; }
-.light_hover:hover        { background-color: var(--future-light)  !important; }
-.yellow_hover:hover       { background-color: var(--future-yellow) !important; }
-.orange_hover:hover       { background-color: var(--future-orange) !important; }
-.red_hover:hover          { background-color: var(--future-red)    !important; }
-.purple_hover:hover       { background-color: var(--future-purple) !important; }
-.blue_hover:hover         { background-color: var(--future-blue)   !important; }
-.brown_hover:hover        { background-color: var(--future-brown)  !important; }
-.green_hover:hover        { background-color: var(--future-green)  !important; }
-.text_dark                { color: var(--future-dark)              !important; }
-.text_black               { color: var(--future-black)             !important; }
-.text_white               { color: var(--future-white)             !important; }
-.text_light               { color: var(--future-light)             !important; }
-.text_yellow              { color: var(--future-yellow)            !important; }
-.text_orange              { color: var(--future-orange)            !important; }
-.text_red                 { color: var(--future-red)               !important; }
-.text_purple              { color: var(--future-purple)            !important; }
-.text_blue                { color: var(--future-blue)              !important; }
-.text_brown               { color: var(--future-brown)             !important; }
-.text_green               { color: var(--future-green)             !important; }
-.text_dark_hover:hover    { color: var(--future-dark)              !important; }
-.text_black_hover:hover   { color: var(--future-black)             !important; }
-.text_white_hover:hover   { color: var(--future-white)             !important; }
-.text_light_hover:hover   { color: var(--future-light)             !important; }
-.text_yellow_hover:hover  { color: var(--future-yellow)            !important; }
-.text_orange_hover:hover  { color: var(--future-orange)            !important; }
-.text_red_hover:hover     { color: var(--future-red)               !important; }
-.text_purple_hover:hover  { color: var(--future-purple)            !important; }
-.text_blue_hover:hover    { color: var(--future-blue)              !important; }
-.text_brown_hover:hover   { color: var(--future-brown)             !important; }
-.text_green_hover:hover   { color: var(--future-green)             !important; }
+.background                 { background-color: var(--future-dark)      !important; }
+.dark                       { background-color: var(--future-dark)      !important; }
+.black                      { background-color: var(--future-black)     !important; }
+.white                      { background-color: var(--future-white)     !important; }
+.light                      { background-color: var(--future-light)     !important; }
+.yellow                     { background-color: var(--future-yellow)    !important; }
+.orange                     { background-color: var(--future-orange)    !important; }
+.red                        { background-color: var(--future-red)       !important; }
+.purple                     { background-color: var(--future-purple)    !important; }
+.blue                       { background-color: var(--future-blue)      !important; }
+.brown                      { background-color: var(--future-brown)     !important; }
+.green                      { background-color: var(--future-green)     !important; }
+.terrans                    { background-color: var(--future-terrans)   !important; }
+.invaders                   { background-color: var(--future-invaders)  !important; }
+.organics                   { background-color: var(--future-organics)  !important; }
+.pirates                    { background-color: var(--future-pirates)   !important; }
+.neutrals                   { background-color: var(--future-neutrals)  !important; }
+.dark_hover:hover           { background-color: var(--future-dark)      !important; }
+.black_hover:hover          { background-color: var(--future-black)     !important; }
+.white_hover:hover          { background-color: var(--future-white)     !important; }
+.light_hover:hover          { background-color: var(--future-light)     !important; }
+.yellow_hover:hover         { background-color: var(--future-yellow)    !important; }
+.orange_hover:hover         { background-color: var(--future-orange)    !important; }
+.red_hover:hover            { background-color: var(--future-red)       !important; }
+.purple_hover:hover         { background-color: var(--future-purple)    !important; }
+.blue_hover:hover           { background-color: var(--future-blue)      !important; }
+.brown_hover:hover          { background-color: var(--future-brown)     !important; }
+.green_hover:hover          { background-color: var(--future-green)     !important; }
+.terrans_hover:hover        { background-color: var(--future-terrans)   !important; }
+.invaders_hover:hover       { background-color: var(--future-invaders)  !important; }
+.organics_hover:hover       { background-color: var(--future-organics)  !important; }
+.pirates_hover:hover        { background-color: var(--future-pirates)   !important; }
+.neutrals_hover:hover       { background-color: var(--future-neutrals)  !important; }
+.text_dark                  { color: var(--future-dark)                 !important; }
+.text_black                 { color: var(--future-black)                !important; }
+.text_white                 { color: var(--future-white)                !important; }
+.text_light                 { color: var(--future-light)                !important; }
+.text_yellow                { color: var(--future-yellow)               !important; }
+.text_orange                { color: var(--future-orange)               !important; }
+.text_red                   { color: var(--future-red)                  !important; }
+.text_purple                { color: var(--future-purple)               !important; }
+.text_blue                  { color: var(--future-blue)                 !important; }
+.text_brown                 { color: var(--future-brown)                !important; }
+.text_green                 { color: var(--future-green)                !important; }
+.text_terrans               { color: var(--future-terrans)              !important; }
+.text_invaders              { color: var(--future-invaders)             !important; }
+.text_organics              { color: var(--future-organics)             !important; }
+.text_pirates               { color: var(--future-pirates)              !important; }
+.text_neutrals              { color: var(--future-neutrals)             !important; }
+.text_dark_hover:hover      { color: var(--future-dark)                 !important; }
+.text_black_hover:hover     { color: var(--future-black)                !important; }
+.text_white_hover:hover     { color: var(--future-white)                !important; }
+.text_light_hover:hover     { color: var(--future-light)                !important; }
+.text_yellow_hover:hover    { color: var(--future-yellow)               !important; }
+.text_orange_hover:hover    { color: var(--future-orange)               !important; }
+.text_red_hover:hover       { color: var(--future-red)                  !important; }
+.text_purple_hover:hover    { color: var(--future-purple)               !important; }
+.text_blue_hover:hover      { color: var(--future-blue)                 !important; }
+.text_brown_hover:hover     { color: var(--future-brown)                !important; }
+.text_green_hover:hover     { color: var(--future-green)                !important; }
+.text_terrans_hover:hover   { color: var(--future-terrans)              !important; }
+.text_invaders_hover:hover  { color: var(--future-invaders)             !important; }
+.text_organics_hover:hover  { color: var(--future-organics)             !important; }
+.text_pirates_hover:hover   { color: var(--future-pirates)              !important; }
+.text_neutrals_hover:hover  { color: var(--future-neutrals)             !important; }
 
 /*************************************************** TEXT STYLING ****************************************************/
 
@@ -703,3 +728,7 @@ footer { width: 100%; text-align: center; color: var(--future-light)    ;
          font-size: 85%; margin-top: 6.0rem; margin-bottom: 3.0rem;     }
 @media (max-width: 992px)                                               {
 footer { font-size: 70%; margin-top: 10.0rem; margin-bottom: 5.0rem;  } }
+
+/**************************************************** GAME ICONS *****************************************************/
+
+.gameicon { max-height: 20px; }

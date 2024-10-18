@@ -138,7 +138,7 @@ $cards_list = cards_list( $admin_cards_sort   ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_80 padding_top">
+<div class="width_90 padding_top">
 
   <h5>
     <?=__('admin_card_management').__(':')?>
@@ -158,12 +158,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr class="uppercase">
         <th class="align_center">
-          <?=__('admin_card_list_name')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_cards_search('name');")?>
-        </th>
-        <th class="align_center">
           <?=__('admin_card_list_release')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_cards_search('release');")?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_card_list_name')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_cards_search('name');")?>
         </th>
         <th class="align_center">
           <?=__('admin_card_list_type')?>
@@ -211,10 +211,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr>
         <th>
-          <input type="hidden" name="admin_cards_sort" id="admin_cards_sort" value="default">
-          <input type="text" class="table_search" name="admin_cards_search_name" id="admin_cards_search_name" value="" onkeyup="admin_cards_search();">
-        </th>
-        <th>
           <select class="table_search" name="admin_cards_search_release" id="admin_cards_search_release" onchange="admin_cards_search();">
             <option value="0">&nbsp;</option>
             <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
@@ -222,6 +218,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <option value="<?=$releases_list[$i]['id']?>"><?=$releases_list[$i]['name']?></option>
             <?php endfor; ?>
           </select>
+        </th>
+        <th>
+          <input type="hidden" name="admin_cards_sort" id="admin_cards_sort" value="default">
+          <input type="text" class="table_search" name="admin_cards_search_name" id="admin_cards_search_name" value="" onkeyup="admin_cards_search();">
         </th>
         <th>
           <select class="table_search" name="admin_cards_search_type" id="admin_cards_search_type" onchange="admin_cards_search();">
@@ -305,14 +305,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr id="admin_cards_row_<?=$cards_list[$i]['id']?>">
 
-        <td class="align_left nowrap tooltip_container">
-          <?=$cards_list[$i]['name']?>
-          <div class="tooltip bold">
-            <?=$cards_list[$i]['name_en']?><br>
-            <?=$cards_list[$i]['name_fr']?>
-          </div>
-        </td>
-
         <?php if($cards_list[$i]['release']) : ?>
         <td class="align_center nowrap tooltip_container">
           <?=$cards_list[$i]['release']?>
@@ -327,23 +319,31 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <td class="align_center nowrap">
+        <td class="align_left nowrap bold tooltip_container">
+          <?=$cards_list[$i]['name']?>
+          <div class="tooltip bold">
+            <?=$cards_list[$i]['name_en']?><br>
+            <?=$cards_list[$i]['name_fr']?>
+          </div>
+        </td>
+
+        <td class="align_center bold nowrap">
           <?=$cards_list[$i]['type']?>
         </td>
 
-        <td class="align_center nowrap">
+        <td class="align_center bold nowrap">
           <?=$cards_list[$i]['faction']?>
         </td>
 
-        <td class="align_center nowrap">
+        <td class="align_center bold nowrap">
           <?=$cards_list[$i]['rarity']?>
         </td>
 
-        <td class="align_center bold nowrap">
+        <td class="align_left nowrap card_cost">
           <?=$cards_list[$i]['cost']?>
         </td>
 
-        <td class="align_center bold nowrap">
+        <td class="align_left nowrap card_income">
           <?=$cards_list[$i]['income']?>
         </td>
 
@@ -355,13 +355,17 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$cards_list[$i]['durability']?>
         </td>
 
-        <?php if($cards_list[$i]['body_en'] || $cards_list[$i]['body_fr']): ?>
+        <?php if($cards_list[$i]['body_en_raw'] || $cards_list[$i]['body_fr_raw']): ?>
         <td class="align_center nowrap tooltip_container">
           <?=$cards_list[$i]['length_en']?> - <?=$cards_list[$i]['length_fr']?>
           <div class="tooltip dowrap body_preview">
-            <?=$cards_list[$i]['body_en']?>
+            <div class="smallpadding_top smallpadding_bot spaced">
+              <?=$cards_list[$i]['body_en_raw']?>
+            </div>
             <hr>
-            <?=$cards_list[$i]['body_fr']?>
+            <div class="smallpadding_top smallpadding_bot spaced">
+              <?=$cards_list[$i]['body_fr_raw']?>
+            </div>
           </div>
         </td>
         <?php else: ?>
@@ -403,8 +407,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <td class="align_center nowrap">
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer tinyspaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/cards_edit?card='.$cards_list[$i]['id'])?>
+        <td class="align_center nowrap" style="min-width: 6.0rem">
+          <?=__icon('maximize', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('admin_card_list_view'), href: 'pages/admin/cards_view?card='.$cards_list[$i]['id'])?>
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/cards_edit?card='.$cards_list[$i]['id'])?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_cards_delete('".__('admin_card_delete_confirm')."','".$cards_list[$i]['id']."')")?>
         </td>
 

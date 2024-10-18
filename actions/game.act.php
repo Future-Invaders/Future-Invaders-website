@@ -10,6 +10,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  cards_list                      Lists cards in the database                                                      */
 /*  cards_add                       Adds a card to the database                                                      */
+/*  cards_format_body               Formats a card's body                                                            */
+/*  cards_format_cost               Formats a card's cost                                                            */
 /*                                                                                                                   */
 /*  images_get                      Returns data related to an image                                                 */
 /*  images_get_full_path            Returns the full path of an image waititng to be added to the database           */
@@ -223,30 +225,30 @@ function cards_list( string  $sort_by  = 'name'  ,
     // Prepare for display
     if($format === 'html')
     {
-      $data[$i]['id']         = sanitize_output($row['c_id']);
-      $data[$i]['name']       = sanitize_output(string_truncate($row['c_name'], 30, '...'));
-      $data[$i]['name_en']    = sanitize_output($row['c_name_en']);
-      $data[$i]['name_fr']    = sanitize_output($row['c_name_fr']);
-      $data[$i]['release']    = sanitize_output(string_truncate($row['r_name'], 12, '...'));
-      $data[$i]['release_en'] = sanitize_output($row['r_name_en']);
-      $data[$i]['release_fr'] = sanitize_output($row['r_name_fr']);
-      $data[$i]['type']       = sanitize_output($row['ct_name']);
-      $data[$i]['faction']    = sanitize_output($row['f_name']);
-      $data[$i]['rarity']     = sanitize_output($row['cr_name']);
-      $data[$i]['cost']       = sanitize_output($row['c_cost']);
-      $data[$i]['income']     = sanitize_output($row['c_income']);
-      $data[$i]['weapons']    = $row['c_weapons'] ? sanitize_output($row['c_weapons']) : '&nbsp;';
-      $data[$i]['durability'] = $row['c_durability'] ? sanitize_output($row['c_durability']) : '&nbsp;';
-      $data[$i]['length_en']  = sanitize_output($row['c_length_en']);
-      $data[$i]['length_fr']  = sanitize_output($row['c_length_fr']);
-      $data[$i]['body_en']    = sanitize_output($row['c_body_en'], preserve_line_breaks: true);
-      $data[$i]['body_fr']    = sanitize_output($row['c_body_fr'], preserve_line_breaks: true);
-      $data[$i]['image_en']   = sanitize_output($row['i_path_en']);
-      $data[$i]['image_fr']   = sanitize_output($row['i_path_fr']);
-      $data[$i]['extra']      = sanitize_output($row['c_extra']);
-      $data[$i]['hidden']     = sanitize_output($row['c_hidden']);
-      $data[$i]['ntags']      = sanitize_output($row['ct_count']);
-      $data[$i]['tags']       = sanitize_output($row['ct_names']);
+      $data[$i]['id']           = sanitize_output($row['c_id']);
+      $data[$i]['name']         = sanitize_output(string_truncate($row['c_name'], 25, '...'));
+      $data[$i]['name_en']      = sanitize_output($row['c_name_en']);
+      $data[$i]['name_fr']      = sanitize_output($row['c_name_fr']);
+      $data[$i]['release']      = sanitize_output(string_truncate($row['r_name'], 12, '...'));
+      $data[$i]['release_en']   = sanitize_output($row['r_name_en']);
+      $data[$i]['release_fr']   = sanitize_output($row['r_name_fr']);
+      $data[$i]['type']         = sanitize_output(string_change_case($row['ct_name'], 'uppercase'));
+      $data[$i]['faction']      = sanitize_output(string_change_case($row['f_name'], 'uppercase'));
+      $data[$i]['rarity']       = sanitize_output(string_change_case($row['cr_name'], 'uppercase'));
+      $data[$i]['cost']         = cards_format_cost($row['c_cost']);
+      $data[$i]['income']       = cards_format_cost($row['c_income']);
+      $data[$i]['weapons']      = $row['c_weapons'] ? sanitize_output($row['c_weapons']) : '&nbsp;';
+      $data[$i]['durability']   = $row['c_durability'] ? sanitize_output($row['c_durability']) : '&nbsp;';
+      $data[$i]['length_en']    = sanitize_output($row['c_length_en']);
+      $data[$i]['length_fr']    = sanitize_output($row['c_length_fr']);
+      $data[$i]['body_en_raw']  = cards_format_body($row['c_body_en']);
+      $data[$i]['body_fr_raw']  = cards_format_body($row['c_body_fr']);
+      $data[$i]['image_en']     = sanitize_output($row['i_path_en']);
+      $data[$i]['image_fr']     = sanitize_output($row['i_path_fr']);
+      $data[$i]['extra']        = sanitize_output($row['c_extra']);
+      $data[$i]['hidden']       = sanitize_output($row['c_hidden']);
+      $data[$i]['ntags']        = sanitize_output($row['ct_count']);
+      $data[$i]['tags']         = sanitize_output($row['ct_names']);
     }
 
     // Prepare for the API
@@ -270,8 +272,6 @@ function cards_list( string  $sort_by  = 'name'  ,
   // Return the prepared data
   return $data;
 }
-
-
 
 
 
@@ -341,6 +341,77 @@ function cards_add( array $data ) : void
   }
 }
 
+
+
+
+/**
+ * Formats a card's body.
+ *
+ * @param   string  $body  The card's body.
+ *
+ * @return  string        The formatted body.
+ */
+
+function cards_format_body( string $body ) : string
+{
+  // Get the path to the website's root
+  $path = root_path();
+
+  // Transform line breaks
+  $body = nl2br($body);
+
+  // Replace formatting tags
+  $body = preg_replace('/<b>(.*?)<\/b>/is', "<span class=\"bold\">$1</span>", $body);
+  $body = preg_replace('/<i>(.*?)<\/i>/is', "<span class=\"italics\">$1</span>", $body);
+
+  // Add resource icons
+  $body = preg_replace('/\[T\]/is', "<img src=\"".$path."/img/gameicons/oil.png\" alt=\"[T]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[I\]/is', "<img src=\"".$path."/img/gameicons/tech.png\" alt=\"[I]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[O\]/is', "<img src=\"".$path."/img/gameicons/life.png\" alt=\"[O]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[P\]/is', "<img src=\"".$path."/img/gameicons/scrap.png\" alt=\"[P]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[X\]/is', "<img src=\"".$path."/img/gameicons/credits.png\" alt=\"[X]\" class=\"valign_middle gameicon\">", $body);
+
+  // Add card type icons
+  $body = preg_replace('/\[S\]/is', "<img src=\"".$path."/img/gameicons/ship.png\" alt=\"[S]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[A\]/is', "<img src=\"".$path."/img/gameicons/action.png\" alt=\"[A]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[R\]/is', "<img src=\"".$path."/img/gameicons/reaction.png\" alt=\"[R]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[B\]/is', "<img src=\"".$path."/img/gameicons/structure.png\" alt=\"[B]\" class=\"valign_middle gameicon\">", $body);
+
+  // Return the formatted card body
+  return $body;
+}
+
+
+
+
+/**
+ * Format a card's cost.
+ *
+ * @param   string  $cost  The card's cost.
+ *
+ * @return  string        The formatted cost.
+ */
+
+function cards_format_cost( string $cost ) : string
+{
+  // Get the path to the website's root
+  $path = root_path();
+
+  // Map replacement of letters with icons
+  $icons = array(
+    'T' => "<img src=\"".$path."/img/gameicons/oil.png\" alt=\"T\" class=\"valign_middle gameicon\">"     ,
+    'I' => "<img src=\"".$path."/img/gameicons/tech.png\" alt=\"I\" class=\"valign_middle gameicon\">"    ,
+    'O' => "<img src=\"".$path."/img/gameicons/life.png\" alt=\"O\" class=\"valign_middle gameicon\">"    ,
+    'P' => "<img src=\"".$path."/img/gameicons/scrap.png\" alt=\"P\" class=\"valign_middle gameicon\">"   ,
+    'X' => "<img src=\"".$path."/img/gameicons/credits.png\" alt=\"X\" class=\"valign_middle gameicon\">"
+  );
+
+  // Replace the letters with icons
+  $cost = strtr($cost, $icons);
+
+  // Return the formatted card cost
+  return $cost;
+}
 
 
 
