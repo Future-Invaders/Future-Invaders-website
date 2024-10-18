@@ -76,25 +76,145 @@ function cards_list( string  $sort_by  = 'name'  ,
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Sanitize the search data
-  $search_name  = sanitize_array_element($search, 'name', 'string');
+  $search_name        = sanitize_array_element($search, 'name', 'string');
+  $search_release_id  = sanitize_array_element($search, 'release_id', 'int');
+  $search_type_id     = sanitize_array_element($search, 'type_id', 'int');
+  $search_faction_id  = sanitize_array_element($search, 'faction_id', 'int');
+  $search_rarity_id   = sanitize_array_element($search, 'rarity_id', 'int');
+  $search_cost        = sanitize_array_element($search, 'cost', 'string');
+  $search_income      = sanitize_array_element($search, 'income', 'string');
+  $search_weapons     = sanitize_array_element($search, 'weapons', 'int');
+  $search_durability  = sanitize_array_element($search, 'durability', 'int');
+  $search_body        = sanitize_array_element($search, 'body', 'string');
+  $search_extra       = sanitize_array_element($search, 'extra', 'int');
+  $search_tag_id      = sanitize_array_element($search, 'tag_id', 'int');
 
   // Search through the data
-  $query_search  =  ($search_name)  ? " WHERE cards.name_en LIKE '%$search_name%'
-                                        OR    cards.name_fr LIKE '%$search_name%' " : " WHERE 1 = 1 ";
+  $query_search  = ($search_name)           ? " WHERE cards.name_en    LIKE '%$search_name%'
+                                                OR    cards.name_fr    LIKE '%$search_name%' "      : " WHERE 1 = 1 ";
+  $query_search .= ($search_release_id && $search_release_id !== -1)
+                                            ? " AND   releases.id         = '$search_release_id' "  : "";
+  $query_search .= ($search_release_id === -1)
+                                            ? " AND   releases.id         IS NULL "                 : "";
+  $query_search .= ($search_type_id && $search_type_id !== -1)
+                                            ? " AND   card_types.id       = '$search_type_id' "     : "";
+  $query_search .= ($search_type_id === -1)
+                                            ? " AND   card_types.id       IS NULL "                 : "";
+  $query_search .= ($search_faction_id && $search_faction_id !== -1)
+                                            ? " AND   factions.id         = '$search_faction_id' "  : "";
+  $query_search .= ($search_faction_id === -1)
+                                            ? " AND   factions.id         IS NULL "                 : "";
+  $query_search .= ($search_rarity_id && $search_rarity_id !== -1)
+                                            ? " AND   card_rarities.id    = '$search_rarity_id' "   : "";
+  $query_search .= ($search_rarity_id === -1)
+                                            ? " AND   card_rarities.id    IS NULL "                 : "";
+  $query_search .= ($search_cost)           ? " AND   cards.cost          LIKE '$search_cost' "     : "";
+  $query_search .= ($search_income)         ? " AND   cards.income        LIKE '$search_income' "   : "";
+  $query_search .= ($search_weapons)        ? " AND   cards.weapons       = '$search_weapons' "     : "";
+  $query_search .= ($search_durability)     ? " AND   cards.durability    = '$search_durability' "  : "";
+  $query_search .= ($search_body)           ? " AND   cards.body_en       LIKE '%$search_body%'
+                                                OR    cards.body_fr       LIKE '%$search_body%' "   : "";
+  $query_search .= ($search_extra === 1 )   ? " AND   cards.is_hidden     = '1' "                   : "";
+  $query_search .= ($search_extra === 10 )  ? " AND   cards.is_extra_card = '1' "                   : "";
+  $query_search .= ($search_extra === 100 ) ? " AND   cards.fk_images_en != ''
+                                                AND   cards.fk_images_fr != '' "                    : "";
+  $query_search .= ($search_extra === 101 ) ? " AND ( cards.fk_images_en != ''
+                                                AND   cards.fk_images_fr  = '' )
+                                                OR  ( cards.fk_images_en  = ''
+                                                AND   cards.fk_images_fr != '' ) "                  : "";
+  $query_search .= ($search_extra === 102 ) ? " AND   cards.fk_images_en  = ''
+                                                AND   cards.fk_images_fr  = '' "                    : "";
+  $query_search .= ($search_tag_id === -1)  ? " AND   tags.id             IS NULL "                 : "";
+
+  // Use a different search technique for tags
+  $query_having = ($search_tag_id && $search_tag_id !== -1)
+                ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                : "";
 
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'type'    => " ORDER BY cards.fk_card_types ASC ",
-    default   => " ORDER BY cards.name_$lang ASC ",
+    'tags'        => " ORDER BY COUNT(tags.id)              DESC    ,
+                                cards.name_$lang            ASC     ",
+    'api'         => " ORDER BY cards.name_en               ASC     ",
+    'name'        => " ORDER BY cards.name_$lang            ASC     ",
+    'release'     => " ORDER BY releases.release_date       IS NULL ,
+                                releases.release_date       DESC    ,
+                                cards.name_$lang            ASC     ",
+    'type'        => " ORDER BY card_types.sorting_order    IS NULL ,
+                                card_types.sorting_order    ASC     ,
+                                cards.name_$lang            ASC     ",
+    'faction'     => " ORDER BY factions.sorting_order      IS NULL ,
+                                factions.sorting_order      ASC     ,
+                                cards.name_$lang            ASC     ",
+    'rarity'      => " ORDER BY card_rarities.sorting_order IS NULL ,
+                                card_rarities.sorting_order ASC     ,
+                                cards.name_$lang            ASC     ",
+    'cost'        => " ORDER BY LENGTH(cards.cost)          DESC    ,
+                                cards.cost                  DESC    ,
+                                cards.name_$lang            ASC     ",
+    'income'      => " ORDER BY LENGTH(cards.income)        DESC    ,
+                                cards.income                DESC    ,
+                                cards.name_$lang            ASC     ",
+    'weapons'     => " ORDER BY cards.weapons               DESC    ,
+                                cards.name_$lang            ASC     ",
+    'durability'  => " ORDER BY cards.durability            DESC    ,
+                                cards.name_$lang            ASC     ",
+    'body'        => " ORDER BY LENGTH(cards.body_en)
+                              + LENGTH(cards.body_fr)       DESC    ,
+                                cards.name_$lang            ASC     ",
+    default       => " ORDER BY releases.release_date       IS NULL ,
+                                releases.release_date       DESC    ,
+                                factions.sorting_order      IS NULL ,
+                                factions.sorting_order      ASC     ,
+                                card_types.sorting_order    IS NULL ,
+                                card_types.sorting_order    ASC     ,
+                                LENGTH(cards.cost)          ASC     ,
+                                card_rarities.sorting_order IS NULL ,
+                                card_rarities.sorting_order ASC     ,
+                                cards.cost                  ASC     ,
+                                cards.name_$lang            ASC     ",
   };
 
   // Fetch the cards
-  $cards = query("  SELECT  cards.id          AS 'c_id'   ,
-                            cards.uuid        AS 'c_uuid' ,
-                            cards.name_$lang  AS 'c_name'
-                    FROM    cards
+  $cards = query("  SELECT    cards.id                  AS 'c_id'         ,
+                              cards.uuid                AS 'c_uuid'       ,
+                              cards.name_$lang          AS 'c_name'       ,
+                              cards.name_en             AS 'c_name_en'    ,
+                              cards.name_fr             AS 'c_name_fr'    ,
+                              cards.cost                AS 'c_cost'       ,
+                              cards.income              AS 'c_income'     ,
+                              cards.weapons             AS 'c_weapons'    ,
+                              cards.durability          AS 'c_durability' ,
+                              cards.is_extra_card       AS 'c_extra'      ,
+                              cards.is_hidden           AS 'c_hidden'     ,
+                              LENGTH(cards.body_en)     AS 'c_length_en'  ,
+                              LENGTH(cards.body_fr)     AS 'c_length_fr'  ,
+                              cards.body_en             AS 'c_body_en'    ,
+                              cards.body_fr             AS 'c_body_fr'    ,
+                              releases.name_$lang       AS 'r_name'       ,
+                              releases.name_en          AS 'r_name_en'    ,
+                              releases.name_fr          AS 'r_name_fr'    ,
+                              card_types.name_$lang     AS 'ct_name'      ,
+                              factions.name_$lang       AS 'f_name'       ,
+                              card_rarities.name_$lang  AS 'cr_name'      ,
+                              images_en.path            AS 'i_path_en'    ,
+                              images_fr.path            AS 'i_path_fr'    ,
+                              COUNT(tags.id)            AS 'ct_count'     ,
+                              GROUP_CONCAT(tags.name SEPARATOR ', ')
+                                                        AS 'ct_names'
+                    FROM      cards
+                    LEFT JOIN releases            ON releases.id          = cards.fk_releases
+                    LEFT JOIN factions            ON factions.id          = cards.fk_factions
+                    LEFT JOIN card_types          ON card_types.id        = cards.fk_card_types
+                    LEFT JOIN card_rarities       ON card_rarities.id     = cards.fk_card_rarities
+                    LEFT JOIN images AS images_en ON images_en.id         = cards.fk_images_en
+                    LEFT JOIN images AS images_fr ON images_fr.id         = cards.fk_images_fr
+                    LEFT JOIN tags_cards          ON tags_cards.fk_cards  = cards.id
+                    LEFT JOIN tags                ON tags.id              = tags_cards.fk_tags
                     $query_search
+                    GROUP BY  cards.id
+                    $query_having
                     $query_sort ");
 
   // Prepare the data for display
@@ -103,15 +223,36 @@ function cards_list( string  $sort_by  = 'name'  ,
     // Prepare for display
     if($format === 'html')
     {
-      $data[$i]['id']     = sanitize_output($row['c_id']);
-      $data[$i]['name']   = sanitize_output($row['c_name']);
+      $data[$i]['id']         = sanitize_output($row['c_id']);
+      $data[$i]['name']       = sanitize_output(string_truncate($row['c_name'], 30, '...'));
+      $data[$i]['name_en']    = sanitize_output($row['c_name_en']);
+      $data[$i]['name_fr']    = sanitize_output($row['c_name_fr']);
+      $data[$i]['release']    = sanitize_output(string_truncate($row['r_name'], 12, '...'));
+      $data[$i]['release_en'] = sanitize_output($row['r_name_en']);
+      $data[$i]['release_fr'] = sanitize_output($row['r_name_fr']);
+      $data[$i]['type']       = sanitize_output($row['ct_name']);
+      $data[$i]['faction']    = sanitize_output($row['f_name']);
+      $data[$i]['rarity']     = sanitize_output($row['cr_name']);
+      $data[$i]['cost']       = sanitize_output($row['c_cost']);
+      $data[$i]['income']     = sanitize_output($row['c_income']);
+      $data[$i]['weapons']    = $row['c_weapons'] ? sanitize_output($row['c_weapons']) : '&nbsp;';
+      $data[$i]['durability'] = $row['c_durability'] ? sanitize_output($row['c_durability']) : '&nbsp;';
+      $data[$i]['length_en']  = sanitize_output($row['c_length_en']);
+      $data[$i]['length_fr']  = sanitize_output($row['c_length_fr']);
+      $data[$i]['body_en']    = sanitize_output($row['c_body_en'], preserve_line_breaks: true);
+      $data[$i]['body_fr']    = sanitize_output($row['c_body_fr'], preserve_line_breaks: true);
+      $data[$i]['image_en']   = sanitize_output($row['i_path_en']);
+      $data[$i]['image_fr']   = sanitize_output($row['i_path_fr']);
+      $data[$i]['extra']      = sanitize_output($row['c_extra']);
+      $data[$i]['hidden']     = sanitize_output($row['c_hidden']);
+      $data[$i]['ntags']      = sanitize_output($row['ct_count']);
+      $data[$i]['tags']       = sanitize_output($row['ct_names']);
     }
 
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid']   = sanitize_json($row['c_uuid']);
-      $data[$i]['name']   = sanitize_json($row['c_name']);
+      $data[$i]['uuid'] = sanitize_json($row['c_uuid']);
     }
   }
 
@@ -379,10 +520,13 @@ function images_list( string  $sort_by  = 'path'  ,
                                               ? " AND   images.language = '$search_lang' "        : "";
   $query_search .= ($search_lang === "none")  ? " AND   images.language = '' "                    : "";
   $query_search .= ($search_artist)           ? " AND   images.artist   LIKE '%$search_artist%' " : "";
-  $query_search .= ($search_tag_id && $search_tag_id !== -1)
-                                              ? " AND   tags.id         = '$search_tag_id' "      : "";
   $query_search .= ($search_tag_id === -1)    ? " AND   tags.id         IS NULL "                 : "";
   $query_search .= ($search_tag)              ? " AND   tags.name       LIKE '$search_tag' "      : "";
+
+  // Use a different search technique for tags
+  $query_having = ($search_tag_id && $search_tag_id !== -1)
+                ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -410,10 +554,11 @@ function images_list( string  $sort_by  = 'path'  ,
                                 GROUP_CONCAT(tags.name SEPARATOR ', ')
                                                 AS 'it_names'
                       FROM      images
-                      LEFT JOIN tags_images ON tags_images.fk_images = images.id
-                      LEFT JOIN tags        ON tags.id = tags_images.fk_tags
+                      LEFT JOIN tags_images ON tags_images.fk_images  = images.id
+                      LEFT JOIN tags        ON tags.id                = tags_images.fk_tags
                       $query_search
                       GROUP BY  images.id
+                      $query_having
                       $query_sort ");
 
   // Prepare the data for display

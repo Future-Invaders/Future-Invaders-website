@@ -174,7 +174,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </select>
       </div>
 
-      <div class="smallpadding_bot">
+      <div class="padding_bot">
         <label for="card_release"><?=__('admin_card_add_release')?></label>
         <select class="indiv align_left" name="card_release">
           <option value="">&nbsp;</option>
@@ -194,10 +194,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <div id="card_stats">
 
-        <div class="flexcontainer">
+        <div class="flexcontainer smallpadding_bot tinypadding_top">
           <div style="flex: 3">
 
-            <div class="smallpadding_bot">
+            <div>
               <label><?=__('admin_card_add_weapons')?></label>
               <input class="indiv" type="text" name="card_weapons">
             </div>
@@ -208,7 +208,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
           <div style="flex: 3">
 
-            <div class="smallpadding_bot">
+            <div>
               <label><?=__('admin_card_add_durability')?></label>
               <input class="indiv" type="text" name="card_durability">
             </div>
@@ -220,10 +220,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
         </div>
 
-        <div class="flexcontainer">
+        <div class="flexcontainer padding_bot">
           <div style="flex: 3">
 
-            <div class="smallpadding_bot">
+            <div>
               <label><?=__('admin_card_add_cost')?></label>
               <input class="indiv" type="text" name="card_cost">
             </div>
@@ -234,7 +234,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
           <div style="flex: 3">
 
-            <div class="smallpadding_bot">
+            <div>
               <label><?=__('admin_card_add_income')?></label>
               <input class="indiv" type="text" name="card_income">
             </div>
@@ -248,10 +248,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       </div>
 
-      <div class="flexcontainer">
+      <div class="flexcontainer padding_bot">
         <div style="flex: 8">
 
-          <div class="smallpadding_bot">
+          <div>
             <label><?=__('admin_card_add_body_en')?></label>
             <textarea class="indiv" name="card_body_en"></textarea>
           </div>
@@ -262,7 +262,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
         <div style="flex: 8">
 
-          <div class="smallpadding_bot">
+          <div>
             <label><?=__('admin_card_add_body_fr')?></label>
             <textarea class="indiv" name="card_body_fr"></textarea>
           </div>

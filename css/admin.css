@@ -1,2 +1,3 @@
 .admin_menu     { margin-top: -2.3rem;                                        }
 .image_preview  { max-width: 18.0rem !important; max-height: 100% !important; }
+.body_preview   { max-height: 100%;                                           }

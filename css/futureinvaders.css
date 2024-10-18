@@ -264,6 +264,7 @@ hr   { height: 3px;                                                 } }
 .spaced           { padding-left: 0.5rem; padding-right: 0.5rem;  }
 .spaced_left      { padding-left: 0.5rem;                         }
 .bigspaced_left   { padding-left: 1.5rem;                         }
+.tinyspaced_right { padding-right: 0.2rem;                        }
 .spaced_right     { padding-right: 0.5rem;                        }
 .bigspaced_right  { padding-right: 1.5rem;                        }
 .nopadding        { padding-top: 0; padding-bottom: 0;            }

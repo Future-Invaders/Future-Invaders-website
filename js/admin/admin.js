@@ -56,8 +56,19 @@ function admin_cards_search( sort_data = null )
     document.getElementById('admin_cards_sort').value = sort_data;
 
   // Assemble the postdata
-  postdata =  'admin_cards_sort='            + document.getElementById('admin_cards_sort').value;
-  postdata += '&admin_cards_search_name='    + document.getElementById('admin_cards_search_name').value;
+  postdata =  'admin_cards_sort='               + document.getElementById('admin_cards_sort').value;
+  postdata += '&admin_cards_search_name='       + document.getElementById('admin_cards_search_name').value;
+  postdata += '&admin_cards_search_release='    + document.getElementById('admin_cards_search_release').value;
+  postdata += '&admin_cards_search_type='       + document.getElementById('admin_cards_search_type').value;
+  postdata += '&admin_cards_search_faction='    + document.getElementById('admin_cards_search_faction').value;
+  postdata += '&admin_cards_search_rarity='     + document.getElementById('admin_cards_search_rarity').value;
+  postdata += '&admin_cards_search_cost='       + document.getElementById('admin_cards_search_cost').value;
+  postdata += '&admin_cards_search_income='     + document.getElementById('admin_cards_search_income').value;
+  postdata += '&admin_cards_search_weapons='    + document.getElementById('admin_cards_search_weapons').value;
+  postdata += '&admin_cards_search_durability=' + document.getElementById('admin_cards_search_durability').value;
+  postdata += '&admin_cards_search_body='       + document.getElementById('admin_cards_search_body').value;
+  postdata += '&admin_cards_search_extra='      + document.getElementById('admin_cards_search_extra').value;
+  postdata += '&admin_cards_search_tags='       + document.getElementById('admin_cards_search_tags').value;
 
   // Submit the search
   fetch_page('cards', 'admin_cards_tbody', postdata);
@@ -165,10 +176,10 @@ function admin_images_search( sort_data = null )
 /**
  * Fetches the preview of an image.
  *
- * @param   {int}   image_id    The image's id.
- * @param   {int}   image_name  The image's name.
- * @param   {int}   short_name  The image's short name.
- * @param   {int}   root_path   The path to the root of the website.
+ * @param   {int}     image_id    The image's id.
+ * @param   {string}  image_name  The image's name.
+ * @param   {string}  short_name  The image's short name.
+ * @param   {string}  root_path   The path to the root of the website.
  *
  * @returns {void}
  */

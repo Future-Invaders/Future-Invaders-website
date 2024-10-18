@@ -1020,6 +1020,8 @@ ___('submenu_social_copyright', 'FR', "Propriété intellectuelle");
 
 ___('submenu_social_contact',   'EN', "Contact");
 ___('submenu_social_contact',   'FR', "Contact");
+___('submenu_social_feedback',  'EN', "Give feedback");
+___('submenu_social_feedback',  'FR', "Donnez votre avis");
 ___('submenu_social_publish',   'EN', "Publish this game!");
 ___('submenu_social_publish',   'FR', "Éditez ce jeu !");
 ___('submenu_social_contactme', 'EN', "Contact info");
