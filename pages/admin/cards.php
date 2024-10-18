@@ -327,15 +327,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
         </td>
 
-        <td class="align_center bold nowrap">
+        <td class="align_center bold uppercase nowrap <?=$cards_list[$i]['type_css']?>">
           <?=$cards_list[$i]['type']?>
         </td>
 
-        <td class="align_center bold nowrap">
+        <td class="align_center bold uppercase nowrap <?=$cards_list[$i]['faction_css']?>">
           <?=$cards_list[$i]['faction']?>
         </td>
 
-        <td class="align_center bold nowrap">
+        <td class="align_center bold uppercase nowrap <?=$cards_list[$i]['rarity_css']?>">
           <?=$cards_list[$i]['rarity']?>
         </td>
 

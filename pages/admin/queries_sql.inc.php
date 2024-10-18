@@ -758,7 +758,7 @@ if($last_query < 10)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Cards, card tags, image languages, sorting order for card types and rarities
+// Cards, card tags, image languages, sorting order and styling for card types factions and rarities
 
 if($last_query < 11)
 {
@@ -803,10 +803,14 @@ if($last_query < 11)
   sql_create_index('images', 'images_language', 'language(10)');
 
   sql_create_field('card_types', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_field('card_types', 'styling', 'TINYTEXT NOT NULL', 'name_fr');
   sql_create_index('card_types', 'card_types_sorting_order', 'sorting_order');
 
   sql_create_field('card_rarities', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_field('card_rarities', 'styling', 'TINYTEXT NOT NULL', 'max_card_count');
   sql_create_index('card_rarities', 'card_rarities_sorting_order', 'sorting_order');
+
+  sql_create_field('factions', 'styling', 'TINYTEXT NOT NULL', 'name_fr');
 
   sql_update_query_id(11);
 }

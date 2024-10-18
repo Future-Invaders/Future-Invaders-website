@@ -37,11 +37,13 @@ if(isset($_POST['card_type_add']))
   $card_type_add_order    = form_fetch_element('card_type_order');
   $card_type_add_name_en  = form_fetch_element('card_type_name_en');
   $card_type_add_name_fr  = form_fetch_element('card_type_name_fr');
+  $card_type_add_styling  = form_fetch_element('card_type_styling');
 
   // Assemble an array with the postdata
   $card_type_add_data = array(  'order'   => $card_type_add_order   ,
                                 'name_en' => $card_type_add_name_en ,
-                                'name_fr' => $card_type_add_name_fr );
+                                'name_fr' => $card_type_add_name_fr ,
+                                'styling' => $card_type_add_styling );
 
   // Add the card type to the database
   card_types_add($card_type_add_data);
@@ -60,11 +62,13 @@ if(isset($_POST['card_type_edit']))
   $card_type_edit_order   = form_fetch_element('card_type_order');
   $card_type_edit_name_en = form_fetch_element('card_type_name_en');
   $card_type_edit_name_fr = form_fetch_element('card_type_name_fr');
+  $card_type_edit_styling = form_fetch_element('card_type_styling');
 
   // Assemble an array with the postdata
   $card_type_edit_data = array( 'order'   => $card_type_edit_order   ,
                                 'name_en' => $card_type_edit_name_en ,
-                                'name_fr' => $card_type_edit_name_fr );
+                                'name_fr' => $card_type_edit_name_fr ,
+                                'styling' => $card_type_edit_styling );
 
   // Edit the card type
   card_types_edit(  $card_type_edit_id    ,
@@ -137,7 +141,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr id="admin_card_types_row_<?=$card_types_list[$i]['id']?>">
 
-        <td class="align_center nowrap">
+        <td class="align_center bold uppercase nowrap <?=$card_types_list[$i]['styling']?>">
           <?=$card_types_list[$i]['name']?>
         </td>
 

@@ -47,9 +47,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <input class="indiv" type="text" name="card_type_name_en">
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label for="card_type_name_fr"><?=__('admin_card_type_add_name_fr')?></label>
         <input class="indiv" type="text" name="card_type_name_fr">
+      </div>
+
+      <div class="padding_bot">
+        <label for="card_type_styling"><?=__('admin_card_type_add_styling')?></label>
+        <input class="indiv" type="text" name="card_type_styling">
       </div>
 
       <input type="submit" name="card_type_add" value="<?=__('admin_card_type_add_submit')?>">

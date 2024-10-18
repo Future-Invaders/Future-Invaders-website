@@ -71,9 +71,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <input class="indiv" type="text" name="faction_name_en" value="<?=$admin_faction_data['name_en']?>">
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label for="faction_name_fr"><?=__('admin_faction_add_name_fr')?></label>
         <input class="indiv" type="text" name="faction_name_fr" value="<?=$admin_faction_data['name_fr']?>">
+      </div>
+
+      <div class="padding_bot">
+        <label for="faction_styling"><?=__('admin_faction_add_styling')?></label>
+        <input class="indiv" type="text" name="faction_styling" value="<?=$admin_faction_data['styling']?>">
       </div>
 
       <input type="submit" name="faction_edit" value="<?=__('admin_faction_edit_submit')?>">

@@ -198,8 +198,11 @@ function cards_list( string  $sort_by  = 'name'  ,
                               releases.name_en          AS 'r_name_en'    ,
                               releases.name_fr          AS 'r_name_fr'    ,
                               card_types.name_$lang     AS 'ct_name'      ,
+                              card_types.styling        AS 'ct_styling'   ,
                               factions.name_$lang       AS 'f_name'       ,
+                              factions.styling          AS 'f_styling'    ,
                               card_rarities.name_$lang  AS 'cr_name'      ,
+                              card_rarities.styling     AS 'cr_styling'   ,
                               images_en.path            AS 'i_path_en'    ,
                               images_fr.path            AS 'i_path_fr'    ,
                               COUNT(tags.id)            AS 'ct_count'     ,
@@ -232,9 +235,12 @@ function cards_list( string  $sort_by  = 'name'  ,
       $data[$i]['release']      = sanitize_output(string_truncate($row['r_name'], 12, '...'));
       $data[$i]['release_en']   = sanitize_output($row['r_name_en']);
       $data[$i]['release_fr']   = sanitize_output($row['r_name_fr']);
-      $data[$i]['type']         = sanitize_output(string_change_case($row['ct_name'], 'uppercase'));
-      $data[$i]['faction']      = sanitize_output(string_change_case($row['f_name'], 'uppercase'));
-      $data[$i]['rarity']       = sanitize_output(string_change_case($row['cr_name'], 'uppercase'));
+      $data[$i]['type']         = sanitize_output($row['ct_name']);
+      $data[$i]['type_css']     = sanitize_output($row['ct_styling']);
+      $data[$i]['faction']      = sanitize_output($row['f_name']);
+      $data[$i]['faction_css']  = sanitize_output($row['f_styling']);
+      $data[$i]['rarity']       = sanitize_output($row['cr_name']);
+      $data[$i]['rarity_css']   = sanitize_output($row['cr_styling']);
       $data[$i]['cost']         = cards_format_cost($row['c_cost']);
       $data[$i]['income']       = cards_format_cost($row['c_income']);
       $data[$i]['weapons']      = $row['c_weapons'] ? sanitize_output($row['c_weapons']) : '&nbsp;';
@@ -1510,10 +1516,11 @@ function factions_get( int $faction_id ) : array|null
     return null;
 
   // Fetch the faction's data
-  $faction_data = query(" SELECT  factions.id             AS 'f_id' ,
-                                  factions.sorting_order  AS 'f_order' ,
-                                  factions.name_en        AS 'f_name_en' ,
-                                  factions.name_fr        AS 'f_name_fr'
+  $faction_data = query(" SELECT  factions.id             AS 'f_id'       ,
+                                  factions.sorting_order  AS 'f_order'    ,
+                                  factions.name_en        AS 'f_name_en'  ,
+                                  factions.name_fr        AS 'f_name_fr'  ,
+                                  factions.styling        AS 'f_styling'
                           FROM    factions
                           WHERE   factions.id = '$faction_id' ",
                           fetch_row: true);
@@ -1523,6 +1530,7 @@ function factions_get( int $faction_id ) : array|null
   $data['order']    = sanitize_output($faction_data['f_order']);
   $data['name_en']  = sanitize_output($faction_data['f_name_en']);
   $data['name_fr']  = sanitize_output($faction_data['f_name_fr']);
+  $data['styling']  = sanitize_output($faction_data['f_styling']);
 
   // Return the faction's data
   return $data;
@@ -1549,7 +1557,8 @@ function factions_list( string $format = 'html' ) : array
                                 factions.sorting_order  AS 'f_order'    ,
                                 factions.name_en        AS 'f_name_en'  ,
                                 factions.name_fr        AS 'f_name_fr'  ,
-                                factions.name_$lang     AS 'f_name'
+                                factions.name_$lang     AS 'f_name'     ,
+                                factions.styling        AS 'f_styling'
                       FROM      factions
                       ORDER BY  factions.sorting_order ASC ");
 
@@ -1559,9 +1568,10 @@ function factions_list( string $format = 'html' ) : array
     // Prepare for display
     if($format === 'html')
     {
-      $data[$i]['id']     = sanitize_output($row['f_id']);
-      $data[$i]['order']  = sanitize_output($row['f_order']);
-      $data[$i]['name']   = sanitize_output($row['f_name']);
+      $data[$i]['id']       = sanitize_output($row['f_id']);
+      $data[$i]['order']    = sanitize_output($row['f_order']);
+      $data[$i]['name']     = sanitize_output($row['f_name']);
+      $data[$i]['styling']  = sanitize_output($row['f_styling']);
     }
 
     // Prepare for the API
@@ -1605,13 +1615,15 @@ function factions_add( array $data ) : void
   $faction_order    = sanitize_array_element($data, 'order', 'int');
   $faction_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $faction_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $faction_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Add the faction to the database
   query(" INSERT INTO factions
           SET         factions.uuid           = UUID()              ,
                       factions.sorting_order  = '$faction_order'    ,
                       factions.name_en        = '$faction_name_en'  ,
-                      factions.name_fr        = '$faction_name_fr'  ");
+                      factions.name_fr        = '$faction_name_fr'  ,
+                      factions.styling        = '$faction_styling'  ");
 }
 
 
@@ -1634,6 +1646,7 @@ function factions_edit( int   $faction_id ,
   $faction_order    = sanitize_array_element($data, 'order', 'int');
   $faction_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $faction_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $faction_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Stop here if the faction does not exist
   if(!database_row_exists('factions', $faction_id))
@@ -1643,7 +1656,8 @@ function factions_edit( int   $faction_id ,
   query(" UPDATE  factions
           SET     factions.sorting_order  = '$faction_order'    ,
                   factions.name_en        = '$faction_name_en'  ,
-                  factions.name_fr        = '$faction_name_fr'
+                  factions.name_fr        = '$faction_name_fr'  ,
+                  factions.styling        = '$faction_styling'
           WHERE   factions.id             = '$faction_id' ");
 }
 
@@ -1699,7 +1713,8 @@ function card_types_get( int $card_type_id ) : array|null
                                     card_types.uuid           AS 'c_uuid'     ,
                                     card_types.sorting_order  AS 'c_order'    ,
                                     card_types.name_en        AS 'c_name_en'  ,
-                                    card_types.name_fr        AS 'c_name_fr'
+                                    card_types.name_fr        AS 'c_name_fr'  ,
+                                    card_types.styling        AS 'c_styling'
                             FROM    card_types
                             WHERE   card_types.id = '$card_type_id' ",
                             fetch_row: true);
@@ -1709,6 +1724,7 @@ function card_types_get( int $card_type_id ) : array|null
   $data['order']    = sanitize_output($card_type_data['c_order']);
   $data['name_en']  = sanitize_output($card_type_data['c_name_en']);
   $data['name_fr']  = sanitize_output($card_type_data['c_name_fr']);
+  $data['styling']  = sanitize_output($card_type_data['c_styling']);
 
   // Return the card type's data
   return $data;
@@ -1736,7 +1752,8 @@ function card_types_list( string $format = 'html' ) : array
                                   card_types.sorting_order  AS 'c_order'    ,
                                   card_types.name_en        AS 'c_name_en'  ,
                                   card_types.name_fr        AS 'c_name_fr'  ,
-                                  card_types.name_$lang     AS 'c_name'
+                                  card_types.name_$lang     AS 'c_name'     ,
+                                  card_types.styling        AS 'c_styling'
                         FROM      card_types
                         ORDER BY  card_types.sorting_order ASC ");
 
@@ -1746,9 +1763,10 @@ function card_types_list( string $format = 'html' ) : array
     // Prepare for display
     if($format === 'html')
     {
-      $data[$i]['id']     = sanitize_output($row['c_id']);
-      $data[$i]['order']  = sanitize_output($row['c_order']);
-      $data[$i]['name']   = sanitize_output($row['c_name']);
+      $data[$i]['id']       = sanitize_output($row['c_id']);
+      $data[$i]['order']    = sanitize_output($row['c_order']);
+      $data[$i]['name']     = sanitize_output($row['c_name']);
+      $data[$i]['styling']  = sanitize_output($row['c_styling']);
     }
 
     // Prepare for the API
@@ -1792,13 +1810,15 @@ function card_types_add( array $data ) : void
   $card_type_order    = sanitize_array_element($data, 'order', 'int');
   $card_type_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $card_type_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $card_type_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Add the card type to the database
   query(" INSERT INTO card_types
           SET         card_types.uuid           = UUID()                ,
                       card_types.sorting_order  = '$card_type_order'    ,
                       card_types.name_en        = '$card_type_name_en'  ,
-                      card_types.name_fr        = '$card_type_name_fr'  ");
+                      card_types.name_fr        = '$card_type_name_fr'  ,
+                      card_types.styling        = '$card_type_styling'  ");
 }
 
 
@@ -1821,6 +1841,7 @@ function card_types_edit( int   $card_type_id ,
   $card_type_order    = sanitize_array_element($data, 'order', 'int');
   $card_type_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $card_type_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $card_type_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Stop here if the card type does not exist
   if(!database_row_exists('card_types', $card_type_id))
@@ -1830,7 +1851,8 @@ function card_types_edit( int   $card_type_id ,
   query(" UPDATE  card_types
           SET     card_types.sorting_order  = '$card_type_order'    ,
                   card_types.name_en        = '$card_type_name_en'  ,
-                  card_types.name_fr        = '$card_type_name_fr'
+                  card_types.name_fr        = '$card_type_name_fr'  ,
+                  card_types.styling        = '$card_type_styling'
           WHERE   card_types.id             = '$card_type_id' ");
 }
 
@@ -1882,12 +1904,13 @@ function card_rarities_get( int $card_rarity_id ) : array|null
     return null;
 
   // Fetch the card rarity's data
-  $card_rarity_data = query(" SELECT  card_rarities.id              AS 'r_id'       ,
-                                      card_rarities.uuid            AS 'r_uuid'     ,
-                                      card_rarities.sorting_order   AS 'r_order'    ,
-                                      card_rarities.name_en         AS 'r_name_en'  ,
-                                      card_rarities.name_fr         AS 'r_name_fr'  ,
-                                      card_rarities.max_card_count  AS 'r_max_count'
+  $card_rarity_data = query(" SELECT  card_rarities.id              AS 'r_id'         ,
+                                      card_rarities.uuid            AS 'r_uuid'       ,
+                                      card_rarities.sorting_order   AS 'r_order'      ,
+                                      card_rarities.name_en         AS 'r_name_en'    ,
+                                      card_rarities.name_fr         AS 'r_name_fr'    ,
+                                      card_rarities.max_card_count  AS 'r_max_count'  ,
+                                      card_rarities.styling         AS 'r_styling'
                             FROM    card_rarities
                             WHERE   card_rarities.id = '$card_rarity_id' ",
                             fetch_row: true);
@@ -1898,6 +1921,7 @@ function card_rarities_get( int $card_rarity_id ) : array|null
   $data['name_en']    = sanitize_output($card_rarity_data['r_name_en']);
   $data['name_fr']    = sanitize_output($card_rarity_data['r_name_fr']);
   $data['max_count']  = sanitize_output($card_rarity_data['r_max_count']);
+  $data['styling']    = sanitize_output($card_rarity_data['r_styling']);
 
   // Return the card rarity's data
   return $data;
@@ -1920,13 +1944,14 @@ function card_rarities_list( string  $format = 'html'  ) : array
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the card rarities
-  $card_rarities = query("  SELECT    card_rarities.id              AS 'r_id'       ,
-                                      card_rarities.uuid            AS 'r_uuid'     ,
-                                      card_rarities.sorting_order   AS 'r_order'    ,
-                                      card_rarities.name_en         AS 'r_name_en'  ,
-                                      card_rarities.name_fr         AS 'r_name_fr'  ,
-                                      card_rarities.name_$lang      AS 'r_name'     ,
-                                      card_rarities.max_card_count  AS 'r_max_count'
+  $card_rarities = query("  SELECT    card_rarities.id              AS 'r_id'         ,
+                                      card_rarities.uuid            AS 'r_uuid'       ,
+                                      card_rarities.sorting_order   AS 'r_order'      ,
+                                      card_rarities.name_en         AS 'r_name_en'    ,
+                                      card_rarities.name_fr         AS 'r_name_fr'    ,
+                                      card_rarities.name_$lang      AS 'r_name'       ,
+                                      card_rarities.max_card_count  AS 'r_max_count'  ,
+                                      card_rarities.styling         AS 'r_styling'
                             FROM      card_rarities
                             ORDER BY  card_rarities.sorting_order ASC ");
 
@@ -1940,6 +1965,7 @@ function card_rarities_list( string  $format = 'html'  ) : array
       $data[$i]['name']       = sanitize_output($row['r_name']);
       $data[$i]['order']      = sanitize_output($row['r_order']);
       $data[$i]['max_count']  = sanitize_output($row['r_max_count']);
+      $data[$i]['styling']    = sanitize_output($row['r_styling']);
     }
 
     // Prepare for the API
@@ -1985,6 +2011,7 @@ function card_rarities_add( array $data ) : void
   $card_rarity_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $card_rarity_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
   $card_rarity_max      = sanitize_array_element($data, 'max', 'int', min: 0, default: 0);
+  $card_rarity_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Add the card rarity to the database
   query(" INSERT INTO card_rarities
@@ -1992,7 +2019,8 @@ function card_rarities_add( array $data ) : void
                       card_rarities.sorting_order   = '$card_rarity_order'    ,
                       card_rarities.name_en         = '$card_rarity_name_en'  ,
                       card_rarities.name_fr         = '$card_rarity_name_fr'  ,
-                      card_rarities.max_card_count  = '$card_rarity_max'      ");
+                      card_rarities.max_card_count  = '$card_rarity_max'      ,
+                      card_rarities.styling         = '$card_rarity_styling'  ");
 }
 
 
@@ -2016,6 +2044,7 @@ function card_rarities_edit( int   $card_rarity_id ,
   $card_rarity_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $card_rarity_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
   $card_rarity_max      = sanitize_array_element($data, 'max', 'int', min: 0, default: 0);
+  $card_rarity_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Stop here if the card rarity does not exist
   if(!database_row_exists('card_rarities', $card_rarity_id))
@@ -2026,7 +2055,8 @@ function card_rarities_edit( int   $card_rarity_id ,
           SET     card_rarities.sorting_order   = '$card_rarity_order'    ,
                   card_rarities.name_en         = '$card_rarity_name_en'  ,
                   card_rarities.name_fr         = '$card_rarity_name_fr'  ,
-                  card_rarities.max_card_count  = '$card_rarity_max'
+                  card_rarities.max_card_count  = '$card_rarity_max'      ,
+                  card_rarities.styling         = '$card_rarity_styling'
           WHERE   card_rarities.id              = '$card_rarity_id' ");
 }
 

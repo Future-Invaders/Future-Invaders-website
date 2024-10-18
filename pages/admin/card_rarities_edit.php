@@ -76,9 +76,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <input class="indiv" type="text" name="card_rarity_name_fr" value="<?=$admin_card_rarity_data['name_fr']?>">
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label for="card_rarity_max_count"><?=__('admin_card_rarity_add_max_count')?></label>
         <input class="indiv" type="text" name="card_rarity_max_count" value="<?=$admin_card_rarity_data['max_count']?>">
+      </div>
+
+      <div class="padding_bot">
+        <label for="card_rarity_styling"><?=__('admin_card_rarity_add_styling')?></label>
+        <input class="indiv" type="text" name="card_rarity_styling" value="<?=$admin_card_rarity_data['styling']?>">
       </div>
 
       <input type="submit" name="card_rarity_edit" value="<?=__('admin_card_rarity_edit_submit')?>">

@@ -200,6 +200,8 @@ ___('admin_card_type_add_name_en',  'EN', "Name (English)");
 ___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
 ___('admin_card_type_add_name_fr',  'EN', "Name (French)");
 ___('admin_card_type_add_name_fr',  'FR', "Nom (Français)");
+___('admin_card_type_add_styling',  'EN', "CSS styling");
+___('admin_card_type_add_styling',  'FR', "Stylage CSS");
 ___('admin_card_type_add_submit',   'EN', "Add card type");
 ___('admin_card_type_add_submit',   'FR', "Ajouter le type de carte");
 
@@ -242,6 +244,8 @@ ___('admin_card_rarity_add_name_fr',    'EN', "Name (French)");
 ___('admin_card_rarity_add_name_fr',    'FR', "Nom (Français)");
 ___('admin_card_rarity_add_max_count',  'EN', "Max count per arsenal");
 ___('admin_card_rarity_add_max_count',  'FR', "Maximum par arsenal");
+___('admin_card_rarity_add_styling',    'EN', "CSS styling");
+___('admin_card_rarity_add_styling',    'FR', "Stylage CSS");
 ___('admin_card_rarity_add_submit',     'EN', "Add rarity");
 ___('admin_card_rarity_add_submit',     'FR', "Ajouter la rareté");
 
@@ -437,6 +441,8 @@ ___('admin_faction_add_name_en',        'EN', "Name (English)");
 ___('admin_faction_add_name_en',        'FR', "Nom (Anglais)");
 ___('admin_faction_add_name_fr',        'EN', "Name (French)");
 ___('admin_faction_add_name_fr',        'FR', "Nom (Français)");
+___('admin_faction_add_styling',        'EN', "CSS styling");
+___('admin_faction_add_styling',        'FR', "Stylage CSS");
 ___('admin_faction_add_submit',         'EN', "Add faction");
 ___('admin_faction_add_submit',         'FR', "Ajouter une faction");
 

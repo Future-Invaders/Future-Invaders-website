@@ -55,6 +55,7 @@ src:  url('./fonts/Open-sans-bold.eot?#iefix') format('embedded-opentype'),
         --future-yellow:    #C8B900 ;
         --future-orange:    #C66900 ;
         --future-red:       #B00B1E ;
+        --future-pink:      #F9629F ;
         --future-purple:    #673AB7 ;
         --future-blue:      #0069C0 ;
         --future-brown:     #795548 ;
@@ -110,12 +111,19 @@ hr   { height: 3px;                                                 } }
 
 .background                 { background-color: var(--future-dark)      !important; }
 .dark                       { background-color: var(--future-dark)      !important; }
+.dark2                      { background-color: var(--future-dark2)     !important; }
+.dark3                      { background-color: var(--future-dark3)     !important; }
+.dark4                      { background-color: var(--future-dark4)     !important; }
+.dark5                      { background-color: var(--future-dark5)     !important; }
+.dark6                      { background-color: var(--future-dark6)     !important; }
+.dark7                      { background-color: var(--future-dark7)     !important; }
 .black                      { background-color: var(--future-black)     !important; }
 .white                      { background-color: var(--future-white)     !important; }
 .light                      { background-color: var(--future-light)     !important; }
 .yellow                     { background-color: var(--future-yellow)    !important; }
 .orange                     { background-color: var(--future-orange)    !important; }
 .red                        { background-color: var(--future-red)       !important; }
+.pink                       { background-color: var(--future-pink)      !important; }
 .purple                     { background-color: var(--future-purple)    !important; }
 .blue                       { background-color: var(--future-blue)      !important; }
 .brown                      { background-color: var(--future-brown)     !important; }
@@ -132,6 +140,7 @@ hr   { height: 3px;                                                 } }
 .yellow_hover:hover         { background-color: var(--future-yellow)    !important; }
 .orange_hover:hover         { background-color: var(--future-orange)    !important; }
 .red_hover:hover            { background-color: var(--future-red)       !important; }
+.pink_hover:hover           { background-color: var(--future-pink)      !important; }
 .purple_hover:hover         { background-color: var(--future-purple)    !important; }
 .blue_hover:hover           { background-color: var(--future-blue)      !important; }
 .brown_hover:hover          { background-color: var(--future-brown)     !important; }
@@ -148,6 +157,7 @@ hr   { height: 3px;                                                 } }
 .text_yellow                { color: var(--future-yellow)               !important; }
 .text_orange                { color: var(--future-orange)               !important; }
 .text_red                   { color: var(--future-red)                  !important; }
+.text_pink                  { color: var(--future-pink)                 !important; }
 .text_purple                { color: var(--future-purple)               !important; }
 .text_blue                  { color: var(--future-blue)                 !important; }
 .text_brown                 { color: var(--future-brown)                !important; }
@@ -164,6 +174,7 @@ hr   { height: 3px;                                                 } }
 .text_yellow_hover:hover    { color: var(--future-yellow)               !important; }
 .text_orange_hover:hover    { color: var(--future-orange)               !important; }
 .text_red_hover:hover       { color: var(--future-red)                  !important; }
+.text_pink_hover:hover      { color: var(--future-pink)                 !important; }
 .text_purple_hover:hover    { color: var(--future-purple)               !important; }
 .text_blue_hover:hover      { color: var(--future-blue)                 !important; }
 .text_brown_hover:hover     { color: var(--future-brown)                !important; }
