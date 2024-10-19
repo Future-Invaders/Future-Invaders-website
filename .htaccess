@@ -3,5 +3,6 @@ Options -Indexes
 
 # API
 RewriteEngine On
+RewriteRule ^api/card/(.*)$ api/card/card.php?uuid=$1 [QSA,NC]
 RewriteRule ^api/image/(.*)$ api/image/image.php?uuid=$1 [QSA,NC]
 RewriteRule ^api/tag/(.*)$ api/tag/tag.php?uuid=$1 [QSA,NC]

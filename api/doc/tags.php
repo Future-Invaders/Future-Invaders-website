@@ -166,6 +166,63 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
           "path": string
         }
       }
+      "linked_cards": [
+        "card": {
+          "uuid": string,
+          "name": {
+            "en": string,
+            "fr": string
+          },
+          "cost": string,
+          "income": string,
+          "weapons": int,
+          "durability": int,
+          "body": {
+            "en": string,
+            "fr": string
+          },
+          "release": {
+            "uuid": string,
+            "date": string,
+            "name": {
+              "en": string,
+              "fr": string
+            }
+          },
+          "faction": {
+            "uuid": string,
+            "name": {
+              "en": string,
+              "fr": string
+            }
+          },
+          "type": {
+            "uuid": string,
+            "name": {
+              "en": string,
+              "fr": string
+            }
+          },
+          "rarity": {
+            "uuid": string,
+            "max_card_count": int,
+            "name": {
+              "en": string,
+              "fr": string
+            }
+          },
+          "images": {
+            "en": {
+              "uuid": string,
+              "name": string,
+              "language": string,
+              "artist": string,
+              "path": string,
+            },
+          },
+        }
+      ]
+    }
   }
 }</pre>
 

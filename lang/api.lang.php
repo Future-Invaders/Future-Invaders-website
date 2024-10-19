@@ -150,6 +150,13 @@ ___('api_cards_list_tag',      'EN', "Search for cards with a specific tag.");
 ___('api_cards_list_tag',      'FR', "Recherche des cartes avec un tag spécifique.");
 
 
+// Get card
+___('api_cards_get_summary',   'EN', "Retrieves a card by its UUID.");
+___('api_cards_get_summary',   'FR', "Récupère une carte par son UUID.");
+___('api_cards_get_uuid',      'EN', "The UUID of the card to retrieve.");
+___('api_cards_get_uuid',      'FR', "L'UUID de la carte à récupérer.");
+
+
 // List card types
 ___('api_card_types_list_summary',  'EN', "Retrieves a list of all card types.");
 ___('api_card_types_list_summary',  'FR', "Récupère la liste de tous les types de cartes.");

@@ -45,6 +45,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <ul class="tinypadding_top">
     <li><?=__link('#list_cards', 'GET /api/cards', is_internal: false)?></li>
+    <li><?=__link('#get_card', 'GET /api/card/{uuid}', is_internal: false)?></li>
     <li><?=__link('#list_card_types', 'GET /api/card_types', is_internal: false)?></li>
     <li><?=__link('#list_card_rarities', 'GET /api/card_rarities', is_internal: false)?></li>
   </ul>
@@ -198,6 +199,113 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   ]
 }</pre>
 
+</div>
+
+<hr id="get_card">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/card/{uuid}
+  </h4>
+
+  <p>
+    <?=__('api_cards_get_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">uuid</span> - string<br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_get_uuid')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "card": {
+    "uuid": string,
+    "name": {
+      "en": string,
+      "fr": string
+    },
+    "cost": string,
+    "income": string,
+    "weapons": int,
+    "durability": int,
+    "body": {
+      "en": string,
+      "fr": string
+    },
+    "release": {
+      "uuid": string,
+      "date": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
+    },
+    "faction": {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
+    },
+    "type": {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
+    },
+    "rarity": {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      },
+      "max_card_count": int
+    },
+    "images": {
+      "en": {
+        "uuid": string,
+        "name": string,
+        "language": string,
+        "artist": string,
+        "path": string,
+      },
+      "fr": {
+        "uuid": string,
+        "name": string,
+        "language": string,
+        "artist": string,
+        "path": string,
+      }
+    },
+    "tags": [
+      {
+        "tag": {
+          "uuid": string,
+          "name": string,
+          "description": {
+            "en": string,
+            "fr": string
+          },
+        },
+      }
+    ],
+  }
+}</pre>
 </div>
 
 <hr id="list_card_types">

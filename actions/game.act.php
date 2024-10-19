@@ -66,19 +66,37 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Returns data related to a card.
  *
- * @param   int         $card_id   The id of the card.
+ * @param   int         $card_id    (OPTIONAL)  The id of the card.
+ * @param   string      $card_uuid  (OPTIONAL)  The uuid of the card.
+ * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_depth   (OPTIONAL)  Whether to include elements linked to the card in the API.
  *
  * @return  array|null            An array containing the card's data, or null if the card does not exist.
  */
 
-function cards_get( int $card_id ) : array|null
+function cards_get( int     $card_id    = null    ,
+                    string  $card_uuid  = null    ,
+                    string  $format     = 'html'  ,
+                    bool    $no_depth   = false   ) : array|null
 {
-  // Sanitize the card's id
-  $card_id = sanitize($card_id, 'int');
-
-  // Return null if the card does not exist
-  if(!database_row_exists('cards', $card_id))
+  // Return null if there are neither an id nor an uuid
+  if(!$card_id && !$card_uuid)
     return null;
+
+  // Sanitize the card's id and uuid
+  $card_id   = sanitize($card_id, 'int');
+  $card_uuid = sanitize($card_uuid, 'string');
+
+  // Return null if the card does not have a valid ID
+  if($card_id && !database_row_exists('cards', $card_id))
+    return null;
+
+  // Return null if the card does not have a valid UUID
+  if($card_uuid && !database_entry_exists('cards', 'uuid', $card_uuid))
+    return null;
+
+  // Prepare the condition for retrieving the card
+  $query_where = ($card_id) ? " WHERE cards.id = '$card_id' " : " WHERE cards.uuid = '$card_uuid' ";
 
   // Fetch the card's data
   $card_data = query("  SELECT  cards.id                AS 'c_id'         ,
@@ -100,26 +118,90 @@ function cards_get( int $card_id ) : array|null
                                 cards.body_en           AS 'c_body_en'    ,
                                 cards.body_fr           AS 'c_body_fr'
                         FROM    cards
-                        WHERE   cards.id = '$card_id' ",
+                        $query_where ",
                         fetch_row: true);
 
+  // Don't retrieve hidden or extra cards through the API
+  if($format === 'api' && $card_data['c_hidden'] || $card_data['c_extra'])
+    return null;
+
   // Prepare the data for display
-  $data['name_en']      = sanitize_output($card_data['c_name_en']);
-  $data['name_fr']      = sanitize_output($card_data['c_name_fr']);
-  $data['image_id_en']  = sanitize_output($card_data['c_img_en_id']);
-  $data['image_id_fr']  = sanitize_output($card_data['c_img_fr_id']);
-  $data['type_id']      = sanitize_output($card_data['c_type_id']);
-  $data['faction_id']   = sanitize_output($card_data['c_faction_id']);
-  $data['rarity_id']    = sanitize_output($card_data['c_rarity_id']);
-  $data['release_id']   = sanitize_output($card_data['c_release_id']);
-  $data['hidden']       = sanitize_output($card_data['c_hidden']);
-  $data['extra']        = sanitize_output($card_data['c_extra']);
-  $data['weapons']      = sanitize_output($card_data['c_weapons']);
-  $data['durability']   = sanitize_output($card_data['c_durability']);
-  $data['cost']         = sanitize_output($card_data['c_cost']);
-  $data['income']       = sanitize_output($card_data['c_income']);
-  $data['body_en']      = sanitize_output($card_data['c_body_en']);
-  $data['body_fr']      = sanitize_output($card_data['c_body_fr']);
+  if($format === 'html')
+  {
+    $data['name_en']      = sanitize_output($card_data['c_name_en']);
+    $data['name_fr']      = sanitize_output($card_data['c_name_fr']);
+    $data['image_id_en']  = sanitize_output($card_data['c_img_en_id']);
+    $data['image_id_fr']  = sanitize_output($card_data['c_img_fr_id']);
+    $data['type_id']      = sanitize_output($card_data['c_type_id']);
+    $data['faction_id']   = sanitize_output($card_data['c_faction_id']);
+    $data['rarity_id']    = sanitize_output($card_data['c_rarity_id']);
+    $data['release_id']   = sanitize_output($card_data['c_release_id']);
+    $data['hidden']       = sanitize_output($card_data['c_hidden']);
+    $data['extra']        = sanitize_output($card_data['c_extra']);
+    $data['weapons']      = sanitize_output($card_data['c_weapons']);
+    $data['durability']   = sanitize_output($card_data['c_durability']);
+    $data['cost']         = sanitize_output($card_data['c_cost']);
+    $data['income']       = sanitize_output($card_data['c_income']);
+    $data['body_en']      = sanitize_output($card_data['c_body_en']);
+    $data['body_fr']      = sanitize_output($card_data['c_body_fr']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    // Sanitize the data
+    $data['uuid']         = sanitize_json($card_data['c_uuid']);
+    $data['name']['en']   = sanitize_json($card_data['c_name_en']);
+    $data['name']['fr']   = sanitize_json($card_data['c_name_fr']);
+    $data['cost']         = sanitize_json($card_data['c_cost']);
+    $data['income']       = sanitize_json($card_data['c_income']);
+    $data['weapons']      = (int)sanitize_json($card_data['c_weapons']);
+    $data['durability']   = (int)sanitize_json($card_data['c_durability']);
+    $data['body']['en']   = sanitize_json($card_data['c_body_en']);
+    $data['body']['fr']   = sanitize_json($card_data['c_body_fr']);
+    $data['release']      = ($card_data['c_release_id'])
+                          ? releases_get($card_data['c_release_id'], format: 'api', no_parent_array: true)
+                          : array();
+    $data['faction']      = ($card_data['c_faction_id'])
+                          ? factions_get($card_data['c_faction_id'], format: 'api', no_parent_array: true)
+                          : array();
+    $data['type']         = ($card_data['c_type_id'])
+                          ? card_types_get($card_data['c_type_id'], format: 'api', no_parent_array: true)
+                          : array();
+    $data['rarity']       = ($card_data['c_rarity_id'])
+                          ? card_rarities_get($card_data['c_rarity_id'], format: 'api', no_parent_array: true)
+                          : array();
+    $data['images']['en'] = ($card_data['c_img_en_id'])
+                          ? images_get($card_data['c_img_en_id'], format: 'api', no_depth: true, no_parent_array: true)
+                          : array();
+    $data['images']['fr'] = ($card_data['c_img_fr_id'])
+                          ? images_get($card_data['c_img_fr_id'], format: 'api', no_depth: true,no_parent_array: true)
+                          : array();
+
+    // Add linked tags
+    if(!$no_depth)
+    {
+      // Fetch linked tags
+      $card_id = sanitize($card_data['c_id'], 'int');
+      $qtags = query("  SELECT  tags_cards.fk_tags AS 'ct_id'
+                        FROM    tags_cards
+                        WHERE   tags_cards.fk_cards = '$card_id' ");
+
+      // Prepare linked tags for display
+      for($i = 0; $dtags = query_row($qtags); $i++)
+        $data['tags'][$i] = tags_get( tag_id:   $dtags['ct_id'] ,
+                                      format:   $format         ,
+                                      no_depth:  true           );
+
+      // If there are no linked tags, show an empty array
+      if($i === 0)
+        $data['tags'] = array();
+    }
+
+    // Prepare for the API
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('card' => $data);
+  }
 
   // Return the data
   return $data;
@@ -1297,6 +1379,24 @@ function tags_get(  ?int    $tag_id   = NULL    ,
       // If there are no linked images, show an empty array
       if($i === 0)
         $data['linked_images'] = array();
+
+      // Fetch linked cards
+      $qcards = query(" SELECT    tags_cards.fk_cards AS 'tc_id'
+                        FROM      tags_cards
+                        LEFT JOIN cards ON tags_cards.fk_cards = cards.id
+                        WHERE     tags_cards.fk_tags  = '$tag_id'
+                        AND       cards.is_hidden     = '0'
+                        AND       cards.is_extra_card = '0' ");
+
+      // Prepare linked cards for display
+      for($i = 0; $dcards = query_row($qcards); $i++)
+        $data['linked_cards'][$i] = cards_get(  card_id: $dcards['tc_id'] ,
+                                                format:   'api'         ,
+                                                no_depth: true          );
+
+      // If there are no linked cards, show an empty array
+      if($i === 0)
+        $data['linked_cards'] = array();
     }
 
     // Prepare for the API
