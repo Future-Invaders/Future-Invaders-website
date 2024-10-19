@@ -176,6 +176,11 @@ ___('admin_card_edit_submit',      'EN', "Edit card");
 ___('admin_card_edit_submit',      'FR', "Modifier la carte");
 
 
+// Delete a card
+___('admin_card_delete_confirm',   'EN', "Confirm the deletion of this card");
+___('admin_card_delete_confirm',   'FR', "Confirmez la suppression de cette carte");
+
+
 // Card management
 ___('admin_card_management',          'EN', "Card management");
 ___('admin_card_management',          'FR', "Gestion des cartes");

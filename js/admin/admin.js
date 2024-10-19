@@ -3,7 +3,7 @@
 /*  admin_menu                  Navigates between administration pages.                                              */
 /*                                                                                                                   */
 /*  admin_cards_search          Searches the card list.                                                              */
-/*                                                                                                                   */
+/*  admin_cards_delete          Triggers the deletion of an entry in the card list.                                  */
 /*  admin_card_hide_stats       Hides stats for extra cards.                                                         */
 /*                                                                                                                   */
 /*  admin_card_types_delete     Triggers the deletion of an entry in the card type list.                             */
@@ -72,6 +72,29 @@ function admin_cards_search( sort_data = null )
 
   // Submit the search
   fetch_page('cards', 'admin_cards_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the card list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     card_id   The id of the card to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_cards_delete( message   ,
+                             card_id   )
+{
+  // Assemble the postdata
+  postdata = 'admin_cards_delete=' + fetch_sanitize(card_id);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('cards', 'admin_cards_tbody', postdata);
 }
 
 

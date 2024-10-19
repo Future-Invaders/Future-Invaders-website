@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  cards_list                      Lists cards in the database                                                      */
 /*  cards_add                       Adds a card to the database                                                      */
 /*  cards_edit                      Edits a card in the database                                                     */
+/*  cards_delete                    Deletes a card from the database                                                 */
 /*  cards_format_body               Formats a card's body                                                            */
 /*  cards_format_cost               Formats a card's cost                                                            */
 /*                                                                                                                   */
@@ -498,6 +499,31 @@ function cards_edit( int   $card_id ,
               WHERE       tags_cards.fk_cards = '$card_id'
               AND         tags_cards.fk_tags  = '$tag_id'   ");
   }
+}
+
+
+
+
+/**
+ * Deletes a card from the database.
+ *
+ * @param   int     $card_id  The id of the card to delete.
+ *
+ * @return  void
+ */
+
+function cards_delete( int $card_id ) : void
+{
+  // Sanitize the data
+  $card_id = sanitize($card_id, 'int');
+
+  // Delete the card from the database
+  query(" DELETE FROM cards
+          WHERE       cards.id = '$card_id' ");
+
+  // Delete the card's tags from the database
+  query(" DELETE FROM tags_cards
+          WHERE       tags_cards.fk_cards = '$card_id' ");
 }
 
 
