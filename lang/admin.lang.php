@@ -83,6 +83,21 @@ ___('admin_query_ok', 'FR', "Requêtes exécutées avec succès");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Card management
+___('admin_card_management',            'EN', "Card management");
+___('admin_card_management',            'FR', "Gestion des cartes");
+___('admin_card_management_add',        'EN', "Add a card");
+___('admin_card_management_add',        'FR', "Ajouter une carte");
+___('admin_card_management_types',      'EN', "Card types");
+___('admin_card_management_types',      'FR', "Types de cartes");
+___('admin_card_management_rarities',   'EN', "Card rarities");
+___('admin_card_management_rarities',   'FR', "Raretés de cartes");
+___('admin_card_management_show_body',  'EN', "Show card previews");
+___('admin_card_management_show_body',  'FR', "Prévisualiser les cartes");
+___('admin_card_management_hide_body',  'EN', "Hide card previews");
+___('admin_card_management_hide_body',  'FR', "Masquer les prévisualisations");
+
+
 // Card list
 ___('admin_card_list_name',       'EN', "Name");
 ___('admin_card_list_name',       'FR', "Nom");
@@ -124,6 +139,8 @@ ___('admin_card_list_count',      'EN', "{{1}} card");
 ___('admin_card_list_count',      'FR', "{{1}} carte");
 ___('admin_card_list_count+',     'EN', "{{1}} cards");
 ___('admin_card_list_count+',     'FR', "{{1}} cartes");
+___('admin_card_list_no_image',   'EN', "No image");
+___('admin_card_list_no_image',   'FR', "Pas d'image");
 
 
 // Add a card
@@ -179,15 +196,6 @@ ___('admin_card_edit_submit',      'FR', "Modifier la carte");
 // Delete a card
 ___('admin_card_delete_confirm',   'EN', "Confirm the deletion of this card");
 ___('admin_card_delete_confirm',   'FR', "Confirmez la suppression de cette carte");
-
-
-// Card management
-___('admin_card_management',          'EN', "Card management");
-___('admin_card_management',          'FR', "Gestion des cartes");
-___('admin_card_management_types',    'EN', "Card types");
-___('admin_card_management_types',    'FR', "Types de cartes");
-___('admin_card_management_rarities', 'EN', "Card rarities");
-___('admin_card_management_rarities', 'FR', "Raretés de cartes");
 
 
 // Card types list

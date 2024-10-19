@@ -195,6 +195,9 @@ $admin_cards_search = array(  'name'        => form_fetch_element('admin_cards_s
 $cards_list = cards_list( $admin_cards_sort   ,
                           $admin_cards_search );
 
+// Use a different styling when showing full card texts
+$cards_table_style = (isset($_GET['fullbody'])) ? 'doublealtc2' : 'altc2';
+
 
 
 
@@ -212,11 +215,23 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
   <ul class="tinypadding_top bigpadding_bot">
     <li>
+      <?=__link('pages/admin/cards_add', __('admin_card_management_add'))?>
+    </li>
+    <li>
       <?=__link('pages/admin/card_types', __('admin_card_management_types'))?>
     </li>
     <li>
       <?=__link('pages/admin/card_rarities', __('admin_card_management_rarities'))?>
     </li>
+    <?php if(!isset($_GET['fullbody'])): ?>
+    <li>
+      <?=__link('pages/admin/cards?fullbody', __('admin_card_management_show_body'))?>
+    </li>
+    <?php else: ?>
+    <li>
+      <?=__link('pages/admin/cards', __('admin_card_management_hide_body'))?>
+    </li>
+    <?php endif; ?>
   </ul>
 
   <table>
@@ -357,7 +372,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
     </thead>
 
-    <tbody class="altc2 nowrap" id="admin_cards_tbody">
+    <tbody class="<?=$cards_table_style?> nowrap" id="admin_cards_tbody">
 
       <?php endif; ?>
 
@@ -479,6 +494,46 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
 
       </tr>
+
+      <?php if(isset($_GET['fullbody'])): ?>
+      <tr class="row_separator_dark">
+        <td colspan="13">
+          <div class="flexcontainer dowrap align_left smallpadding_top smallpadding_bot">
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 2">
+              <img src="<?=$path.$cards_list[$i]['image_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 5">
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <?=$cards_list[$i]['body_en_raw']?>
+              </div>
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 5">
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <?=$cards_list[$i]['body_fr_raw']?>
+              </div>
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 2">
+              <img src="<?=$path.$cards_list[$i]['image_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+          </div>
+        </td>
+      </tr>
+      <?php endif; ?>
 
       <?php endfor; ?>
 
