@@ -44,9 +44,159 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <ul class="tinypadding_top">
+    <li><?=__link('#list_cards', 'GET /api/cards', is_internal: false)?></li>
     <li><?=__link('#list_card_types', 'GET /api/card_types', is_internal: false)?></li>
     <li><?=__link('#list_card_rarities', 'GET /api/card_rarities', is_internal: false)?></li>
   </ul>
+
+</div>
+
+<hr id="list_cards">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/cards
+  </h4>
+
+  <p>
+    <?=__('api_cards_list_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">name</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_list_name')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">body</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_list_body')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">release</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_list_release')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">faction</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_list_faction')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">type</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_list_type')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">rarity</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_list_rarity')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">tag</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_cards_list_tag')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "cards": [
+    {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      },
+      "cost": string,
+      "income": string,
+      "weapons": int,
+      "durability": int,
+      "body": {
+        "en": string,
+        "fr": string
+      },
+      "release": {
+        "en": string,
+        "fr": string
+      },
+      "faction": {
+        "en": string,
+        "fr": string
+      },
+      "type": {
+        "en": string,
+        "fr": string
+      },
+      "rarity": {
+        "name": {
+          "en": string,
+          "fr": string
+        }
+        "max_card_count": int,
+      },
+      "images": {
+        "en": {
+          "uuid": string,
+          "path": string,
+          "endpoint": string
+        },
+        "fr": {
+          "uuid": string,
+          "path": string,
+          "endpoint": string
+        }
+      },
+      "tags": [
+        "tag1",
+        "tag2",
+        ...
+      ],
+      "endpoint": string
+    },
+  ]
+}</pre>
 
 </div>
 

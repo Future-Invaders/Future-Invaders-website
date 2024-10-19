@@ -122,13 +122,32 @@ EOD
 
 // Header
 ___('api_cards_intro', 'EN', <<<EOD
-Future Invaders being a card game, there are many different types of cards. The API documentation should help you find what you are looking for, browse it carefully.
+Only cards used during a game of Future Invaders are accessible through the API. Extra cards, rules cards, lore cards, and so on are not accessible trough the API.
 EOD
 );
 ___('api_cards_intro', 'FR', <<<EOD
-Future Invaders étant un jeu de cartes, il y a beaucoup de sortes de cartes différentes. La documentation de l'API devrait vous aider à trouver ce que vous cherchez, parcourez-la avec attention.
+Seules les cartes jouées lors d'une partie de Future Invaders sont accessibles via l'API. Les cartes supplémentaires, les cartes de règles, les cartes de lore et ainsi de suite ne sont pas accessibles via l'API.
 EOD
 );
+
+
+// List cards
+___('api_cards_list_summary',  'EN', "Retrieves a list of all cards playable during a game of Future Invaders.");
+___('api_cards_list_summary',  'FR', "Récupère la liste de toutes les cartes jouables lors d'une partie de Future Invaders.");
+___('api_cards_list_name',     'EN', "Search for cards by name. Searches in all languages at once.");
+___('api_cards_list_name',     'FR', "Recherche des cartes par nom. Cherche dans toutes les langues à la fois.");
+___('api_cards_list_body',     'EN', "Search in the body text of cards. Searches in all languages at once.");
+___('api_cards_list_body',     'FR', "Recherche dans le texte du corps des cartes. Cherche dans toutes les langues à la fois.");
+___('api_cards_list_release',  'EN', "Search for cards by release UUID. Find release UUIDs using {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_cards_list_release',  'FR', "Recherche des cartes par UUID de version. Trouvez les UUIDs des versions en utilisant {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_cards_list_faction',  'EN', "Search for cards by faction UUID. Find faction UUIDs using {{link|api/doc/factions#list_factions|GET /api/factions}}.");
+___('api_cards_list_faction',  'FR', "Recherche des cartes par UUID de faction. Trouvez les UUIDs des factions en utilisant {{link|api/doc/factions#list_factions|GET /api/factions}}.");
+___('api_cards_list_type',     'EN', "Search for cards by card type UUID. Find card type UUIDs using {{link|api/doc/cards#list_card_types|GET /api/card_types}}.");
+___('api_cards_list_type',     'FR', "Recherche des cartes par UUID de type de carte. Trouvez les UUIDs des types de cartes en utilisant {{link|api/doc/cards#list_card_types|GET /api/card_types}}.");
+___('api_cards_list_rarity',   'EN', "Search for cards by card rarity UUID. Find card rarity UUIDs using {{link|api/doc/cards#list_card_rarities|GET /api/card_rarities}}.");
+___('api_cards_list_rarity',   'FR', "Recherche des cartes par UUID de rareté de carte. Trouvez les UUIDs des raretés de cartes en utilisant {{link|api/doc/cards#list_card_rarities|GET /api/card_rarities}}.");
+___('api_cards_list_tag',      'EN', "Search for cards with a specific tag.");
+___('api_cards_list_tag',      'FR', "Recherche des cartes avec un tag spécifique.");
 
 
 // List card types

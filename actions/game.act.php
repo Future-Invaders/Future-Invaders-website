@@ -146,55 +146,69 @@ function cards_list( string  $sort_by  = 'name'  ,
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Sanitize the search data
-  $search_name        = sanitize_array_element($search, 'name', 'string');
-  $search_release_id  = sanitize_array_element($search, 'release_id', 'int');
-  $search_type_id     = sanitize_array_element($search, 'type_id', 'int');
-  $search_faction_id  = sanitize_array_element($search, 'faction_id', 'int');
-  $search_rarity_id   = sanitize_array_element($search, 'rarity_id', 'int');
-  $search_cost        = sanitize_array_element($search, 'cost', 'string');
-  $search_income      = sanitize_array_element($search, 'income', 'string');
-  $search_weapons     = sanitize_array_element($search, 'weapons', 'int');
-  $search_durability  = sanitize_array_element($search, 'durability', 'int');
-  $search_body        = sanitize_array_element($search, 'body', 'string');
-  $search_extra       = sanitize_array_element($search, 'extra', 'int');
-  $search_tag_id      = sanitize_array_element($search, 'tag_id', 'int');
+  $search_name          = sanitize_array_element($search, 'name', 'string');
+  $search_release_id    = sanitize_array_element($search, 'release_id', 'int');
+  $search_release_uuid  = sanitize_array_element($search, 'release_uuid', 'string');
+  $search_type_id       = sanitize_array_element($search, 'type_id', 'int');
+  $search_type_uuid     = sanitize_array_element($search, 'type_uuid', 'string');
+  $search_faction_id    = sanitize_array_element($search, 'faction_id', 'int');
+  $search_faction_uuid  = sanitize_array_element($search, 'faction_uuid', 'string');
+  $search_rarity_id     = sanitize_array_element($search, 'rarity_id', 'int');
+  $search_rarity_uuid   = sanitize_array_element($search, 'rarity_uuid', 'string');
+  $search_cost          = sanitize_array_element($search, 'cost', 'string');
+  $search_income        = sanitize_array_element($search, 'income', 'string');
+  $search_weapons       = sanitize_array_element($search, 'weapons', 'int');
+  $search_durability    = sanitize_array_element($search, 'durability', 'int');
+  $search_body          = sanitize_array_element($search, 'body', 'string');
+  $search_extra         = sanitize_array_element($search, 'extra', 'int');
+  $search_tag_id        = sanitize_array_element($search, 'tag_id', 'int');
+  $search_tag           = sanitize_array_element($search, 'tag', 'string');
 
   // Search through the data
-  $query_search  = ($search_name)           ? " WHERE cards.name_en    LIKE '%$search_name%'
-                                                OR    cards.name_fr    LIKE '%$search_name%' "      : " WHERE 1 = 1 ";
+  $query_search  = ($search_name)           ? " WHERE ( cards.name_en     LIKE '%$search_name%'
+                                                OR    cards.name_fr       LIKE '%$search_name%' ) "  : " WHERE 1 = 1 ";
   $query_search .= ($search_release_id && $search_release_id !== -1)
-                                            ? " AND   releases.id         = '$search_release_id' "  : "";
+                                            ? " AND   releases.id         = '$search_release_id' "    : "";
   $query_search .= ($search_release_id === -1)
-                                            ? " AND   releases.id         IS NULL "                 : "";
+                                            ? " AND   releases.id         IS NULL "                   : "";
+  $query_search .= ($search_release_uuid)   ? " AND   releases.uuid       = '$search_release_uuid' "  : "";
   $query_search .= ($search_type_id && $search_type_id !== -1)
-                                            ? " AND   card_types.id       = '$search_type_id' "     : "";
+                                            ? " AND   card_types.id       = '$search_type_id' "       : "";
   $query_search .= ($search_type_id === -1)
-                                            ? " AND   card_types.id       IS NULL "                 : "";
+                                            ? " AND   card_types.id       IS NULL "                   : "";
+  $query_search .= ($search_type_uuid)      ? " AND   card_types.uuid     = '$search_type_uuid' "     : "";
   $query_search .= ($search_faction_id && $search_faction_id !== -1)
-                                            ? " AND   factions.id         = '$search_faction_id' "  : "";
+                                            ? " AND   factions.id         = '$search_faction_id' "    : "";
   $query_search .= ($search_faction_id === -1)
-                                            ? " AND   factions.id         IS NULL "                 : "";
+                                            ? " AND   factions.id         IS NULL "                   : "";
+  $query_search .= ($search_faction_uuid)   ? " AND   factions.uuid       = '$search_faction_uuid' "  : "";
   $query_search .= ($search_rarity_id && $search_rarity_id !== -1)
-                                            ? " AND   card_rarities.id    = '$search_rarity_id' "   : "";
+                                            ? " AND   card_rarities.id    = '$search_rarity_id' "     : "";
   $query_search .= ($search_rarity_id === -1)
-                                            ? " AND   card_rarities.id    IS NULL "                 : "";
-  $query_search .= ($search_cost)           ? " AND   cards.cost          LIKE '$search_cost' "     : "";
-  $query_search .= ($search_income)         ? " AND   cards.income        LIKE '$search_income' "   : "";
-  $query_search .= ($search_weapons)        ? " AND   cards.weapons       = '$search_weapons' "     : "";
-  $query_search .= ($search_durability)     ? " AND   cards.durability    = '$search_durability' "  : "";
-  $query_search .= ($search_body)           ? " AND   cards.body_en       LIKE '%$search_body%'
-                                                OR    cards.body_fr       LIKE '%$search_body%' "   : "";
-  $query_search .= ($search_extra === 1 )   ? " AND   cards.is_hidden     = '1' "                   : "";
-  $query_search .= ($search_extra === 10 )  ? " AND   cards.is_extra_card = '1' "                   : "";
+                                            ? " AND   card_rarities.id    IS NULL "                   : "";
+  $query_search .= ($search_rarity_uuid)    ? " AND   card_rarities.uuid  = '$search_rarity_uuid' "   : "";
+  $query_search .= ($search_cost)           ? " AND   cards.cost          LIKE '$search_cost' "       : "";
+  $query_search .= ($search_income)         ? " AND   cards.income        LIKE '$search_income' "     : "";
+  $query_search .= ($search_weapons)        ? " AND   cards.weapons       = '$search_weapons' "       : "";
+  $query_search .= ($search_durability)     ? " AND   cards.durability    = '$search_durability' "    : "";
+  $query_search .= ($search_body)           ? " AND ( cards.body_en       LIKE '%$search_body%'
+                                                OR    cards.body_fr       LIKE '%$search_body%' ) "  : "";
+  $query_search .= ($search_extra === 1 )   ? " AND   cards.is_hidden     = '1' "                     : "";
+  $query_search .= ($search_extra === 10 )  ? " AND   cards.is_extra_card = '1' "                     : "";
   $query_search .= ($search_extra === 100 ) ? " AND   cards.fk_images_en != ''
-                                                AND   cards.fk_images_fr != '' "                    : "";
+                                                AND   cards.fk_images_fr != '' "                      : "";
   $query_search .= ($search_extra === 101 ) ? " AND ( cards.fk_images_en != ''
                                                 AND   cards.fk_images_fr  = '' )
                                                 OR  ( cards.fk_images_en  = ''
-                                                AND   cards.fk_images_fr != '' ) "                  : "";
+                                                AND   cards.fk_images_fr != '' ) "                    : "";
   $query_search .= ($search_extra === 102 ) ? " AND   cards.fk_images_en  = ''
-                                                AND   cards.fk_images_fr  = '' "                    : "";
-  $query_search .= ($search_tag_id === -1)  ? " AND   tags.id             IS NULL "                 : "";
+                                                AND   cards.fk_images_fr  = '' "                      : "";
+  $query_search .= ($search_tag_id === -1)  ? " AND   tags.id             IS NULL "                   : "";
+  $query_search .= ($search_tag)            ? " AND   tags.name           LIKE '$search_tag' "        : "";
+
+  // Filter out hidden cards and extra cards in the API
+  $query_search .= ($format === 'api')      ? " AND   cards.is_hidden       = '0'
+                                                AND   cards.is_extra_card   = '0' "                   : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
@@ -247,35 +261,50 @@ function cards_list( string  $sort_by  = 'name'  ,
   };
 
   // Fetch the cards
-  $cards = query("  SELECT    cards.id                  AS 'c_id'         ,
-                              cards.uuid                AS 'c_uuid'       ,
-                              cards.name_$lang          AS 'c_name'       ,
-                              cards.name_en             AS 'c_name_en'    ,
-                              cards.name_fr             AS 'c_name_fr'    ,
-                              cards.cost                AS 'c_cost'       ,
-                              cards.income              AS 'c_income'     ,
-                              cards.weapons             AS 'c_weapons'    ,
-                              cards.durability          AS 'c_durability' ,
-                              cards.is_extra_card       AS 'c_extra'      ,
-                              cards.is_hidden           AS 'c_hidden'     ,
-                              LENGTH(cards.body_en)     AS 'c_length_en'  ,
-                              LENGTH(cards.body_fr)     AS 'c_length_fr'  ,
-                              cards.body_en             AS 'c_body_en'    ,
-                              cards.body_fr             AS 'c_body_fr'    ,
-                              releases.name_$lang       AS 'r_name'       ,
-                              releases.name_en          AS 'r_name_en'    ,
-                              releases.name_fr          AS 'r_name_fr'    ,
-                              card_types.name_$lang     AS 'ct_name'      ,
-                              card_types.styling        AS 'ct_styling'   ,
-                              factions.name_$lang       AS 'f_name'       ,
-                              factions.styling          AS 'f_styling'    ,
-                              card_rarities.name_$lang  AS 'cr_name'      ,
-                              card_rarities.styling     AS 'cr_styling'   ,
-                              images_en.path            AS 'i_path_en'    ,
-                              images_fr.path            AS 'i_path_fr'    ,
-                              COUNT(tags.id)            AS 'ct_count'     ,
+  $cards = query("  SELECT    cards.id                      AS 'c_id'         ,
+                              cards.uuid                    AS 'c_uuid'       ,
+                              cards.name_$lang              AS 'c_name'       ,
+                              cards.name_en                 AS 'c_name_en'    ,
+                              cards.name_fr                 AS 'c_name_fr'    ,
+                              cards.cost                    AS 'c_cost'       ,
+                              cards.income                  AS 'c_income'     ,
+                              cards.weapons                 AS 'c_weapons'    ,
+                              cards.durability              AS 'c_durability' ,
+                              cards.is_extra_card           AS 'c_extra'      ,
+                              cards.is_hidden               AS 'c_hidden'     ,
+                              LENGTH(cards.body_en)         AS 'c_length_en'  ,
+                              LENGTH(cards.body_fr)         AS 'c_length_fr'  ,
+                              cards.body_en                 AS 'c_body_en'    ,
+                              cards.body_fr                 AS 'c_body_fr'    ,
+                              releases.id                   AS 'r_id'         ,
+                              releases.name_$lang           AS 'r_name'       ,
+                              releases.name_en              AS 'r_name_en'    ,
+                              releases.name_fr              AS 'r_name_fr'    ,
+                              card_types.id                 AS 'ct_id'        ,
+                              card_types.name_en            AS 'ct_name_en'   ,
+                              card_types.name_fr            AS 'ct_name_fr'   ,
+                              card_types.name_$lang         AS 'ct_name'      ,
+                              card_types.styling            AS 'ct_styling'   ,
+                              factions.id                   AS 'f_id'         ,
+                              factions.name_en              AS 'f_name_en'    ,
+                              factions.name_fr              AS 'f_name_fr'    ,
+                              factions.name_$lang           AS 'f_name'       ,
+                              factions.styling              AS 'f_styling'    ,
+                              card_rarities.id              AS 'cr_id'        ,
+                              card_rarities.name_en         AS 'cr_name_en'   ,
+                              card_rarities.name_fr         AS 'cr_name_fr'   ,
+                              card_rarities.name_$lang      AS 'cr_name'      ,
+                              card_rarities.max_card_count  AS 'cr_max_count' ,
+                              card_rarities.styling         AS 'cr_styling'   ,
+                              images_en.id                  AS 'i_id_en'      ,
+                              images_en.uuid                AS 'i_uuid_en'    ,
+                              images_en.path                AS 'i_path_en'    ,
+                              images_fr.id                  AS 'i_id_fr'      ,
+                              images_fr.uuid                AS 'i_uuid_fr'    ,
+                              images_fr.path                AS 'i_path_fr'    ,
+                              COUNT(tags.id)                AS 'ct_count'     ,
                               GROUP_CONCAT(tags.name SEPARATOR ', ')
-                                                        AS 'ct_names'
+                                                            AS 'ct_names'
                     FROM      cards
                     LEFT JOIN releases            ON releases.id          = cards.fk_releases
                     LEFT JOIN factions            ON factions.id          = cards.fk_factions
@@ -328,7 +357,60 @@ function cards_list( string  $sort_by  = 'name'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid'] = sanitize_json($row['c_uuid']);
+      $data[$i]['uuid']                       = sanitize_json($row['c_uuid']);
+      $data[$i]['name']['en']                 = sanitize_json($row['c_name_en']);
+      $data[$i]['name']['fr']                 = sanitize_json($row['c_name_fr']);
+      $data[$i]['cost']                       = sanitize_json($row['c_cost']);
+      $data[$i]['income']                     = sanitize_json($row['c_income']);
+      $data[$i]['weapons']                    = (int)sanitize_json($row['c_weapons']);
+      $data[$i]['durability']                 = (int)sanitize_json($row['c_durability']);
+      $data[$i]['body']['en']                 = sanitize_json($row['c_body_en']);
+      $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
+      if($row['r_id'])
+      {
+        $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
+        $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
+      }
+      else
+        $data[$i]['release']                  = array();
+      if($row['f_id'])
+      {
+        $data[$i]['faction']['en']            = sanitize_json($row['f_name_en']);
+        $data[$i]['faction']['fr']            = sanitize_json($row['f_name_fr']);
+      }
+      else
+        $data[$i]['faction']                  = array();
+      if($row['ct_id'])
+      {
+        $data[$i]['type']['en']               = sanitize_json($row['ct_name_en']);
+        $data[$i]['type']['fr']               = sanitize_json($row['ct_name_fr']);
+      }
+      else
+        $data[$i]['type']                     = array();
+      if($row['cr_id'])
+      {
+        $data[$i]['rarity']['en']             = sanitize_json($row['cr_name_en']);
+        $data[$i]['rarity']['fr']             = sanitize_json($row['cr_name_fr']);
+        $data[$i]['rarity']['max_card_count'] = (int)sanitize_json($row['cr_max_count']);
+      }
+      else
+        $data[$i]['rarity']                   = array();
+      if(!$row['i_id_en'] && !$row['i_id_fr'])
+        $data[$i]['images']                   = array();
+      if($row['i_id_en'])
+      {
+        $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
+        $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
+        $data[$i]['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid_en']);
+      }
+      if($row['i_id_fr'])
+      {
+        $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
+        $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
+        $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid_fr']);
+      }
+      $data[$i]['tags']     = ($row['ct_names']) ? explode(', ', $row['ct_names']) : array();
+      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
     }
   }
 
@@ -609,18 +691,20 @@ function cards_format_cost( string $cost ) : string
 /**
  * Returns data related to an image.
  *
- * @param   int         $image_id     (OPTIONAL)  The id of the image.
- * @param   string      $image_uuid   (OPTIONAL)  The uuid of the image.
- * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
- * @param   bool        $no_depth     (OPTIONAL)  Whether to include elements linked to the image in the API.
+ * @param   int         $image_id         (OPTIONAL)  The id of the image.
+ * @param   string      $image_uuid       (OPTIONAL)  The uuid of the image.
+ * @param   string      $format           (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_depth         (OPTIONAL)  Whether to include elements linked to the image in the API.
+ * @param   bool        $no_parent_array  (OPTIONAL)  Whether to return the data inside a parent array in the API.
  *
- * @return  array|null              An array containing the image's data, or null if the image does not exist.
+ * @return  array|null                    An array containing the image's data, or null if the image does not exist.
  */
 
-function images_get(  ?int    $image_id   = null    ,
-                      ?string $image_uuid = null    ,
-                      string  $format     = 'html'  ,
-                      bool    $no_depth   = false   ) : array|null
+function images_get(  ?int    $image_id         = null    ,
+                      ?string $image_uuid       = null    ,
+                      string  $format           = 'html'  ,
+                      bool    $no_depth         = false   ,
+                      bool    $no_parent_array  = false   ) : array|null
 {
   // Return null if there are neither an id nor an uuid
   if(!$image_id && !$image_uuid)
@@ -695,7 +779,7 @@ function images_get(  ?int    $image_id   = null    ,
   if($format === 'api')
   {
     $data = (isset($data)) ? $data : NULL;
-    $data = array('image' => $data);
+    $data = ($no_parent_array) ? $data : array('image' => $data);
   }
 
   // Return the image's data
@@ -1477,12 +1561,16 @@ function tags_delete( int $tag_id ) : void
 /**
  * Returns data related to a release.
  *
- * @param   int         $release_id   The id of the release.
+ * @param   int         $release_id                   The id of the release.
+ * @param   string      $format                       Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_parent_array  (OPTIONAL)  Whether to return the data inside a parent array in the API.
  *
  * @return  array|null              An array containing the release's data, or null if the release does not exist.
  */
 
-function releases_get( int $release_id ) : array|null
+function releases_get(  int    $release_id                ,
+                        string $format          = 'html'  ,
+                        bool   $no_parent_array = false   ) : array|null
 {
   // Sanitize the release's id
   $release_id = sanitize($release_id, 'int');
@@ -1493,6 +1581,7 @@ function releases_get( int $release_id ) : array|null
 
   // Fetch the release's data
   $release_data = query(" SELECT  releases.id           AS 'r_id'       ,
+                                  releases.uuid         AS 'r_uuid'     ,
                                   releases.name_en      AS 'r_name_en'  ,
                                   releases.name_fr      AS 'r_name_fr'  ,
                                   releases.release_date AS 'r_date'
@@ -1501,11 +1590,29 @@ function releases_get( int $release_id ) : array|null
                           fetch_row: true);
 
   // Assemble an array with the release's data
-  $data['id']       = sanitize_output($release_data['r_id']);
-  $data['name_en']  = sanitize_output($release_data['r_name_en']);
-  $data['name_fr']  = sanitize_output($release_data['r_name_fr']);
-  $data['date']     = sanitize_output(date_to_ddmmyy($release_data['r_date']));
-  $data['datesql']  = sanitize_output($release_data['r_date']);
+  if($format === 'html')
+  {
+    $data['id']       = sanitize_output($release_data['r_id']);
+    $data['name_en']  = sanitize_output($release_data['r_name_en']);
+    $data['name_fr']  = sanitize_output($release_data['r_name_fr']);
+    $data['date']     = sanitize_output(date_to_ddmmyy($release_data['r_date']));
+    $data['datesql']  = sanitize_output($release_data['r_date']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    $data['uuid']       = sanitize_json($release_data['r_uuid']);
+    $data['date']       = sanitize_json($release_data['r_date']);
+    $data['name']['en'] = sanitize_json($release_data['r_name_en']);
+    $data['name']['fr'] = sanitize_json($release_data['r_name_fr']);
+
+    // Prepare the data structure
+    $data = (isset($data)) ? $data : NULL;
+    $data = ($no_parent_array) ? $data : array('release' => $data);
+  }
+
+
 
   // Return the release's data
   return $data;
@@ -1686,12 +1793,16 @@ function releases_delete( int $release_id ) : void
 /**
  * Returns data related to a faction.
  *
- * @param   int         $faction_id   The id of the faction.
+ * @param   int         $faction_id                   The id of the faction.
+ * @param   string      $format                       Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_parent_array  (OPTIONAL)  Whether to return the data inside a parent array in the API.
  *
  * @return  array|null                An array containing the faction's data, or null if the faction does not exist.
  */
 
-function factions_get( int $faction_id ) : array|null
+function factions_get( int    $faction_id                 ,
+                       string $format           = 'html'  ,
+                       bool   $no_parent_array  = false   ) : array|null
 {
   // Sanitize the faction's id
   $faction_id = sanitize($faction_id, 'int');
@@ -1702,6 +1813,7 @@ function factions_get( int $faction_id ) : array|null
 
   // Fetch the faction's data
   $faction_data = query(" SELECT  factions.id             AS 'f_id'       ,
+                                  factions.uuid           AS 'f_uuid'     ,
                                   factions.sorting_order  AS 'f_order'    ,
                                   factions.name_en        AS 'f_name_en'  ,
                                   factions.name_fr        AS 'f_name_fr'  ,
@@ -1711,11 +1823,26 @@ function factions_get( int $faction_id ) : array|null
                           fetch_row: true);
 
   // Assemble an array with the faction's data
-  $data['id']       = sanitize_output($faction_data['f_id']);
-  $data['order']    = sanitize_output($faction_data['f_order']);
-  $data['name_en']  = sanitize_output($faction_data['f_name_en']);
-  $data['name_fr']  = sanitize_output($faction_data['f_name_fr']);
-  $data['styling']  = sanitize_output($faction_data['f_styling']);
+  if($format === 'html')
+  {
+    $data['id']       = sanitize_output($faction_data['f_id']);
+    $data['order']    = sanitize_output($faction_data['f_order']);
+    $data['name_en']  = sanitize_output($faction_data['f_name_en']);
+    $data['name_fr']  = sanitize_output($faction_data['f_name_fr']);
+    $data['styling']  = sanitize_output($faction_data['f_styling']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    $data['uuid']       = sanitize_json($faction_data['f_uuid']);
+    $data['name']['en'] = sanitize_json($faction_data['f_name_en']);
+    $data['name']['fr'] = sanitize_json($faction_data['f_name_fr']);
+
+    // Prepare the data structure
+    $data = (isset($data)) ? $data : NULL;
+    $data = ($no_parent_array) ? $data : array('faction' => $data);
+  }
 
   // Return the faction's data
   return $data;
@@ -1879,12 +2006,16 @@ function factions_delete( int $faction_id ) : void
 /**
  * Returns data related to a card type.
  *
- * @param   int         $card_type_id   The id of the card type.
+ * @param   int         $card_type_id                 The id of the card type.
+ * @param   string      $format                       Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_parent_array  (OPTIONAL)  Whether to return the data inside a parent array in the API.
  *
- * @return  array|null                  An array containing the card type's data, or null if the card type does not exist.
+ * @return  array|null               An array containing the card type's data, or null if the card type does not exist.
  */
 
-function card_types_get( int $card_type_id ) : array|null
+function card_types_get( int    $card_type_id              ,
+                         string $format           = 'html' ,
+                         bool   $no_parent_array  = false  ) : array|null
 {
   // Sanitize the card type's id
   $card_type_id = sanitize($card_type_id, 'int');
@@ -1905,11 +2036,26 @@ function card_types_get( int $card_type_id ) : array|null
                             fetch_row: true);
 
   // Assemble an array with the card type's data
-  $data['id']       = sanitize_output($card_type_data['c_id']);
-  $data['order']    = sanitize_output($card_type_data['c_order']);
-  $data['name_en']  = sanitize_output($card_type_data['c_name_en']);
-  $data['name_fr']  = sanitize_output($card_type_data['c_name_fr']);
-  $data['styling']  = sanitize_output($card_type_data['c_styling']);
+  if($format === 'html')
+  {
+    $data['id']       = sanitize_output($card_type_data['c_id']);
+    $data['order']    = sanitize_output($card_type_data['c_order']);
+    $data['name_en']  = sanitize_output($card_type_data['c_name_en']);
+    $data['name_fr']  = sanitize_output($card_type_data['c_name_fr']);
+    $data['styling']  = sanitize_output($card_type_data['c_styling']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    $data['uuid']       = sanitize_json($card_type_data['c_uuid']);
+    $data['name']['en'] = sanitize_json($card_type_data['c_name_en']);
+    $data['name']['fr'] = sanitize_json($card_type_data['c_name_fr']);
+
+    // Prepare the data structure
+    $data = (isset($data)) ? $data : NULL;
+    $data = ($no_parent_array) ? $data : array('card_type' => $data);
+  }
 
   // Return the card type's data
   return $data;
@@ -2074,12 +2220,16 @@ function card_types_delete( int $card_type_id ) : void
 /**
  * Returns data related to a card rarity.
  *
- * @param   int         $card_rarity_id   The id of the card rarity.
+ * @param   int         $card_rarity_id               The id of the card rarity.
+ * @param   string      $format                       Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_parent_array  (OPTIONAL)  Whether to return the data inside a parent array in the API.
  *
  * @return  array|null                    An array containing the card rarity's data, or null if it does not exist.
  */
 
-function card_rarities_get( int $card_rarity_id ) : array|null
+function card_rarities_get( int    $card_rarity_id            ,
+                            string $format           = 'html' ,
+                            bool   $no_parent_array  = false  ) : array|null
 {
   // Sanitize the card rarity's id
   $card_rarity_id = sanitize($card_rarity_id, 'int');
@@ -2096,17 +2246,27 @@ function card_rarities_get( int $card_rarity_id ) : array|null
                                       card_rarities.name_fr         AS 'r_name_fr'    ,
                                       card_rarities.max_card_count  AS 'r_max_count'  ,
                                       card_rarities.styling         AS 'r_styling'
-                            FROM    card_rarities
-                            WHERE   card_rarities.id = '$card_rarity_id' ",
+                            FROM      card_rarities
+                            WHERE     card_rarities.id = '$card_rarity_id' ",
                             fetch_row: true);
 
   // Assemble an array with the card rarity's data
-  $data['id']         = sanitize_output($card_rarity_data['r_id']);
-  $data['order']      = sanitize_output($card_rarity_data['r_order']);
-  $data['name_en']    = sanitize_output($card_rarity_data['r_name_en']);
-  $data['name_fr']    = sanitize_output($card_rarity_data['r_name_fr']);
-  $data['max_count']  = sanitize_output($card_rarity_data['r_max_count']);
-  $data['styling']    = sanitize_output($card_rarity_data['r_styling']);
+  if($format === 'html')
+  {
+    $data['id']         = sanitize_output($card_rarity_data['r_id']);
+    $data['order']      = sanitize_output($card_rarity_data['r_order']);
+    $data['name_en']    = sanitize_output($card_rarity_data['r_name_en']);
+    $data['name_fr']    = sanitize_output($card_rarity_data['r_name_fr']);
+    $data['max_count']  = sanitize_output($card_rarity_data['r_max_count']);
+    $data['styling']    = sanitize_output($card_rarity_data['r_styling']);
+  }
+  else if($format === 'api')
+  {
+    $data['uuid']           = sanitize_json($card_rarity_data['r_uuid']);
+    $data['max_card_count'] = (int)sanitize_json($card_rarity_data['r_max_count']);
+    $data['name']['en']     = sanitize_json($card_rarity_data['r_name_en']);
+    $data['name']['fr']     = sanitize_json($card_rarity_data['r_name_fr']);
+  }
 
   // Return the card rarity's data
   return $data;
@@ -2157,7 +2317,7 @@ function card_rarities_list( string  $format = 'html'  ) : array
     if($format === 'api')
     {
       $data[$i]['uuid']           = sanitize_json($row['r_uuid']);
-      $data[$i]['max_card_count'] = sanitize_json($row['r_max_count']);
+      $data[$i]['max_card_count'] = (int)sanitize_json($row['r_max_count']);
       $data[$i]['name']['en']     = sanitize_json($row['r_name_fr']);
       $data[$i]['name']['fr']     = sanitize_json($row['r_name_en']);
     }
