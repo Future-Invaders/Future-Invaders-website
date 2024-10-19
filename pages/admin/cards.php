@@ -8,9 +8,9 @@ include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
-$page_url       = "pages/admin/card_types";
-$page_title_en  = "Admin: Card types";
-$page_title_fr  = "Admin : Types de cartes";
+$page_url       = "pages/admin/cards";
+$page_title_en  = "Admin: Cards";
+$page_title_fr  = "Admin : Cartes";
 
 // Admin menu selection
 $admin_menu['cards'] = 1;
@@ -24,9 +24,30 @@ $js   = array('admin/admin');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                    BACK END                                                      */
+/*                                                    BACK END                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of elements needed for search menus
+
+// List of releases
+$releases_list = releases_list();
+
+// List of card types
+$card_types_list = card_types_list();
+
+// List of factions
+$factions_list = factions_list();
+
+// List of card rarities
+$card_rarities_list = card_rarities_list();
+
+// List of card tags
+$card_tags_list = tags_list(search: array('ftype' => 'Card'));
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Add a card
@@ -85,22 +106,58 @@ if(isset($_POST['card_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// List of elements needed for search menus
+// Edit a card
 
-// List of releases
-$releases_list = releases_list();
+if(isset($_POST['card_edit']))
+{
+  // Gather the card's id
+  $card_edit_id = form_fetch_element('card_id');
 
-// List of card types
-$card_types_list = card_types_list();
+  // Gather card postdata
+  $card_edit_name_en     = form_fetch_element('card_name_en');
+  $card_edit_name_fr     = form_fetch_element('card_name_fr');
+  $card_edit_image_en    = form_fetch_element('card_image_en');
+  $card_edit_image_fr    = form_fetch_element('card_image_fr');
+  $card_edit_type        = form_fetch_element('card_type');
+  $card_edit_faction     = form_fetch_element('card_faction');
+  $card_edit_rarity      = form_fetch_element('card_rarity');
+  $card_edit_release     = form_fetch_element('card_release');
+  $card_edit_hidden      = form_fetch_element('card_hidden');
+  $card_edit_extra       = form_fetch_element('card_extra');
+  $card_edit_weapons     = form_fetch_element('card_weapons', default_value: 0);
+  $card_edit_cost        = form_fetch_element('card_cost', default_value: 0);
+  $card_edit_durability  = form_fetch_element('card_durability', default_value: "");
+  $card_edit_income      = form_fetch_element('card_income', default_value: "");
+  $card_edit_body_en     = form_fetch_element('card_body_en');
+  $card_edit_body_fr     = form_fetch_element('card_body_fr');
 
-// List of factions
-$factions_list = factions_list();
+  // Gather tag postdata
+  for($i = 0; $i < $card_tags_list['rows']; $i++)
+    $card_edit_tags[$card_tags_list[$i]['id']] = form_fetch_element("card_tag_".$card_tags_list[$i]['id'], element_exists: true);
 
-// List of card rarities
-$card_rarities_list = card_rarities_list();
+  // Assemble an array with the postdata
+  $card_edit_data = array(  'name_en'   => $card_edit_name_en     ,
+                            'name_fr'   => $card_edit_name_fr     ,
+                            'image_en'  => $card_edit_image_en    ,
+                            'image_fr'  => $card_edit_image_fr    ,
+                            'type_id'   => $card_edit_type        ,
+                            'faction_id'=> $card_edit_faction     ,
+                            'rarity_id' => $card_edit_rarity      ,
+                            'release_id'=> $card_edit_release     ,
+                            'hidden'    => $card_edit_hidden      ,
+                            'extra'     => $card_edit_extra       ,
+                            'weapons'   => $card_edit_weapons     ,
+                            'cost'      => $card_edit_cost        ,
+                            'durability'=> $card_edit_durability  ,
+                            'income'    => $card_edit_income      ,
+                            'body_en'   => $card_edit_body_en     ,
+                            'body_fr'   => $card_edit_body_fr     ,
+                            'card_tags' => $card_edit_tags        );
 
-// List of card tags
-$card_tags_list = tags_list(search: array('ftype' => 'Card'));
+  // Edit the card
+  cards_edit( $card_edit_id   ,
+              $card_edit_data );
+}
 
 
 
@@ -407,9 +464,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <td class="align_center nowrap" style="min-width: 6.0rem">
-          <?=__icon('maximize', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('admin_card_list_view'), href: 'pages/admin/cards_view?card='.$cards_list[$i]['id'])?>
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/cards_edit?card='.$cards_list[$i]['id'])?>
+        <td class="align_center nowrap card_action_icons">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer smallspaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/cards_edit?card='.$cards_list[$i]['id'])?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_cards_delete('".__('admin_card_delete_confirm')."','".$cards_list[$i]['id']."')")?>
         </td>
 

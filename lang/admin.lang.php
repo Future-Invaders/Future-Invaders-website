@@ -169,6 +169,13 @@ ___('admin_card_add_submit',      'EN', "Add card");
 ___('admin_card_add_submit',      'FR', "Ajouter la carte");
 
 
+// Edit a card
+___('admin_card_edit_title',       'EN', "Edit card");
+___('admin_card_edit_title',       'FR', "Modifier la carte ");
+___('admin_card_edit_submit',      'EN', "Edit card");
+___('admin_card_edit_submit',      'FR', "Modifier la carte");
+
+
 // Card management
 ___('admin_card_management',          'EN', "Card management");
 ___('admin_card_management',          'FR', "Gestion des cartes");

@@ -8,8 +8,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  cards_get                       Returns data related to a card                                                   */
 /*  cards_list                      Lists cards in the database                                                      */
 /*  cards_add                       Adds a card to the database                                                      */
+/*  cards_edit                      Edits a card in the database                                                     */
 /*  cards_format_body               Formats a card's body                                                            */
 /*  cards_format_cost               Formats a card's cost                                                            */
 /*                                                                                                                   */
@@ -59,6 +61,71 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                       CARDS                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Returns data related to a card.
+ *
+ * @param   int         $card_id   The id of the card.
+ *
+ * @return  array|null            An array containing the card's data, or null if the card does not exist.
+ */
+
+function cards_get( int $card_id ) : array|null
+{
+  // Sanitize the card's id
+  $card_id = sanitize($card_id, 'int');
+
+  // Return null if the card does not exist
+  if(!database_row_exists('cards', $card_id))
+    return null;
+
+  // Fetch the card's data
+  $card_data = query("  SELECT  cards.id                AS 'c_id'         ,
+                                cards.uuid              AS 'c_uuid'       ,
+                                cards.fk_releases       AS 'c_release_id' ,
+                                cards.fk_images_en      AS 'c_img_en_id'  ,
+                                cards.fk_images_fr      AS 'c_img_fr_id'  ,
+                                cards.fk_card_types     AS 'c_type_id'    ,
+                                cards.fk_factions       AS 'c_faction_id' ,
+                                cards.fk_card_rarities  AS 'c_rarity_id'  ,
+                                cards.is_extra_card     AS 'c_extra'      ,
+                                cards.is_hidden         AS 'c_hidden'     ,
+                                cards.name_en           AS 'c_name_en'    ,
+                                cards.name_fr           AS 'c_name_fr'    ,
+                                cards.cost              AS 'c_cost'       ,
+                                cards.income            AS 'c_income'     ,
+                                cards.weapons           AS 'c_weapons'    ,
+                                cards.durability        AS 'c_durability' ,
+                                cards.body_en           AS 'c_body_en'    ,
+                                cards.body_fr           AS 'c_body_fr'
+                        FROM    cards
+                        WHERE   cards.id = '$card_id' ",
+                        fetch_row: true);
+
+  // Prepare the data for display
+  $data['name_en']      = sanitize_output($card_data['c_name_en']);
+  $data['name_fr']      = sanitize_output($card_data['c_name_fr']);
+  $data['image_id_en']  = sanitize_output($card_data['c_img_en_id']);
+  $data['image_id_fr']  = sanitize_output($card_data['c_img_fr_id']);
+  $data['type_id']      = sanitize_output($card_data['c_type_id']);
+  $data['faction_id']   = sanitize_output($card_data['c_faction_id']);
+  $data['rarity_id']    = sanitize_output($card_data['c_rarity_id']);
+  $data['release_id']   = sanitize_output($card_data['c_release_id']);
+  $data['hidden']       = sanitize_output($card_data['c_hidden']);
+  $data['extra']        = sanitize_output($card_data['c_extra']);
+  $data['weapons']      = sanitize_output($card_data['c_weapons']);
+  $data['durability']   = sanitize_output($card_data['c_durability']);
+  $data['cost']         = sanitize_output($card_data['c_cost']);
+  $data['income']       = sanitize_output($card_data['c_income']);
+  $data['body_en']      = sanitize_output($card_data['c_body_en']);
+  $data['body_fr']      = sanitize_output($card_data['c_body_fr']);
+
+  // Return the data
+  return $data;
+}
+
+
+
 
 /**
  * Lists cards in the database.
@@ -344,6 +411,92 @@ function cards_add( array $data ) : void
       query(" INSERT INTO tags_cards
               SET         tags_cards.fk_cards = '$card_id' ,
                           tags_cards.fk_tags   = '$tag_id'   ");
+  }
+}
+
+
+
+
+/**
+ * Edits a card in the database.
+ *
+ * @param   int         $card_id   The id of the card to edit.
+ * @param   array       $data      An array containing the card's data.
+ *
+ * @return  void
+ */
+
+function cards_edit( int   $card_id ,
+                     array $data     ) : void
+{
+  // Sanitize the data
+  $card_id          = sanitize($card_id, 'int');
+  $card_name_en     = sanitize_array_element($data, 'name_en', 'string');
+  $card_name_fr     = sanitize_array_element($data, 'name_fr', 'string');
+  $card_image_en    = sanitize_array_element($data, 'image_en', 'int');
+  $card_image_fr    = sanitize_array_element($data, 'image_fr', 'int');
+  $card_type        = sanitize_array_element($data, 'type_id', 'int');
+  $card_faction     = sanitize_array_element($data, 'faction_id', 'int');
+  $card_rarity      = sanitize_array_element($data, 'rarity_id', 'int');
+  $card_release     = sanitize_array_element($data, 'release_id', 'int');
+  $card_hidden      = sanitize_array_element($data, 'hidden', 'bool');
+  $card_extra       = sanitize_array_element($data, 'extra', 'bool');
+  $card_weapons     = sanitize_array_element($data, 'weapons', 'int');
+  $card_cost        = sanitize_array_element($data, 'cost', 'string');
+  $card_durability  = sanitize_array_element($data, 'durability', 'string');
+  $card_income      = sanitize_array_element($data, 'income', 'string');
+  $card_body_en     = sanitize_array_element($data, 'body_en', 'string');
+  $card_body_fr     = sanitize_array_element($data, 'body_fr', 'string');
+
+  // Stop here if the card does not exist
+  if(!database_row_exists('cards', $card_id))
+    return;
+
+  // Edit the card
+  query(" UPDATE  cards
+          SET     cards.name_en           = '$card_name_en'  ,
+                  cards.name_fr           = '$card_name_fr'  ,
+                  cards.fk_images_en      = '$card_image_en' ,
+                  cards.fk_images_fr      = '$card_image_fr' ,
+                  cards.fk_card_types     = '$card_type'     ,
+                  cards.fk_factions       = '$card_faction'  ,
+                  cards.fk_card_rarities  = '$card_rarity' ,
+                  cards.fk_releases       = '$card_release',
+                  cards.is_hidden         = '$card_hidden'   ,
+                  cards.is_extra_card     = '$card_extra'    ,
+                  cards.weapons           = '$card_weapons'  ,
+                  cards.cost              = '$card_cost'     ,
+                  cards.durability        = '$card_durability',
+                  cards.income            = '$card_income'   ,
+                  cards.body_en           = '$card_body_en'  ,
+                  cards.body_fr           = '$card_body_fr'
+          WHERE   cards.id                = '$card_id' ");
+
+  // Fetch a list of card tags
+  $card_tags = tags_list(search: array('ftype' => 'Card'));
+
+  // Update the card's tags in the database
+  for($i = 0; $i < $card_tags['rows']; $i++)
+  {
+    // Check the current status of each tag
+    $tag_id = $card_tags[$i]['id'];
+    $tag_check = query("  SELECT  tags_cards.id AS 'ti_id'
+                          FROM    tags_cards
+                          WHERE   tags_cards.fk_cards = '$card_id'
+                          AND     tags_cards.fk_tags  = '$tag_id' ",
+                          fetch_row: true);
+
+    // Create missing tags
+    if($data['card_tags'][$card_tags[$i]['id']] && is_null($tag_check))
+      query(" INSERT INTO tags_cards
+              SET         tags_cards.fk_cards = '$card_id' ,
+                          tags_cards.fk_tags  = '$tag_id'   ");
+
+    // Delete extraneous tags
+    if(!$data['card_tags'][$card_tags[$i]['id']] && !is_null($tag_check))
+      query(" DELETE FROM tags_cards
+              WHERE       tags_cards.fk_cards = '$card_id'
+              AND         tags_cards.fk_tags  = '$tag_id'   ");
   }
 }
 
@@ -1071,6 +1224,7 @@ function tags_list( string  $sort_by  = 'name'  ,
   $search_name  = sanitize_array_element($search, 'name', 'string');
   $search_desc  = sanitize_array_element($search, 'desc', 'string');
   $search_image = sanitize_array_element($search, 'image_id', 'int');
+  $search_card  = sanitize_array_element($search, 'card_id', 'int');
 
   // Search through the data
   $query_search  =  ($search_type)  ? " WHERE tags.fk_tag_types   =    '$search_type' "     : " WHERE 1 = 1 ";
@@ -1082,6 +1236,10 @@ function tags_list( string  $sort_by  = 'name'  ,
   // Search for tagged images
   $query_images  = ($search_image)  ? " LEFT JOIN tags_images ON tags_images.fk_tags = tags.id "  : "";
   $query_search .= ($search_image)  ? " AND tags_images.fk_images = '$search_image' "             : "";
+
+  // Search for tagged cards
+  $query_cards    = ($search_card)  ? " LEFT JOIN tags_cards ON tags_cards.fk_tags = tags.id "  : "";
+  $query_search  .= ($search_card)  ? " AND tags_cards.fk_cards = '$search_card' "              : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -1108,6 +1266,7 @@ function tags_list( string  $sort_by  = 'name'  ,
                     FROM      tags
                     LEFT JOIN tag_types ON tags.fk_tag_types = tag_types.id
                     $query_images
+                    $query_cards
                     $query_search
                     $query_sort ");
 

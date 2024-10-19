@@ -55,7 +55,7 @@ src:  url('./fonts/Open-sans-bold.eot?#iefix') format('embedded-opentype'),
         --future-yellow:    #C8B900 ;
         --future-orange:    #C66900 ;
         --future-red:       #B00B1E ;
-        --future-pink:      #F9629F ;
+        --future-pink:      #D1608D ;
         --future-purple:    #673AB7 ;
         --future-blue:      #0069C0 ;
         --future-brown:     #795548 ;
@@ -294,32 +294,33 @@ hr   { height: 3px;                                                 } }
 
 /****************************************************** SPACING ******************************************************/
 
-.indiv, .intable  { width: 100%;                                  }
-.indented         { padding-left: 2.0rem;                         }
-.nospaced         { padding-left: 0; padding-right: 0;            }
-.spaced           { padding-left: 0.5rem; padding-right: 0.5rem;  }
-.spaced_left      { padding-left: 0.5rem;                         }
-.bigspaced_left   { padding-left: 1.5rem;                         }
-.tinyspaced_right { padding-right: 0.2rem;                        }
-.spaced_right     { padding-right: 0.5rem;                        }
-.bigspaced_right  { padding-right: 1.5rem;                        }
-.nopadding        { padding-top: 0; padding-bottom: 0;            }
-.nopadding_top    { padding-top: 0;                               }
-.tinypadding_top  { padding-top: 0.5rem;                          }
-.smallpadding_top { padding-top: 1.0rem;                          }
-.padding_top      { padding-top: 2.0rem;                          }
-.bigpadding_top   { padding-top: 3.0rem;                          }
-.hugepadding_top  { padding-top: 5.0rem;                          }
-.megapadding_top  { padding-top: 7.0rem;                          }
-.gigapadding_top  { padding-top: 10.0rem;                         }
-.nopadding_bot    { padding-bottom: 0;                            }
-.tinypadding_bot  { padding-bottom: 0.5rem;                       }
-.smallpadding_bot { padding-bottom: 1.0rem;                       }
-.padding_bot      { padding-bottom: 2.0rem;                       }
-.bigpadding_bot   { padding-bottom: 3.0rem;                       }
-.hugepadding_bot  { padding-bottom: 5.0rem;                       }
-.megapadding_bot  { padding-bottom: 7.0rem;                       }
-.gigapadding_bot  { padding-bottom: 10.0rem;                      }
+.indiv, .intable    { width: 100%;                                  }
+.indented           { padding-left: 2.0rem;                         }
+.nospaced           { padding-left: 0; padding-right: 0;            }
+.spaced             { padding-left: 0.5rem; padding-right: 0.5rem;  }
+.spaced_left        { padding-left: 0.5rem;                         }
+.bigspaced_left     { padding-left: 1.5rem;                         }
+.tinyspaced_right   { padding-right: 0.2rem;                        }
+.smallspaced_right  { padding-right: 0.3rem;                        }
+.spaced_right       { padding-right: 0.5rem;                        }
+.bigspaced_right    { padding-right: 1.5rem;                        }
+.nopadding          { padding-top: 0; padding-bottom: 0;            }
+.nopadding_top      { padding-top: 0;                               }
+.tinypadding_top    { padding-top: 0.5rem;                          }
+.smallpadding_top   { padding-top: 1.0rem;                          }
+.padding_top        { padding-top: 2.0rem;                          }
+.bigpadding_top     { padding-top: 3.0rem;                          }
+.hugepadding_top    { padding-top: 5.0rem;                          }
+.megapadding_top    { padding-top: 7.0rem;                          }
+.gigapadding_top    { padding-top: 10.0rem;                         }
+.nopadding_bot      { padding-bottom: 0;                            }
+.tinypadding_bot    { padding-bottom: 0.5rem;                       }
+.smallpadding_bot   { padding-bottom: 1.0rem;                       }
+.padding_bot        { padding-bottom: 2.0rem;                       }
+.bigpadding_bot     { padding-bottom: 3.0rem;                       }
+.hugepadding_bot    { padding-bottom: 5.0rem;                       }
+.megapadding_bot    { padding-bottom: 7.0rem;                       }
+.gigapadding_bot    { padding-bottom: 10.0rem;                      }
 
 /************************************************* SPACING ON MOBILE *************************************************/
 
