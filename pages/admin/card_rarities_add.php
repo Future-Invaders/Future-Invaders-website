@@ -31,11 +31,16 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 <div class="width_50 padding_top padding_bot">
 
   <h2 class="padding_bot">
-    <?=__('admin_card_rarity_add_title')?>
+    <?=__link('pages/admin/card_rarities', __('admin_card_rarity_add_title'), 'text_light')?>
   </h2>
 
   <form action="card_rarities" method="POST">
     <fieldset>
+
+      <div class="smallpadding_bot">
+        <label for="card_rarity_order"><?=__('admin_card_rarity_add_order')?></label>
+        <input class="indiv" type="text" name="card_rarity_order">
+      </div>
 
       <div class="smallpadding_bot">
         <label for="card_rarity_name_en"><?=__('admin_card_rarity_add_name_en')?></label>
@@ -47,9 +52,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <input class="indiv" type="text" name="card_rarity_name_fr">
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label for="card_rarity_max_count"><?=__('admin_card_rarity_add_max_count')?></label>
         <input class="indiv" type="text" name="card_rarity_max_count">
+      </div>
+
+      <div class="padding_bot">
+        <label for="card_rarity_styling"><?=__('admin_card_rarity_add_styling')?></label>
+        <input class="indiv" type="text" name="card_rarity_styling">
       </div>
 
       <input type="submit" name="card_rarity_add" value="<?=__('admin_card_rarity_add_submit')?>">

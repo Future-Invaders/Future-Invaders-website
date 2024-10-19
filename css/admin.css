@@ -1,2 +1,6 @@
-.admin_menu    { margin-top: -2.3rem;                                        }
-.image_preview { max-width: 18.0rem !important; max-height: 100% !important; }
+.admin_menu         { margin-top: -2.3rem;                                        }
+.image_preview      { max-width: 18.0rem !important; max-height: 100% !important; }
+.body_preview       { max-height: 100% !important; max-width: 25.0rem !important; }
+.card_cost          { min-width: 12.0rem;                                         }
+.card_income        { min-width: 6.0rem;                                          }
+.card_action_icons  { min-width: 4.0rem;                                          }

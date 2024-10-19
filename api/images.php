@@ -16,18 +16,32 @@ include_once './../actions/game.act.php'; # Game actions
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch the list of releases
+// Fetch the list of images
 
-$releases_list = releases_list( format: 'api' );
+// Retrieve the search parameters
+$images_search_name   = form_fetch_element('name', request_type: 'GET');
+$images_search_lang   = form_fetch_element('language', request_type: 'GET');
+$images_search_artist = form_fetch_element('artist', request_type: 'GET');
+$images_search_tag    = form_fetch_element('tag', request_type: 'GET');
+
+// Assemble the search parameters
+$images_search = array( 'name'    => $images_search_name   ,
+                        'lang'    => $images_search_lang   ,
+                        'artist'  => $images_search_artist ,
+                        'tag'     => $images_search_tag    );
+
+// Fetch the images
+$images_list = images_list( search:   $images_search  ,
+                            format:   'api'          );
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Output the card list as JSON
+// Output the image list as JSON
 
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
 
-// Output the cards
-echo sanitize_api_output($releases_list);
+// Output the images
+echo sanitize_api_output($images_list);

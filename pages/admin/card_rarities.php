@@ -34,14 +34,18 @@ $js   = array('admin/admin');
 if(isset($_POST['card_rarity_add']))
 {
   // Gather the postdata
-  $card_rarity_add_name_en = form_fetch_element('card_rarity_name_en');
-  $card_rarity_add_name_fr = form_fetch_element('card_rarity_name_fr');
-  $card_rarity_add_max     = form_fetch_element('card_rarity_max_count');
+  $card_rarity_add_order    = form_fetch_element('card_rarity_order');
+  $card_rarity_add_name_en  = form_fetch_element('card_rarity_name_en');
+  $card_rarity_add_name_fr  = form_fetch_element('card_rarity_name_fr');
+  $card_rarity_add_max      = form_fetch_element('card_rarity_max_count');
+  $card_rarity_add_styling  = form_fetch_element('card_rarity_styling');
 
   // Assemble an array with the postdata
-  $card_rarity_add_data = array(  'name_en' => $card_rarity_add_name_en ,
+  $card_rarity_add_data = array(  'order'   => $card_rarity_add_order   ,
+                                  'name_en' => $card_rarity_add_name_en ,
                                   'name_fr' => $card_rarity_add_name_fr ,
-                                  'max'     => $card_rarity_add_max     );
+                                  'max'     => $card_rarity_add_max     ,
+                                  'styling' => $card_rarity_add_styling );
 
   // Add the card rarity to the database
   card_rarities_add($card_rarity_add_data);
@@ -56,14 +60,18 @@ if(isset($_POST['card_rarity_edit']))
 {
   // Gather the postdata
   $card_rarity_edit_id      = form_fetch_element('card_rarity_id');
+  $card_rarity_edit_order   = form_fetch_element('card_rarity_order');
   $card_rarity_edit_name_en = form_fetch_element('card_rarity_name_en');
   $card_rarity_edit_name_fr = form_fetch_element('card_rarity_name_fr');
   $card_rarity_edit_max     = form_fetch_element('card_rarity_max_count');
+  $card_rarity_edit_styling = form_fetch_element('card_rarity_styling');
 
   // Assemble an array with the postdata
-  $card_rarity_edit_data = array(  'name_en' => $card_rarity_edit_name_en ,
-                                   'name_fr' => $card_rarity_edit_name_fr ,
-                                   'max'     => $card_rarity_edit_max     );
+  $card_rarity_edit_data = array( 'order'   => $card_rarity_edit_order   ,
+                                  'name_en' => $card_rarity_edit_name_en ,
+                                  'name_fr' => $card_rarity_edit_name_fr ,
+                                  'max'     => $card_rarity_edit_max     ,
+                                  'styling' => $card_rarity_edit_styling );
 
   // Edit the card rarity
   card_rarities_edit(  $card_rarity_edit_id    ,
@@ -97,12 +105,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
 <div class="width_30 padding_top">
 
+  <h2 class="align_center padding_bot">
+    <?=__link('pages/admin/cards', __('admin_card_rarity_list_title'), style: 'text_light')?>
+  </h2>
+
   <table>
     <thead>
 
       <tr class="uppercase">
         <th class="align_center">
           <?=__('admin_card_rarity_list_name')?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_card_rarity_list_order')?>
         </th>
         <th class="align_center">
           <?=__('admin_card_rarity_list_max')?>
@@ -119,7 +134,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="2" class="uppercase text_light dark bold align_center">
+        <td colspan="3" class="uppercase text_light dark bold align_center">
           <?=__('admin_card_rarity_list_count', preset_values: array($card_rarities_list['rows']), amount: $card_rarities_list['rows'])?>
         </td>
         <td class="dark bold align_center">
@@ -131,8 +146,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr id="admin_card_rarities_row_<?=$card_rarities_list[$i]['id']?>">
 
-        <td class="align_center nowrap">
+        <td class="align_center nowrap bold uppercase <?=$card_rarities_list[$i]['styling']?>">
           <?=$card_rarities_list[$i]['name']?>
+        </td>
+
+        <td class="align_center nowrap">
+          <?=$card_rarities_list[$i]['order']?>
         </td>
 
         <td class="align_center nowrap">

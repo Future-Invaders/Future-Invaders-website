@@ -25,6 +25,8 @@ ___('api_menu_releases',  'EN', "Releases");
 ___('api_menu_releases',  'FR', "Versions");
 ___('api_menu_factions',  'EN', "Factions");
 ___('api_menu_factions',  'FR', "Factions");
+___('api_menu_images',    'EN', "Images");
+___('api_menu_images',    'FR', "Images");
 ___('api_menu_tags',      'EN', "Tags");
 ___('api_menu_tags',      'FR', "Tags");
 
@@ -120,27 +122,49 @@ EOD
 
 // Header
 ___('api_cards_intro', 'EN', <<<EOD
-Future Invaders being a card game, there are many different types of cards. The API documentation should help you find what you are looking for, browse it carefully.
+Only cards used during a game of Future Invaders are accessible through the API. Extra cards, rules cards, lore cards, and so on are not accessible trough the API.
 EOD
 );
 ___('api_cards_intro', 'FR', <<<EOD
-Future Invaders étant un jeu de cartes, il y a beaucoup de sortes de cartes différentes. La documentation de l'API devrait vous aider à trouver ce que vous cherchez, parcourez-la avec attention.
+Seules les cartes jouées lors d'une partie de Future Invaders sont accessibles via l'API. Les cartes supplémentaires, les cartes de règles, les cartes de lore et ainsi de suite ne sont pas accessibles via l'API.
 EOD
 );
+
+
+// List cards
+___('api_cards_list_summary',  'EN', "Retrieves a list of all cards playable during a game of Future Invaders.");
+___('api_cards_list_summary',  'FR', "Récupère la liste de toutes les cartes jouables lors d'une partie de Future Invaders.");
+___('api_cards_list_name',     'EN', "Search for cards by name. Searches in all languages at once.");
+___('api_cards_list_name',     'FR', "Recherche des cartes par nom. Cherche dans toutes les langues à la fois.");
+___('api_cards_list_body',     'EN', "Search in the body text of cards. Searches in all languages at once.");
+___('api_cards_list_body',     'FR', "Recherche dans le texte du corps des cartes. Cherche dans toutes les langues à la fois.");
+___('api_cards_list_release',  'EN', "Search for cards by release UUID. Find release UUIDs using {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_cards_list_release',  'FR', "Recherche des cartes par UUID de version. Trouvez les UUIDs des versions en utilisant {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_cards_list_faction',  'EN', "Search for cards by faction UUID. Find faction UUIDs using {{link|api/doc/factions#list_factions|GET /api/factions}}.");
+___('api_cards_list_faction',  'FR', "Recherche des cartes par UUID de faction. Trouvez les UUIDs des factions en utilisant {{link|api/doc/factions#list_factions|GET /api/factions}}.");
+___('api_cards_list_type',     'EN', "Search for cards by card type UUID. Find card type UUIDs using {{link|api/doc/cards#list_card_types|GET /api/card_types}}.");
+___('api_cards_list_type',     'FR', "Recherche des cartes par UUID de type de carte. Trouvez les UUIDs des types de cartes en utilisant {{link|api/doc/cards#list_card_types|GET /api/card_types}}.");
+___('api_cards_list_rarity',   'EN', "Search for cards by card rarity UUID. Find card rarity UUIDs using {{link|api/doc/cards#list_card_rarities|GET /api/card_rarities}}.");
+___('api_cards_list_rarity',   'FR', "Recherche des cartes par UUID de rareté de carte. Trouvez les UUIDs des raretés de cartes en utilisant {{link|api/doc/cards#list_card_rarities|GET /api/card_rarities}}.");
+___('api_cards_list_tag',      'EN', "Search for cards with a specific tag.");
+___('api_cards_list_tag',      'FR', "Recherche des cartes avec un tag spécifique.");
+
+
+// Get card
+___('api_cards_get_summary',   'EN', "Retrieves a card by its UUID.");
+___('api_cards_get_summary',   'FR', "Récupère une carte par son UUID.");
+___('api_cards_get_uuid',      'EN', "The UUID of the card to retrieve.");
+___('api_cards_get_uuid',      'FR', "L'UUID de la carte à récupérer.");
 
 
 // List card types
 ___('api_card_types_list_summary',  'EN', "Retrieves a list of all card types.");
-___('api_card_types_list_summary',  'FR', "Récupère une liste de tous les types de cartes.");
-___('api_card_types_list_language', 'EN', "Display card types in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_card_types_list_language', 'FR', "Affiche les types de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+___('api_card_types_list_summary',  'FR', "Récupère la liste de tous les types de cartes.");
 
 
 // List card rarities
 ___('api_card_rarities_list_summary',  'EN', "Retrieves a list of all card rarities. They determine the maximum number of copies of a single card which you can include in an arsenal.");
-___('api_card_rarities_list_summary',  'FR', "Récupère une liste de toutes les raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.");
-___('api_card_rarities_list_language', 'EN', "Display card rarities in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_card_rarities_list_language', 'FR', "Affiche les raretés de cartes dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+___('api_card_rarities_list_summary',  'FR', "Récupère la liste de toutes les raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.");
 
 
 
@@ -163,10 +187,8 @@ EOD
 
 
 // List releases
-___('api_releases_list_summary',  'EN', "Retrieves a list of all past releases, in reverse chronological order.");
-___('api_releases_list_summary',  'FR', "Récupère une liste de toutes les versions passées, dans l'ordre antéchronologique.");
-___('api_releases_list_language', 'EN', "Display releases in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_releases_list_language', 'FR', "Affiche les versions dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+___('api_releases_list_summary',  'EN', "Retrieves a list of all releases, in reverse chronological order.");
+___('api_releases_list_summary',  'FR', "Récupère la liste de toutes les versions, dans l'ordre antéchronologique.");
 
 
 
@@ -190,9 +212,46 @@ EOD
 
 // List factions
 ___('api_factions_list_summary',  'EN', "Retrieves a list of all factions.");
-___('api_factions_list_summary',  'FR', "Récupère une liste de toutes les factions.");
-___('api_factions_list_language', 'EN', "Display factions in the specified ISO 639-1 language ('en' or 'fr', defaults to 'en').");
-___('api_factions_list_language', 'FR', "Affiche les factions dans la langue spécifiée au format ISO 639-1 ('en' ou 'fr', par défaut 'en').");
+___('api_factions_list_summary',  'FR', "Récupère la liste de toutes les factions.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      IMAGES                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_images_intro', 'EN', <<<EOD
+The images retrieved by the API are full cards, not individual art pieces.
+EOD
+);
+___('api_images_intro', 'FR', <<<EOD
+Les images accessibles via l'API sont pas des illustrations, ce sont des cartes complètes.
+EOD
+);
+
+
+// List images
+___('api_images_list_summary',  'EN', "Retrieves a list of all images.");
+___('api_images_list_summary',  'FR', "Récupère la liste de toutes les images.");
+___('api_images_list_name',     'EN', "Search for images by name.");
+___('api_images_list_name',     'FR', "Recherche des images par nom.");
+___('api_images_list_language', 'EN', "Search for images by ISO-639-1 language code (eg. 'en', 'fr').");
+___('api_images_list_language', 'FR', "Recherche des images par code de langue ISO-639-1 (par ex. 'en', 'fr').");
+___('api_images_list_artist',   'EN', "Search for images by artist name.");
+___('api_images_list_artist',   'FR', "Recherche des images par nom d'artiste.");
+___('api_images_list_tag',      'EN', "Search for images with a specific tag.");
+___('api_images_list_tag',      'FR', "Recherche des images avec un tag spécifique.");
+
+
+// Get image
+___('api_images_get_summary', 'EN', "Retrieves an image by its UUID.");
+___('api_images_get_summary', 'FR', "Récupère une image par son UUID.");
+___('api_images_get_uuid',    'EN', "The UUID of the image to retrieve.");
+___('api_images_get_uuid',    'FR', "L'UUID de l'image à récupérer.");
 
 
 
@@ -216,11 +275,13 @@ EOD
 
 // List tags
 ___('api_tags_list_summary',  'EN', "Retrieves a list of all tags.");
-___('api_tags_list_summary',  'FR', "Récupère une liste de tous les tags.");
+___('api_tags_list_summary',  'FR', "Récupère la liste de tous les tags.");
 ___('api_tags_list_type',     'EN', "Search for tags of a specific type ('Card', 'Image', etc.)");
 ___('api_tags_list_type',     'FR', "Recherche les tags d'un type spécifique ('Carte', 'Image', etc.)");
 ___('api_tags_list_name',     'EN', "Search for tags by name.");
 ___('api_tags_list_name',     'FR', "Recherche des tags par nom.");
+___('api_tags_list_desc',     'EN', "Search the description of tags, in all languages.");
+___('api_tags_list_desc',     'FR', "Recherche dans la description des tags, dans toutes les langues.");
 
 
 // Get tag

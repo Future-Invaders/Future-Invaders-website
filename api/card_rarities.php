@@ -18,15 +18,7 @@ include_once './../actions/game.act.php'; # Game actions
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of card rarities
 
-// Retrieve the search parameters
-$card_rarities_search_lang = form_fetch_element('language', request_type: 'GET', default_value: 'en');
-
-// Assemble the search parameters
-$card_rarities_search = array( 'lang' => $card_rarities_search_lang );
-
-// Fetch the card rarities
-$card_rarities_list = card_rarities_list( search: $card_rarities_search  ,
-                                          format: 'api'                );
+$card_rarities_list = card_rarities_list( format: 'api' );
 
 
 

@@ -8,13 +8,13 @@ include_once './../../lang/api.lang.php';     # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "api/doc/tags";
-$page_title_en    = "API: Tags";
-$page_title_fr    = "API : Tags";
+$page_url         = "api/doc/images";
+$page_title_en    = "API: Images";
+$page_title_fr    = "API : Images";
 $page_description = "Future Invaders' API allows you to interact with the website without using a browser.";
 
 // API doc menu selection
-$api_menu['tags'] = true;
+$api_menu['images'] = true;
 
 // Extra CSS & JS
 $css  = array('api');
@@ -36,30 +36,30 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h1>
 
   <h4>
-    <?=__('api_menu_tags')?>
+    <?=__('api_menu_images')?>
   </h4>
 
   <p>
-    <?=__('api_tags_intro')?>
+    <?=__('api_images_intro')?>
   </p>
 
   <ul class="tinypadding_top">
-    <li><?=__link('#list_tags', 'GET /api/tags', is_internal: false)?></li>
-    <li><?=__link('#get_tag', 'GET /api/tag/{uuid}', is_internal: false)?></li>
+    <li><?=__link('#list_images', 'GET /api/images', is_internal: false)?></li>
+    <li><?=__link('#get_image', 'GET /api/image/{uuid}', is_internal: false)?></li>
   </ul>
 
 </div>
 
-<hr id="list_tags">
+<hr id="list_images">
 
 <div class="width_50 padding_top bigpadding_bot">
 
   <h4>
-    GET /api/tags
+    GET /api/images
   </h4>
 
   <p>
-    <?=__('api_tags_list_summary')?>
+    <?=__('api_images_list_summary')?>
   </p>
 
   <h6 class="bigpadding_top">
@@ -69,31 +69,41 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <hr class="api_doc_parameters">
 
   <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">type</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
-  </p>
-
-  <p class="nopadding_top tinypadding_bot">
-    <?=__('api_tags_list_type')?>
-  </p>
-
-  <hr class="api_doc_parameters">
-
-  <p class="tinypadding_top tinypadding_bot">
     <span class="bold underlined">name</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_tags_list_name')?>
+    <?=__('api_images_list_name')?>
   </p>
 
   <hr class="api_doc_parameters">
 
   <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">description</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+    <span class="bold underlined">language</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_tags_list_desc')?>
+    <?=__('api_images_list_language')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">artist</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_images_list_artist')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">tag</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_images_list_tag')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
@@ -101,15 +111,18 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h6>
 
   <pre>{
-  "tags": [
+  "images": [
     {
       "uuid": string,
-      "type": string,
       "name": string,
-      "description": {
-        "en": string,
-        "fr": string
-      }
+      "language": string,
+      "artist": string,
+      "path": string,
+      "tags": [
+        "tag1",
+        "tag2",
+        ...
+      ],
       "endpoint": string
     },
   ]
@@ -117,16 +130,16 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
 </div>
 
-<hr id="get_tag">
+<hr id="get_image">
 
 <div class="width_50 padding_top">
 
   <h4>
-    GET /api/tag/{uuid}
+    GET /api/image/{uuid}
   </h4>
 
   <p>
-    <?=__('api_tags_get_summary')?>
+    <?=__('api_images_get_summary')?>
   </p>
 
   <h6 class="bigpadding_top">
@@ -140,7 +153,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_tags_get_uuid')?>
+    <?=__('api_images_get_uuid')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
@@ -148,81 +161,24 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h6>
 
   <pre>{
-  "tag": {
+  "image": {
     "uuid": string,
-    "type": string,
     "name": string,
-    "description": {
-      "en": string,
-      "fr": string
-    },
-    "linked_images": [
+    "language": string,
+    "artist": string,
+    "path": string,
+    "tags": [
       {
-        "image": {
+        "tag": {
           "uuid": string,
+          "type": string,
           "name": string,
-          "language": string,
-          "artist": string,
-          "path": string
-        }
-      }
-      "linked_cards": [
-        "card": {
-          "uuid": string,
-          "name": {
+          "description": {
             "en": string,
             "fr": string
           },
-          "cost": string,
-          "income": string,
-          "weapons": int,
-          "durability": int,
-          "body": {
-            "en": string,
-            "fr": string
-          },
-          "release": {
-            "uuid": string,
-            "date": string,
-            "name": {
-              "en": string,
-              "fr": string
-            }
-          },
-          "faction": {
-            "uuid": string,
-            "name": {
-              "en": string,
-              "fr": string
-            }
-          },
-          "type": {
-            "uuid": string,
-            "name": {
-              "en": string,
-              "fr": string
-            }
-          },
-          "rarity": {
-            "uuid": string,
-            "max_card_count": int,
-            "name": {
-              "en": string,
-              "fr": string
-            }
-          },
-          "images": {
-            "en": {
-              "uuid": string,
-              "name": string,
-              "language": string,
-              "artist": string,
-              "path": string,
-            },
-          },
         }
-      ]
-    }
+    ]
   }
 }</pre>
 

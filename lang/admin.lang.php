@@ -84,17 +84,127 @@ ___('admin_query_ok', 'FR', "Requêtes exécutées avec succès");
 /*********************************************************************************************************************/
 
 // Card management
-___('admin_card_management',          'EN', "Card management");
-___('admin_card_management',          'FR', "Gestion des cartes");
-___('admin_card_management_types',    'EN', "Card types");
-___('admin_card_management_types',    'FR', "Types de cartes");
-___('admin_card_management_rarities', 'EN', "Card rarities");
-___('admin_card_management_rarities', 'FR', "Raretés de cartes");
+___('admin_card_management',            'EN', "Card management");
+___('admin_card_management',            'FR', "Gestion des cartes");
+___('admin_card_management_add',        'EN', "Add a card");
+___('admin_card_management_add',        'FR', "Ajouter une carte");
+___('admin_card_management_types',      'EN', "Card types");
+___('admin_card_management_types',      'FR', "Types de cartes");
+___('admin_card_management_rarities',   'EN', "Card rarities");
+___('admin_card_management_rarities',   'FR', "Raretés de cartes");
+___('admin_card_management_show_body',  'EN', "Show card previews");
+___('admin_card_management_show_body',  'FR', "Prévisualiser les cartes");
+___('admin_card_management_hide_body',  'EN', "Hide card previews");
+___('admin_card_management_hide_body',  'FR', "Masquer les prévisualisations");
+
+
+// Card list
+___('admin_card_list_name',       'EN', "Name");
+___('admin_card_list_name',       'FR', "Nom");
+___('admin_card_list_release',    'EN', "Release");
+___('admin_card_list_release',    'FR', "Version");
+___('admin_card_list_type',       'EN', "Type");
+___('admin_card_list_type',       'FR', "Type");
+___('admin_card_list_faction',    'EN', "Factn.");
+___('admin_card_list_faction',    'FR', "Factn.");
+___('admin_card_list_rarity',     'EN', "Rarity");
+___('admin_card_list_rarity',     'FR', "Rareté");
+___('admin_card_list_cost',       'EN', "Cost");
+___('admin_card_list_cost',       'FR', "Coût");
+___('admin_card_list_income',     'EN', "Income");
+___('admin_card_list_income',     'FR', "Reven.");
+___('admin_card_list_weapons',    'EN', "Wep.");
+___('admin_card_list_weapons',    'FR', "Arm.");
+___('admin_card_list_durability', 'EN', "Dur.");
+___('admin_card_list_durability', 'FR', "Dur.");
+___('admin_card_list_body',       'EN', "Body");
+___('admin_card_list_body',       'FR', "Texte");
+___('admin_card_list_data',       'EN', "Data");
+___('admin_card_list_data',       'FR', "Data");
+___('admin_card_list_image_yes',  'EN', "Two images");
+___('admin_card_list_image_yes',  'FR', "Deux images");
+___('admin_card_list_image_one',  'EN', "Only one image");
+___('admin_card_list_image_one',  'FR', "Une seule image");
+___('admin_card_list_image_no',   'EN', "No image");
+___('admin_card_list_image_no',   'FR', "Pas d'image");
+___('admin_card_list_extra',      'EN', "Extra card");
+___('admin_card_list_extra',      'FR', "Carte supplémentaire");
+___('admin_card_list_hidden',     'EN', "Hidden card");
+___('admin_card_list_hidden',     'FR', "Carte cachée");
+___('admin_card_list_tags',       'EN', "Tags");
+___('admin_card_list_tags',       'FR', "Tags");
+___('admin_card_list_view',       'EN', "View card");
+___('admin_card_list_view',       'FR', "Voir la carte");
+___('admin_card_list_count',      'EN', "{{1}} card");
+___('admin_card_list_count',      'FR', "{{1}} carte");
+___('admin_card_list_count+',     'EN', "{{1}} cards");
+___('admin_card_list_count+',     'FR', "{{1}} cartes");
+___('admin_card_list_no_image',   'EN', "No image");
+___('admin_card_list_no_image',   'FR', "Pas d'image");
+
+
+// Add a card
+___('admin_card_add_title',       'EN', "Add a card");
+___('admin_card_add_title',       'FR', "Ajouter une carte");
+___('admin_card_add_release',     'EN', "Release");
+___('admin_card_add_release',     'FR', "Version");
+___('admin_card_add_image_en',    'EN', "Image (English)");
+___('admin_card_add_image_en',    'FR', "Image (Anglais)");
+___('admin_card_add_image_fr',    'EN', "Image (French)");
+___('admin_card_add_image_fr',    'FR', "Image (Français)");
+___('admin_card_add_name_en',     'EN', "Name (English)");
+___('admin_card_add_name_en',     'FR', "Nom (Anglais)");
+___('admin_card_add_name_fr',     'EN', "Name (French)");
+___('admin_card_add_name_fr',     'FR', "Nom (Français)");
+___('admin_card_add_type',        'EN', "Type");
+___('admin_card_add_type',        'FR', "Type");
+___('admin_card_add_faction',     'EN', "Faction");
+___('admin_card_add_faction',     'FR', "Faction");
+___('admin_card_add_rarity',      'EN', "Rarity");
+___('admin_card_add_rarity',      'FR', "Rareté");
+___('admin_card_add_properties',  'EN', "Properties");
+___('admin_card_add_properties',  'FR', "Propriétés");
+___('admin_card_add_extra',       'EN', "Extra card (rules, tools, etc.)");
+___('admin_card_add_extra',       'FR', "Carte supplémentaire (règles, outils, etc.)");
+___('admin_card_add_hidden',      'EN', "Hidden from the public");
+___('admin_card_add_hidden',      'FR', "Cachée du public");
+___('admin_card_add_cost',        'EN', "Cost");
+___('admin_card_add_cost',        'FR', "Coût");
+___('admin_card_add_income',      'EN', "Income");
+___('admin_card_add_income',      'FR', "Revenu");
+___('admin_card_add_weapons',     'EN', "Weapons");
+___('admin_card_add_weapons',     'FR', "Armes");
+___('admin_card_add_durability',  'EN', "Durability");
+___('admin_card_add_durability',  'FR', "Durabilité");
+___('admin_card_add_body_en',     'EN', "Card text (English)");
+___('admin_card_add_body_en',     'FR', "Texte de la carte (Anglais)");
+___('admin_card_add_body_fr',     'EN', "Card text (French)");
+___('admin_card_add_body_fr',     'FR', "Texte de la carte (Français)");
+___('admin_card_add_tags',        'EN', "Tags");
+___('admin_card_add_tags',        'FR', "Tags");
+___('admin_card_add_submit',      'EN', "Add card");
+___('admin_card_add_submit',      'FR', "Ajouter la carte");
+
+
+// Edit a card
+___('admin_card_edit_title',       'EN', "Edit card");
+___('admin_card_edit_title',       'FR', "Modifier la carte ");
+___('admin_card_edit_submit',      'EN', "Edit card");
+___('admin_card_edit_submit',      'FR', "Modifier la carte");
+
+
+// Delete a card
+___('admin_card_delete_confirm',   'EN', "Confirm the deletion of this card");
+___('admin_card_delete_confirm',   'FR', "Confirmez la suppression de cette carte");
 
 
 // Card types list
+___('admin_card_type_list_title',   'EN', "Card types");
+___('admin_card_type_list_title',   'FR', "Types de cartes");
 ___('admin_card_type_list_name',    'EN', "Name");
 ___('admin_card_type_list_name',    'FR', "Nom");
+___('admin_card_type_list_order',   'EN', "Order");
+___('admin_card_type_list_order',   'FR', "Ordre");
 ___('admin_card_type_list_count',   'EN', "{{1}} card type");
 ___('admin_card_type_list_count',   'FR', "{{1}} type de carte");
 ___('admin_card_type_list_count+',  'EN', "{{1}} card types");
@@ -104,10 +214,14 @@ ___('admin_card_type_list_count+',  'FR', "{{1}} types de cartes");
 // Add a card type
 ___('admin_card_type_add_title',    'EN', "Add a card type");
 ___('admin_card_type_add_title',    'FR', "Ajouter un type de carte");
+___('admin_card_type_add_order',    'EN', "Sorting order");
+___('admin_card_type_add_order',    'FR', "Ordre de tri");
 ___('admin_card_type_add_name_en',  'EN', "Name (English)");
 ___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
 ___('admin_card_type_add_name_fr',  'EN', "Name (French)");
 ___('admin_card_type_add_name_fr',  'FR', "Nom (Français)");
+___('admin_card_type_add_styling',  'EN', "CSS styling");
+___('admin_card_type_add_styling',  'FR', "Stylage CSS");
 ___('admin_card_type_add_submit',   'EN', "Add card type");
 ___('admin_card_type_add_submit',   'FR', "Ajouter le type de carte");
 
@@ -125,8 +239,12 @@ ___('admin_card_type_delete_confirm', 'FR', "Confirmez la suppression de ce type
 
 
 // Card rarities list
+___('admin_card_rarity_list_title',   'EN', "Card rarities");
+___('admin_card_rarity_list_title',   'FR', "Raretés de cartes");
 ___('admin_card_rarity_list_name',    'EN', "Name");
 ___('admin_card_rarity_list_name',    'FR', "Nom");
+___('admin_card_rarity_list_order',   'EN', "Order");
+___('admin_card_rarity_list_order',   'FR', "Ordre");
 ___('admin_card_rarity_list_max',     'EN', "Max count");
 ___('admin_card_rarity_list_max',     'FR', "Nombre max");
 ___('admin_card_rarity_list_count',   'EN', "{{1}} rarity");
@@ -138,12 +256,16 @@ ___('admin_card_rarity_list_count+',  'FR', "{{1}} raretés");
 // Add a card rarity
 ___('admin_card_rarity_add_title',      'EN', "Add a rarity");
 ___('admin_card_rarity_add_title',      'FR', "Ajouter une rareté");
+___('admin_card_rarity_add_order',      'EN', "Sorting order");
+___('admin_card_rarity_add_order',      'FR', "Ordre de tri");
 ___('admin_card_rarity_add_name_en',    'EN', "Name (English)");
 ___('admin_card_rarity_add_name_en',    'FR', "Nom (Anglais)");
 ___('admin_card_rarity_add_name_fr',    'EN', "Name (French)");
 ___('admin_card_rarity_add_name_fr',    'FR', "Nom (Français)");
 ___('admin_card_rarity_add_max_count',  'EN', "Max count per arsenal");
 ___('admin_card_rarity_add_max_count',  'FR', "Maximum par arsenal");
+___('admin_card_rarity_add_styling',    'EN', "CSS styling");
+___('admin_card_rarity_add_styling',    'FR', "Stylage CSS");
 ___('admin_card_rarity_add_submit',     'EN', "Add rarity");
 ___('admin_card_rarity_add_submit',     'FR', "Ajouter la rareté");
 
@@ -174,18 +296,22 @@ ___('admin_uncategorized_images_title', 'FR', "Images non catégorisées");
 
 
 // Image list
-___('admin_image_list_path',    'EN', "Path");
-___('admin_image_list_path',    'FR', "Chemin");
-___('admin_image_list_name',    'EN', "Name");
-___('admin_image_list_name',    'FR', "Nom");
-___('admin_image_list_artist',  'EN', "Artist");
-___('admin_image_list_artist',  'FR', "Artiste");
-___('admin_image_list_tags',    'EN', "Tags");
-___('admin_image_list_tags',    'FR', "Tags");
-___('admin_image_list_count',   'EN', "{{1}} image");
-___('admin_image_list_count',   'FR', "{{1}} image");
-___('admin_image_list_count+',  'EN', "{{1}} images");
-___('admin_image_list_count+',  'FR', "{{1}} images");
+___('admin_image_list_path',      'EN', "Path");
+___('admin_image_list_path',      'FR', "Chemin");
+___('admin_image_list_name',      'EN', "Name");
+___('admin_image_list_name',      'FR', "Nom");
+___('admin_image_list_language',  'EN', "Lang");
+___('admin_image_list_language',  'FR', "Lang");
+___('admin_image_list_artist',    'EN', "Artist");
+___('admin_image_list_artist',    'FR', "Artiste");
+___('admin_image_list_tags',      'EN', "Tags");
+___('admin_image_list_tags',      'FR', "Tags");
+___('admin_image_list_count',     'EN', "{{1}} image");
+___('admin_image_list_count',     'FR', "{{1}} image");
+___('admin_image_list_count+',    'EN', "{{1}} images");
+___('admin_image_list_count+',    'FR', "{{1}} images");
+___('admin_images_nolang',        'EN', "None");
+___('admin_images_nolang',        'FR', "Aucune");
 
 
 // Add an image
@@ -193,6 +319,8 @@ ___('admin_image_name_title', 'EN', "Add image");
 ___('admin_image_name_title', 'FR', "Ajouter l'image");
 ___('admin_image_name',       'EN', "Image name");
 ___('admin_image_name',       'FR', "Nom de l'image");
+___('admin_image_language',   'EN', "Language (ISO 639-1: 'en', 'fr', etc.)");
+___('admin_image_language',   'FR', "Langue (ISO 639-1 : 'en', 'fr', etc.)");
 ___('admin_image_artist',     'EN', "Artist");
 ___('admin_image_artist',     'FR', "Artiste");
 ___('admin_image_tags',       'EN', "Tags");
@@ -202,8 +330,8 @@ ___('admin_image_add_submit', 'FR', "Ajouter l'image");
 
 
 // Edit an image
-___('admin_image_edit_title',   'EN', "Edit image");
-___('admin_image_edit_title',   'FR', "Modifier l'image");
+___('admin_image_edit_title',   'EN', "Edit image {{1}}");
+___('admin_image_edit_title',   'FR', "Modifier l'image {{1}}");
 ___('admin_image_edit_submit',  'EN', "Edit image");
 ___('admin_image_edit_submit',  'FR', "Modifier l'image");
 
@@ -333,6 +461,8 @@ ___('admin_faction_add_name_en',        'EN', "Name (English)");
 ___('admin_faction_add_name_en',        'FR', "Nom (Anglais)");
 ___('admin_faction_add_name_fr',        'EN', "Name (French)");
 ___('admin_faction_add_name_fr',        'FR', "Nom (Français)");
+___('admin_faction_add_styling',        'EN', "CSS styling");
+___('admin_faction_add_styling',        'FR', "Stylage CSS");
 ___('admin_faction_add_submit',         'EN', "Add faction");
 ___('admin_faction_add_submit',         'FR', "Ajouter une faction");
 

@@ -943,6 +943,8 @@ ___('submenu_guides_rules',   'EN', "Game rules");
 ___('submenu_guides_rules',   'FR', "Règles du jeu");
 ___('submenu_guides_howto',   'EN', "How to play");
 ___('submenu_guides_howto',   'FR', "Comment jouer");
+___('submenu_guides_lore',    'EN', "Lore");
+___('submenu_guides_lore',    'FR', "Univers");
 ___('submenu_guides_vocab',   'EN', "Vocabulary");
 ___('submenu_guides_vocab',   'FR', "Vocabulaire");
 ___('submenu_guides_rulings', 'EN', "Rulings");
@@ -1018,6 +1020,8 @@ ___('submenu_social_copyright', 'FR', "Propriété intellectuelle");
 
 ___('submenu_social_contact',   'EN', "Contact");
 ___('submenu_social_contact',   'FR', "Contact");
+___('submenu_social_feedback',  'EN', "Give feedback");
+___('submenu_social_feedback',  'FR', "Donnez votre avis");
 ___('submenu_social_publish',   'EN', "Publish this game!");
 ___('submenu_social_publish',   'FR', "Éditez ce jeu !");
 ___('submenu_social_contactme', 'EN', "Contact info");

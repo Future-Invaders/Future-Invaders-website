@@ -54,6 +54,9 @@ $image_add_path = form_fetch_element('image', request_type: 'GET');
 if(!$image_add_path)
   exit(header("Location: ./images"));
 
+// Get the image's full path
+$image_full_path = images_get_full_path($image_add_path);
+
 
 
 
@@ -64,6 +67,7 @@ if(isset($_POST['image_add']))
 {
   // Gather image postdata
   $image_add_name   = form_fetch_element('image_name');
+  $image_add_lang   = form_fetch_element('image_language');
   $image_add_artist = form_fetch_element('image_artist');
 
   // Gather tag postdata
@@ -77,6 +81,7 @@ if(isset($_POST['image_add']))
   // Assemble an array with the postdata
   $image_add_data = array(  'image_path'    => $image_add_path    ,
                             'image_name'    => $image_add_name    ,
+                            'image_lang'    => $image_add_lang    ,
                             'image_artist'  => $image_add_artist  ,
                             'image_tags'    => $image_add_tags    );
 
@@ -98,9 +103,13 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
 <div class="width_50 padding_top">
 
-  <h5 class="padding_bot">
+  <h5 class="align_center smallpadding_bot">
     <?=__('admin_image_name_title', spaces_after: 1).$image_add_path?>
   </h5>
+
+  <div class="align_center smallpadding_bot">
+    <img src="<?=$image_full_path?>" class="image_preview">
+  </div>
 
   <form action="images_add?image=<?=$image_add_path?>" method="POST">
     <fieldset>
@@ -110,6 +119,11 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <div class="smallpadding_bot">
         <label for="image_name"><?=__('admin_image_name')?></label>
         <input class="indiv" type="text" name="image_name">
+      </div>
+
+      <div class="smallpadding_bot">
+        <label for="image_language"><?=__('admin_image_language')?></label>
+        <input class="indiv" type="text" name="image_language">
       </div>
 
       <div class="padding_bot">

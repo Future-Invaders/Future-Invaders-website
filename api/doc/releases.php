@@ -61,20 +61,6 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <?=__('api_releases_list_summary')?>
   </p>
 
-  <h6 class="bigpadding_top">
-    <?=__('api_parameters')?>
-  </h6>
-
-  <hr class="api_doc_parameters">
-
-  <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">language</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
-  </p>
-
-  <p class="nopadding_top tinypadding_bot">
-    <?=__('api_releases_list_language')?>
-  </p>
-
   <h6 class="bigpadding_top smallpadding_bot">
     <?=__('api_response_schema')?>
   </h6>
@@ -83,8 +69,11 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   "releases": [
     {
       "uuid": string,
-      "name": string,
-      "date": string
+      "date": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
     },
   ]
 }</pre>

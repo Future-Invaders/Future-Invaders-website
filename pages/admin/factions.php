@@ -37,11 +37,13 @@ if(isset($_POST['faction_add']))
   $faction_add_order    = form_fetch_element('faction_sorting_order');
   $faction_add_name_en  = form_fetch_element('faction_name_en');
   $faction_add_name_fr  = form_fetch_element('faction_name_fr');
+  $faction_add_styling  = form_fetch_element('faction_styling');
 
   // Assemble an array with the postdata
-  $faction_add_data = array(  'order'   => $faction_add_order ,
+  $faction_add_data = array(  'order'   => $faction_add_order   ,
                               'name_en' => $faction_add_name_en ,
-                              'name_fr' => $faction_add_name_fr );
+                              'name_fr' => $faction_add_name_fr ,
+                              'styling' => $faction_add_styling );
 
   // Add the faction to the database
   factions_add($faction_add_data);
@@ -59,9 +61,10 @@ if(isset($_POST['faction_edit']))
   $faction_edit_id = form_fetch_element('faction_id');
 
   // Assemble an array with the postdata
-  $faction_edit_data = array( 'order'   => form_fetch_element('faction_sorting_order') ,
-                              'name_en' => form_fetch_element('faction_name_en') ,
-                              'name_fr' => form_fetch_element('faction_name_fr') );
+  $faction_edit_data = array( 'order'   => form_fetch_element('faction_sorting_order')  ,
+                              'name_en' => form_fetch_element('faction_name_en')        ,
+                              'name_fr' => form_fetch_element('faction_name_fr')        ,
+                              'styling' => form_fetch_element('faction_styling')        );
 
   // Edit the faction
   factions_edit(  $faction_edit_id    ,
@@ -133,7 +136,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$factions_list[$i]['order']?>
         </td>
 
-        <td class="align_center">
+        <td class="align_center bold uppercase nowrap <?=$factions_list[$i]['styling']?>">
           <?=$factions_list[$i]['name']?>
         </td>
 
