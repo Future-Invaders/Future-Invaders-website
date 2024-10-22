@@ -197,7 +197,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <select class="table_search" name="admin_images_search_tags" id="admin_images_search_tags" onchange="admin_images_search();">
             <option value="">&nbsp;</option>
-            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <option value="-1"><?=string_change_case(__('none'), 'lowercase')?></option>
             <?php for($i = 0; $i < $image_tags['rows']; $i++): ?>
             <option value="<?=$image_tags[$i]['id']?>"><?=$image_tags[$i]['name']?></option>
             <?php endfor; ?>

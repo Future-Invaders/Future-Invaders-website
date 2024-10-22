@@ -99,25 +99,29 @@ function cards_get( int     $card_id    = null    ,
   $query_where = ($card_id) ? " WHERE cards.id = '$card_id' " : " WHERE cards.uuid = '$card_uuid' ";
 
   // Fetch the card's data
-  $card_data = query("  SELECT  cards.id                AS 'c_id'         ,
-                                cards.uuid              AS 'c_uuid'       ,
-                                cards.fk_releases       AS 'c_release_id' ,
-                                cards.fk_images_en      AS 'c_img_en_id'  ,
-                                cards.fk_images_fr      AS 'c_img_fr_id'  ,
-                                cards.fk_card_types     AS 'c_type_id'    ,
-                                cards.fk_factions       AS 'c_faction_id' ,
-                                cards.fk_card_rarities  AS 'c_rarity_id'  ,
-                                cards.is_extra_card     AS 'c_extra'      ,
-                                cards.is_hidden         AS 'c_hidden'     ,
-                                cards.name_en           AS 'c_name_en'    ,
-                                cards.name_fr           AS 'c_name_fr'    ,
-                                cards.cost              AS 'c_cost'       ,
-                                cards.income            AS 'c_income'     ,
-                                cards.weapons           AS 'c_weapons'    ,
-                                cards.durability        AS 'c_durability' ,
-                                cards.body_en           AS 'c_body_en'    ,
-                                cards.body_fr           AS 'c_body_fr'
-                        FROM    cards
+  $card_data = query("  SELECT    cards.id                AS 'c_id'         ,
+                                  cards.uuid              AS 'c_uuid'       ,
+                                  cards.fk_releases       AS 'c_release_id' ,
+                                  cards.fk_images_en      AS 'c_img_en_id'  ,
+                                  cards.fk_images_fr      AS 'c_img_fr_id'  ,
+                                  cards.fk_card_types     AS 'c_type_id'    ,
+                                  cards.fk_factions       AS 'c_faction_id' ,
+                                  cards.fk_card_rarities  AS 'c_rarity_id'  ,
+                                  cards.is_extra_card     AS 'c_extra'      ,
+                                  cards.is_hidden         AS 'c_hidden'     ,
+                                  cards.name_en           AS 'c_name_en'    ,
+                                  cards.name_fr           AS 'c_name_fr'    ,
+                                  cards.cost              AS 'c_cost'       ,
+                                  cards.income            AS 'c_income'     ,
+                                  cards.weapons           AS 'c_weapons'    ,
+                                  cards.durability        AS 'c_durability' ,
+                                  cards.body_en           AS 'c_body_en'    ,
+                                  cards.body_fr           AS 'c_body_fr'    ,
+                                  images_en.path          AS 'i_path_en'    ,
+                                  images_fr.path          AS 'i_path_fr'
+                        FROM      cards
+                        LEFT JOIN images AS images_en ON images_en.id = cards.fk_images_en
+                        LEFT JOIN images AS images_fr ON images_fr.id = cards.fk_images_fr
                         $query_where ",
                         fetch_row: true);
 
@@ -131,7 +135,9 @@ function cards_get( int     $card_id    = null    ,
     $data['name_en']      = sanitize_output($card_data['c_name_en']);
     $data['name_fr']      = sanitize_output($card_data['c_name_fr']);
     $data['image_id_en']  = sanitize_output($card_data['c_img_en_id']);
+    $data['image_en']     = sanitize_output($card_data['i_path_en']);
     $data['image_id_fr']  = sanitize_output($card_data['c_img_fr_id']);
+    $data['image_fr']     = sanitize_output($card_data['i_path_fr']);
     $data['type_id']      = sanitize_output($card_data['c_type_id']);
     $data['faction_id']   = sanitize_output($card_data['c_faction_id']);
     $data['rarity_id']    = sanitize_output($card_data['c_rarity_id']);

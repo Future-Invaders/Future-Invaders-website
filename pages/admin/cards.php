@@ -359,7 +359,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <select class="table_search" name="admin_cards_search_tags" id="admin_cards_search_tags" onchange="admin_cards_search();">
             <option value="">&nbsp;</option>
-            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <option value="-1"><?=string_change_case(__('none'), 'lowercase')?></option>
             <?php for($i = 0; $i < $card_tags_list['rows']; $i++): ?>
             <option value="<?=$card_tags_list[$i]['id']?>"><?=$card_tags_list[$i]['name']?></option>
             <?php endfor; ?>

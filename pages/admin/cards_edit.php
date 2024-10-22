@@ -184,6 +184,38 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
     <?=__('admin_card_edit_title')?>
   </h2>
 
+  <?php if($admin_card_data['image_en'] || $admin_card_data['image_fr']): ?>
+
+  <div class="flexcontainer smallpadding_bot">
+    <div style="flex: 8">
+
+      <?php if($admin_card_data['image_en']): ?>
+      <div class="align_center smallpadding_bot">
+        <img src="<?=$path.$admin_card_data['image_en']?>" class="image_preview">
+      </div>
+      <?php else: ?>
+      &nbsp;
+      <?php endif; ?>
+
+    </div>
+    <div style="flex: 1">
+      &nbsp;
+    </div>
+    <div style="flex: 8">
+
+      <?php if($admin_card_data['image_fr']): ?>
+      <div class="align_center smallpadding_bot">
+        <img src="<?=$path.$admin_card_data['image_fr']?>" class="image_preview">
+      </div>
+      <?php else: ?>
+      &nbsp;
+      <?php endif; ?>
+
+    </div>
+  </div>
+
+  <?php endif; ?>
+
   <form action="cards" method="POST">
     <fieldset>
 
