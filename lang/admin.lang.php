@@ -295,6 +295,8 @@ ___('admin_uncategorized_images_title',   'EN', "{{1}} uncategorized image");
 ___('admin_uncategorized_images_title',   'FR', "{{1}} image non catégorisée");
 ___('admin_uncategorized_images_title+',  'EN', "{{1}} uncategorized images");
 ___('admin_uncategorized_images_title+',  'FR', "{{1}} images non catégorisées");
+___('admin_uncategorized_images_hide',    'EN', "Hide uncategorized images");
+___('admin_uncategorized_images_hide',    'FR', "Masquer les images non catégorisées");
 
 
 // Image list

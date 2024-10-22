@@ -121,20 +121,27 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
   <?php if($uncategorized_images['rows']): ?>
 
-  <h5><?=__('admin_uncategorized_images_title', amount: $uncategorized_images['rows'], preset_values: array($uncategorized_images['rows']))?></h5>
+  <div id="admin_uncategorized_images_list">
 
-  <ul class="smallpadding_top bigpadding_bot">
+    <h5>
+      <?=__('admin_uncategorized_images_title', amount: $uncategorized_images['rows'], preset_values: array($uncategorized_images['rows']))?>
+      <?=__icon('minimize', alt: 'X', title: __('admin_uncategorized_images_hide'), class: 'valign_middle pointer spaced_left', onclick: "toggle_element('admin_uncategorized_images_list')")?>
+    </h5>
 
-    <?php for($i = 0; $i < $uncategorized_images['rows']; $i++): ?>
+    <ul class="smallpadding_top bigpadding_bot">
 
-    <li>
-      <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/images_add?image='.$uncategorized_images[$i])?>
-      <?=str_replace('||', '/', $uncategorized_images[$i])?>
-    </li>
+      <?php for($i = 0; $i < $uncategorized_images['rows']; $i++): ?>
 
-    <?php endfor; ?>
+      <li>
+        <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/images_add?image='.$uncategorized_images[$i])?>
+        <?=str_replace('||', '/', $uncategorized_images[$i])?>
+      </li>
 
-  </ul>
+      <?php endfor; ?>
+
+    </ul>
+
+  </div>
 
   <?php endif; ?>
 
