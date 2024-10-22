@@ -894,6 +894,7 @@ function images_list( string  $sort_by  = 'path'  ,
   $search_artist  = sanitize_array_element($search, 'artist', 'string');
   $search_tag_id  = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag     = sanitize_array_element($search, 'tag', 'string');
+  $search_unused  = sanitize_array_element($search, 'unused', 'bool', default: false);
 
   // Search through the data
   $query_search =  ($search_path)             ? " WHERE images.path     LIKE '%$search_path%' "   : " WHERE 1 = 1 ";
@@ -904,11 +905,17 @@ function images_list( string  $sort_by  = 'path'  ,
   $query_search .= ($search_artist)           ? " AND   images.artist   LIKE '%$search_artist%' " : "";
   $query_search .= ($search_tag_id === -1)    ? " AND   tags.id         IS NULL "                 : "";
   $query_search .= ($search_tag)              ? " AND   tags.name       LIKE '$search_tag' "      : "";
+  $query_search .= ($search_unused)           ? " AND   cards_en.id     IS NULL
+                                                  AND   cards_fr.id     IS NULL "                 : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
                 ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
                 : "";
+
+  // Join cards if looking for unused images
+  $query_cards  = ($search_unused) ? "  LEFT JOIN cards AS cards_en ON cards_en.fk_images_en = images.id
+                                        LEFT JOIN cards AS cards_fr ON cards_fr.fk_images_fr = images.id " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -938,6 +945,7 @@ function images_list( string  $sort_by  = 'path'  ,
                       FROM      images
                       LEFT JOIN tags_images ON tags_images.fk_images  = images.id
                       LEFT JOIN tags        ON tags.id                = tags_images.fk_tags
+                      $query_cards
                       $query_search
                       GROUP BY  images.id
                       $query_having
