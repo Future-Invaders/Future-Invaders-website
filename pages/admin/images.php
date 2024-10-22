@@ -129,7 +129,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
     <li>
       <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/images_add?image='.$uncategorized_images[$i])?>
-      <?=$uncategorized_images[$i]?>
+      <?=str_replace('||', '/', $uncategorized_images[$i])?>
     </li>
 
     <?php endfor; ?>

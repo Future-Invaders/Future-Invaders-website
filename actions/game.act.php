@@ -870,48 +870,6 @@ function images_get(  ?int    $image_id         = null    ,
 
 
 
-/**
- * Returns the full path of an image waititng to be added to the database.
- *
- * @param   string      $name   The image's name.
- *
- * @return  string|null         The full path to the image, or null if it can't be found.
- */
-
-function images_get_full_path( string $name ) : ?string
-{
-  // Get a list of all images in the database
-  $qimages = query("  SELECT    images.path AS 'i_path'
-                      FROM      images ");
-
-  // Store these images in an array
-  $images_list = array();
-  while($dimages = query_row($qimages, 'both'))
-    $images_list[] = $dimages['i_path'];
-
-  // Get the full path to the image
-  $directories = images_list_directories();
-  foreach($directories as $directory)
-  {
-    // Define the image's full path
-    $temp_path = './../../img/'.$directory.'/'.$name;
-
-    // Check if the image exists
-    if(file_exists($temp_path))
-    {
-      // If it does, check if it's already in the database
-      if(!in_array($temp_path, $images_list))
-      {
-        // If not, grab the image's path
-        $image_full_path = $temp_path;
-      }
-    }
-  }
-
-  return (isset($image_full_path)) ? $image_full_path : null;
-}
-
-
 
 /**
  * Lists images in the database.
@@ -1084,6 +1042,7 @@ function images_list_uncategorized() : array
   {
     // Fetch the images in the directory
     if(is_dir('./../../img/'.$directory))
+      // Get the full path of the images
       $images_in_directory = scandir('./../../img/'.$directory);
     else
       $images_in_directory = array();
@@ -1096,13 +1055,18 @@ function images_list_uncategorized() : array
     // Add the images to the array if they aren't in the database
     foreach($images_in_directory as $image)
       if(!in_array('./../../img/'.$directory.'/'.$image, $images_list))
-        $missing_images[] = $image;
+        $missing_images[] = 'img/'.$directory.'/'.$image;
+
+    // Use an empty array if the directory has no images
+    if(!isset($missing_images))
+      $missing_images = array();
+
+    // Replace slashes in the image path with double pipes
+    foreach($missing_images as $i => $image)
+      $missing_images[$i] = str_replace('/', '||', $image);
 
     // Sort the list alphabetically
-    if(isset($missing_images))
-      sort($missing_images);
-    else
-      $missing_images = array();
+    sort($missing_images);
   }
 
   // Add the number of rows to the returned data
@@ -1161,18 +1125,21 @@ function images_add( array $data ) : void
   if(!isset($data['image_path']))
     return;
 
-  // Get the image's full path
-  $image_path = images_get_full_path($data['image_path']);
-
-  // Stop here if the image is already in the database or doesn't exist
-  if(!$image_path)
-    return;
-
   // Sanatize image data
-  $image_add_path   = sanitize(mb_substr($image_path, 8), 'string');
+  $image_add_path   = sanitize($data['image_path'], 'string');
   $image_add_name   = sanitize_array_element($data, 'image_name', 'string');
   $image_add_lang   = sanitize_array_element($data, 'image_lang', 'string');
   $image_add_artist = sanitize_array_element($data, 'image_artist', 'string');
+
+  // Look for the image in the database
+  $qimage = query(" SELECT  images.id AS 'i_id'
+                    FROM    images
+                    WHERE   images.path = '$image_add_path' ",
+                    fetch_row: true);
+
+  // Stop here if the image is already in the database
+  if($qimage['i_id'])
+    return;
 
   // Add the image to the database
   query(" INSERT INTO images
