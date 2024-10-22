@@ -385,7 +385,7 @@ function cards_list( string  $sort_by  = 'name'  ,
                               images_fr.uuid                AS 'i_uuid_fr'    ,
                               images_fr.path                AS 'i_path_fr'    ,
                               COUNT(tags.id)                AS 'ct_count'     ,
-                              GROUP_CONCAT(tags.name SEPARATOR ', ')
+                              GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
                                                             AS 'ct_names'
                     FROM      cards
                     LEFT JOIN releases            ON releases.id          = cards.fk_releases
@@ -931,7 +931,7 @@ function images_list( string  $sort_by  = 'path'  ,
                                 images.language AS 'i_lang'   ,
                                 images.artist   AS 'i_artist' ,
                                 COUNT(tags.id)  AS 'it_count' ,
-                                GROUP_CONCAT(tags.name SEPARATOR ', ')
+                                GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
                                                 AS 'it_names'
                       FROM      images
                       LEFT JOIN tags_images ON tags_images.fk_images  = images.id
