@@ -1475,12 +1475,14 @@ function tags_list( string  $sort_by  = 'name'  ,
     if($format === 'html')
     {
       // Sanatize the data
-      $data[$i]['id']     = sanitize_output($row['t_id']);
-      $data[$i]['name']   = sanitize_output(string_truncate($row['t_name'], 25, '...'));
-      $data[$i]['fname']  = sanitize_output($row['t_name']);
-      $data[$i]['type']   = sanitize_output($row['tt_type']);
-      $data[$i]['desc']   = sanitize_output(string_truncate($row['t_desc_'.$lang], 50, '...'));
-      $data[$i]['fdesc']  = sanitize_output($row['t_desc_'.$lang], preserve_line_breaks: true);
+      $data[$i]['id']       = sanitize_output($row['t_id']);
+      $data[$i]['name']     = sanitize_output(string_truncate($row['t_name'], 25, '...'));
+      $data[$i]['fname']    = sanitize_output($row['t_name']);
+      $data[$i]['type']     = sanitize_output($row['tt_type']);
+      $data[$i]['desc']     = sanitize_output(string_truncate($row['t_desc_'.$lang], 50, '...'));
+      $data[$i]['desc_en']  = sanitize_output($row['t_desc_en']);
+      $data[$i]['desc_fr']  = sanitize_output($row['t_desc_fr']);
+      $data[$i]['fdesc']    = sanitize_output($row['t_desc_'.$lang], preserve_line_breaks: true);
 
       // Count tag types
       $data['type_count'][$row['tt_id']]++;
