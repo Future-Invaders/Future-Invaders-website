@@ -422,7 +422,9 @@ function cards_list( string  $sort_by  = 'name'  ,
       $data[$i]['rarity_css']   = sanitize_output($row['cr_styling']);
       $data[$i]['cost']         = cards_format_cost($row['c_cost']);
       $data[$i]['income']       = cards_format_cost($row['c_income']);
-      $data[$i]['weapons']      = $row['c_weapons'] ? sanitize_output($row['c_weapons']) : '&nbsp;';
+      $data[$i]['weapons']      = $row['c_weapons'] || $row['ct_name_en'] == 'Ship'
+                                ? sanitize_output($row['c_weapons'])
+                                : '&nbsp;';
       $data[$i]['durability']   = $row['c_durability'] ? sanitize_output($row['c_durability']) : '&nbsp;';
       $data[$i]['length_en']    = sanitize_output($row['c_length_en']);
       $data[$i]['length_fr']    = sanitize_output($row['c_length_fr']);
