@@ -54,8 +54,9 @@ $image_add_path = form_fetch_element('image', request_type: 'GET');
 if(!$image_add_path)
   exit(header("Location: ./images"));
 
-// Get the image's full path
-$image_full_path = images_get_full_path($image_add_path);
+// Replace double pipes in the path with slashes
+$image_fake_path = $image_add_path;
+$image_add_path = str_replace('||', '/', $image_add_path);
 
 
 
@@ -108,10 +109,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
   </h5>
 
   <div class="align_center smallpadding_bot">
-    <img src="<?=$image_full_path?>" class="image_preview">
+    <img src="<?=$path.$image_add_path?>" class="image_preview">
   </div>
 
-  <form action="images_add?image=<?=$image_add_path?>" method="POST">
+  <form action="images_add?image=<?=$image_fake_path?>" method="POST">
     <fieldset>
 
       <input type="hidden" name="image_path" value="<?=$image_add_path?>">
