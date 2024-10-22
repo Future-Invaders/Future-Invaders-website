@@ -121,7 +121,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
   <?php if($uncategorized_images['rows']): ?>
 
-  <h5><?=__('admin_uncategorized_images_title').__(':')?></h5>
+  <h5><?=__('admin_uncategorized_images_title', amount: $uncategorized_images['rows'], preset_values: array($uncategorized_images['rows']))?></h5>
 
   <ul class="smallpadding_top bigpadding_bot">
 
