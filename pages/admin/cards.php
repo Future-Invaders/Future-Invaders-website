@@ -479,7 +479,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <td class="align_center tooltip_container">
           <span class="bold"><?=$cards_list[$i]['ntags']?></span>
           <div class="tooltip">
-            <?=$cards_list[$i]['tags']?>
+            <?=str_replace(', ', '<br>', $cards_list[$i]['tags'])?>
           </div>
         </td>
         <?php else: ?>

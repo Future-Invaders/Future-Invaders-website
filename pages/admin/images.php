@@ -251,7 +251,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <td class="align_center tooltip_container">
           <span class="bold"><?=$list_images[$i]['ntags']?></span>
           <div class="tooltip">
-            <?=$list_images[$i]['tags']?>
+            <?=str_replace(', ', '<br>', $list_images[$i]['tags'])?>
           </div>
         </td>
         <?php else: ?>
