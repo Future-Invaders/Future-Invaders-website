@@ -126,7 +126,7 @@ function cards_get( int     $card_id    = null    ,
                         fetch_row: true);
 
   // Don't retrieve hidden or extra cards through the API
-  if($format === 'api' && $card_data['c_hidden'] || $card_data['c_extra'])
+  if($format === 'api' && ($card_data['c_hidden'] || $card_data['c_extra']))
     return null;
 
   // Prepare the data for display
