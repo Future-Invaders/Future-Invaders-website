@@ -200,18 +200,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <?php if($tags_list[$i]['desc'] !== $tags_list[$i]['fdesc']): ?>
         <td class="align_center tooltip_container">
           <?=$tags_list[$i]['desc']?>
           <div class="tooltip dowrap">
-            <?=$tags_list[$i]['fdesc']?>
+            <?=$tags_list[$i]['desc_en']?>
+            <hr>
+            <?=$tags_list[$i]['desc_fr']?>
           </div>
         </td>
-        <?php else: ?>
-        <td class="align_center">
-          <?=$tags_list[$i]['desc']?>
-        </td>
-        <?php endif; ?>
+
 
         <td class="align_center nowrap">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/tags_edit?tag='.$tags_list[$i]['id'])?>

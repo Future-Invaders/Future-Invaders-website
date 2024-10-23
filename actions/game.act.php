@@ -99,30 +99,34 @@ function cards_get( int     $card_id    = null    ,
   $query_where = ($card_id) ? " WHERE cards.id = '$card_id' " : " WHERE cards.uuid = '$card_uuid' ";
 
   // Fetch the card's data
-  $card_data = query("  SELECT  cards.id                AS 'c_id'         ,
-                                cards.uuid              AS 'c_uuid'       ,
-                                cards.fk_releases       AS 'c_release_id' ,
-                                cards.fk_images_en      AS 'c_img_en_id'  ,
-                                cards.fk_images_fr      AS 'c_img_fr_id'  ,
-                                cards.fk_card_types     AS 'c_type_id'    ,
-                                cards.fk_factions       AS 'c_faction_id' ,
-                                cards.fk_card_rarities  AS 'c_rarity_id'  ,
-                                cards.is_extra_card     AS 'c_extra'      ,
-                                cards.is_hidden         AS 'c_hidden'     ,
-                                cards.name_en           AS 'c_name_en'    ,
-                                cards.name_fr           AS 'c_name_fr'    ,
-                                cards.cost              AS 'c_cost'       ,
-                                cards.income            AS 'c_income'     ,
-                                cards.weapons           AS 'c_weapons'    ,
-                                cards.durability        AS 'c_durability' ,
-                                cards.body_en           AS 'c_body_en'    ,
-                                cards.body_fr           AS 'c_body_fr'
-                        FROM    cards
+  $card_data = query("  SELECT    cards.id                AS 'c_id'         ,
+                                  cards.uuid              AS 'c_uuid'       ,
+                                  cards.fk_releases       AS 'c_release_id' ,
+                                  cards.fk_images_en      AS 'c_img_en_id'  ,
+                                  cards.fk_images_fr      AS 'c_img_fr_id'  ,
+                                  cards.fk_card_types     AS 'c_type_id'    ,
+                                  cards.fk_factions       AS 'c_faction_id' ,
+                                  cards.fk_card_rarities  AS 'c_rarity_id'  ,
+                                  cards.is_extra_card     AS 'c_extra'      ,
+                                  cards.is_hidden         AS 'c_hidden'     ,
+                                  cards.name_en           AS 'c_name_en'    ,
+                                  cards.name_fr           AS 'c_name_fr'    ,
+                                  cards.cost              AS 'c_cost'       ,
+                                  cards.income            AS 'c_income'     ,
+                                  cards.weapons           AS 'c_weapons'    ,
+                                  cards.durability        AS 'c_durability' ,
+                                  cards.body_en           AS 'c_body_en'    ,
+                                  cards.body_fr           AS 'c_body_fr'    ,
+                                  images_en.path          AS 'i_path_en'    ,
+                                  images_fr.path          AS 'i_path_fr'
+                        FROM      cards
+                        LEFT JOIN images AS images_en ON images_en.id = cards.fk_images_en
+                        LEFT JOIN images AS images_fr ON images_fr.id = cards.fk_images_fr
                         $query_where ",
                         fetch_row: true);
 
   // Don't retrieve hidden or extra cards through the API
-  if($format === 'api' && $card_data['c_hidden'] || $card_data['c_extra'])
+  if($format === 'api' && ($card_data['c_hidden'] || $card_data['c_extra']))
     return null;
 
   // Prepare the data for display
@@ -131,7 +135,9 @@ function cards_get( int     $card_id    = null    ,
     $data['name_en']      = sanitize_output($card_data['c_name_en']);
     $data['name_fr']      = sanitize_output($card_data['c_name_fr']);
     $data['image_id_en']  = sanitize_output($card_data['c_img_en_id']);
+    $data['image_en']     = sanitize_output($card_data['i_path_en']);
     $data['image_id_fr']  = sanitize_output($card_data['c_img_fr_id']);
+    $data['image_fr']     = sanitize_output($card_data['i_path_fr']);
     $data['type_id']      = sanitize_output($card_data['c_type_id']);
     $data['faction_id']   = sanitize_output($card_data['c_faction_id']);
     $data['rarity_id']    = sanitize_output($card_data['c_rarity_id']);
@@ -385,7 +391,7 @@ function cards_list( string  $sort_by  = 'name'  ,
                               images_fr.uuid                AS 'i_uuid_fr'    ,
                               images_fr.path                AS 'i_path_fr'    ,
                               COUNT(tags.id)                AS 'ct_count'     ,
-                              GROUP_CONCAT(tags.name SEPARATOR ', ')
+                              GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
                                                             AS 'ct_names'
                     FROM      cards
                     LEFT JOIN releases            ON releases.id          = cards.fk_releases
@@ -422,7 +428,9 @@ function cards_list( string  $sort_by  = 'name'  ,
       $data[$i]['rarity_css']   = sanitize_output($row['cr_styling']);
       $data[$i]['cost']         = cards_format_cost($row['c_cost']);
       $data[$i]['income']       = cards_format_cost($row['c_income']);
-      $data[$i]['weapons']      = $row['c_weapons'] ? sanitize_output($row['c_weapons']) : '&nbsp;';
+      $data[$i]['weapons']      = $row['c_weapons'] || $row['ct_name_en'] == 'Ship'
+                                ? sanitize_output($row['c_weapons'])
+                                : '&nbsp;';
       $data[$i]['durability']   = $row['c_durability'] ? sanitize_output($row['c_durability']) : '&nbsp;';
       $data[$i]['length_en']    = sanitize_output($row['c_length_en']);
       $data[$i]['length_fr']    = sanitize_output($row['c_length_fr']);
@@ -892,6 +900,7 @@ function images_list( string  $sort_by  = 'path'  ,
   $search_artist  = sanitize_array_element($search, 'artist', 'string');
   $search_tag_id  = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag     = sanitize_array_element($search, 'tag', 'string');
+  $search_unused  = sanitize_array_element($search, 'unused', 'bool', default: false);
 
   // Search through the data
   $query_search =  ($search_path)             ? " WHERE images.path     LIKE '%$search_path%' "   : " WHERE 1 = 1 ";
@@ -902,11 +911,17 @@ function images_list( string  $sort_by  = 'path'  ,
   $query_search .= ($search_artist)           ? " AND   images.artist   LIKE '%$search_artist%' " : "";
   $query_search .= ($search_tag_id === -1)    ? " AND   tags.id         IS NULL "                 : "";
   $query_search .= ($search_tag)              ? " AND   tags.name       LIKE '$search_tag' "      : "";
+  $query_search .= ($search_unused)           ? " AND   cards_en.id     IS NULL
+                                                  AND   cards_fr.id     IS NULL "                 : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
                 ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
                 : "";
+
+  // Join cards if looking for unused images
+  $query_cards  = ($search_unused) ? "  LEFT JOIN cards AS cards_en ON cards_en.fk_images_en = images.id
+                                        LEFT JOIN cards AS cards_fr ON cards_fr.fk_images_fr = images.id " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -931,11 +946,12 @@ function images_list( string  $sort_by  = 'path'  ,
                                 images.language AS 'i_lang'   ,
                                 images.artist   AS 'i_artist' ,
                                 COUNT(tags.id)  AS 'it_count' ,
-                                GROUP_CONCAT(tags.name SEPARATOR ', ')
+                                GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
                                                 AS 'it_names'
                       FROM      images
                       LEFT JOIN tags_images ON tags_images.fk_images  = images.id
                       LEFT JOIN tags        ON tags.id                = tags_images.fk_tags
+                      $query_cards
                       $query_search
                       GROUP BY  images.id
                       $query_having
@@ -1465,12 +1481,14 @@ function tags_list( string  $sort_by  = 'name'  ,
     if($format === 'html')
     {
       // Sanatize the data
-      $data[$i]['id']     = sanitize_output($row['t_id']);
-      $data[$i]['name']   = sanitize_output(string_truncate($row['t_name'], 25, '...'));
-      $data[$i]['fname']  = sanitize_output($row['t_name']);
-      $data[$i]['type']   = sanitize_output($row['tt_type']);
-      $data[$i]['desc']   = sanitize_output(string_truncate($row['t_desc_'.$lang], 50, '...'));
-      $data[$i]['fdesc']  = sanitize_output($row['t_desc_'.$lang], preserve_line_breaks: true);
+      $data[$i]['id']       = sanitize_output($row['t_id']);
+      $data[$i]['name']     = sanitize_output(string_truncate($row['t_name'], 25, '...'));
+      $data[$i]['fname']    = sanitize_output($row['t_name']);
+      $data[$i]['type']     = sanitize_output($row['tt_type']);
+      $data[$i]['desc']     = sanitize_output(string_truncate($row['t_desc_'.$lang], 50, '...'));
+      $data[$i]['desc_en']  = sanitize_output($row['t_desc_en']);
+      $data[$i]['desc_fr']  = sanitize_output($row['t_desc_fr']);
+      $data[$i]['fdesc']    = sanitize_output($row['t_desc_'.$lang], preserve_line_breaks: true);
 
       // Count tag types
       $data['type_count'][$row['tt_id']]++;

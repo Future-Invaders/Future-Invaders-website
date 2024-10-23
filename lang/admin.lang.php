@@ -291,8 +291,12 @@ ___('admin_card_rarity_delete_confirm', 'FR', "Confirmez la suppression de cette
 /*********************************************************************************************************************/
 
 // Uncategorized images
-___('admin_uncategorized_images_title', 'EN', "Uncategorized images");
-___('admin_uncategorized_images_title', 'FR', "Images non catégorisées");
+___('admin_uncategorized_images_title',   'EN', "{{1}} uncategorized image");
+___('admin_uncategorized_images_title',   'FR', "{{1}} image non catégorisée");
+___('admin_uncategorized_images_title+',  'EN', "{{1}} uncategorized images");
+___('admin_uncategorized_images_title+',  'FR', "{{1}} images non catégorisées");
+___('admin_uncategorized_images_hide',    'EN', "Hide uncategorized images");
+___('admin_uncategorized_images_hide',    'FR', "Masquer les images non catégorisées");
 
 
 // Image list
