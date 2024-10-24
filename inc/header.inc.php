@@ -264,7 +264,7 @@ $javascripts .= '
             <?=__link('pages/game/rules', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/game/lore', __('submenu_guides_lore'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/game/lore', __('submenu_guides_lore'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_guides_vocab'), 'header_submenu_wip', 1, $path);?>
