@@ -167,6 +167,11 @@ ___('api_card_rarities_list_summary',  'EN', "Retrieves a list of all card rarit
 ___('api_card_rarities_list_summary',  'FR', "Récupère la liste de toutes les raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.");
 
 
+// List reminders
+___('api_reminders_list_summary',  'EN', "Retrieves a list of all reminder cards, which contain a summary of the rules.");
+___('api_reminders_list_summary',  'FR', "Récupère la liste de toutes les cartes de rappels, qui contiennent un résumé des règles.");
+
+
 // List rules
 ___('api_rules_list_summary',  'EN', "Retrieves a list of all rules cards.");
 ___('api_rules_list_summary',  'FR', "Récupère la liste de toutes les cartes de règles.");
