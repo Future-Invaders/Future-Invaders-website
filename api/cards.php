@@ -28,13 +28,15 @@ $cards_search_rarity  = form_fetch_element('rarity', request_type: 'GET');
 $cards_search_tag     = form_fetch_element('tag', request_type: 'GET');
 
 // Assemble the search parameters
-$cards_search = array(  'name'          => $cards_search_name ,
-                        'body'          => $cards_search_body ,
-                        'release_uuid'  => $cards_search_release ,
-                        'faction_uuid'  => $cards_search_faction ,
-                        'type_uuid'     => $cards_search_type ,
-                        'rarity_uuid'   => $cards_search_rarity ,
-                        'tag'           => $cards_search_tag );
+$cards_search = array(  'name'          => $cards_search_name     ,
+                        'body'          => $cards_search_body     ,
+                        'release_uuid'  => $cards_search_release  ,
+                        'faction_uuid'  => $cards_search_faction  ,
+                        'type_uuid'     => $cards_search_type     ,
+                        'rarity_uuid'   => $cards_search_rarity   ,
+                        'tag'           => $cards_search_tag      ,
+                        'game_card'     => true                   ,
+                        'public'        => true                   );
 
 // Fetch the cards
 $cards_list = cards_list( search:   $cards_search  ,

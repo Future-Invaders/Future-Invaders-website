@@ -253,6 +253,7 @@ function cards_list( string   $sort_by    = 'name'  ,
   $search_tag_id        = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag           = sanitize_array_element($search, 'tag', 'string');
   $search_public        = sanitize_array_element($search, 'public', 'bool');
+  $search_game_cards    = sanitize_array_element($search, 'game_card', 'bool');
 
   // Search through the data
   $query_search  = ($search_name)           ? " WHERE ( cards.name_en     LIKE '%$search_name%'
@@ -298,10 +299,7 @@ function cards_list( string   $sort_by    = 'name'  ,
   $query_search .= ($search_tag_id === -1)  ? " AND   tags.id             IS NULL "                   : "";
   $query_search .= ($search_tag)            ? " AND   tags.name           LIKE '$search_tag' "        : "";
   $query_search .= ($search_public)         ? " AND   cards.is_hidden     = '0' "                     : "";
-
-  // Filter out hidden cards and extra cards in the API
-  $query_search .= ($format === 'api')      ? " AND   cards.is_hidden     = '0'
-                                                AND   cards.is_extra_card = '0' "                     : "";
+  $query_search .= ($search_game_cards)     ? " AND   cards.is_extra_card = '0' "                     : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
