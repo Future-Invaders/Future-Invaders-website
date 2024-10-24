@@ -9,10 +9,10 @@ include_once './../../lang/game.lang.php';    # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/game/rules";
-$page_title_en    = "Rules";
-$page_title_fr    = "Règles";
-$page_description = "Rules of the strategy sci-fi card battling game Future Invaders";
+$page_url         = "pages/game/lore";
+$page_title_en    = "Lore";
+$page_title_fr    = "Univers";
+$page_description = "Worldbuilding of the strategy sci-fi card battling game Future Invaders";
 
 // Extra css
 $css = array('game');
@@ -27,20 +27,15 @@ $css = array('game');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch rules and reminder cards
+// Fetch lore cards
 
 // Prepare the correct language string
 $card_lang = string_change_case($lang, 'lowercase');
 
-// Fetch rules cards
-$rules_cards = cards_list(  sort_by:  'name'                        ,
-                            search:   array(  'type'    => 'Rules'  ,
-                                              'public'  => true   ) );
-
-// Fetch reminder cards
-$reminder_cards = cards_list( sort_by:  'name'                            ,
-                              search:   array(  'type'    => 'Reminders'  ,
-                                                'public'  => true       ) );
+// Fetch lore cards
+$lore_cards = cards_list( sort_by:  'name'                        ,
+                          search:   array(  'type'    => 'Lore'   ,
+                                            'public'  => true   ) );
 
 
 
@@ -55,76 +50,32 @@ $reminder_cards = cards_list( sort_by:  'name'                            ,
 <div class="width_50 bigpadding_bot">
 
   <h2>
-    <?=__('rules_title')?>
+    <?=__('lore_title')?>
   </h2>
 
   <p>
-    <?=__('rules_body_1')?>
+    <?=__('lore_body_1')?>
   </p>
 
   <p>
-    <?=__('rules_body_2')?>
+    <?=__('lore_body_2')?>
   </p>
 
   <p>
-    <?=__('rules_body_3')?>
-  </p>
-
-  <p>
-    <?=__('rules_body_4')?>
+    <?=__('lore_body_3')?>
   </p>
 
 </div>
 
-<hr>
+<div class="width_50 bigpadding_top">
 
-<div class="width_50 bigpadding_top bigpadding_bot">
-
-  <h2 class="smallpadding_bot">
-    <?=__('rules_toc')?>
-  </h2>
-
-  <h5 class="smallpadding_top">
-    <?=__('rules_cards_title')?>
-  </h5>
-
-  <ul class="smallpadding_top">
-    <?php for($i = 0; $i < $rules_cards['rows']; $i++): ?>
-    <li>
-      <?=__link('pages/game/rules#rule_'.($i+1), $rules_cards[$i]['name_'.$card_lang])?>
-    </li>
-    <?php endfor; ?>
-  </ul>
-
-  <h5 class="smallpadding_top">
-    <?=__('reminder_cards_title')?>
-  </h5>
-
-  <ul class="smallpadding_top">
-    <?php for($i = 0; $i < $reminder_cards['rows']; $i++): ?>
-    <li>
-      <?=__link('pages/game/rules#reminder_'.($i+1), $reminder_cards[$i]['name_'.$card_lang])?>
-    </li>
-    <?php endfor; ?>
-  </ul>
-
-</div>
-
-<hr>
-
-<div class="width_50 bigpadding_top bigpadding_bot" id="rules">
-
-  <h2 class="bigpadding_bot">
-    <?=__('rules_cards_title')?>
-  </h2>
-
-  <?php for($i = 0; $i < $rules_cards['rows']; $i++): ?>
+  <?php for($i = 0; $i < $lore_cards['rows']; $i++): ?>
 
   <div class="flexcontainer rules_container padding_bot" id="rule_<?=($i+1)?>">
 
     <div class="align_center" style="flex: 4">
-      <a href="<?=$path.$rules_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$path.$rules_cards[$i]['image_'.$card_lang]?>" alt="<?=$rules_cards[$i]['name_'.$card_lang]?>">
+      <a href="<?=$path.$lore_cards[$i]['image_'.$card_lang]?>">
+        <img class="rules_image" src="<?=$path.$lore_cards[$i]['image_'.$card_lang]?>" alt="<?=$lore_cards[$i]['name_'.$card_lang]?>">
       </a>
     </div>
 
@@ -135,49 +86,10 @@ $reminder_cards = cards_list( sort_by:  'name'                            ,
     <div style="flex: 8">
       <div class="black bigspaced tinypadding_top tinypadding_bot">
         <h4>
-          <?=$rules_cards[$i]['name_'.$card_lang]?>
+          <?=$lore_cards[$i]['name_'.$card_lang]?>
         </h4>
         <p>
-          <?=$rules_cards[$i]['body_'.$card_lang.'_raw']?>
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-  <?php endfor; ?>
-
-</div>
-
-<hr>
-
-<div class="width_50 bigpadding_top" id="reminders">
-
-  <h2 class="bigpadding_bot">
-    <?=__('reminder_cards_title')?>
-  </h2>
-
-  <?php for($i = 0; $i < $reminder_cards['rows']; $i++): ?>
-
-  <div class="flexcontainer rules_container padding_bot" id="reminder_<?=($i+1)?>">
-
-    <div class="align_center" style="flex: 4">
-      <a href="<?=$path.$reminder_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$path.$reminder_cards[$i]['image_'.$card_lang]?>" alt="<?=$reminder_cards[$i]['name_'.$card_lang]?>">
-      </a>
-    </div>
-
-    <div style="flex: 1">
-      &nbsp;
-    </div>
-
-    <div style="flex: 8">
-      <div class="black bigspaced tinypadding_top tinypadding_bot">
-        <h4>
-          <?=$reminder_cards[$i]['name_'.$card_lang]?>
-        </h4>
-        <p>
-          <?=$reminder_cards[$i]['body_'.$card_lang.'_raw']?>
+          <?=$lore_cards[$i]['body_'.$card_lang.'_raw']?>
         </p>
       </div>
     </div>

@@ -939,8 +939,8 @@ ___('submenu_game_blog',    'EN', "Development blog");
 ___('submenu_game_blog',    'FR', "Blog de développement");
 
 // Submenu: Guides
-___('submenu_guides_rules',   'EN', "Game rules");
-___('submenu_guides_rules',   'FR', "Règles du jeu");
+___('submenu_guides_rules',   'EN', "Game");
+___('submenu_guides_rules',   'FR', "Future Invaders");
 ___('submenu_guides_howto',   'EN', "How to play");
 ___('submenu_guides_howto',   'FR', "Comment jouer");
 ___('submenu_guides_lore',    'EN', "Lore");
