@@ -48,6 +48,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <li><?=__link('#get_card', 'GET /api/card/{uuid}', is_internal: false)?></li>
     <li><?=__link('#list_card_types', 'GET /api/card_types', is_internal: false)?></li>
     <li><?=__link('#list_card_rarities', 'GET /api/card_rarities', is_internal: false)?></li>
+    <li><?=__link('#list_rules', 'GET /api/rules', is_internal: false)?></li>
   </ul>
 
 </div>
@@ -340,7 +341,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
 <hr id="list_card_rarities">
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top bigpadding_bot">
 
   <h4>
     GET /api/card_rarities
@@ -364,6 +365,56 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
     },
+  ]
+}</pre>
+
+</div>
+
+<hr id="list_rules">
+
+<div class="width_50 padding_top">
+
+  <h4>
+    GET /api/rules
+  </h4>
+
+  <p>
+    <?=__('api_rules_list_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "cards": [
+    {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      },
+      "body": {
+        "en": string,
+        "fr": string
+      }
+      "release": {
+        "en": string,
+        "fr": string
+      },
+      "images": {
+        "en": {
+          "uuid": string,
+          "path": string,
+          "endpoint": string
+        },
+        "fr": {
+          "uuid": string,
+          "path": string,
+          "endpoint": string
+        }
+      }
+    }
   ]
 }</pre>
 

@@ -450,60 +450,95 @@ function cards_list( string   $sort_by    = 'name'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid']                       = sanitize_json($row['c_uuid']);
-      $data[$i]['name']['en']                 = sanitize_json($row['c_name_en']);
-      $data[$i]['name']['fr']                 = sanitize_json($row['c_name_fr']);
-      $data[$i]['cost']                       = sanitize_json($row['c_cost']);
-      $data[$i]['income']                     = sanitize_json($row['c_income']);
-      $data[$i]['weapons']                    = (int)sanitize_json($row['c_weapons']);
-      $data[$i]['durability']                 = (int)sanitize_json($row['c_durability']);
-      $data[$i]['body']['en']                 = sanitize_json($row['c_body_en']);
-      $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
-      if($row['r_id'])
+      // Special cards (rules, lore, extras)
+      if($search_type !== null)
       {
-        $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
-        $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
+        $data[$i]['uuid']                       = sanitize_json($row['c_uuid']);
+        $data[$i]['name']['en']                 = sanitize_json($row['c_name_en']);
+        $data[$i]['name']['fr']                 = sanitize_json($row['c_name_fr']);
+        $data[$i]['body']['en']                 = sanitize_json($row['c_body_en']);
+        $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
+        if($row['r_id'])
+        {
+          $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
+          $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
+        }
+        if($row['i_id_en'])
+        {
+          $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
+          $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
+          $data[$i]['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                                  .'api/image/'.$row['i_uuid_en']);
+        }
+        if($row['i_id_fr'])
+        {
+          $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
+          $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
+          $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                                  .'api/image/'.$row['i_uuid_fr']);
+        }
       }
+
+      // Generic game cards
       else
-        $data[$i]['release']                  = array();
-      if($row['f_id'])
       {
-        $data[$i]['faction']['en']            = sanitize_json($row['f_name_en']);
-        $data[$i]['faction']['fr']            = sanitize_json($row['f_name_fr']);
+        $data[$i]['uuid']                       = sanitize_json($row['c_uuid']);
+        $data[$i]['name']['en']                 = sanitize_json($row['c_name_en']);
+        $data[$i]['name']['fr']                 = sanitize_json($row['c_name_fr']);
+        $data[$i]['cost']                       = sanitize_json($row['c_cost']);
+        $data[$i]['income']                     = sanitize_json($row['c_income']);
+        $data[$i]['weapons']                    = (int)sanitize_json($row['c_weapons']);
+        $data[$i]['durability']                 = (int)sanitize_json($row['c_durability']);
+        $data[$i]['body']['en']                 = sanitize_json($row['c_body_en']);
+        $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
+        if($row['r_id'])
+        {
+          $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
+          $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
+        }
+        else
+          $data[$i]['release']                  = array();
+        if($row['f_id'])
+        {
+          $data[$i]['faction']['en']            = sanitize_json($row['f_name_en']);
+          $data[$i]['faction']['fr']            = sanitize_json($row['f_name_fr']);
+        }
+        else
+          $data[$i]['faction']                  = array();
+        if($row['ct_id'])
+        {
+          $data[$i]['type']['en']               = sanitize_json($row['ct_name_en']);
+          $data[$i]['type']['fr']               = sanitize_json($row['ct_name_fr']);
+        }
+        else
+          $data[$i]['type']                     = array();
+        if($row['cr_id'])
+        {
+          $data[$i]['rarity']['en']             = sanitize_json($row['cr_name_en']);
+          $data[$i]['rarity']['fr']             = sanitize_json($row['cr_name_fr']);
+          $data[$i]['rarity']['max_card_count'] = (int)sanitize_json($row['cr_max_count']);
+        }
+        else
+          $data[$i]['rarity']                   = array();
+        if(!$row['i_id_en'] && !$row['i_id_fr'])
+          $data[$i]['images']                   = array();
+        if($row['i_id_en'])
+        {
+          $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
+          $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
+          $data[$i]['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                                  .'api/image/'.$row['i_uuid_en']);
+        }
+        if($row['i_id_fr'])
+        {
+          $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
+          $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
+          $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                                  .'api/image/'.$row['i_uuid_fr']);
+        }
+        $data[$i]['tags']     = ($row['ct_names']) ? explode(', ', $row['ct_names']) : array();
+        $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
       }
-      else
-        $data[$i]['faction']                  = array();
-      if($row['ct_id'])
-      {
-        $data[$i]['type']['en']               = sanitize_json($row['ct_name_en']);
-        $data[$i]['type']['fr']               = sanitize_json($row['ct_name_fr']);
-      }
-      else
-        $data[$i]['type']                     = array();
-      if($row['cr_id'])
-      {
-        $data[$i]['rarity']['en']             = sanitize_json($row['cr_name_en']);
-        $data[$i]['rarity']['fr']             = sanitize_json($row['cr_name_fr']);
-        $data[$i]['rarity']['max_card_count'] = (int)sanitize_json($row['cr_max_count']);
-      }
-      else
-        $data[$i]['rarity']                   = array();
-      if(!$row['i_id_en'] && !$row['i_id_fr'])
-        $data[$i]['images']                   = array();
-      if($row['i_id_en'])
-      {
-        $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
-        $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
-        $data[$i]['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid_en']);
-      }
-      if($row['i_id_fr'])
-      {
-        $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
-        $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
-        $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid_fr']);
-      }
-      $data[$i]['tags']     = ($row['ct_names']) ? explode(', ', $row['ct_names']) : array();
-      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
     }
   }
 
