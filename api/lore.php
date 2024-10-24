@@ -18,29 +18,14 @@ include_once './../actions/game.act.php'; # Game actions
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of cards
 
-// Retrieve the search parameters
-$cards_search_name    = form_fetch_element('name', request_type: 'GET');
-$cards_search_body    = form_fetch_element('body', request_type: 'GET');
-$cards_search_release = form_fetch_element('release', request_type: 'GET');
-$cards_search_faction = form_fetch_element('faction', request_type: 'GET');
-$cards_search_type    = form_fetch_element('type', request_type: 'GET');
-$cards_search_rarity  = form_fetch_element('rarity', request_type: 'GET');
-$cards_search_tag     = form_fetch_element('tag', request_type: 'GET');
-
 // Assemble the search parameters
-$cards_search = array(  'name'          => $cards_search_name     ,
-                        'body'          => $cards_search_body     ,
-                        'release_uuid'  => $cards_search_release  ,
-                        'faction_uuid'  => $cards_search_faction  ,
-                        'type_uuid'     => $cards_search_type     ,
-                        'rarity_uuid'   => $cards_search_rarity   ,
-                        'tag'           => $cards_search_tag      ,
-                        'game_card'     => true                   ,
-                        'public'        => true                   );
+$cards_search =  array( 'type'    => 'Lore' ,
+                        'public'  => true   );
 
 // Fetch the cards
-$cards_list = cards_list( search:   $cards_search  ,
-                          format:   'api'          );
+$cards_list = cards_list( sort_by:  'name'        ,
+                          search:   $cards_search ,
+                          format:   'api'         );
 
 
 

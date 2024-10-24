@@ -122,11 +122,11 @@ EOD
 
 // Header
 ___('api_cards_intro', 'EN', <<<EOD
-Only cards used during a game of Future Invaders are accessible through the API. Extra cards, rules cards, lore cards, and so on are not accessible trough the API.
+Future Invaders being a card game, these routes access the core content of the game.
 EOD
 );
 ___('api_cards_intro', 'FR', <<<EOD
-Seules les cartes jouées lors d'une partie de Future Invaders sont accessibles via l'API. Les cartes supplémentaires, les cartes de règles, les cartes de lore et ainsi de suite ne sont pas accessibles via l'API.
+Future Invaders étant un jeu de cartes, ces routes permettent d'accéder au contenu central du jeu.
 EOD
 );
 
@@ -151,8 +151,8 @@ ___('api_cards_list_tag',      'FR', "Recherche des cartes avec un tag spécifiq
 
 
 // Get card
-___('api_cards_get_summary',   'EN', "Retrieves a card by its UUID.");
-___('api_cards_get_summary',   'FR', "Récupère une carte par son UUID.");
+___('api_cards_get_summary',   'EN', "Retrieves a card by its UUID. Only cards used during a game of Future Invaders are accessible through the API, extra cards, rules cards, lore cards, and so on are not accessible trough this route.");
+___('api_cards_get_summary',   'FR', "Récupère une carte par son UUID. Seules les cartes utilisées lors d'une partie de Future Invaders sont accessibles via cette route, les cartes de règles, de lore, etc. ne sont pas accessibles via cette route.");
 ___('api_cards_get_uuid',      'EN', "The UUID of the card to retrieve.");
 ___('api_cards_get_uuid',      'FR', "L'UUID de la carte à récupérer.");
 
@@ -165,6 +165,21 @@ ___('api_card_types_list_summary',  'FR', "Récupère la liste de tous les types
 // List card rarities
 ___('api_card_rarities_list_summary',  'EN', "Retrieves a list of all card rarities. They determine the maximum number of copies of a single card which you can include in an arsenal.");
 ___('api_card_rarities_list_summary',  'FR', "Récupère la liste de toutes les raretés de cartes. Elles déterminent le nombre maximum de copies d'une même carte que vous pouvez inclure dans un arsenal.");
+
+
+// List lore
+___('api_lore_list_summary',  'EN', "Retrieves a list of all lore cards, which contain the game's backstory.");
+___('api_lore_list_summary',  'FR', "Récupère la liste de toutes les cartes de lore, qui contiennent le narratif du jeu.");
+
+
+// List reminders
+___('api_reminders_list_summary', 'EN', "Retrieves a list of all reminder cards, which contain a summary of the most important rules.");
+___('api_reminders_list_summary', 'FR', "Récupère la liste de toutes les cartes de rappel des règles, qui contiennent un résumé digeste des règles les plus importantes.");
+
+
+// List rules
+___('api_rules_list_summary', 'EN', "Retrieves a list of all rules cards.");
+___('api_rules_list_summary', 'FR', "Récupère la liste de toutes les cartes de règles.");
 
 
 
