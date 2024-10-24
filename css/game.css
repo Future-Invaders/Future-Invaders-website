@@ -1,0 +1,3 @@
+@media (max-width: 992px) {
+.rules_container { flex-direction: column; }
+.rules_image     { max-width: 25.0rem;     } }

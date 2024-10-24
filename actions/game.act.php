@@ -219,16 +219,16 @@ function cards_get( int     $card_id    = null    ,
 /**
  * Lists cards in the database.
  *
- * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
- * @param   array   $search   (OPTIONAL)  An array containing the search data.
- * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   string  $sort_by      (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search       (OPTIONAL)  An array containing the search data.
+ * @param   string  $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                         An array containing the cards.
  */
 
-function cards_list( string  $sort_by  = 'name'  ,
-                     array   $search   = array() ,
-                     string  $format   = 'html'  ) : array
+function cards_list( string   $sort_by    = 'name'  ,
+                     array    $search     = array() ,
+                     string   $format     = 'html'  ) : array
 {
   // Get the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
@@ -237,6 +237,7 @@ function cards_list( string  $sort_by  = 'name'  ,
   $search_name          = sanitize_array_element($search, 'name', 'string');
   $search_release_id    = sanitize_array_element($search, 'release_id', 'int');
   $search_release_uuid  = sanitize_array_element($search, 'release_uuid', 'string');
+  $search_type          = sanitize_array_element($search, 'type', 'string');
   $search_type_id       = sanitize_array_element($search, 'type_id', 'int');
   $search_type_uuid     = sanitize_array_element($search, 'type_uuid', 'string');
   $search_faction_id    = sanitize_array_element($search, 'faction_id', 'int');
@@ -251,6 +252,7 @@ function cards_list( string  $sort_by  = 'name'  ,
   $search_extra         = sanitize_array_element($search, 'extra', 'int');
   $search_tag_id        = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag           = sanitize_array_element($search, 'tag', 'string');
+  $search_public        = sanitize_array_element($search, 'public', 'bool');
 
   // Search through the data
   $query_search  = ($search_name)           ? " WHERE ( cards.name_en     LIKE '%$search_name%'
@@ -260,6 +262,8 @@ function cards_list( string  $sort_by  = 'name'  ,
   $query_search .= ($search_release_id === -1)
                                             ? " AND   releases.id         IS NULL "                   : "";
   $query_search .= ($search_release_uuid)   ? " AND   releases.uuid       = '$search_release_uuid' "  : "";
+  $query_search .= ($search_type)           ? " AND ( card_types.name_en  = '$search_type'
+                                                OR    card_types.name_fr  = '$search_type' ) "        : "";
   $query_search .= ($search_type_id && $search_type_id !== -1)
                                             ? " AND   card_types.id       = '$search_type_id' "       : "";
   $query_search .= ($search_type_id === -1)
@@ -293,10 +297,11 @@ function cards_list( string  $sort_by  = 'name'  ,
                                                 AND   cards.fk_images_fr  = '' "                      : "";
   $query_search .= ($search_tag_id === -1)  ? " AND   tags.id             IS NULL "                   : "";
   $query_search .= ($search_tag)            ? " AND   tags.name           LIKE '$search_tag' "        : "";
+  $query_search .= ($search_public)         ? " AND   cards.is_hidden     = '0' "                     : "";
 
   // Filter out hidden cards and extra cards in the API
-  $query_search .= ($format === 'api')      ? " AND   cards.is_hidden       = '0'
-                                                AND   cards.is_extra_card   = '0' "                   : "";
+  $query_search .= ($format === 'api')      ? " AND   cards.is_hidden     = '0'
+                                                AND   cards.is_extra_card = '0' "                     : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
