@@ -298,6 +298,7 @@ hr   { height: 3px;                                                 } }
 .indented           { padding-left: 2.0rem;                         }
 .nospaced           { padding-left: 0; padding-right: 0;            }
 .spaced             { padding-left: 0.5rem; padding-right: 0.5rem;  }
+.bigspaced          { padding-left: 1.0rem; padding-right: 1.0rem;  }
 .spaced_left        { padding-left: 0.5rem;                         }
 .bigspaced_left     { padding-left: 1.5rem;                         }
 .tinyspaced_right   { padding-right: 0.2rem;                        }

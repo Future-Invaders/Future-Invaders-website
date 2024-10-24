@@ -31,8 +31,29 @@ ___('rules_body_2', 'FR', <<<EOD
 Ensuite, vous pouvez apprendre à jouer à Future Invaders en lisant les règles ci-dessous. Par rapport à la majorité des autres jeux de cartes stratégiques, Future Invaders a des règles simples : n'ayez pas peur de la complexité apparente, essayez-le, c'est en jouant que l'on apprend le mieux.
 EOD
 );
+___('rules_body_3', 'EN', <<<EOD
+At the bottom of the page, after the rules, some {{link|pages/game/rules#reminders|reminder cards}} recap the rules in a more digestible way, including a step by step summary of the structure of a turn.
+EOD
+);
+___('rules_body_3', 'FR', <<<EOD
+En bas de la page, après les règles, des {{link|pages/game/rules#reminders|cartes de rappel}} récapitulent les règles de façon plus digeste, incluant un résumé étape par étape de la structure d'un tour.
+EOD
+);
+___('rules_body_4', 'EN', <<<EOD
+The rules are presented on cards, which allows you to {{link|404|print them at home}}.
+EOD
+);
+___('rules_body_4', 'FR', <<<EOD
+Les règles sont présentées sous forme de cartes, ce qui vous permet de les {{link|404|imprimer chez vous}}.
+EOD
+);
 
 
 // Rules cards
-___('rules_cards_alt',  'EN', "Rule card");
-___('rules_cards_alt',  'FR', "Carte de règles");
+___('rules_cards_title', 'EN', "Game rules");
+___('rules_cards_title', 'FR', "Règles du jeu");
+
+
+// Reminder cards
+___('reminder_cards_title', 'EN', "Rule reminders");
+___('reminder_cards_title', 'FR', "Rappels des règles");
