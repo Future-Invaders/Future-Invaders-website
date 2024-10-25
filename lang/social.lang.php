@@ -194,3 +194,48 @@ ___('contact_body_5', 'FR', <<<EOD
 Pour toute question professionnelle, contactez-moi par e-mail : {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
 EOD
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FEEDBACK                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Feedback
+___('feedback_title',  'EN', "Give feedback");
+___('feedback_title',  'FR', "Donnez votre avis");
+___('feedback_body_1', 'EN', <<<EOD
+Feedback on the game is very welcome, whether it's positive or negative. We love hearing your Future Invaders stories and listening to your ideas for improvement. Please keep your feedback to one of two specific places: the game's {{link|404|Discord server}} or its {{link|404|IRC chat}}. Other lines of communication are for professional inquiries only.
+EOD
+);
+___('feedback_body_1', 'FR', <<<EOD
+Les retours d'expérience sont appréciés, qu'ils soient positifs ou négatifs. Nous adorons lire vos histoires de Future Invaders et écouter vos idées pour améliorer le jeu. Merci de partager vos retours d'expérience sur l'un de ces deux endroits : {{link|404|le serveur Discord}} ou le {{link|404|chat IRC du jeu}}. Les autres lignes de communication sont réservées à un usage professionnel.
+EOD
+);
+___('feedback_body_2', 'EN', <<<EOD
+The game's balance is fine-tuned by incorporating feedback from playtesting. While we may not implement changes based on every suggestion, we will listen and strive to incorporate your ideas into the game's design. Our goal is to make the game as fun as possible for everyone.
+EOD
+);
+___('feedback_body_2', 'FR', <<<EOD
+L'équilibrage du jeu est influencé par vos retours d'expérience. Bien que nous ne puissions pas mettre en œuvre chaque suggestion, elles sont toutes prises en compte, et nous essaierons de les intégrer dans les évolutions futures du jeu. Notre but est de rendre le jeu aussi agréable et équilibré que possible pour tout le monde.
+EOD
+);
+___('feedback_body_3', 'EN', <<<EOD
+Please note that if you design specific cards or fan content, we appreciate your creativity, will love discussing them with the community, but for legal reasons, we will not use them in the game.
+EOD
+);
+___('feedback_body_3', 'FR', <<<EOD
+Veuillez noter que si vous créez vos propres cartes ou contenus pour le jeu, nous apprécions votre créativité et serons ravis d'en discuter avec la communauté. Cependant, pour des raisons juridiques, nous ne pourrons pas les utiliser dans le jeu.
+EOD
+);
+___('feedback_body_4', 'EN', <<<EOD
+Feedback related to professional inquiries can be sent via e-mail at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+___('feedback_body_4', 'FR', <<<EOD
+Pour des retours d'expérience professionnels, envoyez un e-mail à {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
