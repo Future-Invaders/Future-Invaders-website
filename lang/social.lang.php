@@ -84,3 +84,60 @@ ___('privacy_copyright_body_5', 'FR', <<<EOD
 © Future Invaders / Éric Bisceglia 2024 - {{1}}
 EOD
 );
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    CREDITS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Game credits
+___('credits_game_title',  'EN', "Game credits");
+___('credits_game_title',  'FR', "Crédits du jeu");
+___('credits_game_body_1', 'EN', <<<EOD
+Future Invaders was created by {{external|https://e-bis.fr/games/|Éric Bisceglia}}.
+EOD
+);
+___('credits_game_body_1', 'FR', <<<EOD
+Future Invaders a été créé par {{external|https://e-bis.fr/games/fr.html|Éric Bisceglia}}.
+EOD
+);
+___('credits_game_body_2', 'EN', <<<EOD
+All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|404|can be accessed here}}.
+EOD
+);
+___('credits_game_body_2', 'FR', <<<EOD
+Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|404|peut être consulté ici}}.
+EOD
+);
+___('credits_game_body_3', 'EN', <<<EOD
+Thanks to Florian for figuring out how to make multiplayer games work smoothly, and to Quentin for his patience when listening to my game design rants. I also want to thank those who helped improve the game in its early stages with their insightful suggestions: Samira, Ash, Kaci, Prince, Jen, Simon, and all other playtesters for their valuable feedback.
+EOD
+);
+___('credits_game_body_3', 'FR', <<<EOD
+Merci à Florian pour avoir trouvé comment faire fonctionner le multijoueur, et à Quentin pour sa patience face à mes tirades incessantes sur la conception de jeu. Je tiens également à remercier les personnes qui ont contribué à améliorer le jeu lors des phases initiales du développement par leurs suggestions précieuses : Samira, Ash, Kaci, Prince, Jen, Simon, et tous les autres testeurs du jeu pour leurs retours d'expérience constructifs.
+EOD
+);
+
+
+// Art credits
+___('credits_art_title',  'EN', "Art credits");
+___('credits_art_title',  'FR', "Crédits artistiques");
+___('credits_art_body_1', 'EN', <<<EOD
+All of the game's current artworks were generated using Microsoft Image Creator.
+EOD
+);
+___('credits_art_body_1', 'FR', <<<EOD
+Toutes les illustrations du jeu ont été générées par Microsoft Image Creator.
+EOD
+);
+___('credits_art_body_2', 'EN', <<<EOD
+These artworks are temporary and will be replaced by hand-drawn illustrations in the future once the game is funded or published.
+EOD
+);
+___('credits_art_body_2', 'FR', <<<EOD
+Ces illustrations sont temporaires et seront remplacées par des illustrations professionnelles à l'avenir, une fois que le jeu sera financé ou publié.
+EOD
+);
