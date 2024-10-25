@@ -141,3 +141,56 @@ ___('credits_art_body_2', 'FR', <<<EOD
 Ces illustrations sont temporaires et seront remplacées par des illustrations professionnelles à l'avenir, une fois que le jeu sera financé ou publié.
 EOD
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      CONTACT                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Contact info
+___('contact_title',  'EN', "Contact info");
+___('contact_title',  'FR', "Infos de contact");
+___('contact_body_1', 'EN', <<<EOD
+If you have any questions about the game or its players, ask on the game's {{link|404|Discord server}} or its {{link|404|IRC chat}}.
+EOD
+);
+___('contact_body_1', 'FR', <<<EOD
+Si vous avez des questions sur le jeu, posez-les sur le {{link|404|serveur Discord}} ou le {{link|404|chat IRC du jeu}}.
+EOD
+);
+___('contact_body_2', 'EN', <<<EOD
+To provide feedback or share your ideas, visit the {{link|pages/social/feedback|give feedback page}}.
+EOD
+);
+___('contact_body_2', 'FR', <<<EOD
+Pour donner votre avis ou partager vos idées, visitez la {{link|pages/social/feedback|page « Donnez votre avis »}}.
+EOD
+);
+___('contact_body_3', 'EN', <<<EOD
+If you want to help or contribute in any way, visit the {{link|404|help the game page}}.
+EOD
+);
+___('contact_body_3', 'FR', <<<EOD
+Si vous désirez aider ou contribuer au développement du jeu, visitez la {{link|404|page « Contribuer au jeu »}}.
+EOD
+);
+___('contact_body_4', 'EN', <<<EOD
+For discussions about publishing the game, visit the {{link|pages/social/publish|publish this game page}}.
+EOD
+);
+___('contact_body_4', 'FR', <<<EOD
+Si vous souhaitez éditer le jeu ou discuter de sa publication, visitez la page {{link|pages/social/publish|page « Éditez ce jeu ! »}}.
+EOD
+);
+___('contact_body_5', 'EN', <<<EOD
+For professional inquiries about the game, please email me at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+___('contact_body_5', 'FR', <<<EOD
+Pour toute question professionnelle, contactez-moi par e-mail : {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);

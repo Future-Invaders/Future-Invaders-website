@@ -406,7 +406,7 @@ $javascripts .= '
             <?=__link('pages/social/credits', __('submenu_social_credits'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_contactme'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/contact', __('submenu_social_contactme'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_social_feedback'), 'header_submenu_wip', 1, $path);?>

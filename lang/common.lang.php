@@ -1035,6 +1035,8 @@ ___('submenu_social_credits',   'FR', "Crédits");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Footer
 
+___('footer_contact',   'EN', "Contact info");
+___('footer_contact',   'FR', "Infos de contact");
 ___('footer_legal',     'EN', "Legal notice and privacy policy");
 ___('footer_legal',     'FR', "Mentions légales &amp; confidentialité");
 ___('footer_copyright', 'EN', "&copy; Future Invaders 2024 - {{1}}");
