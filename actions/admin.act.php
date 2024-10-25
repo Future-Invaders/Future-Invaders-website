@@ -75,13 +75,40 @@ function admin_notes_update(  $tasks  = ''  ,
 /**
  * Returns page stats for the website.
  *
+ * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ *
  * @return  array   An array containing page stats.
  */
 
-function admin_page_stats_list() : array
+function admin_page_stats_list( string  $sort_by  = 'views'  ,
+                                array   $search   = array()  ) : array
 {
   // Get the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanitize the search data
+  $search_path  = sanitize_array_element($search, 'path', 'string');
+  $search_name  = sanitize_array_element($search, 'name', 'string');
+
+  // Search through the data
+  $query_search  =  ($search_path)  ? " WHERE stats_pages.page_path     LIKE '%$search_path%' "   : " WHERE 1 = 1 ";
+  $query_search .=  ($search_name)  ? " AND ( stats_pages.page_name_en  LIKE '%$search_name%'
+                                        OR    stats_pages.page_name_fr  LIKE '%$search_name%' ) " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'path'    => " ORDER BY stats_pages.page_path       ASC   ",
+    'name'    => " ORDER BY stats_pages.page_name_$lang ASC   ",
+    'last'    => " ORDER BY stats_pages.last_viewed_at  DESC  ",
+    'novisit' => " ORDER BY stats_pages.last_viewed_at  ASC   ",
+    'queries' => " ORDER BY stats_pages.query_count     DESC  ",
+    'load'    => " ORDER BY stats_pages.load_time       DESC  ",
+    default   => " ORDER BY stats_pages.view_count      DESC  ,
+                            stats_pages.last_viewed_at  DESC  ,
+                            stats_pages.page_path       ASC   ",
+  };
 
   // Fetch the stats
   $stats = query("  SELECT    stats_pages.id              AS 'p_id'       ,
@@ -94,9 +121,8 @@ function admin_page_stats_list() : array
                               stats_pages.query_count     AS 'p_queries'  ,
                               stats_pages.load_time       AS 'p_load'
                     FROM      stats_pages
-                    ORDER BY  stats_pages.view_count      DESC  ,
-                              stats_pages.last_viewed_at  DESC  ,
-                              stats_pages.page_path       ASC   ");
+                    $query_search
+                    $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = query_row($stats); $i++)
@@ -104,7 +130,7 @@ function admin_page_stats_list() : array
     $data[$i]['id']       = sanitize_output($row['p_id']);
     $data[$i]['path']     = sanitize_output(string_truncate($row['p_path'], 25, '...'));
     $data[$i]['fpath']    = sanitize_output($row['p_path']);
-    $data[$i]['name']     = sanitize_output(string_truncate($row['p_name'], 25, '...'));
+    $data[$i]['name']     = sanitize_output(string_truncate($row['p_name'], 30, '...'));
     $data[$i]['name_en']  = sanitize_output($row['p_name_en']);
     $data[$i]['name_fr']  = sanitize_output($row['p_name_fr']);
     $data[$i]['last']     = sanitize_output(time_since($row['p_last']));

@@ -499,13 +499,13 @@ ___('admin_page_stats_list_path',     'FR', "Chemin");
 ___('admin_page_stats_list_name',     'EN', "Name");
 ___('admin_page_stats_list_name',     'FR', "Nom");
 ___('admin_page_stats_list_last',     'EN', "Last visit");
-___('admin_page_stats_list_last',     'FR', "Dernière vue");
+___('admin_page_stats_list_last',     'FR', "Visite");
 ___('admin_page_stats_list_views',    'EN', "Views");
 ___('admin_page_stats_list_views',    'FR', "Vues");
-___('admin_page_stats_list_queries',  'EN', "Queries");
-___('admin_page_stats_list_queries',  'FR', "Requêtes");
+___('admin_page_stats_list_queries',  'EN', "Qry.");
+___('admin_page_stats_list_queries',  'FR', "Qry.");
 ___('admin_page_stats_list_load',     'EN', "Load");
-___('admin_page_stats_list_load',     'FR', "Charge.");
+___('admin_page_stats_list_load',     'FR', "Load");
 ___('admin_page_stats_list_count',    'EN', "{{1}} pages");
 ___('admin_page_stats_list_count',    'FR', "{{1}} pages");
 

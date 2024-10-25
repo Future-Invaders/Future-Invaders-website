@@ -41,7 +41,13 @@ if(isset($_POST['admin_page_stats_delete']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch page stats
 
-$page_stats_list = admin_page_stats_list();
+// Fetch the search data
+$admin_page_stats_sort        = form_fetch_element('admin_page_stats_sort', 'views');
+$admin_page_stats_search_data = array(  'path'  =>  form_fetch_element('admin_page_stats_search_path')  ,
+                                        'name'  =>  form_fetch_element('admin_page_stats_search_name')  );
+
+$page_stats_list = admin_page_stats_list( $admin_page_stats_sort        ,
+                                          $admin_page_stats_search_data );
 
 
 
@@ -52,7 +58,7 @@ $page_stats_list = admin_page_stats_list();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_60 padding_top">
 
   <table>
     <thead>
@@ -60,26 +66,47 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <tr class="uppercase">
         <th class="align_center">
           <?=__('admin_page_stats_list_path')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_page_stats_search('path');")?>
         </th>
         <th class="align_center">
           <?=__('admin_page_stats_list_name')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_page_stats_search('name');")?>
         </th>
         <th class="align_center">
           <?=__('admin_page_stats_list_views')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_page_stats_search('views');")?>
         </th>
         <th class="align_center">
           <?=__('admin_page_stats_list_last')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_page_stats_search('last');")?>
+          <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "admin_page_stats_search('novisit');")?>
         </th>
         <th class="align_center">
           <?=__('admin_page_stats_list_queries')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_page_stats_search('queries');")?>
         </th>
         <th class="align_center">
           <?=__('admin_page_stats_list_load')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_page_stats_search('load');")?>
         </th>
         <th>
           <?=__('act')?>
         </th>
       </tr>
+
+      <tr>
+        <th>
+          <input type="hidden" name="admin_page_stats_sort" id="admin_page_stats_sort" value="views">
+          <input type="text" class="table_search" name="admin_page_stats_search_path" id="admin_page_stats_search_path" value="" onkeyup="admin_page_stats_search();">
+        </th>
+        <th>
+          <input type="text" class="table_search" name="admin_page_stats_search_name" id="admin_page_stats_search_name" value="" onkeyup="admin_page_stats_search();">
+        </th>
+        <th colspan="5">
+          &nbsp;
+        </th>
+      </tr>
+    </tr>
 
     </thead>
 
