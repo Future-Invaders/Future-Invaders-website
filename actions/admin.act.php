@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_notes_update                  Updates admin notes                                                          */
 /*                                                                                                                   */
 /*  admin_page_stats_list               Returns page stats for the website                                           */
+/*  admin_page_stats_delete             Deletes a page stats entry                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -117,4 +118,25 @@ function admin_page_stats_list() : array
 
   // Return the data
   return $data;
+}
+
+
+
+
+/**
+ * Deletes a page stats entry.
+ *
+ * @param   int     $page_stats  The id of the page stats entry to delete.
+ *
+ * @return  void
+ */
+
+function admin_page_stats_delete( int $page_stats ) : void
+{
+  // Sanitize the data
+  $page_stats = sanitize($page_stats, 'int');
+
+  // Delete the page stats entry
+  query(" DELETE FROM stats_pages
+          WHERE       stats_pages.id = '$page_stats' ");
 }

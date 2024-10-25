@@ -22,6 +22,8 @@
 /*                                                                                                                   */
 /*  admin_factions_delete       Triggers the deletion of an entry in the faction list.                               */
 /*                                                                                                                   */
+/*  admin_page_stats_delete     Triggers the deletion of an entry in the page stats list.                            */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -369,4 +371,27 @@ function admin_factions_delete( message     ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('factions', 'admin_factions_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the page stats list.
+ *
+ * @param   {string}  message     The confirmation message which will be displayed.
+ * @param   {int}     page_stats  The id of the page stats entry to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_page_stats_delete( message     ,
+                                  page_stats  )
+{
+  // Assemble the postdata
+  postdata = 'admin_page_stats_delete=' + fetch_sanitize(page_stats);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('page_stats', 'admin_page_stats_tbody', postdata);
 }
