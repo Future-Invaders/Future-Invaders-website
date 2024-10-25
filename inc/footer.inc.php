@@ -14,13 +14,13 @@ $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
 $metrics    = __('footer_loadtime').$load_time.'s'.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
 
 // Update the page's stats
-if($page_url !== '')
+if(isset($page_url) && $page_url !== '')
 {
   // Sanitize the page stats
   $timestamp      = sanitize(time(), 'int');
   $page_path      = sanitize($page_url, 'string');
-  $page_name_en   = sanitize($page_title_en, 'string');
-  $page_name_fr   = sanitize($page_title_fr, 'string');
+  $page_name_en   = isset($page_title_en) ? sanitize($page_title_en, 'string') : '';
+  $page_name_fr   = isset($page_title_fr) ? sanitize($page_title_fr, 'string') : '';
   $page_queycount = sanitize($GLOBALS['query'], 'int');
   $page_loadtime  = sanitize($load_time * 1000, 'int');
 
@@ -64,9 +64,11 @@ $copyright_date = date('Y');
 
       <footer>
 
-        <?=__link("pages/social/legal", __('footer_legal'), "text_light", true, $path);?><br>
+        <?=__link("pages/social/contact", __('footer_contact'), "text_light text_white_hover", true, $path);?><br>
 
-        <?=__link("pages/social/copyright", __('footer_copyright', preset_values: array($copyright_date)), "text_light", true, $path);?><br>
+        <?=__link("pages/social/legal", __('footer_legal'), "text_light text_white_hover", true, $path);?><br>
+
+        <?=__link("pages/social/copyright", __('footer_copyright', preset_values: array($copyright_date)), "text_light text_white_hover", true, $path);?><br>
 
       </footer>
 

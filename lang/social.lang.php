@@ -84,3 +84,322 @@ ___('privacy_copyright_body_5', 'FR', <<<EOD
 © Future Invaders / Éric Bisceglia 2024 - {{1}}
 EOD
 );
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    CREDITS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Game credits
+___('credits_game_title',  'EN', "Game credits");
+___('credits_game_title',  'FR', "Crédits du jeu");
+___('credits_game_body_1', 'EN', <<<EOD
+Future Invaders was created by {{external|https://e-bis.fr/games/|Éric Bisceglia}}.
+EOD
+);
+___('credits_game_body_1', 'FR', <<<EOD
+Future Invaders a été créé par {{external|https://e-bis.fr/games/fr.html|Éric Bisceglia}}.
+EOD
+);
+___('credits_game_body_2', 'EN', <<<EOD
+All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|404|can be accessed here}}.
+EOD
+);
+___('credits_game_body_2', 'FR', <<<EOD
+Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|404|peut être consulté ici}}.
+EOD
+);
+___('credits_game_body_3', 'EN', <<<EOD
+Thanks to Florian for figuring out how to make multiplayer games work smoothly, and to Quentin for his patience when listening to my game design rants. I also want to thank those who helped improve the game in its early stages with their insightful suggestions: Samira, Ash, Kaci, Prince, Jen, Simon, and all other playtesters for their valuable feedback.
+EOD
+);
+___('credits_game_body_3', 'FR', <<<EOD
+Merci à Florian pour avoir trouvé comment faire fonctionner le multijoueur, et à Quentin pour sa patience face à mes tirades incessantes sur la conception de jeu. Je tiens également à remercier les personnes qui ont contribué à améliorer le jeu lors des phases initiales du développement par leurs suggestions précieuses : Samira, Ash, Kaci, Prince, Jen, Simon, et tous les autres testeurs du jeu pour leurs retours d'expérience constructifs.
+EOD
+);
+
+
+// Art credits
+___('credits_art_title',  'EN', "Art credits");
+___('credits_art_title',  'FR', "Crédits artistiques");
+___('credits_art_body_1', 'EN', <<<EOD
+All of the game's current artworks were generated using Microsoft Image Creator.
+EOD
+);
+___('credits_art_body_1', 'FR', <<<EOD
+Toutes les illustrations du jeu ont été générées par Microsoft Image Creator.
+EOD
+);
+___('credits_art_body_2', 'EN', <<<EOD
+These artworks are temporary and will be replaced by hand-drawn illustrations in the future once the game is funded or published.
+EOD
+);
+___('credits_art_body_2', 'FR', <<<EOD
+Ces illustrations sont temporaires et seront remplacées par des illustrations professionnelles à l'avenir, une fois que le jeu sera financé ou publié.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      CONTACT                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Contact info
+___('contact_title',  'EN', "Contact info");
+___('contact_title',  'FR', "Infos de contact");
+___('contact_body_1', 'EN', <<<EOD
+If you have any questions about the game or its players, ask on the game's {{link|404|Discord server}} or its {{link|404|IRC chat}}.
+EOD
+);
+___('contact_body_1', 'FR', <<<EOD
+Si vous avez des questions sur le jeu, posez-les sur le {{link|404|serveur Discord}} ou le {{link|404|chat IRC du jeu}}.
+EOD
+);
+___('contact_body_2', 'EN', <<<EOD
+To provide feedback or share your ideas, visit the {{link|pages/social/feedback|give feedback page}}.
+EOD
+);
+___('contact_body_2', 'FR', <<<EOD
+Pour donner votre avis ou partager vos idées, visitez la {{link|pages/social/feedback|page « Donnez votre avis »}}.
+EOD
+);
+___('contact_body_3', 'EN', <<<EOD
+If you want to help or contribute in any way, visit the {{link|404|help the game page}}.
+EOD
+);
+___('contact_body_3', 'FR', <<<EOD
+Si vous désirez aider ou contribuer au développement du jeu, visitez la {{link|404|page « Contribuer au jeu »}}.
+EOD
+);
+___('contact_body_4', 'EN', <<<EOD
+For discussions about publishing the game, visit the {{link|pages/social/publish|publish this game page}}.
+EOD
+);
+___('contact_body_4', 'FR', <<<EOD
+Si vous souhaitez éditer le jeu ou discuter de sa publication, visitez la page {{link|pages/social/publish|page « Éditez ce jeu ! »}}.
+EOD
+);
+___('contact_body_5', 'EN', <<<EOD
+For professional inquiries about the game, please email me at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+___('contact_body_5', 'FR', <<<EOD
+Pour toute question professionnelle, contactez-moi par e-mail : {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FEEDBACK                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Feedback
+___('feedback_title',  'EN', "Give feedback");
+___('feedback_title',  'FR', "Donnez votre avis");
+___('feedback_body_1', 'EN', <<<EOD
+Feedback on the game is very welcome, whether it's positive or negative. We love hearing your Future Invaders stories and listening to your ideas for improvement. Please keep your feedback to one of two specific places: the game's {{link|404|Discord server}} or its {{link|404|IRC chat}}. Other lines of communication are for professional inquiries only.
+EOD
+);
+___('feedback_body_1', 'FR', <<<EOD
+Les retours d'expérience sont appréciés, qu'ils soient positifs ou négatifs. Nous adorons lire vos histoires de Future Invaders et écouter vos idées pour améliorer le jeu. Merci de partager vos retours d'expérience sur l'un de ces deux endroits : {{link|404|le serveur Discord}} ou le {{link|404|chat IRC du jeu}}. Les autres lignes de communication sont réservées à un usage professionnel.
+EOD
+);
+___('feedback_body_2', 'EN', <<<EOD
+The game's balance is fine-tuned by incorporating feedback from playtesting. While we may not implement changes based on every suggestion, we will listen and strive to incorporate your ideas into the game's design. Our goal is to make the game as fun as possible for everyone.
+EOD
+);
+___('feedback_body_2', 'FR', <<<EOD
+L'équilibrage du jeu est influencé par vos retours d'expérience. Bien que nous ne puissions pas mettre en œuvre chaque suggestion, elles sont toutes prises en compte, et nous essaierons de les intégrer dans les évolutions futures du jeu. Notre but est de rendre le jeu aussi agréable et équilibré que possible pour tout le monde.
+EOD
+);
+___('feedback_body_3', 'EN', <<<EOD
+Please note that if you design specific cards or fan content, we appreciate your creativity, will love discussing them with the community, but for legal reasons, we will not use them in the game.
+EOD
+);
+___('feedback_body_3', 'FR', <<<EOD
+Veuillez noter que si vous créez vos propres cartes ou contenus pour le jeu, nous apprécions votre créativité et serons ravis d'en discuter avec la communauté. Cependant, pour des raisons juridiques, nous ne pourrons pas les utiliser dans le jeu.
+EOD
+);
+___('feedback_body_4', 'EN', <<<EOD
+Feedback related to professional inquiries can be sent via e-mail at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+___('feedback_body_4', 'FR', <<<EOD
+Pour des retours d'expérience professionnels, envoyez un e-mail à {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 PUBLISH THIS GAME                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Publish this game!
+___('publish_title',  'EN', "Publish this game!");
+___('publish_title',  'FR', "Éditez ce jeu !");
+___('publish_body',   'EN', <<<EOD
+Are you a board or card game publisher looking for a new project? Future Invaders could be your next success story! Years of design and development have already gone into the game, with only the final steps remaining. Below is a Q&A addressing common questions, followed by contact information if you're interested in further discussing the publishing process.
+EOD
+);
+___('publish_body',   'FR', <<<EOD
+Êtes-vous un éditeur de jeux de cartes ou de société à la recherche d'un nouveau projet ? Future Invaders pourrait bien être votre prochain succès ! Des années de développement ont déjà été consacrées à ce jeu, seules les étapes finales restent. Vous trouverez ci-dessous une FAQ couvrant les questions les plus courantes, ainsi qu'une adresse de contact si vous souhaitez en discuter plus en détail.
+EOD
+);
+
+
+// Sales pitch
+___('publish_question_pitch', 'EN', "What is the sales pitch for Future Invaders?");
+___('publish_question_pitch', 'FR', "Quel est l'argumentaire de vente de Future Invaders ?");
+___('publish_answer_pitch',   'EN', <<<EOD
+Quick to learn, challenging to master. Fewer rules than the average tactical card game. Little equipment required, all you need are 30 cards and a few dice. Strict design restrictions to avoid replicating the "unfun" aspects of the genre. Near future science-fiction, an underused theme in card games. Years of future content already planned and designed. With universal acclaim from both new and experienced playtesters, this game is primed for success!
+EOD
+);
+___('publish_answer_pitch',   'FR', <<<EOD
+Rapide à apprendre, difficile à maîtriser. Moins de règles que le jeu de cartes tactique moyen. Peu d'équipement nécessaire, 30 cartes et quelques dés suffisent. Des règles de conception strictes évitent les éléments "anti-fun" des autres jeux. Science-fiction située dans le future proche, thème rare dans les jeux de cartes. Des années de contenus futurs déjà planifiés. Un succès unanime auprès de testeurs débutants comme confirmés.
+EOD
+);
+
+
+// Target audience
+___('publish_question_audience',  'EN', "What is the target audience for Future Invaders?");
+___('publish_question_audience',  'FR', "Quel est le public cible de Future Invaders ?");
+___('publish_answer_audience',    'EN', <<<EOD
+Casual to midcore board and card game players. This game appeals to people looking for an accessible entry into tactical card games, or to those who already enjoy the genre but want a fresh, back-to-basics experience.
+EOD
+);
+___('publish_answer_audience',    'FR', <<<EOD
+Des joueurs de jeux de cartes ou de société allant de "casual" à "midcore". Ce jeu est destiné à ceux qui cherchent une porte d'entrée dans les jeux de cartes tactiques, ainsi qu'à ceux qui aiment déjà le genre et cherchent une expérience qui revient à ses fondamentaux.
+EOD
+);
+
+
+// How is it different
+___('publish_question_difference',  'EN', "How is Future Invaders different from other card games?");
+___('publish_question_difference',  'FR', "En quoi Future Invaders est différent des autres jeux ?");
+___('publish_answer_difference',    'EN', <<<EOD
+ Playtesting shows strong interest in two main areas: the setting, which offers a near-future sci-fi world unconnected to existing media franchises, and the mechanics, which simplify gameplay compared to modern card games while still allowing for creative and complex interactions.
+EOD
+);
+___('publish_answer_difference',    'FR', <<<EOD
+Les séances de playtesting ont montré un fort intérêt pour deux aspects du jeu : son univers, de la science-fiction située dans le futur proche sans pour autant être lié à une franchise existante, et ses mécaniques, plus simples que les jeux de cartes modernes, tout en permettant des interactions complexes et créatives.
+EOD
+);
+
+
+// Why publish a free game
+___('publish_question_free',  'EN', "Why publish a game that's available for free?");
+___('publish_question_free',  'FR', "Pourquoi publier un jeu disponible gratuitement ?");
+___('publish_answer_free',    'EN', <<<EOD
+ The current beta version is available for free as print-and-play to help generate interest and get players to try the game. Most playtesters have expressed a desire to buy a professionally printed version, showing that the free version will not reduce future sales.
+EOD
+);
+___('publish_answer_free',    'FR', <<<EOD
+La version beta actuelle est imprimable gratuitement chez soi, dans le but de susciter l'intérêt des gens et de les inciter à essayer le jeu. La majorité des testeurs ont exprimé leur souhait d'acheter une version imprimée professionnellement, ce qui montre que la gratuité actuelle n'affectera pas les ventes futures.
+EOD
+);
+
+
+// What's left to be done
+___('publish_question_left',  'EN', "What remains to be done before the game is finished?");
+___('publish_question_left',  'FR', "Que reste-t-il à faire avant que le jeu soit prêt ?");
+___('publish_answer_left',    'EN', <<<EOD
+Regarding game design, the core set is complete, heavily playtested, and well-balanced. The current illustrations are AI-generated and need to be replaced by professional art. The rules also need to be formatted for a booklet, and additional accessories such as durability counters, resource trackers, and playmats need to be designed. Lastly, the game must be printed, distributed, and marketed.
+EOD
+);
+___('publish_answer_left',    'FR', <<<EOD
+Le game design du jeu est finalisé, fortement testé, et équilibré. Les illustrations actuelles, faites par IA, doivent être remplacées par des illustrations professionnelles, et les règles formatées en livret. La création d'accessoires, tels que des compteurs de durabilité et un tapis de jeu, sont également une possibilité. Finalement, le jeu doit être imprimé, distribué et commercialisé.
+EOD
+);
+
+
+// Which business model
+___('publish_question_model',  'EN', "What is this game's business model?");
+___('publish_question_model',  'FR', "Quel est le modèle économique du jeu ?");
+___('publish_answer_model',    'EN', <<<EOD
+The tactical card game market is crowded with the "random booster" model, which many playtesters have criticized. Future Invaders will be sold as preconstructed decks of 45 cards. The core set includes 12 such decks, and each expansion will add 12 to 16 more. Special packages of 150 and 300 cards will also be available for "draft mode". This model has received positive feedback from playtesters, who have expressed a willingness to buy 2 to 10 items per expansion, but remains open to discussion.
+EOD
+);
+___('publish_answer_model',    'FR', <<<EOD
+Le marché des jeux de cartes tactiques est dominé par le modèle des "boosters aléatoires", critiqué par de nombreux testeurs. Future Invaders se vendra sous forme de paquets préconstruits de 45 cartes, avec 12 paquets dans le set de base, et 12 à 16 par extension future. Des collections de 150 et 300 cartes seront également disponibles pour le mode "draft". Ce modèle a reçu des retours positifs des testeurs, qui se disent prêts à acheter 2 à 10 paquets par extension, bien que le modèle reste ouvert à discussion.
+EOD
+);
+
+
+// Long term plans
+___('publish_question_plans',  'EN', "What are the long-term plans for Future Invaders?");
+___('publish_question_plans',  'FR', "Quels sont les plans au long terme ?");
+___('publish_answer_plans',    'EN', <<<EOD
+Multiple future expansions have been drafted, with new card designs already done. Each expansion will introduce a new major mechanic, refreshing gameplay along with major progress in the game's story and worldbuilding. Discussing future plans for the game would act as a spoiler to its players. If you are looking to know more, this topic will have to be discussed privately.
+EOD
+);
+___('publish_answer_plans',    'FR', <<<EOD
+Plusieurs extensions futures ont déjà été conçues, incluant de nombreuses nouvelles cartes. Chaque extension introduira une nouvelle mécanique majeure, qui rafraichira l'expérience de jeu, tout en faisant progresser son histoire et son univers. Pour plus de détails sur les projets futurs, une discussion en privé serait plus appropriée afin d'éviter les spoilers publics.
+EOD
+);
+
+
+// Intellectual property
+___('publish_question_ip',  'EN', "What is the status of the game's intellectual property?");
+___('publish_question_ip',  'FR', "Quel est le statut de la propriété intellectuelle du jeu ?");
+___('publish_answer_ip',    'EN', <<<EOD
+The IP is currently owned by the author, Éric Bisceglia. The Future Invaders card game is meant to be the centerpiece of a larger universe, which will include free online games and novellas developed by the author. Publishing the game would entail shared IP rights, with card game rights going to the publisher, while the author retains rights to produce non-commercial works within its universe.
+EOD
+);
+___('publish_answer_ip',    'FR', <<<EOD
+L'auteur, Éric Bisceglia, détient actuellement la propriété intellectuelle. Future Invaders sera au cœur d'un univers comprenant d'autres jeux en ligne gratuits ainsi que des nouvelles, développés par l'auteur. La publication du jeu implique un partage des droits : les droits sur le jeu de cartes reviendront à l'éditeur, tandis que l'auteur conservera le droit de créer des contenus non commerciaux dans l'univers du jeu.
+EOD
+);
+
+
+// Website status
+___('publish_question_website',  'EN', "How about this website?");
+___('publish_question_website',  'FR', "Qu'en est-il de ce site web ?");
+___('publish_answer_website',    'EN', <<<EOD
+Designing a complete website for a game is a long and complex task. Having an already completed website will save a lot of development time, and its ownership can be transferred if desired, although I am willing to continue developing it in the future.
+EOD
+);
+___('publish_answer_website',    'FR', <<<EOD
+Le développement complet d'un site pour le jeu est déjà réalisé, un atout qui économisera du temps de développement. Sa propriété peut être transférée si nécessaire, bien que je sois disposé à continuer à le gérer.
+EOD
+);
+
+
+// Self-publishing
+___('publish_question_self',  'EN', "Why not self-publish Future Invaders?");
+___('publish_question_self',  'FR', "Pourquoi ne pas auto-publier Future Invaders ?");
+___('publish_answer_self',    'EN', <<<EOD
+Future Invaders is envisioned as a long-term project, not a one-off game. Crowdfunding could fund the initial core set but wouldn't guarantee the quality or stability that comes with an established publisher.
+EOD
+);
+___('publish_answer_self',    'FR', <<<EOD
+Future Invaders est envisagé comme un projet à long terme. Bien que le crowdfunding pourrait financer le lancement du jeu, il n'apporterait pas la stabilité ni la qualité qu'un éditeur établi peut garantir sur le long terme.
+EOD
+);
+
+
+// Contact info
+___('publish_question_contact', 'EN', "How can I contact you?");
+___('publish_question_contact', 'FR', "Peut-on discuter ?");
+___('publish_answer_contact',   'EN', <<<EOD
+If you're interested in publishing the game, please contact me at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+___('publish_answer_contact',   'FR', <<<EOD
+Si vous êtes intéressé par la publication du jeu, contactez-moi à l’adresse {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
