@@ -45,6 +45,8 @@ ___('admin_menu_blogs',           'EN', "Blogs");
 ___('admin_menu_blogs',           'FR', "Blogs");
 ___('admin_menu_exports',         'EN', "Exports");
 ___('admin_menu_exports',         'FR', "Exports");
+___('admin_menu_page_stats',      'EN', "Page stats");
+___('admin_menu_page_stats',      'FR', "Stats des pages");
 ___('admin_menu_queries',         'EN', "SQL Queries");
 ___('admin_menu_queries',         'FR', "Requêtes SQL");
 
@@ -481,3 +483,33 @@ ___('admin_faction_edit_submit',  'FR', "Modifier une faction");
 // Delete a faction
 ___('admin_faction_delete_confirm', 'EN', "Confirm the deletion of this faction");
 ___('admin_faction_delete_confirm', 'FR', "Confirmez la suppression de cette faction");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    PAGE STATS                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page stats list
+___('admin_page_stats_list_path',     'EN', "Path");
+___('admin_page_stats_list_path',     'FR', "Chemin");
+___('admin_page_stats_list_name',     'EN', "Name");
+___('admin_page_stats_list_name',     'FR', "Nom");
+___('admin_page_stats_list_last',     'EN', "Last visit");
+___('admin_page_stats_list_last',     'FR', "Dernière vue");
+___('admin_page_stats_list_views',    'EN', "Views");
+___('admin_page_stats_list_views',    'FR', "Vues");
+___('admin_page_stats_list_queries',  'EN', "Queries");
+___('admin_page_stats_list_queries',  'FR', "Requêtes");
+___('admin_page_stats_list_load',     'EN', "Load");
+___('admin_page_stats_list_load',     'FR', "Charge.");
+___('admin_page_stats_list_count',    'EN', "{{1}} pages");
+___('admin_page_stats_list_count',    'FR', "{{1}} pages");
+
+
+// Delete a page stats entry
+___('admin_page_stats_delete_confirm', 'EN', "Confirm the deletion of this page stats entry");
+___('admin_page_stats_delete_confirm', 'FR', "Confirmez la suppression de cette entrée des stats des pages");
