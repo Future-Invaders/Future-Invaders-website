@@ -13,6 +13,41 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
 $metrics    = __('footer_loadtime').$load_time.'s'.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
 
+// Update the page's stats
+if($page_url !== '')
+{
+  // Sanitize the page stats
+  $timestamp      = sanitize(time(), 'int');
+  $page_path      = sanitize($page_url, 'string');
+  $page_name_en   = sanitize($page_title_en, 'string');
+  $page_name_fr   = sanitize($page_title_fr, 'string');
+  $page_queycount = sanitize($GLOBALS['query'], 'int');
+  $page_loadtime  = sanitize($load_time * 1000, 'int');
+
+  // Update the page stats if they already exist
+  if(database_entry_exists('stats_pages', 'page_path', $page_path))
+    query(" UPDATE  stats_pages
+            SET     stats_pages.page_path       =     '$page_path'                ,
+                    stats_pages.page_name_en    =     '$page_name_en'             ,
+                    stats_pages.page_name_fr    =     '$page_name_fr'             ,
+                    stats_pages.last_viewed_at  =     '$timestamp'                ,
+                    stats_pages.view_count      =     stats_pages.view_count + 1  ,
+                    stats_pages.query_count     =     '$page_queycount'           ,
+                    stats_pages.load_time       =     '$page_loadtime'
+            WHERE   stats_pages.page_path       LIKE  '$page_path'                ");
+
+  // Otherwise create the missing page stats
+  else
+    query(" INSERT INTO stats_pages
+            SET         stats_pages.page_path       = '$page_path'    ,
+                        stats_pages.page_name_en    = '$page_name_en' ,
+                        stats_pages.page_name_fr    = '$page_name_fr' ,
+                        stats_pages.last_viewed_at  = '$timestamp'    ,
+                        stats_pages.view_count      = 1               ,
+                        stats_pages.query_count     = $page_queycount ,
+                        stats_pages.load_time       = $page_loadtime  ");
+}
+
 // Copyright ending date
 $copyright_date = date('Y');
 

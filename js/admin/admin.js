@@ -22,6 +22,9 @@
 /*                                                                                                                   */
 /*  admin_factions_delete       Triggers the deletion of an entry in the faction list.                               */
 /*                                                                                                                   */
+/*  admin_page_stats_search     Searches the page stats list.                                                        */
+/*  admin_page_stats_delete     Triggers the deletion of an entry in the page stats list.                            */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -369,4 +372,53 @@ function admin_factions_delete( message     ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('factions', 'admin_factions_tbody', postdata);
+}
+
+
+
+
+/**
+ * Searches for page stats.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+ */
+
+function admin_page_stats_search( sort_data = null )
+{
+  // Update the search input if required
+  if(sort_data)
+    document.getElementById('admin_page_stats_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata =  'admin_page_stats_sort='          + document.getElementById('admin_page_stats_sort').value;
+  postdata += '&admin_page_stats_search_path='  + document.getElementById('admin_page_stats_search_path').value;
+  postdata += '&admin_page_stats_search_name='  + document.getElementById('admin_page_stats_search_name').value;
+
+  // Submit the search
+  fetch_page('page_stats', 'admin_page_stats_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the page stats list.
+ *
+ * @param   {string}  message     The confirmation message which will be displayed.
+ * @param   {int}     page_stats  The id of the page stats entry to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_page_stats_delete( message     ,
+                                  page_stats  )
+{
+  // Assemble the postdata
+  postdata = 'admin_page_stats_delete=' + fetch_sanitize(page_stats);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('page_stats', 'admin_page_stats_tbody', postdata);
 }
