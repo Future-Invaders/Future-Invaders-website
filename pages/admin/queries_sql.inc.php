@@ -819,6 +819,30 @@ if($last_query < 11)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Page stats
+
+if($last_query < 12)
+{
+  sql_create_table('stats_pages');
+  sql_create_field('stats_pages', 'page_path', 'TEXT NOT NULL', 'id');
+  sql_create_field('stats_pages', 'page_name_en', 'TEXT NOT NULL', 'page_path');
+  sql_create_field('stats_pages', 'page_name_fr', 'TEXT NOT NULL', 'page_name_en');
+  sql_create_field('stats_pages', 'last_viewed_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'page_name_fr');
+  sql_create_field('stats_pages', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_viewed_at');
+  sql_create_field('stats_pages', 'query_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'view_count');
+  sql_create_field('stats_pages', 'load_time', 'INT UNSIGNED NOT NULL DEFAULT 0', 'query_count');
+
+  sql_create_index('stats_pages', 'stats_pages_page_path', 'page_path(40)');
+  sql_create_index('stats_pages', 'stats_pages_last_viewed_at', 'last_viewed_at');
+  sql_create_index('stats_pages', 'stats_pages_view_count', 'view_count');
+
+  sql_update_query_id(12);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Arsenal tags
 
 /*
