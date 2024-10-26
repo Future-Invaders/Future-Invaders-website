@@ -48,8 +48,8 @@ $page_description = "Glossary for the strategy sci-fi card battling game Future 
     <?=__('toc')?>
   </h5>
 
-  <ul>
-  <li>
+  <ul style="column-count: 3;">
+    <li>
       <?=__link('pages/game/vocabulary#action', __('vocabulary_action_title'))?>
     </li>
     <li>
@@ -728,7 +728,7 @@ $page_description = "Glossary for the strategy sci-fi card battling game Future 
     <?=__('toc')?>
   </h5>
 
-  <ul>
+  <ul style="column-count: 3;">
     <li>
       <?=__link('pages/game/vocabulary#action', __('vocabulary_action_title'))?>
     </li>

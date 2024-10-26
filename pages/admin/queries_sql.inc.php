@@ -843,11 +843,41 @@ if($last_query < 12)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Arsenal tags
+// Arsenals, arsenal compositions, arsenal tags, arsenal factions, arsenal images, game formats
 
-/*
-if($last_query < X)
+if($last_query < 13)
 {
+  sql_create_table('arsenals');
+  sql_create_field('arsenals', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('arsenals', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_field('arsenals', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
+  sql_create_field('arsenals', 'name_en', 'TINYTEXT NOT NULL', 'fk_formats');
+  sql_create_field('arsenals', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+  sql_create_field('arsenals', 'playstyle_en', 'TINYTEXT', 'name_fr');
+  sql_create_field('arsenals', 'playstyle_fr', 'TINYTEXT', 'playstyle_en');
+  sql_create_field('arsenals', 'summary_en', 'TEXT', 'playstyle_fr');
+  sql_create_field('arsenals', 'summary_fr', 'TEXT', 'summary_en');
+  sql_create_field('arsenals', 'gameplan_en', 'LONGTEXT', 'summary_fr');
+  sql_create_field('arsenals', 'gameplan_fr', 'LONGTEXT', 'gameplan_en');
+  sql_create_field('arsenals', 'reserves_en', 'LONGTEXT', 'gameplan_fr');
+  sql_create_field('arsenals', 'reserves_fr', 'LONGTEXT', 'reserves_en');
+
+  sql_create_index('arsenals', 'arsenals_uuid', 'uuid');
+  sql_create_index('arsenals', 'arsenals_release', 'fk_releases');
+  sql_create_index('arsenals', 'arsenals_format', 'fk_formats');
+  sql_create_index('arsenals', 'arsenals_name_en', 'name_en(40)');
+  sql_create_index('arsenals', 'arsenals_name_fr', 'name_fr(40)');
+
+  sql_create_table('arsenals_compositions');
+  sql_create_field('arsenals_compositions', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('arsenals_compositions', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
+  sql_create_field('arsenals_compositions', 'amount', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
+  sql_create_field('arsenals_compositions', 'is_in_reserves', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'amount');
+
+  sql_create_index('arsenals_compositions', 'arsenals_compositions_arsenal', 'fk_arsenals');
+  sql_create_index('arsenals_compositions', 'arsenals_compositions_card', 'fk_cards');
+  sql_create_index('arsenals_compositions', 'arsenals_compositions_reserves', 'is_in_reserves');
+
   sql_create_table('tags_arsenals');
   sql_create_field('tags_arsenals', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('tags_arsenals', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
@@ -855,9 +885,37 @@ if($last_query < X)
   sql_create_index('tags_arsenals', 'tags_arsenals_arsenal', 'fk_arsenals');
   sql_create_index('tags_arsenals', 'tags_arsenals_tag', 'fk_tags');
 
-  sql_update_query_id(X);
+  sql_create_table('arsenals_factions');
+  sql_create_field('arsenals_factions', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('arsenals_factions', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
+
+  sql_create_index('arsenals_factions', 'arsenals_factions_arsenal', 'fk_arsenals');
+  sql_create_index('arsenals_factions', 'arsenals_factions_faction', 'fk_factions');
+
+  sql_create_table('arsenals_images');
+  sql_create_field('arsenals_images', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('arsenals_images', 'fk_images', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
+  sql_create_field('arsenals_images', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images');
+  sql_create_field('arsenals_images', 'image_title_en', 'TINYTEXT NOT NULL', 'sorting_order');
+  sql_create_field('arsenals_images', 'image_title_fr', 'TINYTEXT NOT NULL', 'image_title_en');
+
+  sql_create_index('arsenals_images', 'arsenals_images_arsenal', 'fk_arsenals');
+  sql_create_index('arsenals_images', 'arsenals_images_image', 'fk_images');
+  sql_create_index('arsenals_images', 'arsenals_images_sorting', 'sorting_order');
+
+  sql_create_table('formats');
+  sql_create_field('formats', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('formats', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
+  sql_create_field('formats', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+  sql_create_field('formats', 'description_en', 'TEXT', 'name_fr');
+  sql_create_field('formats', 'description_fr', 'TEXT', 'description_en');
+
+  sql_create_index('formats', 'formats_uuid', 'uuid');
+  sql_create_index('formats', 'formats_name_en', 'name_en(40)');
+  sql_create_index('formats', 'formats_name_fr', 'name_fr(40)');
+
+  sql_update_query_id(13);
 }
-*/
 
 
 
@@ -874,88 +932,6 @@ if($last_query < X)
 
   sql_create_index('tags_rulings', 'tags_rulings_ruling', 'fk_rulings');
   sql_create_index('tags_rulings', 'tags_rulings_tag', 'fk_tags');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Arsenals
-
-/*
-if($last_query < X)
-{
-  sql_create_table('arsenals');
-  sql_create_field('arsenals', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('arsenals', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
-  sql_create_field('arsenals', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
-  sql_create_field('arsenals', 'fk_images_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_formats');
-  sql_create_field('arsenals', 'fk_images_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_en');
-  sql_create_field('arsenals', 'image_path', 'TINYTEXT NOT NULL', 'fk_images_fr');
-  sql_create_field('arsenals', 'name_en', 'TINYTEXT NOT NULL', 'image_path');
-  sql_create_field('arsenals', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('arsenals', 'playstyle_en', 'TINYTEXT', 'name_fr');
-  sql_create_field('arsenals', 'playstyle_fr', 'TINYTEXT', 'playstyle_en');
-  sql_create_field('arsenals', 'summary_en', 'TEXT', 'playstyle_fr');
-  sql_create_field('arsenals', 'summary_fr', 'TEXT', 'summary_en');
-  sql_create_field('arsenals', 'gameplan_en', 'LONGTEXT', 'summary_fr');
-  sql_create_field('arsenals', 'gameplan_fr', 'LONGTEXT', 'gameplan_en');
-  sql_create_field('arsenals', 'reserves_en', 'LONGTEXT', 'gameplan_fr');
-  sql_create_field('arsenals', 'reserves_fr', 'LONGTEXT', 'reserves_en');
-
-  sql_create_index('arsenals', 'arsenals_uuid', 'uuid');
-  sql_create_index('arsenals', 'arsenals_release', 'fk_releases');
-  sql_create_index('arsenals', 'arsenals_format', 'fk_formats');
-  sql_create_index('arsenals', 'arsenals_image_en', 'fk_images_en');
-  sql_create_index('arsenals', 'arsenals_image_fr', 'fk_images_fr')
-  sql_create_index('arsenals', 'arsenals_name_en', 'name_en(40)');
-  sql_create_index('arsenals', 'arsenals_name_fr', 'name_fr(40)');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Arsenal factions
-
-/*
-if($last_query < X)
-{
-  sql_create_table('arsenals_factions');
-  sql_create_field('arsenals_factions', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('arsenals_factions', 'fk_factions', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
-
-  sql_create_index('arsenals_factions', 'arsenals_factions_arsenal', 'fk_arsenals');
-  sql_create_index('arsenals_factions', 'arsenals_factions_faction', 'fk_factions');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Arsenal compositions
-
-/*
-if($last_query < X)
-{
-  sql_create_table('arsenals_compositions');
-  sql_create_field('arsenals_compositions', 'fk_arsenals', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('arsenals_compositions', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
-  sql_create_field('arsenals_compositions', 'amount', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
-  sql_create_field('arsenals_compositions', 'is_in_reserves', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'amount');
-
-  sql_create_index('arsenals_compositions', 'arsenals_compositions_arsenal', 'fk_arsenals');
-  sql_create_index('arsenals_compositions', 'arsenals_compositions_card', 'fk_cards');
-  sql_create_index('arsenals_compositions', 'arsenals_compositions_reserves', 'is_in_reserves');
 
   sql_update_query_id(X);
 }
@@ -1180,30 +1156,6 @@ if($last_query < X)
 
   sql_create_index('cards_bans', 'cards_bans_card', 'fk_cards');
   sql_create_index('cards_bans', 'cards_bans_format', 'fk_formats');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Game formats
-
-/*
-if($last_query < X)
-{
-  sql_create_table('formats');
-  sql_create_field('formats', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('formats', 'name_en', 'TINYTEXT NOT NULL', 'uuid');
-  sql_create_field('formats', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('formats', 'description_en', 'TEXT', 'name_fr');
-  sql_create_field('formats', 'description_fr', 'TEXT', 'description_en');
-
-  sql_create_index('formats', 'formats_uuid', 'uuid');
-  sql_create_index('formats', 'formats_name_en', 'name_en(40)');
-  sql_create_index('formats', 'formats_name_fr', 'name_fr(40)');
 
   sql_update_query_id(X);
 }
