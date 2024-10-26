@@ -575,6 +575,11 @@ ___('stats_timeline', 'EN', "Timeline");
 ___('stats_timeline', 'FR', "Ligne temporelle");
 
 
+// Table of contents
+___('toc',            'EN', "Table of contents");
+___('toc',            'FR', "Sommaire");
+
+
 
 
 /*********************************************************************************************************************/
