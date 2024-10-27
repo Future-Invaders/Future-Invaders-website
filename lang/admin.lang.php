@@ -339,6 +339,10 @@ ___('admin_arsenal_difficulty_edit_title',  'FR', "Modifier une difficulté");
 ___('admin_arsenal_difficulty_edit_submit', 'EN', "Edit difficulty level");
 ___('admin_arsenal_difficulty_edit_submit', 'FR', "Modifier la difficulté");
 
+// Delete an arsenal difficulty level
+___('admin_arsenal_difficulty_delete_confirm', 'EN', "Confirm the deletion of this arsenal difficulty level");
+___('admin_arsenal_difficulty_delete_confirm', 'FR', "Confirmez la suppression de ce niveau de difficulté");
+
 
 
 

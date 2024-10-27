@@ -1,31 +1,33 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  admin_menu                  Navigates between administration pages.                                              */
+/*  admin_menu                          Navigates between administration pages.                                      */
 /*                                                                                                                   */
-/*  admin_cards_search          Searches the card list.                                                              */
-/*  admin_cards_delete          Triggers the deletion of an entry in the card list.                                  */
-/*  admin_card_hide_stats       Hides stats for extra cards.                                                         */
+/*  admin_cards_search                  Searches the card list.                                                      */
+/*  admin_cards_delete                  Triggers the deletion of an entry in the card list.                          */
+/*  admin_card_hide_stats               Hides stats for extra cards.                                                 */
 /*                                                                                                                   */
-/*  admin_card_types_delete     Triggers the deletion of an entry in the card type list.                             */
+/*  admin_card_types_delete             Triggers the deletion of an entry in the card type list.                     */
 /*                                                                                                                   */
-/*  admin_card_rarities_delete  Triggers the deletion of an entry in the card rarity list.                           */
+/*  admin_card_rarities_delete          Triggers the deletion of an entry in the card rarity list.                   */
 /*                                                                                                                   */
-/*  admin_images_search         Searches the image list.                                                             */
-/*  admin_images_preview        Fetches the preview of an image.                                                     */
-/*  admin_images_delete         Triggers the deletion of an entry in the image list.                                 */
+/*  admin_images_search                 Searches the image list.                                                     */
+/*  admin_images_preview                Fetches the preview of an image.                                             */
+/*  admin_images_delete                 Triggers the deletion of an entry in the image list.                         */
 /*                                                                                                                   */
-/*  admin_tags_search           Searches the tag list.                                                               */
-/*  admin_tags_delete           Triggers the deletion of an entry in the tag list.                                   */
+/*  admin_arsenal_difficulties_delete   Triggers the deletion of an entry in the arsenal difficulty list.            */
 /*                                                                                                                   */
-/*  admin_releases_search       Searches the release list.                                                           */
-/*  admin_releases_delete       Triggers the deletion of an entry in the release list.                               */
+/*  admin_tags_search                   Searches the tag list.                                                       */
+/*  admin_tags_delete                   Triggers the deletion of an entry in the tag list.                           */
 /*                                                                                                                   */
-/*  admin_factions_delete       Triggers the deletion of an entry in the faction list.                               */
+/*  admin_releases_search               Searches the release list.                                                   */
+/*  admin_releases_delete               Triggers the deletion of an entry in the release list.                       */
 /*                                                                                                                   */
-/*  admin_formats_delete        Triggers the deletion of an entry in the game formats list.                          */
+/*  admin_factions_delete               Triggers the deletion of an entry in the faction list.                       */
 /*                                                                                                                   */
-/*  admin_page_stats_search     Searches the page stats list.                                                        */
-/*  admin_page_stats_delete     Triggers the deletion of an entry in the page stats list.                            */
+/*  admin_formats_delete                Triggers the deletion of an entry in the game formats list.                  */
+/*                                                                                                                   */
+/*  admin_page_stats_search             Searches the page stats list.                                                */
+/*  admin_page_stats_delete             Triggers the deletion of an entry in the page stats list.                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -252,6 +254,29 @@ function admin_images_delete( message   ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('images', 'admin_images_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the arsenal difficulty list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     difficulty The id of the arsenal difficulty level to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenal_difficulties_delete( message   ,
+                                            difficulty )
+{
+  // Assemble the postdata
+  postdata = 'admin_arsenal_difficulties_delete=' + fetch_sanitize(difficulty);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('arsenal_difficulties', 'admin_arsenal_difficulties_tbody', postdata);
 }
 
 

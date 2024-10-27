@@ -69,6 +69,15 @@ if(isset($_POST['difficulty_edit']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete an arsenal difficulty level
+
+if(isset($_POST['admin_arsenal_difficulties_delete']))
+  arsenal_difficulties_delete(form_fetch_element('admin_arsenal_difficulties_delete'));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of all arsenal difficulty levels
 
 $arsenal_difficulties_list = arsenal_difficulties_list();

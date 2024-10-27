@@ -67,6 +67,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  arsenal_difficulties_list       Lists arsenal difficulty levels in the database                                  */
 /*  arsenal_difficulties_add        Adds an arsenal difficulty level to the database                                 */
 /*  arsenal_difficulties_edit       Edits an arsenal difficulty level in the database                                */
+/*  arsenal_difficulties_delete     Deletes an arsenal difficulty level from the database                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -2937,4 +2938,25 @@ function arsenal_difficulties_edit( int   $difficulty_id  ,
                   arsenal_difficulties.name_fr        = '$difficulty_name_fr' ,
                   arsenal_difficulties.styling        = '$difficulty_styling'
           WHERE   arsenal_difficulties.id             = '$difficulty_id' ");
+}
+
+
+
+
+/**
+ * Deletes an arsenal difficulty level from the database.
+ *
+ * @param   int     $difficulty_id  The id of the arsenal difficulty level to delete.
+ *
+ * @return  void
+ */
+
+function arsenal_difficulties_delete( int $difficulty_id ) : void
+{
+  // Sanitize the data
+  $difficulty_id = sanitize($difficulty_id, 'int');
+
+  // Delete the arsenal difficulty level from the database
+  query(" DELETE FROM arsenal_difficulties
+          WHERE       arsenal_difficulties.id = '$difficulty_id' ");
 }
