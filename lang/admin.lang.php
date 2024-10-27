@@ -288,6 +288,42 @@ ___('admin_card_rarity_delete_confirm', 'FR', "Confirmez la suppression de cette
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                      ARSENALS                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Arsenal management
+___('admin_arsenal_management',               'EN', "Arsenal management");
+___('admin_arsenal_management',               'FR', "Gestion des arsenaux");
+___('admin_arsenal_management_add',           'EN', "Add an arsenal");
+___('admin_arsenal_management_add',           'FR', "Ajouter un arsenal");
+___('admin_arsenal_management_difficulties',  'EN', "Difficulty levels");
+___('admin_arsenal_management_difficulties',  'FR', "Niveaux de difficulté");
+___('admin_arsenal_management_show_body',     'EN', "Show arsenal previews");
+___('admin_arsenal_management_show_body',     'FR', "Prévisualiser les arsenaux");
+___('admin_arsenal_management_hide_body',     'EN', "Hide arsenal previews");
+___('admin_arsenal_management_hide_body',     'FR', "Masquer les prévisualisations");
+
+
+// Add an arsenal difficulty level
+___('admin_arsenal_difficulty_add_title',   'EN', "Add a difficulty level");
+___('admin_arsenal_difficulty_add_title',   'FR', "Ajouter une difficulté");
+___('admin_arsenal_difficulty_add_order',   'EN', "Sorting order");
+___('admin_arsenal_difficulty_add_order',   'FR', "Ordre de tri");
+___('admin_arsenal_difficulty_add_name_en', 'EN', "Name (English)");
+___('admin_arsenal_difficulty_add_name_en', 'FR', "Nom (Anglais)");
+___('admin_arsenal_difficulty_add_name_fr', 'EN', "Name (French)");
+___('admin_arsenal_difficulty_add_name_fr', 'FR', "Nom (Français)");
+___('admin_arsenal_difficulty_add_styling', 'EN', "CSS styling");
+___('admin_arsenal_difficulty_add_styling', 'FR', "Stylage CSS");
+___('admin_arsenal_difficulty_add_submit',  'EN', "Add difficulty level");
+___('admin_arsenal_difficulty_add_submit',  'FR', "Ajouter la difficulté");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      IMAGES                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

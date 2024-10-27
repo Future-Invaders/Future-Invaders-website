@@ -843,15 +843,16 @@ if($last_query < 12)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Arsenals, arsenal compositions, arsenal tags, arsenal factions, arsenal images, game formats
+// Arsenals, arsenal compositions, arsenal tags, arsenal factions, arsenal images, arsenal difficulties, game formats
 
-if($last_query < 14)
+if($last_query < 13)
 {
   sql_create_table('arsenals');
   sql_create_field('arsenals', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
   sql_create_field('arsenals', 'fk_releases', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
   sql_create_field('arsenals', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_releases');
-  sql_create_field('arsenals', 'name_en', 'TINYTEXT NOT NULL', 'fk_formats');
+  sql_create_field('arsenals', 'fk_difficulties', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_formats');
+  sql_create_field('arsenals', 'name_en', 'TINYTEXT NOT NULL', 'fk_difficulties');
   sql_create_field('arsenals', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('arsenals', 'playstyle_en', 'TINYTEXT', 'name_fr');
   sql_create_field('arsenals', 'playstyle_fr', 'TINYTEXT', 'playstyle_en');
@@ -913,8 +914,16 @@ if($last_query < 14)
 
   sql_create_index('formats', 'formats_uuid', 'uuid');
   sql_create_index('formats', 'formats_sorting', 'sorting_order');
-  sql_create_index('formats', 'formats_name_en', 'name_en(40)');
-  sql_create_index('formats', 'formats_name_fr', 'name_fr(40)');
+
+  sql_create_table('arsenals_difficulties');
+  sql_create_field('arsenals_difficulties', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('arsenals_difficulties', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_field('arsenals_difficulties', 'name_en', 'TINYTEXT NOT NULL', 'sorting_order');
+  sql_create_field('arsenals_difficulties', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+  sql_create_field('arsenals_difficulties', 'styling', 'TEXT', 'name_fr');
+
+  sql_create_index('arsenals_difficulties', 'difficulties_uuid', 'uuid');
+  sql_create_index('arsenals_difficulties', 'difficulties_sorting', 'sorting_order');
 
   sql_update_query_id(13);
 }

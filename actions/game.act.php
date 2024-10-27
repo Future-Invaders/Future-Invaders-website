@@ -63,6 +63,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  formats_edit                    Edits a game format in the database                                              */
 /*  formats_delete                  Deletes a game format from the database                                          */
 /*                                                                                                                   */
+/*  arsenal_difficulties_add        Adds an arsenal difficulty level to the database                                 */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       CARDS                                                       */
@@ -2759,4 +2761,38 @@ function formats_delete( int $format_id ) : void
   // Delete the format from the database
   query(" DELETE FROM formats
           WHERE       formats.id = '$format_id' ");
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                             ARSENAL DIFFICULTY LEVELS                                             */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Adds an arsenal difficulty level to the database.
+ *
+ * @param   array   $data   An array containing the difficulty level's data
+ *
+ * @return  void
+ */
+
+function arsenal_difficulties_add( array $data ) : void
+{
+  // Sanitize the data
+  $difficulty_order   = sanitize_array_element($data, 'order', 'int');
+  $difficulty_name_en = sanitize_array_element($data, 'name_en', 'string');
+  $difficulty_name_fr = sanitize_array_element($data, 'name_fr', 'string');
+  $difficulty_styling = sanitize_array_element($data, 'styling', 'string');
+
+  // Add the difficulty level to the database
+  query(" INSERT INTO arsenals_difficulties
+          SET         arsenals_difficulties.uuid          = UUID()                ,
+                      arsenals_difficulties.sorting_order = '$difficulty_order'   ,
+                      arsenals_difficulties.name_en       = '$difficulty_name_en' ,
+                      arsenals_difficulties.name_fr       = '$difficulty_name_fr' ,
+                      arsenals_difficulties.styling       = '$difficulty_styling' ");
 }
