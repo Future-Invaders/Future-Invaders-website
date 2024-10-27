@@ -26,6 +26,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
+/*  arsenals_add                    Adds an arsenal to the database                                                  */
+/*                                                                                                                   */
 /*  tags_get                        Returns data related to a tag                                                    */
 /*  tags_list                       Lists tags in the database                                                       */
 /*  tags_list_types                 Lists tag types in the database                                                  */
@@ -1315,6 +1317,58 @@ function images_delete( int $image_id ) : void
   // Delete the image's tags from the database
   query(" DELETE FROM tags_images
           WHERE       tags_images.fk_images = '$image_id' ");
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    ARSENALS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Adds an arsenal to the database.
+ *
+ * @param   array   $data  An array containing the arsenal's data.
+ *
+ * @return  void
+ */
+
+function arsenals_add( array $data ) : void
+{
+  // Sanitize the data
+  $arsenal_release      = sanitize_array_element($data, 'release', 'int');
+  $arsenal_format       = sanitize_array_element($data, 'format', 'int');
+  $arsenal_difficulty   = sanitize_array_element($data, 'difficulty', 'int');
+  $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
+  $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
+  $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
+  $arsenal_playstyle_fr = sanitize_array_element($data, 'playstyle_fr', 'string');
+  $arsenal_summary_en   = sanitize_array_element($data, 'summary_en', 'string');
+  $arsenal_summary_fr   = sanitize_array_element($data, 'summary_fr', 'string');
+  $arsenal_gameplan_en  = sanitize_array_element($data, 'gameplan_en', 'string');
+  $arsenal_gameplan_fr  = sanitize_array_element($data, 'gameplan_fr', 'string');
+  $arsenal_reserves_en  = sanitize_array_element($data, 'reserves_en', 'string');
+  $arsenal_reserves_fr  = sanitize_array_element($data, 'reserves_fr', 'string');
+
+  // Add the arsenal to the database
+  query(" INSERT INTO arsenals
+          SET         arsenals.uuid                     = UUID()                  ,
+                      arsenals.fk_releases              = '$arsenal_release'      ,
+                      arsenals.fk_formats               = '$arsenal_format'       ,
+                      arsenals.fk_arsenal_difficulties  = '$arsenal_difficulty'   ,
+                      arsenals.name_en                  = '$arsenal_name_en'      ,
+                      arsenals.name_fr                  = '$arsenal_name_fr'      ,
+                      arsenals.playstyle_en             = '$arsenal_playstyle_en' ,
+                      arsenals.playstyle_fr             = '$arsenal_playstyle_fr' ,
+                      arsenals.summary_en               = '$arsenal_summary_en'   ,
+                      arsenals.summary_fr               = '$arsenal_summary_fr'   ,
+                      arsenals.gameplan_en              = '$arsenal_gameplan_en'  ,
+                      arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
+                      arsenals.reserves_en              = '$arsenal_reserves_en'  ,
+                      arsenals.reserves_fr              = '$arsenal_reserves_fr'  ");
 }
 
 

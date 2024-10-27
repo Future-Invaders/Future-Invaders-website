@@ -305,6 +305,39 @@ ___('admin_arsenal_management_hide_body',     'EN', "Hide arsenal previews");
 ___('admin_arsenal_management_hide_body',     'FR', "Masquer les prévisualisations");
 
 
+// Add an arsenal
+___('admin_arsenal_add_title',        'EN', "Add an arsenal");
+___('admin_arsenal_add_title',        'FR', "Ajouter un arsenal");
+___('admin_arsenal_add_release',      'EN', "Release");
+___('admin_arsenal_add_release',      'FR', "Version");
+___('admin_arsenal_add_format',       'EN', "Format");
+___('admin_arsenal_add_format',       'FR', "Format");
+___('admin_arsenal_add_difficulty',   'EN', "Difficulty level");
+___('admin_arsenal_add_difficulty',   'FR', "Niveau de difficulté");
+___('admin_arsenal_add_name_en',      'EN', "Name (English)");
+___('admin_arsenal_add_name_en',      'FR', "Nom (Anglais)");
+___('admin_arsenal_add_name_fr',      'EN', "Name (French)");
+___('admin_arsenal_add_name_fr',      'FR', "Nom (Français)");
+___('admin_arsenal_add_playstyle_en', 'EN', "Playstyle (English)");
+___('admin_arsenal_add_playstyle_en', 'FR', "Style de jeu (Anglais)");
+___('admin_arsenal_add_playstyle_fr', 'EN', "Playstyle (French)");
+___('admin_arsenal_add_playstyle_fr', 'FR', "Style de jeu (Français)");
+___('admin_arsenal_add_summary_en',   'EN', "Summary (English)");
+___('admin_arsenal_add_summary_en',   'FR', "Résumé (Anglais)");
+___('admin_arsenal_add_summary_fr',   'EN', "Summary (French)");
+___('admin_arsenal_add_summary_fr',   'FR', "Résumé (Français)");
+___('admin_arsenal_add_gameplan_en',  'EN', "Gameplan (English)");
+___('admin_arsenal_add_gameplan_en',  'FR', "Plan du jeu (Anglais)");
+___('admin_arsenal_add_gameplan_fr',  'EN', "Gameplan (French)");
+___('admin_arsenal_add_gameplan_fr',  'FR', "Plan du jeu (Français)");
+___('admin_arsenal_add_reserves_en',  'EN', "Reserves (English)");
+___('admin_arsenal_add_reserves_en',  'FR', "Réserves (Anglais)");
+___('admin_arsenal_add_reserves_fr',  'EN', "Reserves (French)");
+___('admin_arsenal_add_reserves_fr',  'FR', "Réserves (Français)");
+___('admin_arsenal_add_submit',       'EN', "Add arsenal");
+___('admin_arsenal_add_submit',       'FR', "Ajouter l'arsenal");
+
+
 // List arsenal difficulties
 ___('admin_arsenal_difficulty_list_title',  'EN', "Arsenal levels");
 ___('admin_arsenal_difficulty_list_title',  'FR', "Niveaux des arsenaux");

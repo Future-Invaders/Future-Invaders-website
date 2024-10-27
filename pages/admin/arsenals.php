@@ -28,6 +28,45 @@ $js   = array('admin/admin');
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Add an arsenal
+
+if(isset($_POST['arsenal_add']))
+{
+  // Gather the postdata
+  $arsenal_add_release      = form_fetch_element('arsenal_release');
+  $arsenal_add_format       = form_fetch_element('arsenal_format');
+  $arsenal_add_difficulty   = form_fetch_element('arsenal_difficulty');
+  $arsenal_add_name_en      = form_fetch_element('arsenal_name_en');
+  $arsenal_add_name_fr      = form_fetch_element('arsenal_name_fr');
+  $arsenal_add_playstyle_en = form_fetch_element('arsenal_playstyle_en');
+  $arsenal_add_playstyle_fr = form_fetch_element('arsenal_playstyle_fr');
+  $arsenal_add_summary_en   = form_fetch_element('arsenal_summary_en');
+  $arsenal_add_summary_fr   = form_fetch_element('arsenal_summary_fr');
+  $arsenal_add_gameplan_en  = form_fetch_element('arsenal_gameplan_en');
+  $arsenal_add_gameplan_fr  = form_fetch_element('arsenal_gameplan_fr');
+  $arsenal_add_reserves_en  = form_fetch_element('arsenal_reserves_en');
+  $arsenal_add_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
+
+  // Assemble an array with the postdata
+  $arsenal_add_data = array(  'release'       => $arsenal_add_release       ,
+                              'format'        => $arsenal_add_format        ,
+                              'difficulty'    => $arsenal_add_difficulty    ,
+                              'name_en'       => $arsenal_add_name_en       ,
+                              'name_fr'       => $arsenal_add_name_fr       ,
+                              'playstyle_en'  => $arsenal_add_playstyle_en  ,
+                              'playstyle_fr'  => $arsenal_add_playstyle_fr  ,
+                              'summary_en'    => $arsenal_add_summary_en    ,
+                              'summary_fr'    => $arsenal_add_summary_fr    ,
+                              'gameplan_en'   => $arsenal_add_gameplan_en   ,
+                              'gameplan_fr'   => $arsenal_add_gameplan_fr   ,
+                              'reserves_en'   => $arsenal_add_reserves_en   ,
+                              'reserves_fr'   => $arsenal_add_reserves_fr   );
+
+  // Add the arsenal to the database
+  arsenals_add($arsenal_add_data);
+}
+
 
 
 
