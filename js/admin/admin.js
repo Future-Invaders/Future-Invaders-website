@@ -22,6 +22,8 @@
 /*                                                                                                                   */
 /*  admin_factions_delete       Triggers the deletion of an entry in the faction list.                               */
 /*                                                                                                                   */
+/*  admin_formats_delete        Triggers the deletion of an entry in the game formats list.                          */
+/*                                                                                                                   */
 /*  admin_page_stats_search     Searches the page stats list.                                                        */
 /*  admin_page_stats_delete     Triggers the deletion of an entry in the page stats list.                            */
 /*                                                                                                                   */
@@ -372,6 +374,29 @@ function admin_factions_delete( message     ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('factions', 'admin_factions_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the game formats list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     format    The id of the format to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_formats_delete( message   ,
+                               format    )
+{
+  // Assemble the postdata
+  postdata = 'admin_formats_delete=' + fetch_sanitize(format);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('formats', 'admin_formats_tbody', postdata);
 }
 
 

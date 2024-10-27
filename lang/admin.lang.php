@@ -477,6 +477,11 @@ ___('admin_format_add_submit',  'EN', "Add format");
 ___('admin_format_add_submit',  'FR', "Ajouter le format");
 
 
+// Delete a game format
+___('admin_format_delete_confirm', 'EN', "Confirm the deletion of this game format");
+___('admin_format_delete_confirm', 'FR', "Confirmez la suppression de ce format de jeu");
+
+
 
 
 /*********************************************************************************************************************/

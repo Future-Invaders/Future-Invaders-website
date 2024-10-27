@@ -48,6 +48,15 @@ if(isset($_POST['format_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete a game format
+
+if(isset($_POST['admin_formats_delete']))
+  formats_delete(form_fetch_element('admin_formats_delete'));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of game formats
 
 $formats_list = formats_list();
@@ -84,6 +93,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
     </thead>
 
     <tbody class="altc2 nowrap" id="admin_formats_tbody">
+
+      <?php endif; ?>
 
       <tr>
         <td colspan="3" class="uppercase text_light dark bold align_center">
@@ -131,6 +142,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       </tr>
 
       <?php endfor; ?>
+
+      <?php if(!page_is_fetched_dynamically()): ?>
 
     </tbody>
   </table>

@@ -59,6 +59,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  formats_list                    Lists game formats in the database                                               */
 /*  formats_add                     Adds a game format to the database                                               */
+/*  formats_delete                  Deletes a game format from the database                                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -2598,7 +2599,7 @@ function formats_list( string $format = 'html' ) : array
       $data[$i]['name']         = sanitize_output(string_truncate($row['f_name'], 20, '...'));
       $data[$i]['name_en']      = sanitize_output($row['f_name_en']);
       $data[$i]['name_fr']      = sanitize_output($row['f_name_fr']);
-      $data[$i]['desc']         = sanitize_output(string_truncate($row['f_desc'], 50, '...'));
+      $data[$i]['desc']         = sanitize_output(string_truncate($row['f_desc'], 35, '...'));
       $data[$i]['desc_en_raw']  = nl2br($row['f_desc_en']);
       $data[$i]['desc_fr_raw']  = nl2br($row['f_desc_fr']);
     }
@@ -2630,6 +2631,8 @@ function formats_list( string $format = 'html' ) : array
 }
 
 
+
+
 /**
  * Adds a game format to the database.
  *
@@ -2655,4 +2658,25 @@ function formats_add( array $data ) : void
                       formats.name_fr         = '$format_name_fr' ,
                       formats.description_en  = '$format_body_en' ,
                       formats.description_fr  = '$format_body_fr' ");
+}
+
+
+
+
+/**
+ * Deletes a game format from the database.
+ *
+ * @param   int     $format_id  The id of the format to delete.
+ *
+ * @return  void
+ */
+
+function formats_delete( int $format_id ) : void
+{
+  // Sanitize the data
+  $format_id = sanitize($format_id, 'int');
+
+  // Delete the format from the database
+  query(" DELETE FROM formats
+          WHERE       formats.id = '$format_id' ");
 }
