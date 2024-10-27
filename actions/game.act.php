@@ -63,8 +63,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  formats_edit                    Edits a game format in the database                                              */
 /*  formats_delete                  Deletes a game format from the database                                          */
 /*                                                                                                                   */
+/*  arsenal_difficulties_get        Returns data related to an arsenal difficulty level                              */
 /*  arsenal_difficulties_list       Lists arsenal difficulty levels in the database                                  */
 /*  arsenal_difficulties_add        Adds an arsenal difficulty level to the database                                 */
+/*  arsenal_difficulties_edit       Edits an arsenal difficulty level in the database                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -2774,6 +2776,45 @@ function formats_delete( int $format_id ) : void
 /*********************************************************************************************************************/
 
 /**
+ * Returns data related to an arsenal difficulty level.
+ *
+ * @param   int         $arsenal_difficulty_id  The arsenal difficulty level's id.
+ *
+ * @return  array|null            An array containing the arsenal difficulty level's data, or null if it doesn't exist.
+ */
+
+function arsenal_difficulties_get( int $arsenal_difficulty_id ) : array|null
+{
+  // Sanitize the arsenal difficulty level's id
+  $arsenal_difficulty_id = sanitize($arsenal_difficulty_id, 'int');
+
+  // Return null if the arsenal difficulty level does not exist
+  if(!database_row_exists('arsenal_difficulties', $arsenal_difficulty_id))
+    return null;
+
+  // Fetch the arsenal difficulty level's data
+  $arsenal_difficulty_data = query("  SELECT  arsenal_difficulties.sorting_order  AS 'ad_order'   ,
+                                              arsenal_difficulties.name_en        AS 'ad_name_en' ,
+                                              arsenal_difficulties.name_fr        AS 'ad_name_fr' ,
+                                              arsenal_difficulties.styling        AS 'ad_styling'
+                                      FROM    arsenal_difficulties
+                                      WHERE   arsenal_difficulties.id = '$arsenal_difficulty_id' ",
+                                      fetch_row: true);
+
+  // Assemble an array with the arsenal difficulty level's data
+  $data['order']    = sanitize_output($arsenal_difficulty_data['ad_order']);
+  $data['name_en']  = sanitize_output($arsenal_difficulty_data['ad_name_en']);
+  $data['name_fr']  = sanitize_output($arsenal_difficulty_data['ad_name_fr']);
+  $data['styling']  = sanitize_output($arsenal_difficulty_data['ad_styling']);
+
+  // Return the arsenal difficulty level's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists arsenal difficulty levels in the database.
  *
  * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
@@ -2861,4 +2902,39 @@ function arsenal_difficulties_add( array $data ) : void
                       arsenal_difficulties.name_en        = '$difficulty_name_en' ,
                       arsenal_difficulties.name_fr        = '$difficulty_name_fr' ,
                       arsenal_difficulties.styling        = '$difficulty_styling' ");
+}
+
+
+
+
+/**
+ * Edits an arsenal difficulty level in the database.
+ *
+ * @param   int         $difficulty_id  The id of the arsenal difficulty level to edit.
+ * @param   array       $data           An array containing the arsenal difficulty level's data.
+ *
+ * @return  void
+ */
+
+function arsenal_difficulties_edit( int   $difficulty_id  ,
+                                    array $data           ) : void
+{
+  // Sanitize the data
+  $difficulty_id      = sanitize($difficulty_id, 'int');
+  $difficulty_order   = sanitize_array_element($data, 'order', 'int');
+  $difficulty_name_en = sanitize_array_element($data, 'name_en', 'string');
+  $difficulty_name_fr = sanitize_array_element($data, 'name_fr', 'string');
+  $difficulty_styling = sanitize_array_element($data, 'styling', 'string');
+
+  // Stop here if the arsenal difficulty level does not exist
+  if(!database_row_exists('arsenal_difficulties', $difficulty_id))
+    return;
+
+  // Edit the arsenal difficulty level
+  query(" UPDATE  arsenal_difficulties
+          SET     arsenal_difficulties.sorting_order  = '$difficulty_order'   ,
+                  arsenal_difficulties.name_en        = '$difficulty_name_en' ,
+                  arsenal_difficulties.name_fr        = '$difficulty_name_fr' ,
+                  arsenal_difficulties.styling        = '$difficulty_styling'
+          WHERE   arsenal_difficulties.id             = '$difficulty_id' ");
 }

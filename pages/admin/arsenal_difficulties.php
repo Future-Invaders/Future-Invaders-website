@@ -47,6 +47,28 @@ if(isset($_POST['difficulty_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit an arsenal difficulty level
+
+if(isset($_POST['difficulty_edit']))
+{
+  // Gather the difficulty's id
+  $difficulty_edit_id = form_fetch_element('difficulty_id');
+
+  // Assemble an array with the postdata
+  $difficulty_edit_data = array( 'order'   => form_fetch_element('difficulty_sort')   ,
+                                 'name_en' => form_fetch_element('difficulty_name_en') ,
+                                 'name_fr' => form_fetch_element('difficulty_name_fr') ,
+                                 'styling' => form_fetch_element('difficulty_styling')  );
+
+  // Edit the arsenal difficulty level
+  arsenal_difficulties_edit(  $difficulty_edit_id    ,
+                              $difficulty_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of all arsenal difficulty levels
 
 $arsenal_difficulties_list = arsenal_difficulties_list();

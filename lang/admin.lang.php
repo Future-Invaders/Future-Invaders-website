@@ -333,6 +333,13 @@ ___('admin_arsenal_difficulty_add_submit',  'EN', "Add difficulty level");
 ___('admin_arsenal_difficulty_add_submit',  'FR', "Ajouter la difficulté");
 
 
+// Edit an arsenal difficulty level
+___('admin_arsenal_difficulty_edit_title',  'EN', "Edit difficulty level");
+___('admin_arsenal_difficulty_edit_title',  'FR', "Modifier une difficulté");
+___('admin_arsenal_difficulty_edit_submit', 'EN', "Edit difficulty level");
+___('admin_arsenal_difficulty_edit_submit', 'FR', "Modifier la difficulté");
+
+
 
 
 /*********************************************************************************************************************/
