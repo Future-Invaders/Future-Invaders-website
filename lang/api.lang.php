@@ -25,6 +25,8 @@ ___('api_menu_releases',  'EN', "Releases");
 ___('api_menu_releases',  'FR', "Versions");
 ___('api_menu_factions',  'EN', "Factions");
 ___('api_menu_factions',  'FR', "Factions");
+___('api_menu_formats',   'EN', "Formats");
+___('api_menu_formats',   'FR', "Formats");
 ___('api_menu_images',    'EN', "Images");
 ___('api_menu_images',    'FR', "Images");
 ___('api_menu_tags',      'EN', "Tags");
@@ -228,6 +230,30 @@ EOD
 // List factions
 ___('api_factions_list_summary',  'EN', "Retrieves a list of all factions.");
 ___('api_factions_list_summary',  'FR', "Récupère la liste de toutes les factions.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   GAME FORMATS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_formats_intro', 'EN', <<<EOD
+Future Invaders can be played in various different ways. Each unique way to play the game is called a format. This list of official game formats is just a small list of ideas, feel free to come up with your own.
+EOD
+);
+___('api_formats_intro', 'FR', <<<EOD
+Future Invaders peut être joué de différentes façons. Chaque façon de jouer au jeu est appelée un format. Cette liste de formats de jeu officiels est juste une petite liste d'idées, n'hésitez pas à inventer vos propres formats.
+EOD
+);
+
+
+// List factions
+___('api_formats_list_summary', 'EN', "Retrieves a list of game formats.");
+___('api_formats_list_summary', 'FR', "Récupère la liste des formats de jeu.");
 
 
 
