@@ -19,6 +19,8 @@ ___('api_menu_title',     'EN', "Future Invaders API");
 ___('api_menu_title',     'FR', "API Future Invaders");
 ___('api_menu_intro',     'EN', "Introduction");
 ___('api_menu_intro',     'FR', "Introduction");
+___('api_menu_arsenals',  'EN', "Arsenals");
+___('api_menu_arsenals',  'FR', "Arsenaux");
 ___('api_menu_cards',     'EN', "Cards");
 ___('api_menu_cards',     'FR', "Cartes");
 ___('api_menu_releases',  'EN', "Releases");
@@ -182,6 +184,30 @@ ___('api_reminders_list_summary', 'FR', "Récupère la liste de toutes les carte
 // List rules
 ___('api_rules_list_summary', 'EN', "Retrieves a list of all rules cards.");
 ___('api_rules_list_summary', 'FR', "Récupère la liste de toutes les cartes de règles.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     ARSENALS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_arsenals_intro', 'EN', <<<EOD
+Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested preconstructed arsenals, to give you ideas on how to build your own. The API lists all such preconstructed arsenals.
+EOD
+);
+___('api_arsenals_intro', 'FR', <<<EOD
+Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux préconstruits, pour vous donner des idées sur la façon de construire vos propres arsenaux. L'API liste tous ces arsenaux préconstruits.
+EOD
+);
+
+
+// Arsenal difficulties
+___('api_arsenal_difficulties_list_summary', 'EN', "Retrieves a list of difficulty levels used to classify arsenals.");
+___('api_arsenal_difficulties_list_summary', 'FR', "Récupère la liste des niveaux de difficultés utilisés pour classer les arsenaux.");
 
 
 
