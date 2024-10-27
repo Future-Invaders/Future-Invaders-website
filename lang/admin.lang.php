@@ -443,6 +443,31 @@ ___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette ver
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                   GAME FORMATS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Add a game format
+___('admin_format_add_title',   'EN', "Add a game format");
+___('admin_format_add_title',   'FR', "Ajouter un format de jeu");
+___('admin_format_add_sort',    'EN', "Sorting order");
+___('admin_format_add_sort',    'FR', "Ordre de tri");
+___('admin_format_add_name_en', 'EN', "Name (English)");
+___('admin_format_add_name_en', 'FR', "Nom (Anglais)");
+___('admin_format_add_name_fr', 'EN', "Name (French)");
+___('admin_format_add_name_fr', 'FR', "Nom (Français)");
+___('admin_format_add_body_en', 'EN', "Description (English)");
+___('admin_format_add_body_en', 'FR', "Description (Anglais)");
+___('admin_format_add_body_fr', 'EN', "Description (French)");
+___('admin_format_add_body_fr', 'FR', "Description (Français)");
+___('admin_format_add_submit',  'EN', "Add format");
+___('admin_format_add_submit',  'FR', "Ajouter le format");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                     FACTIONS                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

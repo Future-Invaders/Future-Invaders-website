@@ -57,6 +57,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*  card_rarities_delete            Deletes a card rarity from the database                                          */
 /*                                                                                                                   */
+/*  formats_add                     Adds a game format to the database                                               */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       CARDS                                                       */
@@ -2547,4 +2549,40 @@ function card_rarities_delete( int $card_rarity_id ) : void
   // Delete the card rarity from the database
   query(" DELETE FROM card_rarities
           WHERE       card_rarities.id = '$card_rarity_id' ");
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   GAME FORMATS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Adds a game format to the database.
+ *
+ * @param   array   $data  An array containing the game format's data.
+ *
+ * @return  void
+ */
+
+function formats_add( array $data ) : void
+{
+  // Sanitize the data
+  $format_order   = sanitize_array_element($data, 'order', 'int');
+  $format_name_en = sanitize_array_element($data, 'name_en', 'string');
+  $format_name_fr = sanitize_array_element($data, 'name_fr', 'string');
+  $format_body_en = sanitize_array_element($data, 'body_en', 'string');
+  $format_body_fr = sanitize_array_element($data, 'body_fr', 'string');
+
+  // Add the format to the database
+  query(" INSERT INTO formats
+          SET         formats.uuid            = UUID()            ,
+                      formats.sorting_order   = '$format_order'   ,
+                      formats.name_en         = '$format_name_en' ,
+                      formats.name_fr         = '$format_name_fr' ,
+                      formats.description_en  = '$format_body_en' ,
+                      formats.description_fr  = '$format_body_fr' ");
 }
