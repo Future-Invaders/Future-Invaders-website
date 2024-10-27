@@ -30,7 +30,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 <div class="width_50 padding_top">
 
   <h2 class="padding_bot">
-    <?=__('admin_format_add_title')?>
+    <?=__link('pages/admin/formats', __('admin_format_add_title'), 'text_light')?>
   </h2>
 
   <form action="formats" method="POST">

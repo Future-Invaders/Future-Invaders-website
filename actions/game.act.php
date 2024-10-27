@@ -57,6 +57,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*  card_rarities_delete            Deletes a card rarity from the database                                          */
 /*                                                                                                                   */
+/*  formats_list                    Lists game formats in the database                                               */
 /*  formats_add                     Adds a game format to the database                                               */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -2559,6 +2560,75 @@ function card_rarities_delete( int $card_rarity_id ) : void
 /*                                                   GAME FORMATS                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Lists all game formats.
+ *
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array   An array containing the game formats.
+ */
+
+function formats_list( string $format = 'html' ) : array
+{
+  // Get the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch the formats
+  $formats = query("  SELECT    formats.id                AS 'f_id'       ,
+                                formats.uuid              AS 'f_uuid'     ,
+                                formats.sorting_order     AS 'f_order'    ,
+                                formats.name_$lang        AS 'f_name'     ,
+                                formats.name_en           AS 'f_name_en'  ,
+                                formats.name_fr           AS 'f_name_fr'  ,
+                                formats.description_$lang AS 'f_desc'    ,
+                                formats.description_en    AS 'f_desc_en'  ,
+                                formats.description_fr    AS 'f_desc_fr'
+                      FROM      formats
+                      ORDER BY  formats.sorting_order ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($formats); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']           = sanitize_output($row['f_id']);
+      $data[$i]['order']        = sanitize_output($row['f_order']);
+      $data[$i]['name']         = sanitize_output(string_truncate($row['f_name'], 20, '...'));
+      $data[$i]['name_en']      = sanitize_output($row['f_name_en']);
+      $data[$i]['name_fr']      = sanitize_output($row['f_name_fr']);
+      $data[$i]['desc']         = sanitize_output(string_truncate($row['f_desc'], 50, '...'));
+      $data[$i]['desc_en_raw']  = nl2br($row['f_desc_en']);
+      $data[$i]['desc_fr_raw']  = nl2br($row['f_desc_fr']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid']               = sanitize_json($row['f_uuid']);
+      $data[$i]['name']['en']         = sanitize_json($row['f_name_en']);
+      $data[$i]['name']['fr']         = sanitize_json($row['f_name_fr']);
+      $data[$i]['description']['en']  = sanitize_json($row['f_desc_en']);
+      $data[$i]['description']['fr']  = sanitize_json($row['f_desc_fr']);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('formats' => $data);
+  }
+
+  // Return the prepared data
+  return $data;
+}
+
 
 /**
  * Adds a game format to the database.

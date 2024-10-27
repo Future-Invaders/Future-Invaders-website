@@ -447,6 +447,19 @@ ___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette ver
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// List game formats
+___('admin_format_list_order',        'EN', "Order");
+___('admin_format_list_order',        'FR', "Ordre");
+___('admin_format_list_name',         'EN', "Name");
+___('admin_format_list_name',         'FR', "Nom");
+___('admin_format_list_description',  'EN', "Description");
+___('admin_format_list_description',  'FR', "Description");
+___('admin_format_list_count',        'EN', "{{1}} game format");
+___('admin_format_list_count',        'FR', "{{1}} format de jeu");
+___('admin_format_list_count+',       'EN', "{{1}} game formats");
+___('admin_format_list_count+',       'FR', "{{1}} formats de jeu");
+
+
 // Add a game format
 ___('admin_format_add_title',   'EN', "Add a game format");
 ___('admin_format_add_title',   'FR', "Ajouter un format de jeu");
