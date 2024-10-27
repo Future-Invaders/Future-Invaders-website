@@ -305,6 +305,19 @@ ___('admin_arsenal_management_hide_body',     'EN', "Hide arsenal previews");
 ___('admin_arsenal_management_hide_body',     'FR', "Masquer les prévisualisations");
 
 
+// List arsenal difficulties
+___('admin_arsenal_difficulty_list_title',  'EN', "Arsenal levels");
+___('admin_arsenal_difficulty_list_title',  'FR', "Niveaux des arsenaux");
+___('admin_arsenal_difficulty_list_order',  'EN', "Order");
+___('admin_arsenal_difficulty_list_order',  'FR', "Ordre");
+___('admin_arsenal_difficulty_list_name',   'EN', "Name");
+___('admin_arsenal_difficulty_list_name',   'FR', "Nom");
+___('admin_arsenal_difficulty_list_count',  'EN', "{{1}} difficulty level");
+___('admin_arsenal_difficulty_list_count',  'FR', "{{1}} niveau de difficulté");
+___('admin_arsenal_difficulty_list_count+', 'EN', "{{1}} difficulty levels");
+___('admin_arsenal_difficulty_list_count+', 'FR', "{{1}} niveaux de difficulté");
+
+
 // Add an arsenal difficulty level
 ___('admin_arsenal_difficulty_add_title',   'EN', "Add a difficulty level");
 ___('admin_arsenal_difficulty_add_title',   'FR', "Ajouter une difficulté");

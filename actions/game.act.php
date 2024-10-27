@@ -63,6 +63,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  formats_edit                    Edits a game format in the database                                              */
 /*  formats_delete                  Deletes a game format from the database                                          */
 /*                                                                                                                   */
+/*  arsenal_difficulties_list       Lists arsenal difficulty levels in the database                                  */
 /*  arsenal_difficulties_add        Adds an arsenal difficulty level to the database                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -2773,6 +2774,71 @@ function formats_delete( int $format_id ) : void
 /*********************************************************************************************************************/
 
 /**
+ * Lists arsenal difficulty levels in the database.
+ *
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array   An array containing the arsenal difficulty levels.
+ */
+
+function arsenal_difficulties_list( string $format = 'html' ) : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch the arsenal difficulty levels
+  $arsenal_difficulties = query(" SELECT    arsenal_difficulties.id             AS 'ad_id'      ,
+                                            arsenal_difficulties.uuid           AS 'ad_uuid'    ,
+                                            arsenal_difficulties.sorting_order  AS 'ad_order'   ,
+                                            arsenal_difficulties.name_$lang     AS 'ad_name'    ,
+                                            arsenal_difficulties.name_en        AS 'ad_name_en' ,
+                                            arsenal_difficulties.name_fr        AS 'ad_name_fr' ,
+                                            arsenal_difficulties.styling        AS 'ad_styling'
+                                  FROM      arsenal_difficulties
+                                  ORDER BY  arsenal_difficulties.sorting_order ASC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($arsenal_difficulties); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']       = sanitize_output($row['ad_id']);
+      $data[$i]['order']    = sanitize_output($row['ad_order']);
+      $data[$i]['name']     = sanitize_output(string_truncate($row['ad_name'], 20, '...'));
+      $data[$i]['name_en']  = sanitize_output($row['ad_name_en']);
+      $data[$i]['name_fr']  = sanitize_output($row['ad_name_fr']);
+      $data[$i]['styling']  = sanitize_output($row['ad_styling']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid']     = sanitize_json($row['ad_uuid']);
+      $data[$i]['name']['en']  = sanitize_json($row['ad_name_en']);
+      $data[$i]['name']['fr']  = sanitize_json($row['ad_name_fr']);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('arsenal_difficulties' => $data);
+  }
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
  * Adds an arsenal difficulty level to the database.
  *
  * @param   array   $data   An array containing the difficulty level's data
@@ -2789,10 +2855,10 @@ function arsenal_difficulties_add( array $data ) : void
   $difficulty_styling = sanitize_array_element($data, 'styling', 'string');
 
   // Add the difficulty level to the database
-  query(" INSERT INTO arsenals_difficulties
-          SET         arsenals_difficulties.uuid          = UUID()                ,
-                      arsenals_difficulties.sorting_order = '$difficulty_order'   ,
-                      arsenals_difficulties.name_en       = '$difficulty_name_en' ,
-                      arsenals_difficulties.name_fr       = '$difficulty_name_fr' ,
-                      arsenals_difficulties.styling       = '$difficulty_styling' ");
+  query(" INSERT INTO arsenal_difficulties
+          SET         arsenal_difficulties.uuid           = UUID()                ,
+                      arsenal_difficulties.sorting_order  = '$difficulty_order'   ,
+                      arsenal_difficulties.name_en        = '$difficulty_name_en' ,
+                      arsenal_difficulties.name_fr        = '$difficulty_name_fr' ,
+                      arsenal_difficulties.styling        = '$difficulty_styling' ");
 }

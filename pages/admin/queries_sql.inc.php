@@ -915,15 +915,15 @@ if($last_query < 13)
   sql_create_index('formats', 'formats_uuid', 'uuid');
   sql_create_index('formats', 'formats_sorting', 'sorting_order');
 
-  sql_create_table('arsenals_difficulties');
-  sql_create_field('arsenals_difficulties', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('arsenals_difficulties', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
-  sql_create_field('arsenals_difficulties', 'name_en', 'TINYTEXT NOT NULL', 'sorting_order');
-  sql_create_field('arsenals_difficulties', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('arsenals_difficulties', 'styling', 'TEXT', 'name_fr');
+  sql_create_table('arsenal_difficulties');
+  sql_create_field('arsenal_difficulties', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('arsenal_difficulties', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'uuid');
+  sql_create_field('arsenal_difficulties', 'name_en', 'TINYTEXT NOT NULL', 'sorting_order');
+  sql_create_field('arsenal_difficulties', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
+  sql_create_field('arsenal_difficulties', 'styling', 'TEXT', 'name_fr');
 
-  sql_create_index('arsenals_difficulties', 'difficulties_uuid', 'uuid');
-  sql_create_index('arsenals_difficulties', 'difficulties_sorting', 'sorting_order');
+  sql_create_index('arsenal_difficulties', 'difficulties_uuid', 'uuid');
+  sql_create_index('arsenal_difficulties', 'difficulties_sorting', 'sorting_order');
 
   sql_update_query_id(13);
 }
