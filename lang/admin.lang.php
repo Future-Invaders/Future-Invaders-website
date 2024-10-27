@@ -477,6 +477,13 @@ ___('admin_format_add_submit',  'EN', "Add format");
 ___('admin_format_add_submit',  'FR', "Ajouter le format");
 
 
+// Edit a game format
+___('admin_format_edit_title',   'EN', "Edit game format");
+___('admin_format_edit_title',   'FR', "Modifier un format de jeu");
+___('admin_format_edit_submit',  'EN', "Edit game format");
+___('admin_format_edit_submit',  'FR', "Modifier le format de jeu");
+
+
 // Delete a game format
 ___('admin_format_delete_confirm', 'EN', "Confirm the deletion of this game format");
 ___('admin_format_delete_confirm', 'FR', "Confirmez la suppression de ce format de jeu");

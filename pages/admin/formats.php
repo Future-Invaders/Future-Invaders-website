@@ -48,6 +48,29 @@ if(isset($_POST['format_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a game format
+
+if(isset($_POST['format_edit']))
+{
+  // Gather the format's id
+  $format_edit_id = form_fetch_element('format_id');
+
+  // Assemble an array with the postdata
+  $format_edit_data = array( 'order'   => form_fetch_element('format_sort')   ,
+                             'name_en' => form_fetch_element('format_name_en') ,
+                             'name_fr' => form_fetch_element('format_name_fr') ,
+                             'desc_en' => form_fetch_element('format_body_en') ,
+                             'desc_fr' => form_fetch_element('format_body_fr') );
+
+  // Edit the format
+  formats_edit(  $format_edit_id    ,
+                 $format_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete a game format
 
 if(isset($_POST['admin_formats_delete']))

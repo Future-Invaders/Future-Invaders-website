@@ -57,8 +57,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  card_rarities_edit              Edits a card rarity in the database                                              */
 /*  card_rarities_delete            Deletes a card rarity from the database                                          */
 /*                                                                                                                   */
+/*  formats_get                     Returns data related to a game format                                            */
 /*  formats_list                    Lists game formats in the database                                               */
 /*  formats_add                     Adds a game format to the database                                               */
+/*  formats_edit                    Edits a game format in the database                                              */
 /*  formats_delete                  Deletes a game format from the database                                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -2563,11 +2565,52 @@ function card_rarities_delete( int $card_rarity_id ) : void
 /*********************************************************************************************************************/
 
 /**
+ * Returns data related to a game format.
+ *
+ * @param   int         $format_id  The game format's id.
+ *
+ * @return  array|null              An array containing the game format's data, or null if it doesn't exist.
+ */
+
+function formats_get( int $format_id ) : array|null
+{
+  // Sanitize the format's id
+  $format_id = sanitize($format_id, 'int');
+
+  // Return null if the format does not exist
+  if(!database_row_exists('formats', $format_id))
+    return null;
+
+  // Fetch the format's data
+  $format_data = query(" SELECT formats.sorting_order   AS 'f_order'    ,
+                                formats.name_en         AS 'f_name_en'  ,
+                                formats.name_fr         AS 'f_name_fr'  ,
+                                formats.description_en  AS 'f_desc_en'  ,
+                                formats.description_fr  AS 'f_desc_fr'
+                        FROM    formats
+                        WHERE   formats.id = '$format_id' ",
+                        fetch_row: true);
+
+  // Assemble an array with the format's data
+  $data['order']        = sanitize_output($format_data['f_order']);
+  $data['name_en']      = sanitize_output($format_data['f_name_en']);
+  $data['name_fr']      = sanitize_output($format_data['f_name_fr']);
+  $data['desc_en']      = sanitize_output($format_data['f_desc_en']);
+  $data['desc_fr']      = sanitize_output($format_data['f_desc_fr']);
+
+  // Return the format's data
+  return $data;
+}
+
+
+
+
+/**
  * Lists all game formats.
  *
  * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array   An array containing the game formats.
+ * @return  array                         An array containing the game formats.
  */
 
 function formats_list( string $format = 'html' ) : array
@@ -2658,6 +2701,43 @@ function formats_add( array $data ) : void
                       formats.name_fr         = '$format_name_fr' ,
                       formats.description_en  = '$format_body_en' ,
                       formats.description_fr  = '$format_body_fr' ");
+}
+
+
+
+
+/**
+ * Edits a game format in the database.
+ *
+ * @param   int         $format_id   The id of the format to edit.
+ * @param   array       $data        An array containing the format's data.
+ *
+ * @return  void
+ */
+
+function formats_edit(  int   $format_id  ,
+                        array $data       ) : void
+{
+  // Sanitize the data
+  $format_id       = sanitize($format_id, 'int');
+  $format_order    = sanitize_array_element($data, 'order', 'int');
+  $format_name_en  = sanitize_array_element($data, 'name_en', 'string');
+  $format_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $format_body_en  = sanitize_array_element($data, 'desc_en', 'string');
+  $format_body_fr  = sanitize_array_element($data, 'desc_fr', 'string');
+
+  // Stop here if the format does not exist
+  if(!database_row_exists('formats', $format_id))
+    return;
+
+  // Edit the format
+  query(" UPDATE  formats
+          SET     formats.sorting_order   = '$format_order'   ,
+                  formats.name_en         = '$format_name_en' ,
+                  formats.name_fr         = '$format_name_fr' ,
+                  formats.description_en  = '$format_body_en' ,
+                  formats.description_fr  = '$format_body_fr'
+          WHERE   formats.id              = '$format_id'      ");
 }
 
 
