@@ -29,6 +29,21 @@ $js   = array('admin/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of elements needed for search menus
+
+// List of releases
+$releases_list = releases_list();
+
+// List of game formats
+$formats_list = formats_list();
+
+// List of arsenal difficulties
+$arsenal_difficulties_list = arsenal_difficulties_list();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Add an arsenal
 
 if(isset($_POST['arsenal_add']))
@@ -70,6 +85,25 @@ if(isset($_POST['arsenal_add']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch a list of arsenals
+
+// Fetch the search data
+$admin_arsenals_sort    = form_fetch_element('admin_arsenals_sort', '');
+$admin_arsenals_search  = array(  'release'     => form_fetch_element('admin_arsenals_search_release')    ,
+                                  'format'      => form_fetch_element('admin_arsenals_search_format')     ,
+                                  'name'        => form_fetch_element('admin_arsenals_search_name')       ,
+                                  'difficulty'  => form_fetch_element('admin_arsenals_search_difficulty') ,
+                                  'playstyle'   => form_fetch_element('admin_arsenals_search_playstyle')  ,
+                                  'text'        => form_fetch_element('admin_arsenals_search_text')       );
+
+// Fetch the arsenals
+$arsenals_list = arsenals_list( sort_by:  $admin_arsenals_sort    ,
+                                search:   $admin_arsenals_search  );
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -99,6 +133,164 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
     </li>
     <?php endif; ?>
   </ul>
+
+  <table>
+    <thead>
+
+      <tr class="uppercase">
+        <th class="align_center">
+          <?=__('admin_arsenal_list_release')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('release');")?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_arsenal_list_format')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('format');")?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_arsenal_list_name')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('name');")?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_arsenal_list_difficulty')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('difficulty');")?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_arsenal_list_playstyle')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('playstyle');")?>
+        </th>
+        <th class="align_center">
+          <?=__('admin_arsenal_list_body')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('text');")?>
+        </th>
+        <th>
+          <?=__('act')?>
+        </th>
+      </tr>
+
+      <tr>
+        <th>
+          <input type="hidden" name="admin_arsenals_sort" id="admin_arsenals_sort" value="">
+          <select class="table_search" name="admin_arsenals_search_release" id="admin_arsenals_search_release" onchange="admin_arsenals_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $releases_list['rows']; $i++): ?>
+            <option value="<?=$releases_list[$i]['id']?>"><?=$releases_list[$i]['name']?></option>
+            <?php endfor; ?>
+          </select>
+        </th>
+        <th>
+          <select class="table_search" name="admin_arsenals_search_format" id="admin_arsenals_search_format" onchange="admin_arsenals_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $formats_list['rows']; $i++): ?>
+            <option value="<?=$formats_list[$i]['id']?>"><?=$formats_list[$i]['name']?></option>
+            <?php endfor; ?>
+          </select>
+        </th>
+        <th>
+          <input type="text" class="table_search" name="admin_arsenals_search_name" id="admin_arsenals_search_name" value="" onkeyup="admin_arsenals_search();">
+        </th>
+        <th>
+          <select class="table_search" name="admin_arsenals_search_difficulty" id="admin_arsenals_search_difficulty" onchange="admin_arsenals_search();">
+            <option value="0">&nbsp;</option>
+            <option value="-1" class="bold"><?=string_change_case(__('none'), 'uppercase')?></option>
+            <?php for($i = 0; $i < $arsenal_difficulties_list['rows']; $i++): ?>
+            <option value="<?=$arsenal_difficulties_list[$i]['id']?>" class="bold uppercase <?=$arsenal_difficulties_list[$i]['styling']?>"><?=$arsenal_difficulties_list[$i]['name']?></option>
+            <?php endfor; ?>
+          </select>
+        </th>
+        <th>
+          <input type="text" class="table_search" name="admin_arsenals_search_playstyle" id="admin_arsenals_search_playstyle" value="" onkeyup="admin_arsenals_search();">
+        </th>
+        <th>
+          <input type="text" class="table_search" name="admin_arsenals_search_text" id="admin_arsenals_search_text" value="" onkeyup="admin_arsenals_search();">
+        </th>
+        <th>
+          <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/arsenals_add')?>
+        </th>
+      </tr>
+
+    </thead>
+
+    <tbody class="altc2 nowrap" id="admin_arsenals_tbody">
+
+      <?php endif; ?>
+
+      <tr>
+        <td colspan="7" class="uppercase text_light dark bold align_center">
+          <?=__('admin_arsenal_list_count', preset_values: array($arsenals_list['rows']), amount: $arsenals_list['rows'])?>
+        </td>
+      </tr>
+
+      <?php for($i = 0; $i < $arsenals_list['rows']; $i++): ?>
+
+      <tr id="admin_arsenals_row_<?=$arsenals_list[$i]['id']?>">
+
+        <td class="align_center nowrap">
+          <?=$arsenals_list[$i]['release']?>
+        </td>
+
+        <td class="align_center nowrap">
+          <?=$arsenals_list[$i]['format']?>
+        </td>
+
+        <td class="align_left nowrap bold tooltip_container">
+          <?=$arsenals_list[$i]['name']?>
+          <div class="tooltip">
+            <?=$arsenals_list[$i]['name_en']?><br>
+            <?=$arsenals_list[$i]['name_fr']?>
+          </div>
+        </td>
+
+        <td class="align_center nowrap uppercase bold <?=$arsenals_list[$i]['difficulty_css']?>">
+          <?=$arsenals_list[$i]['difficulty']?>
+        </td>
+
+        <td class="align_center nowrap tooltip_container">
+          <?=$arsenals_list[$i]['playstyle']?>
+          <div class="tooltip">
+            <?=$arsenals_list[$i]['playstyle_en']?><br>
+            <?=$arsenals_list[$i]['playstyle_fr']?>
+          </div>
+        </td>
+
+        <td class="align_center tooltip_container">
+          <?=$arsenals_list[$i]['length_en']?> - <?=$arsenals_list[$i]['length_fr']?>
+          <div class="tooltip dowrap">
+            <div class="smallpadding_top smallpadding_bot spaced">
+              <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_en']?><br>
+              <br>
+              <span class="bold"><?=__('admin_arsenal_list_gameplan').__(':')?></span><br>
+              <?=$arsenals_list[$i]['gameplan_en']?><br>
+              <br>
+              <span class="bold"><?=__('admin_arsenal_list_reserves').__(':')?></span><br>
+              <?=$arsenals_list[$i]['reserves_en']?>
+            </div>
+            <hr>
+            <div class="smallpadding_top smallpadding_bot spaced">
+              <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_fr']?><br>
+              <br>
+              <span class="bold"><?=__('admin_arsenal_list_gameplan').__(':')?></span><br>
+              <?=$arsenals_list[$i]['gameplan_fr']?><br>
+              <br>
+              <span class="bold"><?=__('admin_arsenal_list_reserves').__(':')?></span><br>
+              <?=$arsenals_list[$i]['reserves_fr']?>
+            </div>
+          </div>
+        </td>
+
+        <td class="align_center nowrap card_action_icons">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer smallspaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/arsenals_edit?arsenal='.$arsenals_list[$i]['id'])?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_arsenals_delete('".__('admin_arsenal_delete_confirm')."','".$arsenals_list[$i]['id']."')")?>
+        </td>
+
+      </tr>
+
+      <?php endfor; ?>
+
+    </tbody>
+
+    <?php if(!page_is_fetched_dynamically()): ?>
+
+  </table>
 
 </div>
 

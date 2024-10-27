@@ -14,6 +14,8 @@
 /*  admin_images_preview                Fetches the preview of an image.                                             */
 /*  admin_images_delete                 Triggers the deletion of an entry in the image list.                         */
 /*                                                                                                                   */
+/*  admin_arsenals_search               Searches the arsenal list.                                                   */
+/*                                                                                                                   */
 /*  admin_arsenal_difficulties_delete   Triggers the deletion of an entry in the arsenal difficulty list.            */
 /*                                                                                                                   */
 /*  admin_tags_search                   Searches the tag list.                                                       */
@@ -256,6 +258,35 @@ function admin_images_delete( message   ,
     fetch_page('images', 'admin_images_tbody', postdata);
 }
 
+
+
+
+/**
+ * Searches the arsenal list.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_search( sort_data = null )
+{
+  // Update the search input if required
+  if(sort_data)
+    document.getElementById('admin_arsenals_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata =  'admin_arsenals_sort='               + document.getElementById('admin_arsenals_sort').value;
+  postdata += '&admin_arsenals_search_release='    + document.getElementById('admin_arsenals_search_release').value;
+  postdata += '&admin_arsenals_search_format='     + document.getElementById('admin_arsenals_search_format').value;
+  postdata += '&admin_arsenals_search_name='       + document.getElementById('admin_arsenals_search_name').value;
+  postdata += '&admin_arsenals_search_difficulty=' + document.getElementById('admin_arsenals_search_difficulty').value;
+  postdata += '&admin_arsenals_search_playstyle='  + document.getElementById('admin_arsenals_search_playstyle').value;
+  postdata += '&admin_arsenals_search_text='       + document.getElementById('admin_arsenals_search_text').value;
+
+  // Submit the search
+  fetch_page('arsenals', 'admin_arsenals_tbody', postdata);
+}
 
 
 

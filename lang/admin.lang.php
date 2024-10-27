@@ -305,6 +305,31 @@ ___('admin_arsenal_management_hide_body',     'EN', "Hide arsenal previews");
 ___('admin_arsenal_management_hide_body',     'FR', "Masquer les prévisualisations");
 
 
+// Arsenals list
+___('admin_arsenal_list_release',     'EN', "Release");
+___('admin_arsenal_list_release',     'FR', "Version");
+___('admin_arsenal_list_format',      'EN', "Format");
+___('admin_arsenal_list_format',      'FR', "Format");
+___('admin_arsenal_list_name',        'EN', "Name");
+___('admin_arsenal_list_name',        'FR', "Nom");
+___('admin_arsenal_list_difficulty',  'EN', "Level");
+___('admin_arsenal_list_difficulty',  'FR', "Niveau");
+___('admin_arsenal_list_playstyle',   'EN', "Playstyle");
+___('admin_arsenal_list_playstyle',   'FR', "Style de jeu");
+___('admin_arsenal_list_body',        'EN', "Text");
+___('admin_arsenal_list_body',        'FR', "Texte");
+___('admin_arsenal_list_count',       'EN', "{{1}} arsenal");
+___('admin_arsenal_list_count',       'FR', "{{1}} arsenal");
+___('admin_arsenal_list_count+',      'EN', "{{1}} arsenals");
+___('admin_arsenal_list_count+',      'FR', "{{1}} arsenaux");
+___('admin_arsenal_list_summary',     'EN', "Strategy");
+___('admin_arsenal_list_summary',     'FR', "Stratégie");
+___('admin_arsenal_list_gameplan',    'EN', "Game plan");
+___('admin_arsenal_list_gameplan',    'FR', "Plan de jeu");
+___('admin_arsenal_list_reserves',    'EN', "Reserves strategies");
+___('admin_arsenal_list_reserves',    'FR', "Stratégies de réserve");
+
+
 // Add an arsenal
 ___('admin_arsenal_add_title',        'EN', "Add an arsenal");
 ___('admin_arsenal_add_title',        'FR', "Ajouter un arsenal");

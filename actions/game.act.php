@@ -26,6 +26,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
+/*  arsenals_list                   Lists arsenals in the database                                                   */
 /*  arsenals_add                    Adds an arsenal to the database                                                  */
 /*                                                                                                                   */
 /*  tags_get                        Returns data related to a tag                                                    */
@@ -1327,6 +1328,174 @@ function images_delete( int $image_id ) : void
 /*                                                    ARSENALS                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Lists arsenals in the database.
+ *
+ * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
+ * @param   array   $search   (OPTIONAL)  An array containing the search data.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing the arsenals.
+ */
+
+function arsenals_list( string  $sort_by  = ''      ,
+                        array   $search   = array() ,
+                        string  $format   = 'html'  ) : array
+{
+  // Fetch the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Sanitize the search data
+  $search_release     = sanitize_array_element($search, 'release', 'int');
+  $search_format      = sanitize_array_element($search, 'format', 'int');
+  $search_name        = sanitize_array_element($search, 'name', 'string');
+  $search_difficulty  = sanitize_array_element($search, 'difficulty', 'int');
+  $search_playstyle   = sanitize_array_element($search, 'playstyle', 'string');
+  $search_text        = sanitize_array_element($search, 'text', 'string');
+
+  // Search through the data
+  $query_search  = ($search_release)  ? " WHERE arsenals.fk_releases    = '$search_release' "        : " WHERE 1 = 1 ";
+  $query_search .= ($search_format)   ? " AND   arsenals.fk_formats     = '$search_format' "          : "";
+  $query_search .= ($search_name)     ? " AND ( arsenals.name_en        LIKE '%$search_name%'
+                                          OR    arsenals.name_fr        LIKE '%$search_name%' ) "     : "";
+  $query_search .= ($search_difficulty && $search_difficulty !== -1)
+                                      ? " AND   arsenal_difficulties.id = '$search_difficulty' "      : "";
+  $query_search .= ($search_difficulty === -1)
+                                      ? " AND   arsenal_difficulties.id IS NULL "                     : "";
+  $query_search .= ($search_playstyle)
+                                      ? " AND ( arsenals.playstyle_en  LIKE '%$search_playstyle%'
+                                          OR    arsenals.playstyle_fr  LIKE '%$search_playstyle%' ) " : "";
+  $query_search .= ($search_text)     ? " AND ( arsenals.summary_en     LIKE '%$search_text%'
+                                          OR    arsenals.summary_fr     LIKE '%$search_text%'
+                                          OR    arsenals.gameplan_en    LIKE '%$search_text%'
+                                          OR    arsenals.gameplan_fr    LIKE '%$search_text%'
+                                          OR    arsenals.reserves_en    LIKE '%$search_text%'
+                                          OR    arsenals.reserves_fr    LIKE '%$search_text%' ) "     : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'release'     => "  ORDER BY  releases.release_date               IS NULL ,
+                                  releases.release_date               DESC    ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+    'format'      => "  ORDER BY  formats.sorting_order               IS NULL ,
+                                  formats.sorting_order               ASC     ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+    'name'        => "  ORDER BY  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+    'difficulty'  => "  ORDER BY  arsenal_difficulties.sorting_order  IS NULL ,
+                                  arsenal_difficulties.sorting_order  ASC     ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+    'playstyle'   => "  ORDER BY  arsenals.playstyle_$lang            = ''    ,
+                                  arsenals.playstyle_$lang            ASC     ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+    'text'        => "  ORDER BY  LENGTH(arsenals.summary_en)
+                                  + LENGTH(arsenals.summary_fr)
+                                  + LENGTH(arsenals.gameplan_en)
+                                  + LENGTH(arsenals.gameplan_fr)
+                                  + LENGTH(arsenals.reserves_en)
+                                  + LENGTH(arsenals.reserves_fr)      DESC    ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+    default       => "  ORDER BY  releases.release_date               IS NULL ,
+                                  releases.release_date               DESC    ,
+                                  formats.sorting_order               IS NULL ,
+                                  formats.sorting_order               ASC     ,
+                                  arsenal_difficulties.sorting_order  IS NULL ,
+                                  arsenal_difficulties.sorting_order  ASC     ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+  };
+
+  // Fetch the arsenals
+  $arsenals = query(" SELECT    arsenals.id                     AS 'a_id'           ,
+                                arsenals.uuid                   AS 'a_uuid'         ,
+                                arsenals.name_en                AS 'a_name_en'      ,
+                                arsenals.name_fr                AS 'a_name_fr'      ,
+                                arsenals.name_$lang             AS 'a_name'         ,
+                                arsenals.playstyle_en           AS 'a_playstyle_en' ,
+                                arsenals.playstyle_fr           AS 'a_playstyle_fr' ,
+                                arsenals.playstyle_$lang        AS 'a_playstyle'    ,
+                                  LENGTH(arsenals.summary_en)
+                                + LENGTH(arsenals.gameplan_en)
+                                + LENGTH(arsenals.reserves_en)  AS 'a_length_en'    ,
+                                  LENGTH(arsenals.summary_fr)
+                                + LENGTH(arsenals.gameplan_fr)
+                                + LENGTH(arsenals.reserves_fr)  AS 'a_length_fr'    ,
+                                arsenals.summary_en             AS 'a_summary_en'   ,
+                                arsenals.summary_fr             AS 'a_summary_fr'   ,
+                                arsenals.gameplan_en            AS 'a_gameplan_en'  ,
+                                arsenals.gameplan_fr            AS 'a_gameplan_fr'  ,
+                                arsenals.reserves_en            AS 'a_reserves_en'  ,
+                                arsenals.reserves_fr            AS 'a_reserves_fr'  ,
+                                releases.name_$lang             AS 'r_name'         ,
+                                formats.name_$lang              AS 'f_name'         ,
+                                arsenal_difficulties.name_$lang AS 'ad_name'        ,
+                                arsenal_difficulties.styling    AS 'ad_style'
+                      FROM      arsenals
+                      LEFT JOIN releases              ON arsenals.fk_releases             = releases.id
+                      LEFT JOIN formats               ON arsenals.fk_formats              = formats.id
+                      LEFT JOIN arsenal_difficulties  ON arsenals.fk_arsenal_difficulties = arsenal_difficulties.id
+                      $query_search
+                      $query_sort ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($arsenals); $i++)
+  {
+    // Prepare for display
+    if($format === 'html')
+    {
+      $data[$i]['id']             = sanitize_output($row['a_id']);
+      $data[$i]['name']           = sanitize_output(string_truncate($row['a_name'], 20, '...'));
+      $data[$i]['name_en']        = sanitize_output($row['a_name_en']);
+      $data[$i]['name_fr']        = sanitize_output($row['a_name_fr']);
+      $data[$i]['release']        = sanitize_output($row['r_name']);
+      $data[$i]['format']         = sanitize_output($row['f_name']);
+      $data[$i]['difficulty']     = sanitize_output($row['ad_name']);
+      $data[$i]['difficulty_css'] = sanitize_output($row['ad_style']);
+      $data[$i]['playstyle']      = sanitize_output(string_truncate($row['a_playstyle'], 20, '...'));
+      $data[$i]['playstyle_en']   = sanitize_output($row['a_playstyle_en']);
+      $data[$i]['playstyle_fr']   = sanitize_output($row['a_playstyle_fr']);
+      $data[$i]['length_en']      = sanitize_output($row['a_length_en']);
+      $data[$i]['length_fr']      = sanitize_output($row['a_length_fr']);
+      $data[$i]['summary_en']     = sanitize_output($row['a_summary_en']);
+      $data[$i]['summary_fr']     = sanitize_output($row['a_summary_fr']);
+      $data[$i]['gameplan_en']    = nl2br($row['a_gameplan_en']);
+      $data[$i]['gameplan_fr']    = nl2br($row['a_gameplan_fr']);
+      $data[$i]['reserves_en']    = nl2br($row['a_reserves_en']);
+      $data[$i]['reserves_fr']    = nl2br($row['a_reserves_fr']);
+    }
+
+    // Prepare for the API
+    if($format === 'api')
+    {
+      $data[$i]['uuid'] = sanitize_json($row['a_uuid']);
+    }
+  }
+
+  // Add the number of rows to the returned data
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Prepare the data structure for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('arsenals' => $data);
+  }
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
 
 /**
  * Adds an arsenal to the database.
