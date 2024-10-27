@@ -28,6 +28,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  arsenals_list                   Lists arsenals in the database                                                   */
 /*  arsenals_add                    Adds an arsenal to the database                                                  */
+/*  arsenals_delete                 Deletes an arsenal from the database                                             */
 /*                                                                                                                   */
 /*  tags_get                        Returns data related to a tag                                                    */
 /*  tags_list                       Lists tags in the database                                                       */
@@ -1538,6 +1539,27 @@ function arsenals_add( array $data ) : void
                       arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
                       arsenals.reserves_en              = '$arsenal_reserves_en'  ,
                       arsenals.reserves_fr              = '$arsenal_reserves_fr'  ");
+}
+
+
+
+
+/**
+ * Deletes an arsenal from the database.
+ *
+ * @param   int     $arsenal_id  The id of the arsenal to delete.
+ *
+ * @return  void
+ */
+
+function arsenals_delete( int $arsenal_id ) : void
+{
+  // Sanitize the data
+  $arsenal_id = sanitize($arsenal_id, 'int');
+
+  // Delete the arsenal from the database
+  query(" DELETE FROM arsenals
+          WHERE       arsenals.id = '$arsenal_id' ");
 }
 
 

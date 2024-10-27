@@ -15,6 +15,7 @@
 /*  admin_images_delete                 Triggers the deletion of an entry in the image list.                         */
 /*                                                                                                                   */
 /*  admin_arsenals_search               Searches the arsenal list.                                                   */
+/*  admin_arsenals_delete               Triggers the deletion of an entry in the arsenal list.                       */
 /*                                                                                                                   */
 /*  admin_arsenal_difficulties_delete   Triggers the deletion of an entry in the arsenal difficulty list.            */
 /*                                                                                                                   */
@@ -287,6 +288,30 @@ function admin_arsenals_search( sort_data = null )
   // Submit the search
   fetch_page('arsenals', 'admin_arsenals_tbody', postdata);
 }
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the arsenal list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     arsenal   The id of the arsenal to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_delete( message   ,
+                                arsenal   )
+{
+  // Assemble the postdata
+  postdata = 'admin_arsenals_delete=' + fetch_sanitize(arsenal);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('arsenals', 'admin_arsenals_tbody', postdata);
+}
+
 
 
 

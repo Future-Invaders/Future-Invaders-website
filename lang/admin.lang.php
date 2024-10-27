@@ -363,6 +363,11 @@ ___('admin_arsenal_add_submit',       'EN', "Add arsenal");
 ___('admin_arsenal_add_submit',       'FR', "Ajouter l'arsenal");
 
 
+// Delete an arsenal
+___('admin_arsenal_delete_confirm', 'EN', "Confirm the deletion of this arsenal");
+___('admin_arsenal_delete_confirm', 'FR', "Confirmez la suppression de cet arsenal");
+
+
 // List arsenal difficulties
 ___('admin_arsenal_difficulty_list_title',  'EN', "Arsenal levels");
 ___('admin_arsenal_difficulty_list_title',  'FR', "Niveaux des arsenaux");
