@@ -363,6 +363,13 @@ ___('admin_arsenal_add_submit',       'EN', "Add arsenal");
 ___('admin_arsenal_add_submit',       'FR', "Ajouter l'arsenal");
 
 
+// Edit an arsenal
+___('admin_arsenal_edit_title',   'EN', "Edit arsenal");
+___('admin_arsenal_edit_title',   'FR', "Modifier un arsenal");
+___('admin_arsenal_edit_submit',  'EN', "Edit arsenal");
+___('admin_arsenal_edit_submit',  'FR', "Modifier l'arsenal");
+
+
 // Delete an arsenal
 ___('admin_arsenal_delete_confirm', 'EN', "Confirm the deletion of this arsenal");
 ___('admin_arsenal_delete_confirm', 'FR', "Confirmez la suppression de cet arsenal");

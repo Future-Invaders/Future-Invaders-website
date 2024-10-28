@@ -86,6 +86,52 @@ if(isset($_POST['arsenal_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit an arsenal
+
+if(isset($_POST['arsenal_edit']))
+{
+  // Gather the arsenal's id
+  $arsenal_edit_id = form_fetch_element('arsenal_id');
+
+  // Gather the postdata
+  $arsenal_edit_release      = form_fetch_element('arsenal_release');
+  $arsenal_edit_format       = form_fetch_element('arsenal_format');
+  $arsenal_edit_difficulty   = form_fetch_element('arsenal_difficulty');
+  $arsenal_edit_name_en      = form_fetch_element('arsenal_name_en');
+  $arsenal_edit_name_fr      = form_fetch_element('arsenal_name_fr');
+  $arsenal_edit_playstyle_en = form_fetch_element('arsenal_playstyle_en');
+  $arsenal_edit_playstyle_fr = form_fetch_element('arsenal_playstyle_fr');
+  $arsenal_edit_summary_en   = form_fetch_element('arsenal_summary_en');
+  $arsenal_edit_summary_fr   = form_fetch_element('arsenal_summary_fr');
+  $arsenal_edit_gameplan_en  = form_fetch_element('arsenal_gameplan_en');
+  $arsenal_edit_gameplan_fr  = form_fetch_element('arsenal_gameplan_fr');
+  $arsenal_edit_reserves_en  = form_fetch_element('arsenal_reserves_en');
+  $arsenal_edit_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
+
+  // Assemble an array with the postdata
+  $arsenal_edit_data = array( 'release'       => $arsenal_edit_release      ,
+                              'format'        => $arsenal_edit_format       ,
+                              'difficulty'    => $arsenal_edit_difficulty   ,
+                              'name_en'       => $arsenal_edit_name_en      ,
+                              'name_fr'       => $arsenal_edit_name_fr      ,
+                              'playstyle_en'  => $arsenal_edit_playstyle_en ,
+                              'playstyle_fr'  => $arsenal_edit_playstyle_fr ,
+                              'summary_en'    => $arsenal_edit_summary_en   ,
+                              'summary_fr'    => $arsenal_edit_summary_fr   ,
+                              'gameplan_en'   => $arsenal_edit_gameplan_en  ,
+                              'gameplan_fr'   => $arsenal_edit_gameplan_fr  ,
+                              'reserves_en'   => $arsenal_edit_reserves_en  ,
+                              'reserves_fr'   => $arsenal_edit_reserves_fr  );
+
+  // Edit the arsenal
+  arsenals_edit(  $arsenal_edit_id    ,
+                  $arsenal_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete an arsenal
 
 if(isset($_POST['admin_arsenals_delete']))

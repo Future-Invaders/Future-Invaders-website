@@ -26,8 +26,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
+/*  arsenals_get                    Returns data related to an arsenal                                               */
 /*  arsenals_list                   Lists arsenals in the database                                                   */
 /*  arsenals_add                    Adds an arsenal to the database                                                  */
+/*  arsenals_edit                   Edits an arsenal in the database                                                 */
 /*  arsenals_delete                 Deletes an arsenal from the database                                             */
 /*                                                                                                                   */
 /*  tags_get                        Returns data related to a tag                                                    */
@@ -1331,6 +1333,65 @@ function images_delete( int $image_id ) : void
 /*********************************************************************************************************************/
 
 /**
+ * Returns data related to an arsenal.
+ *
+ * @param   int         $arsenal_id   The arsenal's id.
+ *
+ * @return  array|null                An array containing the arsenal's data, or null if it doesn't exist.
+ */
+
+function arsenals_get( int $arsenal_id ) : array|null
+{
+  // Sanitize the arsenal's id
+  $arsenal_id = sanitize($arsenal_id, 'int');
+
+  // Return null if the arsenal does not exist
+  if(!database_row_exists('arsenals', $arsenal_id))
+    return null;
+
+  // Fetch the arsenal's data
+  $arsenal_data = query(" SELECT  arsenals.uuid                     AS 'a_uuid'         ,
+                                  arsenals.fk_releases              AS 'a_release_id'   ,
+                                  arsenals.fk_formats               AS 'a_format_id'    ,
+                                  arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
+                                  arsenals.name_en                  AS 'a_name_en'      ,
+                                  arsenals.name_fr                  AS 'a_name_fr'      ,
+                                  arsenals.playstyle_en             AS 'a_playstyle_en' ,
+                                  arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
+                                  arsenals.summary_en               AS 'a_summary_en'   ,
+                                  arsenals.summary_fr               AS 'a_summary_fr'   ,
+                                  arsenals.gameplan_en              AS 'a_gameplan_en'  ,
+                                  arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
+                                  arsenals.reserves_en              AS 'a_reserves_en'  ,
+                                  arsenals.reserves_fr              AS 'a_reserves_fr'
+                            FROM  arsenals
+                            WHERE arsenals.id = '$arsenal_id' ",
+                            fetch_row: true);
+
+  // Assemble an array with the arsenal's data
+  $data['release']      = sanitize_output($arsenal_data['a_release_id']);
+  $data['format']       = sanitize_output($arsenal_data['a_format_id']);
+  $data['difficulty']   = sanitize_output($arsenal_data['a_level_id']);
+  $data['name_en']      = sanitize_output($arsenal_data['a_name_en']);
+  $data['name_fr']      = sanitize_output($arsenal_data['a_name_fr']);
+  $data['playstyle_en'] = sanitize_output($arsenal_data['a_playstyle_en']);
+  $data['playstyle_fr'] = sanitize_output($arsenal_data['a_playstyle_fr']);
+  $data['summary_en']   = sanitize_output($arsenal_data['a_summary_en']);
+  $data['summary_fr']   = sanitize_output($arsenal_data['a_summary_fr']);
+  $data['gameplan_en']  = sanitize_output($arsenal_data['a_gameplan_en']);
+  $data['gameplan_fr']  = sanitize_output($arsenal_data['a_gameplan_fr']);
+  $data['reserves_en']  = sanitize_output($arsenal_data['a_reserves_en']);
+  $data['reserves_fr']  = sanitize_output($arsenal_data['a_reserves_fr']);
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+
+/**
  * Lists arsenals in the database.
  *
  * @param   string  $sort_by  (OPTIONAL)  The column which should be used to sort the data.
@@ -1494,6 +1555,58 @@ function arsenals_list( string  $sort_by  = ''      ,
   return $data;
 }
 
+
+
+
+/**
+ * Edits an arsenal in the database.
+ *
+ * @param   int         $arsenal_id   The id of the arsenal to edit.
+ * @param   array       $data         An array containing the arsenal's data.
+ *
+ * @return  void
+ */
+
+function arsenals_edit( int   $arsenal_id  ,
+                        array $data       ) : void
+{
+  // Sanitize the data
+  $arsenal_id           = sanitize($arsenal_id, 'int');
+  $arsenal_release      = sanitize_array_element($data, 'release', 'int');
+  $arsenal_format       = sanitize_array_element($data, 'format', 'int');
+  $arsenal_difficulty   = sanitize_array_element($data, 'difficulty', 'int');
+  $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
+  $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
+  $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
+  $arsenal_playstyle_fr = sanitize_array_element($data, 'playstyle_fr', 'string');
+  $arsenal_summary_en   = sanitize_array_element($data, 'summary_en', 'string');
+  $arsenal_summary_fr   = sanitize_array_element($data, 'summary_fr', 'string');
+  $arsenal_gameplan_en  = sanitize_array_element($data, 'gameplan_en', 'string');
+  $arsenal_gameplan_fr  = sanitize_array_element($data, 'gameplan_fr', 'string');
+  $arsenal_reserves_en  = sanitize_array_element($data, 'reserves_en', 'string');
+  $arsenal_reserves_fr  = sanitize_array_element($data, 'reserves_fr', 'string');
+
+  // Stop here if the arsenal does not exist
+  if(!database_row_exists('arsenals', $arsenal_id))
+    return;
+
+  // Edit the arsenal
+  query(" UPDATE  arsenals
+          SET     arsenals.fk_releases              = '$arsenal_release'      ,
+                  arsenals.fk_formats               = '$arsenal_format'       ,
+                  arsenals.fk_arsenal_difficulties  = '$arsenal_difficulty'   ,
+                  arsenals.name_en                  = '$arsenal_name_en'      ,
+                  arsenals.name_fr                  = '$arsenal_name_fr'      ,
+                  arsenals.playstyle_en             = '$arsenal_playstyle_en' ,
+                  arsenals.playstyle_fr             = '$arsenal_playstyle_fr' ,
+                  arsenals.summary_en               = '$arsenal_summary_en'   ,
+                  arsenals.summary_fr               = '$arsenal_summary_fr'   ,
+                  arsenals.gameplan_en              = '$arsenal_gameplan_en'  ,
+                  arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
+                  arsenals.reserves_en              = '$arsenal_reserves_en'  ,
+                  arsenals.reserves_fr              = '$arsenal_reserves_fr'
+          WHERE   arsenals.id                       = '$arsenal_id' ");
+}
 
 
 
