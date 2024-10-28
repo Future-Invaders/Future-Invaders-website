@@ -386,21 +386,25 @@ function cards_list( string   $sort_by    = 'name'  ,
                               cards.body_en                 AS 'c_body_en'    ,
                               cards.body_fr                 AS 'c_body_fr'    ,
                               releases.id                   AS 'r_id'         ,
+                              releases.uuid                 AS 'r_uuid'       ,
                               releases.name_$lang           AS 'r_name'       ,
                               releases.name_en              AS 'r_name_en'    ,
                               releases.name_fr              AS 'r_name_fr'    ,
                               releases.styling              AS 'r_styling'    ,
                               card_types.id                 AS 'ct_id'        ,
+                              card_types.uuid               AS 'ct_uuid'      ,
                               card_types.name_en            AS 'ct_name_en'   ,
                               card_types.name_fr            AS 'ct_name_fr'   ,
                               card_types.name_$lang         AS 'ct_name'      ,
                               card_types.styling            AS 'ct_styling'   ,
                               factions.id                   AS 'f_id'         ,
+                              factions.uuid                 AS 'f_uuid'       ,
                               factions.name_en              AS 'f_name_en'    ,
                               factions.name_fr              AS 'f_name_fr'    ,
                               factions.name_$lang           AS 'f_name'       ,
                               factions.styling              AS 'f_styling'    ,
                               card_rarities.id              AS 'cr_id'        ,
+                              card_rarities.uuid            AS 'cr_uuid'      ,
                               card_rarities.name_en         AS 'cr_name_en'   ,
                               card_rarities.name_fr         AS 'cr_name_fr'   ,
                               card_rarities.name_$lang      AS 'cr_name'      ,
@@ -480,6 +484,7 @@ function cards_list( string   $sort_by    = 'name'  ,
         $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
         if($row['r_id'])
         {
+          $data[$i]['release']['uuid']          = sanitize_json($row['r_uuid']);
           $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
           $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
         }
@@ -513,6 +518,7 @@ function cards_list( string   $sort_by    = 'name'  ,
         $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
         if($row['r_id'])
         {
+          $data[$i]['release']['uuid']          = sanitize_json($row['r_uuid']);
           $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
           $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
         }
@@ -520,6 +526,7 @@ function cards_list( string   $sort_by    = 'name'  ,
           $data[$i]['release']                  = array();
         if($row['f_id'])
         {
+          $data[$i]['faction']['uuid']          = sanitize_json($row['f_uuid']);
           $data[$i]['faction']['en']            = sanitize_json($row['f_name_en']);
           $data[$i]['faction']['fr']            = sanitize_json($row['f_name_fr']);
         }
@@ -527,6 +534,7 @@ function cards_list( string   $sort_by    = 'name'  ,
           $data[$i]['faction']                  = array();
         if($row['ct_id'])
         {
+          $data[$i]['type']['uuid']             = sanitize_json($row['ct_uuid']);
           $data[$i]['type']['en']               = sanitize_json($row['ct_name_en']);
           $data[$i]['type']['fr']               = sanitize_json($row['ct_name_fr']);
         }
@@ -534,6 +542,7 @@ function cards_list( string   $sort_by    = 'name'  ,
           $data[$i]['type']                     = array();
         if($row['cr_id'])
         {
+          $data[$i]['rarity']['uuid']           = sanitize_json($row['cr_uuid']);
           $data[$i]['rarity']['en']             = sanitize_json($row['cr_name_en']);
           $data[$i]['rarity']['fr']             = sanitize_json($row['cr_name_fr']);
           $data[$i]['rarity']['max_card_count'] = (int)sanitize_json($row['cr_max_count']);

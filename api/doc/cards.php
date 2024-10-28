@@ -162,22 +162,24 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       },
       "release": {
+        "uuid": string,
         "en": string,
         "fr": string
       },
       "faction": {
+        "uuid": string,
         "en": string,
         "fr": string
       },
       "type": {
+        "uuid": string,
         "en": string,
         "fr": string
       },
       "rarity": {
-        "name": {
-          "en": string,
-          "fr": string
-        }
+        "uuid": string,
+        "en": string,
+        "fr": string
         "max_card_count": int,
       },
       "images": {
