@@ -1377,34 +1377,21 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   $query_where = ($arsenal_id) ? " WHERE arsenals.id = '$arsenal_id' " : " WHERE arsenals.uuid = '$arsenal_uuid' ";
 
   // Fetch the arsenal's data
-  $arsenal_data = query(" SELECT      arsenals.uuid                     AS 'a_uuid'         ,
-                                      arsenals.fk_releases              AS 'a_release_id'   ,
-                                      arsenals.fk_formats               AS 'a_format_id'    ,
-                                      arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
-                                      arsenals.name_en                  AS 'a_name_en'      ,
-                                      arsenals.name_fr                  AS 'a_name_fr'      ,
-                                      arsenals.playstyle_en             AS 'a_playstyle_en' ,
-                                      arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
-                                      arsenals.summary_en               AS 'a_summary_en'   ,
-                                      arsenals.summary_fr               AS 'a_summary_fr'   ,
-                                      arsenals.gameplan_en              AS 'a_gameplan_en'  ,
-                                      arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
-                                      arsenals.reserves_en              AS 'a_reserves_en'  ,
-                                      arsenals.reserves_fr              AS 'a_reserves_fr'  ,
-                                      releases.uuid                     AS 'r_uuid'         ,
-                                      releases.name_en                  AS 'r_name_en'      ,
-                                      releases.name_fr                  AS 'r_name_fr'      ,
-                                      formats.uuid                      AS 'f_uuid'         ,
-                                      formats.name_en                   AS 'f_name_en'      ,
-                                      formats.name_fr                   AS 'f_name_fr'      ,
-                                      arsenal_difficulties.uuid         AS 'ad_uuid'        ,
-                                      arsenal_difficulties.name_en      AS 'ad_name_en'     ,
-                                      arsenal_difficulties.name_fr      AS 'ad_name_fr'
-                            FROM      arsenals
-                            LEFT JOIN releases              ON arsenals.fk_releases = releases.id
-                            LEFT JOIN formats               ON arsenals.fk_formats  = formats.id
-                            LEFT JOIN arsenal_difficulties  ON
-                                                  arsenals.fk_arsenal_difficulties  = arsenal_difficulties.id
+  $arsenal_data = query(" SELECT  arsenals.uuid                     AS 'a_uuid'         ,
+                                  arsenals.fk_releases              AS 'a_release_id'   ,
+                                  arsenals.fk_formats               AS 'a_format_id'    ,
+                                  arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
+                                  arsenals.name_en                  AS 'a_name_en'      ,
+                                  arsenals.name_fr                  AS 'a_name_fr'      ,
+                                  arsenals.playstyle_en             AS 'a_playstyle_en' ,
+                                  arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
+                                  arsenals.summary_en               AS 'a_summary_en'   ,
+                                  arsenals.summary_fr               AS 'a_summary_fr'   ,
+                                  arsenals.gameplan_en              AS 'a_gameplan_en'  ,
+                                  arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
+                                  arsenals.reserves_en              AS 'a_reserves_en'  ,
+                                  arsenals.reserves_fr              AS 'a_reserves_fr'
+                            FROM  arsenals
                             $query_where ",
                             fetch_row: true);
 
@@ -1433,15 +1420,19 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['uuid']                     = sanitize_json($arsenal_data['a_uuid']);
     $data['name']['en']               = sanitize_json($arsenal_data['a_name_en']);
     $data['name']['fr']               = sanitize_json($arsenal_data['a_name_fr']);
-    $data['release']['uuid']          = sanitize_json($arsenal_data['r_uuid']);
-    $data['release']['en']            = sanitize_json($arsenal_data['r_name_en']);
-    $data['release']['fr']            = sanitize_json($arsenal_data['r_name_fr']);
-    $data['format']['uuid']           = sanitize_json($arsenal_data['f_uuid']);
-    $data['format']['en']             = sanitize_json($arsenal_data['f_name_en']);
-    $data['format']['fr']             = sanitize_json($arsenal_data['f_name_fr']);
-    $data['difficulty']['uuid']       = sanitize_json($arsenal_data['ad_uuid']);
-    $data['difficulty']['en']         = sanitize_json($arsenal_data['ad_name_en']);
-    $data['difficulty']['fr']         = sanitize_json($arsenal_data['ad_name_fr']);
+    $data['release']                  = ($arsenal_data['a_release_id'])
+                                      ? releases_get( release_id:     $arsenal_data['a_release_id'] ,
+                                                      format:         'api'                         ,
+                                                      no_parent_array: true                         )
+                                      : array();
+    $data['format']                   = ($arsenal_data['a_format_id'])
+                                      ? formats_get($arsenal_data['a_format_id'], format: 'api', no_parent_array: true)
+                                      : array();
+    $data['difficulty']               = ($arsenal_data['a_level_id'])
+                                      ? arsenal_difficulties_get( arsenal_difficulty_id:  $arsenal_data['a_level_id'] ,
+                                                                  format: 'api'                                       ,
+                                                                  no_parent_array:        true                        )
+                                      : array();
     $data['playstyle']['en']          = sanitize_json($arsenal_data['a_playstyle_en']);
     $data['playstyle']['fr']          = sanitize_json($arsenal_data['a_playstyle_fr']);
     $data['strategy_summary']['en']   = sanitize_json($arsenal_data['a_summary_en']);
@@ -3086,12 +3077,16 @@ function card_rarities_delete( int $card_rarity_id ) : void
 /**
  * Returns data related to a game format.
  *
- * @param   int         $format_id  The game format's id.
+ * @param   int         $format_id                    The game format's id.
+ * @param   string      $format           (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_parent_array  (OPTIONAL)  Whether to return the data inside a parent array in the API.
  *
- * @return  array|null              An array containing the game format's data, or null if it doesn't exist.
+ * @return  array|null                        An array containing the game format's data, or null if it doesn't exist.
  */
 
-function formats_get( int $format_id ) : array|null
+function formats_get( int     $format_id                  ,
+                      string  $format           = 'html'  ,
+                      bool    $no_parent_array  = false   ) : array|null
 {
   // Sanitize the format's id
   $format_id = sanitize($format_id, 'int');
@@ -3101,7 +3096,8 @@ function formats_get( int $format_id ) : array|null
     return null;
 
   // Fetch the format's data
-  $format_data = query(" SELECT formats.sorting_order   AS 'f_order'    ,
+  $format_data = query(" SELECT formats.uuid            AS 'f_uuid'     ,
+                                formats.sorting_order   AS 'f_order'    ,
                                 formats.name_en         AS 'f_name_en'  ,
                                 formats.name_fr         AS 'f_name_fr'  ,
                                 formats.description_en  AS 'f_desc_en'  ,
@@ -3111,13 +3107,33 @@ function formats_get( int $format_id ) : array|null
                         WHERE   formats.id = '$format_id' ",
                         fetch_row: true);
 
-  // Assemble an array with the format's data
-  $data['order']        = sanitize_output($format_data['f_order']);
-  $data['name_en']      = sanitize_output($format_data['f_name_en']);
-  $data['name_fr']      = sanitize_output($format_data['f_name_fr']);
-  $data['desc_en']      = sanitize_output($format_data['f_desc_en']);
-  $data['desc_fr']      = sanitize_output($format_data['f_desc_fr']);
-  $data['styling']      = sanitize_output($format_data['f_styling']);
+  // Sanitize the data for display
+  if($format === 'html')
+  {
+    $data['order']        = sanitize_output($format_data['f_order']);
+    $data['name_en']      = sanitize_output($format_data['f_name_en']);
+    $data['name_fr']      = sanitize_output($format_data['f_name_fr']);
+    $data['desc_en']      = sanitize_output($format_data['f_desc_en']);
+    $data['desc_fr']      = sanitize_output($format_data['f_desc_fr']);
+    $data['styling']      = sanitize_output($format_data['f_styling']);
+  }
+
+  // Sanitize the data for the API
+  if($format === 'api')
+  {
+    $data['uuid']               = sanitize_json($format_data['f_uuid']);
+    $data['name']['en']         = sanitize_json($format_data['f_name_en']);
+    $data['name']['fr']         = sanitize_json($format_data['f_name_fr']);
+    $data['description']['en']  = sanitize_json($format_data['f_desc_en']);
+    $data['description']['fr']  = sanitize_json($format_data['f_desc_fr']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = ($no_parent_array) ? $data : array('format' => $data);
+  }
 
   // Return the format's data
   return $data;
@@ -3300,12 +3316,16 @@ function formats_delete( int $format_id ) : void
 /**
  * Returns data related to an arsenal difficulty level.
  *
- * @param   int         $arsenal_difficulty_id  The arsenal difficulty level's id.
+ * @param   int         $arsenal_difficulty_id            The arsenal difficulty level's id.
+ * @param   string      $format               (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_parent_array      (OPTIONAL)  Whether to return the data inside a parent array in the API.
  *
  * @return  array|null            An array containing the arsenal difficulty level's data, or null if it doesn't exist.
  */
 
-function arsenal_difficulties_get( int $arsenal_difficulty_id ) : array|null
+function arsenal_difficulties_get(  int     $arsenal_difficulty_id            ,
+                                    string  $format                 = 'html'  ,
+                                    bool    $no_parent_array        = false   ) : array|null
 {
   // Sanitize the arsenal difficulty level's id
   $arsenal_difficulty_id = sanitize($arsenal_difficulty_id, 'int');
@@ -3315,7 +3335,8 @@ function arsenal_difficulties_get( int $arsenal_difficulty_id ) : array|null
     return null;
 
   // Fetch the arsenal difficulty level's data
-  $arsenal_difficulty_data = query("  SELECT  arsenal_difficulties.sorting_order  AS 'ad_order'   ,
+  $arsenal_difficulty_data = query("  SELECT  arsenal_difficulties.uuid           AS 'ad_uuid'    ,
+                                              arsenal_difficulties.sorting_order  AS 'ad_order'   ,
                                               arsenal_difficulties.name_en        AS 'ad_name_en' ,
                                               arsenal_difficulties.name_fr        AS 'ad_name_fr' ,
                                               arsenal_difficulties.styling        AS 'ad_styling'
@@ -3323,11 +3344,29 @@ function arsenal_difficulties_get( int $arsenal_difficulty_id ) : array|null
                                       WHERE   arsenal_difficulties.id = '$arsenal_difficulty_id' ",
                                       fetch_row: true);
 
-  // Assemble an array with the arsenal difficulty level's data
-  $data['order']    = sanitize_output($arsenal_difficulty_data['ad_order']);
-  $data['name_en']  = sanitize_output($arsenal_difficulty_data['ad_name_en']);
-  $data['name_fr']  = sanitize_output($arsenal_difficulty_data['ad_name_fr']);
-  $data['styling']  = sanitize_output($arsenal_difficulty_data['ad_styling']);
+  // Sanitize the data for display
+  if($format === 'html')
+  {
+    $data['order']    = sanitize_output($arsenal_difficulty_data['ad_order']);
+    $data['name_en']  = sanitize_output($arsenal_difficulty_data['ad_name_en']);
+    $data['name_fr']  = sanitize_output($arsenal_difficulty_data['ad_name_fr']);
+    $data['styling']  = sanitize_output($arsenal_difficulty_data['ad_styling']);
+  }
+
+  // Sanitize the data for the API
+  if($format === 'api')
+  {
+    $data['uuid']         = sanitize_json($arsenal_difficulty_data['ad_uuid']);
+    $data['name']['en']   = sanitize_json($arsenal_difficulty_data['ad_name_en']);
+    $data['name']['fr']   = sanitize_json($arsenal_difficulty_data['ad_name_fr']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = ($no_parent_array) ? $data : array('arsenal_difficulty' => $data);
+  }
 
   // Return the arsenal difficulty level's data
   return $data;

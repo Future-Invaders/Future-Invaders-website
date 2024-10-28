@@ -196,18 +196,29 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     },
     "release": {
       "uuid": string,
-      "en": string,
-      "fr": string
+      "date": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
     },
     "format": {
       "uuid": string,
-      "en": string,
-      "fr": string
+      "name": {
+        "en": string,
+        "fr": string
+      }
+      "description": {
+        "en": string,
+        "fr": string
+      }
     },
     "difficulty": {
       "uuid": string,
-      "en": string,
-      "fr": string
+      "name": {
+        "en": string,
+        "fr": string
+      }
     },
     "playstyle": {
       "en": string,
