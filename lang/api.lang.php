@@ -205,6 +205,19 @@ EOD
 );
 
 
+// List arsenals
+___('api_arsenals_list_summary',    'EN', "Retrieves a list of all arsenals.");
+___('api_arsenals_list_summary',    'FR', "Récupère la liste de tous les arsenaux.");
+___('api_arsenals_list_name',       'EN', "Search for arsenals by name. Searches in all languages at once.");
+___('api_arsenals_list_name',       'FR', "Recherche des arsenaux par nom. Cherche dans toutes les langues à la fois.");
+___('api_arsenals_list_release',    'EN', "Search for arsenals by release UUID. Find release UUIDs using {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_arsenals_list_release',    'FR', "Recherche des arsenaux par UUID de version. Trouvez les UUIDs des versions en utilisant {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_arsenals_list_format',     'EN', "Search for arsenals by format UUID. Find format UUIDs using {{link|api/doc/formats#list_formats|GET /api/formats}}.");
+___('api_arsenals_list_format',     'FR', "Recherche des arsenaux par UUID de format. Trouvez les UUIDs des formats en utilisant {{link|api/doc/formats#list_formats|GET /api/formats}}.");
+___('api_arsenals_list_difficulty', 'EN', "Search for arsenals by difficulty UUID. Find difficulty UUIDs using {{link|api/doc/arsenals#list_arsenal_difficulties|GET /api/arsenal_difficulties}}.");
+___('api_arsenals_list_difficulty', 'FR', "Recherche des arsenaux par UUID de difficulté. Trouvez les UUIDs des difficultés en utilisant {{link|api/doc/arsenals#list_arsenal_difficulties|GET /api/arsenal_difficulties}}.");
+
+
 // Arsenal difficulties
 ___('api_arsenal_difficulties_list_summary', 'EN', "Retrieves a list of difficulty levels used to classify arsenals.");
 ___('api_arsenal_difficulties_list_summary', 'FR', "Récupère la liste des niveaux de difficultés utilisés pour classer les arsenaux.");
