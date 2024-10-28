@@ -23,12 +23,14 @@ $arsenals_search_release    = form_fetch_element('release', request_type: 'GET')
 $arsenals_search_format     = form_fetch_element('format', request_type: 'GET');
 $arsenals_search_name       = form_fetch_element('name', request_type: 'GET');
 $arsenals_search_difficulty = form_fetch_element('difficulty', request_type: 'GET');
+$arsenals_search_tag        = form_fetch_element('tag', request_type: 'GET');
 
 // Assemble the search parameters
 $arsenals_search = array( 'release_uuid'    => $arsenals_search_release     ,
                           'format_uuid'     => $arsenals_search_format      ,
                           'name'            => $arsenals_search_name        ,
-                          'difficulty_uuid' => $arsenals_search_difficulty  );
+                          'difficulty_uuid' => $arsenals_search_difficulty  ,
+                          'tag'             => $arsenals_search_tag         );
 
 // Fetch the arsenals
 $arsenals_list = arsenals_list( sort_by:  'api'             ,

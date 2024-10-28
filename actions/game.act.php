@@ -1349,13 +1349,15 @@ function images_delete( int $image_id ) : void
  * @param   int         $arsenal_id   (OPTIONAL)  The arsenal's id.
  * @param   string      $arsenal_uuid (OPTIONAL)  The arsenal's uuid.
  * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   bool        $no_depth     (OPTIONAL)  Whether to include elements linked to the arsenal in the API.
  *
  * @return  array|null                            An array containing the arsenal's data, or null if it doesn't exist.
  */
 
 function arsenals_get(  int     $arsenal_id   = null    ,
                         string  $arsenal_uuid = null    ,
-                        string  $format       = 'html'  ) : array|null
+                        string  $format       = 'html'  ,
+                        bool    $no_depth     = false   ) : array|null
 {
   // Return null if there are neither an id nor an uuid
   if(!$arsenal_id && !$arsenal_uuid)
@@ -1377,7 +1379,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   $query_where = ($arsenal_id) ? " WHERE arsenals.id = '$arsenal_id' " : " WHERE arsenals.uuid = '$arsenal_uuid' ";
 
   // Fetch the arsenal's data
-  $arsenal_data = query(" SELECT  arsenals.uuid                     AS 'a_uuid'         ,
+  $arsenal_data = query(" SELECT  arsenals.id                       AS 'a_id'           ,
+                                  arsenals.uuid                     AS 'a_uuid'         ,
                                   arsenals.fk_releases              AS 'a_release_id'   ,
                                   arsenals.fk_formats               AS 'a_format_id'    ,
                                   arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
@@ -1447,6 +1450,26 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['game_plan']['fr']          = sanitize_json($arsenal_data['a_gameplan_fr']);
     $data['reserves_game_plan']['en'] = sanitize_json($arsenal_data['a_reserves_en']);
     $data['reserves_game_plan']['fr'] = sanitize_json($arsenal_data['a_reserves_fr']);
+
+    // Add linked tags
+    if(!$no_depth)
+    {
+      // Fetch linked tags
+      $arsenal_id = sanitize($arsenal_data['a_id'], 'int');
+      $qtags = query("  SELECT  tags_arsenals.fk_tags AS 'ct_id'
+                        FROM    tags_arsenals
+                        WHERE   tags_arsenals.fk_arsenals = '$arsenal_id' ");
+
+      // Prepare linked tags for display
+      for($i = 0; $dtags = query_row($qtags); $i++)
+        $data['tags'][$i] = tags_get( tag_id:   $dtags['ct_id'] ,
+                                      format:   $format         ,
+                                      no_depth:  true           );
+
+      // If there are no linked tags, show an empty array
+      if($i === 0)
+        $data['tags'] = array();
+    }
   }
 
   // Prepare for the API
@@ -1493,6 +1516,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_text            = sanitize_array_element($search, 'text', 'string');
   $search_data            = sanitize_array_element($search, 'data', 'int');
   $search_tag_id          = sanitize_array_element($search, 'tag_id', 'int');
+  $search_tag             = sanitize_array_element($search, 'tag', 'string');
 
   // Search through the data
   $query_search  = ($search_release && $search_release !== -1)
@@ -1528,6 +1552,8 @@ function arsenals_list( string  $sort_by  = ''      ,
                                       ? " AND   arsenals.is_hidden        = '1' "                         : "";
   $query_search .= ($search_tag_id === -1)
                                       ? " AND   tags.id                   IS NULL "                       : "";
+  $query_search .= ($search_tag)      ? " AND   tags.name                 LIKE '$search_tag' "            : "";
+
   // Don't show hidden arsenals in the API
   $query_search .= ($format === 'api')
                                       ? " AND   arsenals.is_hidden        = '0' "                         : "";
@@ -1705,6 +1731,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['game_plan']['fr']          = sanitize_json($row['a_gameplan_fr']);
       $data[$i]['reserves_game_plan']['en'] = sanitize_json($row['a_reserves_en']);
       $data[$i]['reserves_game_plan']['fr'] = sanitize_json($row['a_reserves_fr']);
+      $data[$i]['tags']                     = ($row['at_names']) ? explode(', ', $row['at_names']) : array();
       $data[$i]['endpoint']                 = sanitize_json($GLOBALS['website_url'].'api/arsenal/'.$row['a_uuid']);
     }
   }
@@ -2008,6 +2035,23 @@ function tags_get(  ?int    $tag_id   = NULL    ,
       // If there are no linked cards, show an empty array
       if($i === 0)
         $data['linked_cards'] = array();
+
+      // Fetch linked arsenals
+      $qarsenals = query("  SELECT    tags_arsenals.fk_arsenals AS 'ta_id'
+                            FROM      tags_arsenals
+                            LEFT JOIN arsenals ON tags_arsenals.fk_arsenals = arsenals.id
+                            WHERE     tags_arsenals.fk_tags  = '$tag_id'
+                            AND       arsenals.is_hidden     = '0' ");
+
+      // Prepare linked arsenals for display
+      for($i = 0; $darsenals = query_row($qarsenals); $i++)
+        $data['linked_arsenals'][$i] = arsenals_get(  arsenal_id: $darsenals['ta_id'] ,
+                                                      format:     'api'               ,
+                                                      no_depth:   true                );
+
+      // If there are no linked arsenals, show an empty array
+      if($i === 0)
+        $data['linked_arsenals'] = array();
     }
 
     // Prepare for the API

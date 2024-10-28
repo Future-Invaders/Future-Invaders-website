@@ -216,6 +216,8 @@ ___('api_arsenals_list_format',     'EN', "Search for arsenals by format UUID. F
 ___('api_arsenals_list_format',     'FR', "Recherche des arsenaux par UUID de format. Trouvez les UUIDs des formats en utilisant {{link|api/doc/formats#list_formats|GET /api/formats}}.");
 ___('api_arsenals_list_difficulty', 'EN', "Search for arsenals by difficulty UUID. Find difficulty UUIDs using {{link|api/doc/arsenals#list_arsenal_difficulties|GET /api/arsenal_difficulties}}.");
 ___('api_arsenals_list_difficulty', 'FR', "Recherche des arsenaux par UUID de difficulté. Trouvez les UUIDs des difficultés en utilisant {{link|api/doc/arsenals#list_arsenal_difficulties|GET /api/arsenal_difficulties}}.");
+___('api_arsenals_list_tag',       'EN', "Search for arsenals with a specific tag.");
+___('api_arsenals_list_tag',       'FR', "Recherche des arsenaux avec un tag spécifique.");
 
 
 // Get arsenal
@@ -372,7 +374,7 @@ ___('api_tags_list_desc',     'FR', "Recherche dans la description des tags, dan
 
 
 // Get tag
-___('api_tags_get_summary',   'EN', "Retrieves a tag by its UUID.");
-___('api_tags_get_summary',   'FR', "Récupère un tag par son UUID.");
+___('api_tags_get_summary',   'EN', "Retrieves a tag by its UUID. For a description of the data returned for linked elements, see their individual routes documentation.");
+___('api_tags_get_summary',   'FR', "Récupère un tag par son UUID. Pour une description des données renvoyées pour les éléments liés aux tags, voir la documentation de chaque route individuelle.");
 ___('api_tags_get_uuid',      'EN', "The UUID of the tag to retrieve.");
 ___('api_tags_get_uuid',      'FR', "L'UUID du tag à récupérer.");
