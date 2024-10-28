@@ -1381,6 +1381,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                                   arsenals.fk_releases              AS 'a_release_id'   ,
                                   arsenals.fk_formats               AS 'a_format_id'    ,
                                   arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
+                                  arsenals.is_hidden                AS 'a_hidden'       ,
                                   arsenals.name_en                  AS 'a_name_en'      ,
                                   arsenals.name_fr                  AS 'a_name_fr'      ,
                                   arsenals.playstyle_en             AS 'a_playstyle_en' ,
@@ -1395,12 +1396,17 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                             $query_where ",
                             fetch_row: true);
 
+  // Don't retrieve hidden cards through the API
+  if($format === 'api' && $arsenal_data['a_hidden'])
+    return null;
+
   // Prepare the data for display
   if($format === 'html')
   {
     $data['release']      = sanitize_output($arsenal_data['a_release_id']);
     $data['format']       = sanitize_output($arsenal_data['a_format_id']);
     $data['difficulty']   = sanitize_output($arsenal_data['a_level_id']);
+    $data['hidden']       = sanitize_output($arsenal_data['a_hidden']);
     $data['name_en']      = sanitize_output($arsenal_data['a_name_en']);
     $data['name_fr']      = sanitize_output($arsenal_data['a_name_fr']);
     $data['playstyle_en'] = sanitize_output($arsenal_data['a_playstyle_en']);
@@ -1485,6 +1491,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_difficulty_uuid = sanitize_array_element($search, 'difficulty_uuid', 'string');
   $search_playstyle       = sanitize_array_element($search, 'playstyle', 'string');
   $search_text            = sanitize_array_element($search, 'text', 'string');
+  $search_data            = sanitize_array_element($search, 'data', 'int');
 
   // Search through the data
   $query_search  = ($search_release && $search_release !== -1)
@@ -1516,6 +1523,12 @@ function arsenals_list( string  $sort_by  = ''      ,
                                           OR    arsenals.gameplan_fr      LIKE '%$search_text%'
                                           OR    arsenals.reserves_en      LIKE '%$search_text%'
                                           OR    arsenals.reserves_fr      LIKE '%$search_text%' ) "       : "";
+  $query_search .= ($search_data === 1)
+                                      ? " AND   arsenals.is_hidden        = '1' "                         : "";
+
+  // Don't show hidden arsenals in the API
+  $query_search .= ($format === 'api')
+                                      ? " AND   arsenals.is_hidden        = '0' "                         : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -1567,6 +1580,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   // Fetch the arsenals
   $arsenals = query(" SELECT    arsenals.id                     AS 'a_id'           ,
                                 arsenals.uuid                   AS 'a_uuid'         ,
+                                arsenals.is_hidden              AS 'a_hidden'       ,
                                 arsenals.name_en                AS 'a_name_en'      ,
                                 arsenals.name_fr                AS 'a_name_fr'      ,
                                 arsenals.name_$lang             AS 'a_name'         ,
@@ -1634,6 +1648,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['gameplan_fr']    = nl2br($row['a_gameplan_fr']);
       $data[$i]['reserves_en']    = nl2br($row['a_reserves_en']);
       $data[$i]['reserves_fr']    = nl2br($row['a_reserves_fr']);
+      $data[$i]['hidden']         = sanitize_output($row['a_hidden']);
     }
 
     // Prepare for the API
@@ -1713,6 +1728,7 @@ function arsenals_edit( int   $arsenal_id  ,
   $arsenal_release      = sanitize_array_element($data, 'release', 'int');
   $arsenal_format       = sanitize_array_element($data, 'format', 'int');
   $arsenal_difficulty   = sanitize_array_element($data, 'difficulty', 'int');
+  $arsenal_hidden       = sanitize_array_element($data, 'hidden', 'bool');
   $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
   $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
   $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
@@ -1733,6 +1749,7 @@ function arsenals_edit( int   $arsenal_id  ,
           SET     arsenals.fk_releases              = '$arsenal_release'      ,
                   arsenals.fk_formats               = '$arsenal_format'       ,
                   arsenals.fk_arsenal_difficulties  = '$arsenal_difficulty'   ,
+                  arsenals.is_hidden                = '$arsenal_hidden'       ,
                   arsenals.name_en                  = '$arsenal_name_en'      ,
                   arsenals.name_fr                  = '$arsenal_name_fr'      ,
                   arsenals.playstyle_en             = '$arsenal_playstyle_en' ,
@@ -1763,6 +1780,7 @@ function arsenals_add( array $data ) : void
   $arsenal_release      = sanitize_array_element($data, 'release', 'int');
   $arsenal_format       = sanitize_array_element($data, 'format', 'int');
   $arsenal_difficulty   = sanitize_array_element($data, 'difficulty', 'int');
+  $arsenal_hidden       = sanitize_array_element($data, 'hidden', 'bool');
   $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
   $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
   $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
@@ -1780,6 +1798,7 @@ function arsenals_add( array $data ) : void
                       arsenals.fk_releases              = '$arsenal_release'      ,
                       arsenals.fk_formats               = '$arsenal_format'       ,
                       arsenals.fk_arsenal_difficulties  = '$arsenal_difficulty'   ,
+                      arsenals.is_hidden                = '$arsenal_hidden'       ,
                       arsenals.name_en                  = '$arsenal_name_en'      ,
                       arsenals.name_fr                  = '$arsenal_name_fr'      ,
                       arsenals.playstyle_en             = '$arsenal_playstyle_en' ,

@@ -96,7 +96,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </select>
       </div>
 
-      <div class="flexcontainer padding_bot">
+      <div class="flexcontainer smallpadding_bot">
         <div style="flex: 8">
 
           <div class="smallpadding_bot">
@@ -156,6 +156,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
 
         </div>
+      </div>
+
+      <div class="padding_bot">
+        <label><?=__('admin_arsenal_add_properties')?></label>
+        <input type="checkbox" name="arsenal_hidden">
+        <label class="label_inline" for="arsenal_hidden"><?=__('admin_arsenal_add_hidden')?></label><br>
       </div>
 
       <input type="submit" name="arsenal_add" value="<?=__('admin_arsenal_add_submit')?>">

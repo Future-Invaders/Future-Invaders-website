@@ -318,16 +318,22 @@ ___('admin_arsenal_list_playstyle',   'EN', "Playstyle");
 ___('admin_arsenal_list_playstyle',   'FR', "Style de jeu");
 ___('admin_arsenal_list_body',        'EN', "Text");
 ___('admin_arsenal_list_body',        'FR', "Texte");
-___('admin_arsenal_list_count',       'EN', "{{1}} arsenal");
-___('admin_arsenal_list_count',       'FR', "{{1}} arsenal");
-___('admin_arsenal_list_count+',      'EN', "{{1}} arsenals");
-___('admin_arsenal_list_count+',      'FR', "{{1}} arsenaux");
 ___('admin_arsenal_list_summary',     'EN', "Strategy");
 ___('admin_arsenal_list_summary',     'FR', "Stratégie");
 ___('admin_arsenal_list_gameplan',    'EN', "Game plan");
 ___('admin_arsenal_list_gameplan',    'FR', "Plan de jeu");
 ___('admin_arsenal_list_reserves',    'EN', "Reserves strategies");
 ___('admin_arsenal_list_reserves',    'FR', "Stratégies de réserve");
+___('admin_arsenal_list_data',        'EN', "Data");
+___('admin_arsenal_list_data',        'FR', "Data");
+___('admin_arsenal_list_data_hidden', 'EN', "Hidden arsenal");
+___('admin_arsenal_list_data_hidden', 'FR', "Arsenal caché");
+___('admin_arsenal_list_hidden',      'EN', "Hidden from the public");
+___('admin_arsenal_list_hidden',      'FR', "Arsenal caché du public");
+___('admin_arsenal_list_count',       'EN', "{{1}} arsenal");
+___('admin_arsenal_list_count',       'FR', "{{1}} arsenal");
+___('admin_arsenal_list_count+',      'EN', "{{1}} arsenals");
+___('admin_arsenal_list_count+',      'FR', "{{1}} arsenaux");
 
 
 // Add an arsenal
@@ -359,6 +365,10 @@ ___('admin_arsenal_add_reserves_en',  'EN', "Reserves (English)");
 ___('admin_arsenal_add_reserves_en',  'FR', "Réserves (Anglais)");
 ___('admin_arsenal_add_reserves_fr',  'EN', "Reserves (French)");
 ___('admin_arsenal_add_reserves_fr',  'FR', "Réserves (Français)");
+___('admin_arsenal_add_properties',   'EN', "Properties");
+___('admin_arsenal_add_properties',   'FR', "Propriétés");
+___('admin_arsenal_add_hidden',       'EN', "Hidden from the public");
+___('admin_arsenal_add_hidden',       'FR', "Arsenal caché du public");
 ___('admin_arsenal_add_submit',       'EN', "Add arsenal");
 ___('admin_arsenal_add_submit',       'FR', "Ajouter l'arsenal");
 

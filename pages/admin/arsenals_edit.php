@@ -94,6 +94,15 @@ for($i = 0; $i < $list_arsenal_difficulties['rows']; $i++)
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Prepare checkboxes
+
+// Hidden arsenal
+$admin_arsenal_hidden_checked = ($admin_arsenal_data['hidden']) ? ' checked' : '';
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -141,7 +150,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </select>
       </div>
 
-      <div class="flexcontainer padding_bot">
+      <div class="flexcontainer smallpadding_bot">
         <div style="flex: 8">
 
           <div class="smallpadding_bot">
@@ -201,6 +210,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
 
         </div>
+      </div>
+
+      <div class="padding_bot">
+        <label><?=__('admin_arsenal_add_properties')?></label>
+        <input type="checkbox" name="arsenal_hidden"<?=$admin_arsenal_hidden_checked?>>
+        <label class="label_inline" for="arsenal_hidden"><?=__('admin_arsenal_add_hidden')?></label><br>
       </div>
 
       <input type="submit" name="arsenal_edit" value="<?=__('admin_arsenal_edit_submit')?>">

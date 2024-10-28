@@ -284,6 +284,7 @@ function admin_arsenals_search( sort_data = null )
   postdata += '&admin_arsenals_search_difficulty=' + document.getElementById('admin_arsenals_search_difficulty').value;
   postdata += '&admin_arsenals_search_playstyle='  + document.getElementById('admin_arsenals_search_playstyle').value;
   postdata += '&admin_arsenals_search_text='       + document.getElementById('admin_arsenals_search_text').value;
+  postdata += '&admin_arsenals_search_data='       + document.getElementById('admin_arsenals_search_data').value;
 
   // Submit the search
   fetch_page('arsenals', 'admin_arsenals_tbody', postdata);

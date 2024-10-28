@@ -62,6 +62,7 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_gameplan_fr  = form_fetch_element('arsenal_gameplan_fr');
   $arsenal_add_reserves_en  = form_fetch_element('arsenal_reserves_en');
   $arsenal_add_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
+  $arsenal_add_hidden       = form_fetch_element('arsenal_hidden');
 
   // Assemble an array with the postdata
   $arsenal_add_data = array(  'release'       => $arsenal_add_release       ,
@@ -76,7 +77,8 @@ if(isset($_POST['arsenal_add']))
                               'gameplan_en'   => $arsenal_add_gameplan_en   ,
                               'gameplan_fr'   => $arsenal_add_gameplan_fr   ,
                               'reserves_en'   => $arsenal_add_reserves_en   ,
-                              'reserves_fr'   => $arsenal_add_reserves_fr   );
+                              'reserves_fr'   => $arsenal_add_reserves_fr   ,
+                              'hidden'        => $arsenal_add_hidden        );
 
   // Add the arsenal to the database
   arsenals_add($arsenal_add_data);
@@ -107,6 +109,7 @@ if(isset($_POST['arsenal_edit']))
   $arsenal_edit_gameplan_fr  = form_fetch_element('arsenal_gameplan_fr');
   $arsenal_edit_reserves_en  = form_fetch_element('arsenal_reserves_en');
   $arsenal_edit_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
+  $arsenal_edit_hidden       = form_fetch_element('arsenal_hidden');
 
   // Assemble an array with the postdata
   $arsenal_edit_data = array( 'release'       => $arsenal_edit_release      ,
@@ -121,7 +124,8 @@ if(isset($_POST['arsenal_edit']))
                               'gameplan_en'   => $arsenal_edit_gameplan_en  ,
                               'gameplan_fr'   => $arsenal_edit_gameplan_fr  ,
                               'reserves_en'   => $arsenal_edit_reserves_en  ,
-                              'reserves_fr'   => $arsenal_edit_reserves_fr  );
+                              'reserves_fr'   => $arsenal_edit_reserves_fr  ,
+                              'hidden'        => $arsenal_edit_hidden       );
 
   // Edit the arsenal
   arsenals_edit(  $arsenal_edit_id    ,
@@ -150,7 +154,8 @@ $admin_arsenals_search  = array(  'release'     => form_fetch_element('admin_ars
                                   'name'        => form_fetch_element('admin_arsenals_search_name')       ,
                                   'difficulty'  => form_fetch_element('admin_arsenals_search_difficulty') ,
                                   'playstyle'   => form_fetch_element('admin_arsenals_search_playstyle')  ,
-                                  'text'        => form_fetch_element('admin_arsenals_search_text')       );
+                                  'text'        => form_fetch_element('admin_arsenals_search_text')       ,
+                                  'data'        => form_fetch_element('admin_arsenals_search_data')       );
 
 // Fetch the arsenals
 $arsenals_list = arsenals_list( sort_by:  $admin_arsenals_sort    ,
@@ -165,7 +170,7 @@ $arsenals_list = arsenals_list( sort_by:  $admin_arsenals_sort    ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_60 padding_top">
 
   <h5>
     <?=__('admin_arsenal_management').__(':')?>
@@ -217,6 +222,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__('admin_arsenal_list_body')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('text');")?>
         </th>
+        <th class="align_center">
+          <?=__('admin_arsenal_list_data')?>
+        </th>
         <th>
           <?=__('act')?>
         </th>
@@ -260,6 +268,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <input type="text" class="table_search" name="admin_arsenals_search_text" id="admin_arsenals_search_text" value="" onkeyup="admin_arsenals_search();">
         </th>
+        <th class="align_center">
+          <select class="table_search" name="admin_arsenals_search_data" id="admin_arsenals_search_data" onchange="admin_arsenals_search();">
+            <option value="0">&nbsp;</option>
+            <option value="1"><?=__('admin_arsenal_list_data_hidden')?></option>
+          </select>
+        </th>
         <th>
           <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/arsenals_add')?>
         </th>
@@ -272,7 +286,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="7" class="uppercase text_light dark bold align_center">
+        <td colspan="8" class="uppercase text_light dark bold align_center">
           <?=__('admin_arsenal_list_count', preset_values: array($arsenals_list['rows']), amount: $arsenals_list['rows'])?>
         </td>
       </tr>
@@ -332,6 +346,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
               <?=$arsenals_list[$i]['reserves_fr']?>
             </div>
           </div>
+        </td>
+
+        <td class="align_center nowrap">
+
+          <?php if($arsenals_list[$i]['hidden']): ?>
+          <?=__icon('user_delete', is_small: true, alt: __('admin_arsenal_list_hidden'), title: __('admin_arsenal_list_hidden'), class: 'valign_middle')?>
+          <?php endif; ?>
+
         </td>
 
         <td class="align_center nowrap card_action_icons">
