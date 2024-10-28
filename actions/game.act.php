@@ -1651,15 +1651,30 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['uuid']                     = sanitize_json($row['a_uuid']);
       $data[$i]['name']['en']               = sanitize_json($row['a_name_en']);
       $data[$i]['name']['fr']               = sanitize_json($row['a_name_fr']);
-      $data[$i]['release']['uuid']          = sanitize_json($row['r_uuid']);
-      $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
-      $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
-      $data[$i]['format']['uuid']           = sanitize_json($row['f_uuid']);
-      $data[$i]['format']['en']             = sanitize_json($row['f_name_en']);
-      $data[$i]['format']['fr']             = sanitize_json($row['f_name_fr']);
-      $data[$i]['difficulty']['uuid']       = sanitize_json($row['ad_uuid']);
-      $data[$i]['difficulty']['en']         = sanitize_json($row['ad_name_en']);
-      $data[$i]['difficulty']['fr']         = sanitize_json($row['ad_name_fr']);
+      if(isset($row['r_uuid']))
+      {
+        $data[$i]['release']['uuid']        = sanitize_json($row['r_uuid']);
+        $data[$i]['release']['en']          = sanitize_json($row['r_name_en']);
+        $data[$i]['release']['fr']          = sanitize_json($row['r_name_fr']);
+      }
+      else
+        $data[$i]['release']                = array();
+      if(isset($row['f_uuid']))
+      {
+        $data[$i]['format']['uuid']         = sanitize_json($row['f_uuid']);
+        $data[$i]['format']['en']           = sanitize_json($row['f_name_en']);
+        $data[$i]['format']['fr']           = sanitize_json($row['f_name_fr']);
+      }
+      else
+        $data[$i]['format']                 = array();
+      if(isset($row['ad_uuid']))
+      {
+        $data[$i]['difficulty']['uuid']     = sanitize_json($row['ad_uuid']);
+        $data[$i]['difficulty']['en']       = sanitize_json($row['ad_name_en']);
+        $data[$i]['difficulty']['fr']       = sanitize_json($row['ad_name_fr']);
+      }
+      else
+        $data[$i]['difficulty']             = array();
       $data[$i]['playstyle']['en']          = sanitize_json($row['a_playstyle_en']);
       $data[$i]['playstyle']['fr']          = sanitize_json($row['a_playstyle_fr']);
       $data[$i]['strategy_summary']['en']   = sanitize_json($row['a_summary_en']);
