@@ -1335,53 +1335,118 @@ function images_delete( int $image_id ) : void
 /**
  * Returns data related to an arsenal.
  *
- * @param   int         $arsenal_id   The arsenal's id.
+ * @param   int         $arsenal_id   (OPTIONAL)  The arsenal's id.
+ * @param   string      $arsenal_uuid (OPTIONAL)  The arsenal's uuid.
+ * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null                An array containing the arsenal's data, or null if it doesn't exist.
+ * @return  array|null                            An array containing the arsenal's data, or null if it doesn't exist.
  */
 
-function arsenals_get( int $arsenal_id ) : array|null
+function arsenals_get(  int     $arsenal_id   = null    ,
+                        string  $arsenal_uuid = null    ,
+                        string  $format       = 'html'  ) : array|null
 {
-  // Sanitize the arsenal's id
-  $arsenal_id = sanitize($arsenal_id, 'int');
-
-  // Return null if the arsenal does not exist
-  if(!database_row_exists('arsenals', $arsenal_id))
+  // Return null if there are neither an id nor an uuid
+  if(!$arsenal_id && !$arsenal_uuid)
     return null;
 
+  // Sanitize the arsenal's id and uuid
+  $arsenal_id   = sanitize($arsenal_id, 'int');
+  $arsenal_uuid = sanitize($arsenal_uuid, 'string');
+
+  // Return null if the arsenal does not have a valid ID
+  if($arsenal_id && !database_row_exists('arsenals', $arsenal_id))
+    return null;
+
+  // Return null if the arsenal does not have a valid UUID
+  if($arsenal_uuid && !database_entry_exists('arsenals', 'uuid', $arsenal_uuid))
+    return null;
+
+  // Prepare the condition for retrieving the arsenal
+  $query_where = ($arsenal_id) ? " WHERE arsenals.id = '$arsenal_id' " : " WHERE arsenals.uuid = '$arsenal_uuid' ";
+
   // Fetch the arsenal's data
-  $arsenal_data = query(" SELECT  arsenals.uuid                     AS 'a_uuid'         ,
-                                  arsenals.fk_releases              AS 'a_release_id'   ,
-                                  arsenals.fk_formats               AS 'a_format_id'    ,
-                                  arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
-                                  arsenals.name_en                  AS 'a_name_en'      ,
-                                  arsenals.name_fr                  AS 'a_name_fr'      ,
-                                  arsenals.playstyle_en             AS 'a_playstyle_en' ,
-                                  arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
-                                  arsenals.summary_en               AS 'a_summary_en'   ,
-                                  arsenals.summary_fr               AS 'a_summary_fr'   ,
-                                  arsenals.gameplan_en              AS 'a_gameplan_en'  ,
-                                  arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
-                                  arsenals.reserves_en              AS 'a_reserves_en'  ,
-                                  arsenals.reserves_fr              AS 'a_reserves_fr'
-                            FROM  arsenals
-                            WHERE arsenals.id = '$arsenal_id' ",
+  $arsenal_data = query(" SELECT      arsenals.uuid                     AS 'a_uuid'         ,
+                                      arsenals.fk_releases              AS 'a_release_id'   ,
+                                      arsenals.fk_formats               AS 'a_format_id'    ,
+                                      arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
+                                      arsenals.name_en                  AS 'a_name_en'      ,
+                                      arsenals.name_fr                  AS 'a_name_fr'      ,
+                                      arsenals.playstyle_en             AS 'a_playstyle_en' ,
+                                      arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
+                                      arsenals.summary_en               AS 'a_summary_en'   ,
+                                      arsenals.summary_fr               AS 'a_summary_fr'   ,
+                                      arsenals.gameplan_en              AS 'a_gameplan_en'  ,
+                                      arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
+                                      arsenals.reserves_en              AS 'a_reserves_en'  ,
+                                      arsenals.reserves_fr              AS 'a_reserves_fr'  ,
+                                      releases.uuid                     AS 'r_uuid'         ,
+                                      releases.name_en                  AS 'r_name_en'      ,
+                                      releases.name_fr                  AS 'r_name_fr'      ,
+                                      formats.uuid                      AS 'f_uuid'         ,
+                                      formats.name_en                   AS 'f_name_en'      ,
+                                      formats.name_fr                   AS 'f_name_fr'      ,
+                                      arsenal_difficulties.uuid         AS 'ad_uuid'        ,
+                                      arsenal_difficulties.name_en      AS 'ad_name_en'     ,
+                                      arsenal_difficulties.name_fr      AS 'ad_name_fr'
+                            FROM      arsenals
+                            LEFT JOIN releases              ON arsenals.fk_releases = releases.id
+                            LEFT JOIN formats               ON arsenals.fk_formats  = formats.id
+                            LEFT JOIN arsenal_difficulties  ON
+                                                  arsenals.fk_arsenal_difficulties  = arsenal_difficulties.id
+                            $query_where ",
                             fetch_row: true);
 
-  // Assemble an array with the arsenal's data
-  $data['release']      = sanitize_output($arsenal_data['a_release_id']);
-  $data['format']       = sanitize_output($arsenal_data['a_format_id']);
-  $data['difficulty']   = sanitize_output($arsenal_data['a_level_id']);
-  $data['name_en']      = sanitize_output($arsenal_data['a_name_en']);
-  $data['name_fr']      = sanitize_output($arsenal_data['a_name_fr']);
-  $data['playstyle_en'] = sanitize_output($arsenal_data['a_playstyle_en']);
-  $data['playstyle_fr'] = sanitize_output($arsenal_data['a_playstyle_fr']);
-  $data['summary_en']   = sanitize_output($arsenal_data['a_summary_en']);
-  $data['summary_fr']   = sanitize_output($arsenal_data['a_summary_fr']);
-  $data['gameplan_en']  = sanitize_output($arsenal_data['a_gameplan_en']);
-  $data['gameplan_fr']  = sanitize_output($arsenal_data['a_gameplan_fr']);
-  $data['reserves_en']  = sanitize_output($arsenal_data['a_reserves_en']);
-  $data['reserves_fr']  = sanitize_output($arsenal_data['a_reserves_fr']);
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['release']      = sanitize_output($arsenal_data['a_release_id']);
+    $data['format']       = sanitize_output($arsenal_data['a_format_id']);
+    $data['difficulty']   = sanitize_output($arsenal_data['a_level_id']);
+    $data['name_en']      = sanitize_output($arsenal_data['a_name_en']);
+    $data['name_fr']      = sanitize_output($arsenal_data['a_name_fr']);
+    $data['playstyle_en'] = sanitize_output($arsenal_data['a_playstyle_en']);
+    $data['playstyle_fr'] = sanitize_output($arsenal_data['a_playstyle_fr']);
+    $data['summary_en']   = sanitize_output($arsenal_data['a_summary_en']);
+    $data['summary_fr']   = sanitize_output($arsenal_data['a_summary_fr']);
+    $data['gameplan_en']  = sanitize_output($arsenal_data['a_gameplan_en']);
+    $data['gameplan_fr']  = sanitize_output($arsenal_data['a_gameplan_fr']);
+    $data['reserves_en']  = sanitize_output($arsenal_data['a_reserves_en']);
+    $data['reserves_fr']  = sanitize_output($arsenal_data['a_reserves_fr']);
+  }
+
+  // Prepare the data for the API
+  if($format === 'api')
+  {
+    // Sanitize the data
+    $data['uuid']                     = sanitize_json($arsenal_data['a_uuid']);
+    $data['name']['en']               = sanitize_json($arsenal_data['a_name_en']);
+    $data['name']['fr']               = sanitize_json($arsenal_data['a_name_fr']);
+    $data['release']['uuid']          = sanitize_json($arsenal_data['r_uuid']);
+    $data['release']['en']            = sanitize_json($arsenal_data['r_name_en']);
+    $data['release']['fr']            = sanitize_json($arsenal_data['r_name_fr']);
+    $data['format']['uuid']           = sanitize_json($arsenal_data['f_uuid']);
+    $data['format']['en']             = sanitize_json($arsenal_data['f_name_en']);
+    $data['format']['fr']             = sanitize_json($arsenal_data['f_name_fr']);
+    $data['difficulty']['uuid']       = sanitize_json($arsenal_data['ad_uuid']);
+    $data['difficulty']['en']         = sanitize_json($arsenal_data['ad_name_en']);
+    $data['difficulty']['fr']         = sanitize_json($arsenal_data['ad_name_fr']);
+    $data['playstyle']['en']          = sanitize_json($arsenal_data['a_playstyle_en']);
+    $data['playstyle']['fr']          = sanitize_json($arsenal_data['a_playstyle_fr']);
+    $data['strategy_summary']['en']   = sanitize_json($arsenal_data['a_summary_en']);
+    $data['strategy_summary']['fr']   = sanitize_json($arsenal_data['a_summary_fr']);
+    $data['game_plan']['en']          = sanitize_json($arsenal_data['a_gameplan_en']);
+    $data['game_plan']['fr']          = sanitize_json($arsenal_data['a_gameplan_fr']);
+    $data['reserves_game_plan']['en'] = sanitize_json($arsenal_data['a_reserves_en']);
+    $data['reserves_game_plan']['fr'] = sanitize_json($arsenal_data['a_reserves_fr']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('arsenal' => $data);
+  }
 
   // Return the data
   return $data;

@@ -45,6 +45,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <ul class="tinypadding_top">
     <li><?=__link('#list_arsenals', 'GET /api/arsenals', is_internal: false)?></li>
+    <li><?=__link('#get_arsenal', 'GET /api/arsenal/{uuid}', is_internal: false)?></li>
     <li><?=__link('#list_arsenal_difficulties', 'GET /api/arsenal_difficulties', is_internal: false)?></li>
   </ul>
 
@@ -152,6 +153,79 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "endpoint": string
     },
   ]
+}</pre>
+
+</div>
+
+<hr id="get_arsenal">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/arsenal/{uuid}
+  </h4>
+
+  <p>
+    <?=__('api_arsenals_get_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">uuid</span> - string<br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_arsenals_get_uuid')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "arsenal": {
+    "uuid": string,
+    "name": {
+      "en": string,
+      "fr": string
+    },
+    "release": {
+      "uuid": string,
+      "en": string,
+      "fr": string
+    },
+    "format": {
+      "uuid": string,
+      "en": string,
+      "fr": string
+    },
+    "difficulty": {
+      "uuid": string,
+      "en": string,
+      "fr": string
+    },
+    "playstyle": {
+      "en": string,
+      "fr": string
+    },
+    "strategy_summary": {
+      "en": string,
+      "fr": string
+    },
+    "game_plan": {
+      "en": string,
+      "fr": string
+    },
+    "reserves_game_plan": {
+      "en": string,
+      "fr": string
+    }
+  }
 }</pre>
 
 </div>

@@ -218,6 +218,13 @@ ___('api_arsenals_list_difficulty', 'EN', "Search for arsenals by difficulty UUI
 ___('api_arsenals_list_difficulty', 'FR', "Recherche des arsenaux par UUID de difficulté. Trouvez les UUIDs des difficultés en utilisant {{link|api/doc/arsenals#list_arsenal_difficulties|GET /api/arsenal_difficulties}}.");
 
 
+// Get arsenal
+___('api_arsenals_get_summary', 'EN', "Retrieves an arsenal by its UUID.");
+___('api_arsenals_get_summary', 'FR', "Récupère un arsenal par son UUID.");
+___('api_arsenals_get_uuid',    'EN', "The UUID of the arsenal to retrieve.");
+___('api_arsenals_get_uuid',    'FR', "L'UUID de l'arsenal à récupérer.");
+
+
 // Arsenal difficulties
 ___('api_arsenal_difficulties_list_summary', 'EN', "Retrieves a list of difficulty levels used to classify arsenals.");
 ___('api_arsenal_difficulties_list_summary', 'FR', "Récupère la liste des niveaux de difficultés utilisés pour classer les arsenaux.");
