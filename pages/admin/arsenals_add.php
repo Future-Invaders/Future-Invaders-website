@@ -51,6 +51,14 @@ $list_arsenal_difficulties = arsenal_difficulties_list();
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch arsenal tags
+
+$arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -130,7 +138,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
         <div style="flex: 8">
 
-          <div class="smallpadding_bot">
+          <div class="padding_bot">
             <label for="arsenal_name_fr"><?=__('admin_arsenal_add_name_fr')?></label>
             <input class="indiv" type="text" name="arsenal_name_fr">
           </div>
@@ -158,10 +166,23 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label><?=__('admin_arsenal_add_properties')?></label>
         <input type="checkbox" name="arsenal_hidden">
         <label class="label_inline" for="arsenal_hidden"><?=__('admin_arsenal_add_hidden')?></label><br>
+      </div>
+
+      <div class="padding_bot">
+        <label><?=__('admin_arsenal_add_tags')?></label>
+        <?php for($i = 0; $i < $arsenal_tags['rows']; $i++): ?>
+        <div class="tooltip_container">
+          <input type="checkbox" name="arsenal_tag_<?=$arsenal_tags[$i]['id']?>">
+          <label class="label_inline" for="arsenal_tag_<?=$arsenal_tags[$i]['id']?>"><?=$arsenal_tags[$i]['name']?></label>
+          <div class="tooltip">
+            <?=$arsenal_tags[$i]['fdesc']?>
+          </div>
+        </div>
+        <?php endfor; ?>
       </div>
 
       <input type="submit" name="arsenal_add" value="<?=__('admin_arsenal_add_submit')?>">

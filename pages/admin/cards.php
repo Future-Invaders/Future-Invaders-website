@@ -75,7 +75,7 @@ if(isset($_POST['card_add']))
   // Fetch card tags
   $card_tags = tags_list(search: array('ftype' => 'Card'));
 
-  // Gather card postdata
+  // Gather card tags postdata
   for($i = 0; $i < $card_tags['rows']; $i++)
     $card_add_tags[$card_tags[$i]['id']] = form_fetch_element("card_tag_".$card_tags[$i]['id'], element_exists: true);
 

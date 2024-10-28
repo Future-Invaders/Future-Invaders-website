@@ -1492,6 +1492,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_playstyle       = sanitize_array_element($search, 'playstyle', 'string');
   $search_text            = sanitize_array_element($search, 'text', 'string');
   $search_data            = sanitize_array_element($search, 'data', 'int');
+  $search_tag_id          = sanitize_array_element($search, 'tag_id', 'int');
 
   // Search through the data
   $query_search  = ($search_release && $search_release !== -1)
@@ -1525,10 +1526,16 @@ function arsenals_list( string  $sort_by  = ''      ,
                                           OR    arsenals.reserves_fr      LIKE '%$search_text%' ) "       : "";
   $query_search .= ($search_data === 1)
                                       ? " AND   arsenals.is_hidden        = '1' "                         : "";
-
+  $query_search .= ($search_tag_id === -1)
+                                      ? " AND   tags.id                   IS NULL "                       : "";
   // Don't show hidden arsenals in the API
   $query_search .= ($format === 'api')
                                       ? " AND   arsenals.is_hidden        = '0' "                         : "";
+
+  // Use a different search technique for tags
+  $query_having = ($search_tag_id && $search_tag_id !== -1)
+                ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -1613,12 +1620,19 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 arsenal_difficulties.name_en    AS 'ad_name_en'     ,
                                 arsenal_difficulties.name_fr    AS 'ad_name_fr'     ,
                                 arsenal_difficulties.name_$lang AS 'ad_name'        ,
-                                arsenal_difficulties.styling    AS 'ad_style'
+                                arsenal_difficulties.styling    AS 'ad_style'       ,
+                                COUNT(tags.id)                  AS 'at_count'       ,
+                                GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
+                                                                AS 'at_names'
                       FROM      arsenals
                       LEFT JOIN releases              ON arsenals.fk_releases             = releases.id
                       LEFT JOIN formats               ON arsenals.fk_formats              = formats.id
                       LEFT JOIN arsenal_difficulties  ON arsenals.fk_arsenal_difficulties = arsenal_difficulties.id
+                      LEFT JOIN tags_arsenals         ON tags_arsenals.fk_arsenals        = arsenals.id
+                      LEFT JOIN tags                  ON tags.id                          = tags_arsenals.fk_tags
                       $query_search
+                      GROUP BY  arsenals.id
+                      $query_having
                       $query_sort ");
 
   // Prepare the data for display
@@ -1649,6 +1663,8 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['reserves_en']    = nl2br($row['a_reserves_en']);
       $data[$i]['reserves_fr']    = nl2br($row['a_reserves_fr']);
       $data[$i]['hidden']         = sanitize_output($row['a_hidden']);
+      $data[$i]['ntags']          = sanitize_output($row['at_count']);
+      $data[$i]['tags']           = sanitize_output($row['at_names']);
     }
 
     // Prepare for the API
@@ -1761,6 +1777,33 @@ function arsenals_edit( int   $arsenal_id  ,
                   arsenals.reserves_en              = '$arsenal_reserves_en'  ,
                   arsenals.reserves_fr              = '$arsenal_reserves_fr'
           WHERE   arsenals.id                       = '$arsenal_id' ");
+
+  // Fetch a list of arsenal tags
+  $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
+
+  // Update the arsenal's tags in the database
+  for($i = 0; $i < $arsenal_tags['rows']; $i++)
+  {
+    // Check the current status of each tag
+    $tag_id = $arsenal_tags[$i]['id'];
+    $tag_check = query("  SELECT  tags_arsenals.id AS 'ti_id'
+                          FROM    tags_arsenals
+                          WHERE   tags_arsenals.fk_arsenals = '$arsenal_id'
+                          AND     tags_arsenals.fk_tags     = '$tag_id' ",
+                          fetch_row: true);
+
+    // Create missing tags
+    if($data['arsenal_tags'][$arsenal_tags[$i]['id']] && is_null($tag_check))
+      query(" INSERT INTO tags_arsenals
+              SET         tags_arsenals.fk_arsenals = '$arsenal_id' ,
+                          tags_arsenals.fk_tags     = '$tag_id'   ");
+
+    // Delete extraneous tags
+    if(!$data['arsenal_tags'][$arsenal_tags[$i]['id']] && !is_null($tag_check))
+      query(" DELETE FROM tags_arsenals
+              WHERE       tags_arsenals.fk_arsenals = '$arsenal_id'
+              AND         tags_arsenals.fk_tags     = '$tag_id'   ");
+  }
 }
 
 
@@ -1809,6 +1852,22 @@ function arsenals_add( array $data ) : void
                       arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
                       arsenals.reserves_en              = '$arsenal_reserves_en'  ,
                       arsenals.reserves_fr              = '$arsenal_reserves_fr'  ");
+
+  // Get the newly created arsenal's id
+  $arsenal_id = sanitize(query_id(), "int");
+
+  // Fetch a list of arsenal tags
+  $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
+
+  // Add the arsenal's tags to the database
+  for($i = 0; $i < $arsenal_tags['rows']; $i++)
+  {
+    $tag_id = $arsenal_tags[$i]['id'];
+    if($data['arsenal_tags'][$arsenal_tags[$i]['id']])
+      query(" INSERT INTO tags_arsenals
+              SET         tags_arsenals.fk_arsenals = '$arsenal_id' ,
+                          tags_arsenals.fk_tags     = '$tag_id'     ");
+  }
 }
 
 
@@ -1830,6 +1889,10 @@ function arsenals_delete( int $arsenal_id ) : void
   // Delete the arsenal from the database
   query(" DELETE FROM arsenals
           WHERE       arsenals.id = '$arsenal_id' ");
+
+  // Delete tags linked to the arsenal
+  query(" DELETE FROM tags_arsenals
+          WHERE       tags_arsenals.fk_arsenals = '$arsenal_id' ");
 }
 
 
@@ -1977,27 +2040,32 @@ function tags_list( string  $sort_by  = 'name'  ,
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Sanatize the search data
-  $search_type  = sanitize_array_element($search, 'type', 'int');
-  $search_ftype = sanitize_array_element($search, 'ftype', 'string');
-  $search_name  = sanitize_array_element($search, 'name', 'string');
-  $search_desc  = sanitize_array_element($search, 'desc', 'string');
-  $search_image = sanitize_array_element($search, 'image_id', 'int');
-  $search_card  = sanitize_array_element($search, 'card_id', 'int');
+  $search_type    = sanitize_array_element($search, 'type', 'int');
+  $search_ftype   = sanitize_array_element($search, 'ftype', 'string');
+  $search_name    = sanitize_array_element($search, 'name', 'string');
+  $search_desc    = sanitize_array_element($search, 'desc', 'string');
+  $search_image   = sanitize_array_element($search, 'image_id', 'int');
+  $search_card    = sanitize_array_element($search, 'card_id', 'int');
+  $search_arsenal = sanitize_array_element($search, 'arsenal_id', 'int');
 
   // Search through the data
-  $query_search  =  ($search_type)  ? " WHERE tags.fk_tag_types   =    '$search_type' "     : " WHERE 1 = 1 ";
-  $query_search .=  ($search_ftype) ? " AND   tag_types.name      LIKE '$search_ftype' "    : "";
-  $query_search .=  ($search_name)  ? " AND   tags.name           LIKE '%$search_name%' "   : "";
-  $query_search .=  ($search_desc)  ? " AND ( tags.description_en LIKE '%$search_desc%'
-                                        OR    tags.description_fr LIKE '%$search_desc%' ) " : "";
+  $query_search  =  ($search_type)    ? " WHERE tags.fk_tag_types   =    '$search_type' "     : " WHERE 1 = 1 ";
+  $query_search .=  ($search_ftype)   ? " AND   tag_types.name      LIKE '$search_ftype' "    : "";
+  $query_search .=  ($search_name)    ? " AND   tags.name           LIKE '%$search_name%' "   : "";
+  $query_search .=  ($search_desc)    ? " AND ( tags.description_en LIKE '%$search_desc%'
+                                          OR    tags.description_fr LIKE '%$search_desc%' ) " : "";
 
   // Search for tagged images
-  $query_images  = ($search_image)  ? " LEFT JOIN tags_images ON tags_images.fk_tags = tags.id "  : "";
-  $query_search .= ($search_image)  ? " AND tags_images.fk_images = '$search_image' "             : "";
+  $query_images  = ($search_image)    ? " LEFT JOIN tags_images ON tags_images.fk_tags = tags.id "      : "";
+  $query_search .= ($search_image)    ? " AND tags_images.fk_images     = '$search_image' "             : "";
 
   // Search for tagged cards
-  $query_cards    = ($search_card)  ? " LEFT JOIN tags_cards ON tags_cards.fk_tags = tags.id "  : "";
-  $query_search  .= ($search_card)  ? " AND tags_cards.fk_cards = '$search_card' "              : "";
+  $query_cards    = ($search_card)    ? " LEFT JOIN tags_cards ON tags_cards.fk_tags = tags.id "        : "";
+  $query_search  .= ($search_card)    ? " AND tags_cards.fk_cards       = '$search_card' "              : "";
+
+  // Search for tagged arsenals
+  $query_arsenals = ($search_arsenal) ? " LEFT JOIN tags_arsenals ON tags_arsenals.fk_tags = tags.id "  : "";
+  $query_search  .= ($search_arsenal) ? " AND tags_arsenals.fk_arsenals = '$search_arsenal' "           : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -2025,6 +2093,7 @@ function tags_list( string  $sort_by  = 'name'  ,
                     LEFT JOIN tag_types ON tags.fk_tag_types = tag_types.id
                     $query_images
                     $query_cards
+                    $query_arsenals
                     $query_search
                     $query_sort ");
 

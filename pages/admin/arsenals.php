@@ -40,6 +40,9 @@ $formats_list = formats_list();
 // List of arsenal difficulties
 $arsenal_difficulties_list = arsenal_difficulties_list();
 
+// List of arsenal tags
+$arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
+
 
 
 
@@ -64,6 +67,10 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
   $arsenal_add_hidden       = form_fetch_element('arsenal_hidden');
 
+  // Gather tags postdata
+  for($i = 0; $i < $arsenal_tags['rows']; $i++)
+    $arsenal_add_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
+
   // Assemble an array with the postdata
   $arsenal_add_data = array(  'release'       => $arsenal_add_release       ,
                               'format'        => $arsenal_add_format        ,
@@ -78,7 +85,8 @@ if(isset($_POST['arsenal_add']))
                               'gameplan_fr'   => $arsenal_add_gameplan_fr   ,
                               'reserves_en'   => $arsenal_add_reserves_en   ,
                               'reserves_fr'   => $arsenal_add_reserves_fr   ,
-                              'hidden'        => $arsenal_add_hidden        );
+                              'hidden'        => $arsenal_add_hidden        ,
+                              'arsenal_tags'  => $arsenal_add_tags         );
 
   // Add the arsenal to the database
   arsenals_add($arsenal_add_data);
@@ -111,6 +119,10 @@ if(isset($_POST['arsenal_edit']))
   $arsenal_edit_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
   $arsenal_edit_hidden       = form_fetch_element('arsenal_hidden');
 
+  // Gather tags postdata
+  for($i = 0; $i < $arsenal_tags['rows']; $i++)
+    $arsenal_edit_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
+
   // Assemble an array with the postdata
   $arsenal_edit_data = array( 'release'       => $arsenal_edit_release      ,
                               'format'        => $arsenal_edit_format       ,
@@ -125,7 +137,8 @@ if(isset($_POST['arsenal_edit']))
                               'gameplan_fr'   => $arsenal_edit_gameplan_fr  ,
                               'reserves_en'   => $arsenal_edit_reserves_en  ,
                               'reserves_fr'   => $arsenal_edit_reserves_fr  ,
-                              'hidden'        => $arsenal_edit_hidden       );
+                              'hidden'        => $arsenal_edit_hidden       ,
+                              'arsenal_tags'  => $arsenal_edit_tags         );
 
   // Edit the arsenal
   arsenals_edit(  $arsenal_edit_id    ,
@@ -155,7 +168,8 @@ $admin_arsenals_search  = array(  'release'     => form_fetch_element('admin_ars
                                   'difficulty'  => form_fetch_element('admin_arsenals_search_difficulty') ,
                                   'playstyle'   => form_fetch_element('admin_arsenals_search_playstyle')  ,
                                   'text'        => form_fetch_element('admin_arsenals_search_text')       ,
-                                  'data'        => form_fetch_element('admin_arsenals_search_data')       );
+                                  'data'        => form_fetch_element('admin_arsenals_search_data')       ,
+                                  'tag_id'      => form_fetch_element('admin_arsenals_search_tags')       );
 
 // Fetch the arsenals
 $arsenals_list = arsenals_list( sort_by:  $admin_arsenals_sort    ,
@@ -225,6 +239,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th class="align_center">
           <?=__('admin_arsenal_list_data')?>
         </th>
+        <th class="align_center">
+          <?=__('admin_arsenal_list_tags')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('tags');")?>
+        </th>
         <th>
           <?=__('act')?>
         </th>
@@ -274,6 +292,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <option value="1"><?=__('admin_arsenal_list_data_hidden')?></option>
           </select>
         </th>
+        <th class="align_center">
+          <select class="table_search" name="admin_arsenals_search_tags" id="admin_arsenals_search_tags" onchange="admin_arsenals_search();">
+            <option value="0">&nbsp;</option>
+            <option value="-1"><?=string_change_case(__('none'), 'lowercase')?></option>
+            <?php for($i = 0; $i < $arsenal_tags['rows']; $i++): ?>
+            <option value="<?=$arsenal_tags[$i]['id']?>"><?=$arsenal_tags[$i]['name']?></option>
+            <?php endfor; ?>
+          </select>
+        </th>
         <th>
           <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/arsenals_add')?>
         </th>
@@ -286,7 +313,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="8" class="uppercase text_light dark bold align_center">
+        <td colspan="9" class="uppercase text_light dark bold align_center">
           <?=__('admin_arsenal_list_count', preset_values: array($arsenals_list['rows']), amount: $arsenals_list['rows'])?>
         </td>
       </tr>
@@ -355,6 +382,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?php endif; ?>
 
         </td>
+
+        <?php if($arsenals_list[$i]['tags']): ?>
+        <td class="align_center nowrap tooltip_container">
+          <span class="bold"><?=$arsenals_list[$i]['ntags']?></span>
+          <div class="tooltip">
+            <?=str_replace(', ', '<br>', $arsenals_list[$i]['tags'])?>
+          </div>
+        </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php endif; ?>
 
         <td class="align_center nowrap card_action_icons">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer smallspaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/arsenals_edit?arsenal='.$arsenals_list[$i]['id'])?>

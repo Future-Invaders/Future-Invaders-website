@@ -95,6 +95,25 @@ for($i = 0; $i < $list_arsenal_difficulties['rows']; $i++)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch arsenal tags
+
+// Fetch a list of all tags and of the tags assigned to the arsenal
+$arsenal_all_tags = tags_list(search: array('ftype' => 'Arsenal'));
+$arsenal_tags     = tags_list(search: array('ftype' => 'Arsenal', 'arsenal_id' => $admin_arsenal_id));
+
+// Check the checkboxes of the tags that are already assigned to the arsenal
+for($i = 0; $i < $arsenal_all_tags['rows']; $i++)
+{
+  $admin_arsenal_tag_checked[$arsenal_all_tags[$i]['id']] = '';
+  for($j = 0; $j < $arsenal_tags['rows']; $j++)
+    if($arsenal_all_tags[$i]['id'] === $arsenal_tags[$j]['id'])
+      $admin_arsenal_tag_checked[$arsenal_all_tags[$i]['id']] = ' checked';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare checkboxes
 
 // Hidden arsenal
@@ -212,10 +231,23 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label><?=__('admin_arsenal_add_properties')?></label>
         <input type="checkbox" name="arsenal_hidden"<?=$admin_arsenal_hidden_checked?>>
         <label class="label_inline" for="arsenal_hidden"><?=__('admin_arsenal_add_hidden')?></label><br>
+      </div>
+
+      <div class="smallpadding_bot">
+        <label><?=__('admin_arsenal_add_tags')?></label>
+        <?php for($i = 0; $i < $arsenal_all_tags['rows']; $i++): ?>
+        <div class="tooltip_container">
+          <input type="checkbox" name="arsenal_tag_<?=$arsenal_all_tags[$i]['id']?>"<?=$admin_arsenal_tag_checked[$arsenal_all_tags[$i]['id']]?>>
+          <label class="label_inline" for="arsenal_tag_<?=$arsenal_all_tags[$i]['id']?>"><?=$arsenal_all_tags[$i]['name']?></label>
+          <div class="tooltip">
+            <?=$arsenal_all_tags[$i]['fdesc']?>
+          </div>
+        </div>
+        <?php endfor; ?>
       </div>
 
       <input type="submit" name="arsenal_edit" value="<?=__('admin_arsenal_edit_submit')?>">

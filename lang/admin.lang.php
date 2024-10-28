@@ -330,6 +330,8 @@ ___('admin_arsenal_list_data_hidden', 'EN', "Hidden arsenal");
 ___('admin_arsenal_list_data_hidden', 'FR', "Arsenal caché");
 ___('admin_arsenal_list_hidden',      'EN', "Hidden from the public");
 ___('admin_arsenal_list_hidden',      'FR', "Arsenal caché du public");
+___('admin_arsenal_list_tags',        'EN', "Tags");
+___('admin_arsenal_list_tags',        'FR', "Tags");
 ___('admin_arsenal_list_count',       'EN', "{{1}} arsenal");
 ___('admin_arsenal_list_count',       'FR', "{{1}} arsenal");
 ___('admin_arsenal_list_count+',      'EN', "{{1}} arsenals");
@@ -369,6 +371,8 @@ ___('admin_arsenal_add_properties',   'EN', "Properties");
 ___('admin_arsenal_add_properties',   'FR', "Propriétés");
 ___('admin_arsenal_add_hidden',       'EN', "Hidden from the public");
 ___('admin_arsenal_add_hidden',       'FR', "Arsenal caché du public");
+___('admin_arsenal_add_tags',         'EN', "Tags");
+___('admin_arsenal_add_tags',         'FR', "Tags");
 ___('admin_arsenal_add_submit',       'EN', "Add arsenal");
 ___('admin_arsenal_add_submit',       'FR', "Ajouter l'arsenal");
 
