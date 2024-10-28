@@ -63,7 +63,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
       </div>
 
-      <div class="flexcontainer padding_bot">
+      <div class="flexcontainer smallpadding_bot">
         <div style="flex: 8">
 
           <div>
@@ -83,6 +83,11 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
 
         </div>
+      </div>
+
+      <div class="padding_bot">
+        <label for="format_styling"><?=__('admin_format_add_styling')?></label>
+        <input class="indiv" type="text" name="format_styling">
       </div>
 
       <input type="submit" name="format_add" value="<?=__('admin_format_add_submit')?>">

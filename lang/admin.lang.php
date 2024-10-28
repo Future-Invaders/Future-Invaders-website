@@ -223,7 +223,7 @@ ___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
 ___('admin_card_type_add_name_fr',  'EN', "Name (French)");
 ___('admin_card_type_add_name_fr',  'FR', "Nom (Français)");
 ___('admin_card_type_add_styling',  'EN', "CSS styling");
-___('admin_card_type_add_styling',  'FR', "Stylage CSS");
+___('admin_card_type_add_styling',  'FR', "Style CSS");
 ___('admin_card_type_add_submit',   'EN', "Add card type");
 ___('admin_card_type_add_submit',   'FR', "Ajouter le type de carte");
 
@@ -267,7 +267,7 @@ ___('admin_card_rarity_add_name_fr',    'FR', "Nom (Français)");
 ___('admin_card_rarity_add_max_count',  'EN', "Max count per arsenal");
 ___('admin_card_rarity_add_max_count',  'FR', "Maximum par arsenal");
 ___('admin_card_rarity_add_styling',    'EN', "CSS styling");
-___('admin_card_rarity_add_styling',    'FR', "Stylage CSS");
+___('admin_card_rarity_add_styling',    'FR', "Style CSS");
 ___('admin_card_rarity_add_submit',     'EN', "Add rarity");
 ___('admin_card_rarity_add_submit',     'FR', "Ajouter la rareté");
 
@@ -398,7 +398,7 @@ ___('admin_arsenal_difficulty_add_name_en', 'FR', "Nom (Anglais)");
 ___('admin_arsenal_difficulty_add_name_fr', 'EN', "Name (French)");
 ___('admin_arsenal_difficulty_add_name_fr', 'FR', "Nom (Français)");
 ___('admin_arsenal_difficulty_add_styling', 'EN', "CSS styling");
-___('admin_arsenal_difficulty_add_styling', 'FR', "Stylage CSS");
+___('admin_arsenal_difficulty_add_styling', 'FR', "Style CSS");
 ___('admin_arsenal_difficulty_add_submit',  'EN', "Add difficulty level");
 ___('admin_arsenal_difficulty_add_submit',  'FR', "Ajouter la difficulté");
 
@@ -603,6 +603,8 @@ ___('admin_format_add_body_en', 'EN', "Description (English)");
 ___('admin_format_add_body_en', 'FR', "Description (Anglais)");
 ___('admin_format_add_body_fr', 'EN', "Description (French)");
 ___('admin_format_add_body_fr', 'FR', "Description (Français)");
+___('admin_format_add_styling', 'EN', "CSS styling");
+___('admin_format_add_styling', 'FR', "Style CSS");
 ___('admin_format_add_submit',  'EN', "Add format");
 ___('admin_format_add_submit',  'FR', "Ajouter le format");
 
@@ -648,7 +650,7 @@ ___('admin_faction_add_name_en',        'FR', "Nom (Anglais)");
 ___('admin_faction_add_name_fr',        'EN', "Name (French)");
 ___('admin_faction_add_name_fr',        'FR', "Nom (Français)");
 ___('admin_faction_add_styling',        'EN', "CSS styling");
-___('admin_faction_add_styling',        'FR', "Stylage CSS");
+___('admin_faction_add_styling',        'FR', "Style CSS");
 ___('admin_faction_add_submit',         'EN', "Add faction");
 ___('admin_faction_add_submit',         'FR', "Ajouter une faction");
 

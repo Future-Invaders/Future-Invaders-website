@@ -38,7 +38,8 @@ if(isset($_POST['format_add']))
                             'name_en' => form_fetch_element('format_name_en') ,
                             'name_fr' => form_fetch_element('format_name_fr') ,
                             'body_en' => form_fetch_element('format_body_en') ,
-                            'body_fr' => form_fetch_element('format_body_fr') );
+                            'body_fr' => form_fetch_element('format_body_fr') ,
+                            'styling' => form_fetch_element('format_styling') );
 
   // Add the faction to the database
   formats_add($format_add_data);
@@ -56,11 +57,12 @@ if(isset($_POST['format_edit']))
   $format_edit_id = form_fetch_element('format_id');
 
   // Assemble an array with the postdata
-  $format_edit_data = array( 'order'   => form_fetch_element('format_sort')   ,
-                             'name_en' => form_fetch_element('format_name_en') ,
-                             'name_fr' => form_fetch_element('format_name_fr') ,
-                             'desc_en' => form_fetch_element('format_body_en') ,
-                             'desc_fr' => form_fetch_element('format_body_fr') );
+  $format_edit_data = array(  'order'   => form_fetch_element('format_sort')    ,
+                              'name_en' => form_fetch_element('format_name_en') ,
+                              'name_fr' => form_fetch_element('format_name_fr') ,
+                              'desc_en' => form_fetch_element('format_body_en') ,
+                              'desc_fr' => form_fetch_element('format_body_fr') ,
+                              'styling' => form_fetch_element('format_styling') );
 
   // Edit the format
   formats_edit(  $format_edit_id    ,
@@ -136,7 +138,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$formats_list[$i]['order']?>
         </td>
 
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container uppercase bold <?=$formats_list[$i]['styling']?>">
           <?=$formats_list[$i]['name']?>
           <div class="tooltip">
             <?=$formats_list[$i]['name_en']?><br>

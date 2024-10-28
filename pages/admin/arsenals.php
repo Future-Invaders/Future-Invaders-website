@@ -283,7 +283,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$arsenals_list[$i]['release']?>
         </td>
 
-        <td class="align_center nowrap">
+        <td class="align_center nowrap uppercase bold <?=$arsenals_list[$i]['format_css']?>">
           <?=$arsenals_list[$i]['format']?>
         </td>
 

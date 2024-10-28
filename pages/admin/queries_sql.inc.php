@@ -845,7 +845,7 @@ if($last_query < 12)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Arsenals, arsenal compositions, arsenal tags, arsenal factions, arsenal images, arsenal difficulties, game formats
 
-if($last_query < 13)
+if($last_query < 14)
 {
   sql_create_table('arsenals');
   sql_create_field('arsenals', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
@@ -911,6 +911,7 @@ if($last_query < 13)
   sql_create_field('formats', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('formats', 'description_en', 'TEXT', 'name_fr');
   sql_create_field('formats', 'description_fr', 'TEXT', 'description_en');
+  sql_create_field('formats', 'styling', 'TEXT', 'description_fr');
 
   sql_create_index('formats', 'formats_uuid', 'uuid');
   sql_create_index('formats', 'formats_sorting', 'sorting_order');
@@ -924,6 +925,8 @@ if($last_query < 13)
 
   sql_create_index('arsenal_difficulties', 'difficulties_uuid', 'uuid');
   sql_create_index('arsenal_difficulties', 'difficulties_sorting', 'sorting_order');
+
+  sql_create_field('releases', 'styling', 'TEXT', 'release_date');
 
   sql_update_query_id(13);
 }

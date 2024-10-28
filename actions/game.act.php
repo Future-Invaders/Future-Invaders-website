@@ -1585,6 +1585,7 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 formats.name_en                 AS 'f_name_en'      ,
                                 formats.name_fr                 AS 'f_name_fr'      ,
                                 formats.name_$lang              AS 'f_name'         ,
+                                formats.styling                 AS 'f_styling'      ,
                                 arsenal_difficulties.uuid       AS 'ad_uuid'        ,
                                 arsenal_difficulties.name_en    AS 'ad_name_en'     ,
                                 arsenal_difficulties.name_fr    AS 'ad_name_fr'     ,
@@ -1609,6 +1610,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['name_fr']        = sanitize_output($row['a_name_fr']);
       $data[$i]['release']        = sanitize_output($row['r_name']);
       $data[$i]['format']         = sanitize_output($row['f_name']);
+      $data[$i]['format_css']     = sanitize_output($row['f_styling']);
       $data[$i]['difficulty']     = sanitize_output($row['ad_name']);
       $data[$i]['difficulty_css'] = sanitize_output($row['ad_style']);
       $data[$i]['playstyle']      = sanitize_output(string_truncate($row['a_playstyle'], 20, '...'));
@@ -3061,7 +3063,8 @@ function formats_get( int $format_id ) : array|null
                                 formats.name_en         AS 'f_name_en'  ,
                                 formats.name_fr         AS 'f_name_fr'  ,
                                 formats.description_en  AS 'f_desc_en'  ,
-                                formats.description_fr  AS 'f_desc_fr'
+                                formats.description_fr  AS 'f_desc_fr'  ,
+                                formats.styling         AS 'f_styling'
                         FROM    formats
                         WHERE   formats.id = '$format_id' ",
                         fetch_row: true);
@@ -3072,6 +3075,7 @@ function formats_get( int $format_id ) : array|null
   $data['name_fr']      = sanitize_output($format_data['f_name_fr']);
   $data['desc_en']      = sanitize_output($format_data['f_desc_en']);
   $data['desc_fr']      = sanitize_output($format_data['f_desc_fr']);
+  $data['styling']      = sanitize_output($format_data['f_styling']);
 
   // Return the format's data
   return $data;
@@ -3100,9 +3104,10 @@ function formats_list( string $format = 'html' ) : array
                                 formats.name_$lang        AS 'f_name'     ,
                                 formats.name_en           AS 'f_name_en'  ,
                                 formats.name_fr           AS 'f_name_fr'  ,
-                                formats.description_$lang AS 'f_desc'    ,
+                                formats.description_$lang AS 'f_desc'     ,
                                 formats.description_en    AS 'f_desc_en'  ,
-                                formats.description_fr    AS 'f_desc_fr'
+                                formats.description_fr    AS 'f_desc_fr'  ,
+                                formats.styling           AS 'f_styling'
                       FROM      formats
                       ORDER BY  formats.sorting_order ASC ");
 
@@ -3120,6 +3125,7 @@ function formats_list( string $format = 'html' ) : array
       $data[$i]['desc']         = sanitize_output(string_truncate($row['f_desc'], 35, '...'));
       $data[$i]['desc_en_raw']  = nl2br($row['f_desc_en']);
       $data[$i]['desc_fr_raw']  = nl2br($row['f_desc_fr']);
+      $data[$i]['styling']      = sanitize_output($row['f_styling']);
     }
 
     // Prepare for the API
@@ -3167,6 +3173,7 @@ function formats_add( array $data ) : void
   $format_name_fr = sanitize_array_element($data, 'name_fr', 'string');
   $format_body_en = sanitize_array_element($data, 'body_en', 'string');
   $format_body_fr = sanitize_array_element($data, 'body_fr', 'string');
+  $format_styling = sanitize_array_element($data, 'styling', 'string');
 
   // Add the format to the database
   query(" INSERT INTO formats
@@ -3175,7 +3182,8 @@ function formats_add( array $data ) : void
                       formats.name_en         = '$format_name_en' ,
                       formats.name_fr         = '$format_name_fr' ,
                       formats.description_en  = '$format_body_en' ,
-                      formats.description_fr  = '$format_body_fr' ");
+                      formats.description_fr  = '$format_body_fr' ,
+                      formats.styling         = '$format_styling' ");
 }
 
 
@@ -3200,6 +3208,7 @@ function formats_edit(  int   $format_id  ,
   $format_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
   $format_body_en  = sanitize_array_element($data, 'desc_en', 'string');
   $format_body_fr  = sanitize_array_element($data, 'desc_fr', 'string');
+  $format_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Stop here if the format does not exist
   if(!database_row_exists('formats', $format_id))
@@ -3211,7 +3220,8 @@ function formats_edit(  int   $format_id  ,
                   formats.name_en         = '$format_name_en' ,
                   formats.name_fr         = '$format_name_fr' ,
                   formats.description_en  = '$format_body_en' ,
-                  formats.description_fr  = '$format_body_fr'
+                  formats.description_fr  = '$format_body_fr' ,
+                  formats.styling         = '$format_styling'
           WHERE   formats.id              = '$format_id'      ");
 }
 
