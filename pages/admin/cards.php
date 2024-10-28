@@ -294,10 +294,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <select class="table_search" name="admin_cards_search_release" id="admin_cards_search_release" onchange="admin_cards_search();">
             <option value="0">&nbsp;</option>
-            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
             <?php for($i = 0; $i < $releases_list['rows']; $i++): ?>
-            <option value="<?=$releases_list[$i]['id']?>"><?=$releases_list[$i]['name']?></option>
+            <option value="<?=$releases_list[$i]['id']?>" class="bold uppercase <?=$releases_list[$i]['styling']?>"><?=$releases_list[$i]['name']?></option>
             <?php endfor; ?>
+            <option value="-1" class="bold uppercase"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
         <th>
@@ -308,27 +308,27 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <select class="table_search" name="admin_cards_search_type" id="admin_cards_search_type" onchange="admin_cards_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $card_types_list['rows']; $i++): ?>
-            <option value="<?=$card_types_list[$i]['id']?>"><?=$card_types_list[$i]['name']?></option>
+            <option value="<?=$card_types_list[$i]['id']?>" class="bold uppercase <?=$card_types_list[$i]['styling']?>"><?=$card_types_list[$i]['name']?></option>
             <?php endfor; ?>
-            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <option value="-1" class="bold uppercase"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
         <th>
           <select class="table_search" name="admin_cards_search_faction" id="admin_cards_search_faction" onchange="admin_cards_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $factions_list['rows']; $i++): ?>
-            <option value="<?=$factions_list[$i]['id']?>"><?=$factions_list[$i]['name']?></option>
+            <option value="<?=$factions_list[$i]['id']?>" class="bold uppercase <?=$factions_list[$i]['styling']?>"><?=$factions_list[$i]['name']?></option>
             <?php endfor; ?>
-            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <option value="-1" class="bold uppercase"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
         <th>
           <select class="table_search" name="admin_cards_search_rarity" id="admin_cards_search_rarity" onchange="admin_cards_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $card_rarities_list['rows']; $i++): ?>
-            <option value="<?=$card_rarities_list[$i]['id']?>"><?=$card_rarities_list[$i]['name']?></option>
+            <option value="<?=$card_rarities_list[$i]['id']?>" class="bold uppercase <?=$card_rarities_list[$i]['styling']?>"><?=$card_rarities_list[$i]['name']?></option>
             <?php endfor; ?>
-            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <option value="-1" class="bold uppercase"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
         <th>

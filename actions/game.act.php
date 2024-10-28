@@ -1487,10 +1487,16 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_text            = sanitize_array_element($search, 'text', 'string');
 
   // Search through the data
-  $query_search  = ($search_release)  ? " WHERE arsenals.fk_releases      = '$search_release' "      : " WHERE 1 = 1 ";
+  $query_search  = ($search_release && $search_release !== -1)
+                                      ? " WHERE arsenals.fk_releases      = '$search_release' "      : " WHERE 1 = 1 ";
+  $query_search .= ($search_release === -1)
+                                      ? " AND   releases.id               IS NULL "                       : "";
   $query_search .= ($search_release_uuid)
                                       ? " AND   releases.uuid             = '$search_release_uuid' "      : "";
-  $query_search .= ($search_format)   ? " AND   arsenals.fk_formats       = '$search_format' "            : "";
+  $query_search .= ($search_format && $search_format !== -1)
+                                      ? " AND   arsenals.fk_formats       = '$search_format' "            : "";
+  $query_search .= ($search_format === -1)
+                                      ? " AND   formats.id                IS NULL "                       : "";
   $query_search .= ($search_format_uuid)
                                       ? " AND   formats.uuid              = '$search_format_uuid' "       : "";
   $query_search .= ($search_name)     ? " AND ( arsenals.name_en          LIKE '%$search_name%'

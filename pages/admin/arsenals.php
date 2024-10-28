@@ -228,16 +228,18 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <select class="table_search" name="admin_arsenals_search_release" id="admin_arsenals_search_release" onchange="admin_arsenals_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $releases_list['rows']; $i++): ?>
-            <option value="<?=$releases_list[$i]['id']?>"><?=$releases_list[$i]['name']?></option>
+            <option value="<?=$releases_list[$i]['id']?>" class="bold uppercase <?=$releases_list[$i]['styling']?>"><?=$releases_list[$i]['name']?></option>
             <?php endfor; ?>
+            <option value="-1" class="bold uppercase"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
         <th>
           <select class="table_search" name="admin_arsenals_search_format" id="admin_arsenals_search_format" onchange="admin_arsenals_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $formats_list['rows']; $i++): ?>
-            <option value="<?=$formats_list[$i]['id']?>"><?=$formats_list[$i]['name']?></option>
+            <option value="<?=$formats_list[$i]['id']?>" class="bold uppercase <?=$formats_list[$i]['styling']?>"><?=$formats_list[$i]['name']?></option>
             <?php endfor; ?>
+            <option value="-1" class="bold uppercase"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
         <th>
@@ -246,10 +248,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <select class="table_search" name="admin_arsenals_search_difficulty" id="admin_arsenals_search_difficulty" onchange="admin_arsenals_search();">
             <option value="0">&nbsp;</option>
-            <option value="-1" class="bold"><?=string_change_case(__('none'), 'uppercase')?></option>
             <?php for($i = 0; $i < $arsenal_difficulties_list['rows']; $i++): ?>
             <option value="<?=$arsenal_difficulties_list[$i]['id']?>" class="bold uppercase <?=$arsenal_difficulties_list[$i]['styling']?>"><?=$arsenal_difficulties_list[$i]['name']?></option>
             <?php endfor; ?>
+            <option value="-1" class="bold"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
         <th>
