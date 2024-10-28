@@ -37,11 +37,13 @@ if(isset($_POST['release_add']))
   $release_add_date     = form_fetch_element('release_date');
   $release_add_name_en  = form_fetch_element('release_name_en');
   $release_add_name_fr  = form_fetch_element('release_name_fr');
+  $release_add_styling  = form_fetch_element('release_styling');
 
   // Assemble an array with the postdata
   $release_add_data = array(  'date'    => $release_add_date    ,
                               'name_en' => $release_add_name_en ,
-                              'name_fr' => $release_add_name_fr );
+                              'name_fr' => $release_add_name_fr ,
+                              'styling' => $release_add_styling );
 
   // Add the release to the database
   releases_add($release_add_data);
@@ -61,7 +63,8 @@ if(isset($_POST['release_edit']))
   // Assemble an array with the postdata
   $release_edit_data = array( 'name_en'    => form_fetch_element('release_name_en') ,
                               'name_fr'    => form_fetch_element('release_name_fr') ,
-                              'date'       => form_fetch_element('release_date')    );
+                              'date'       => form_fetch_element('release_date')    ,
+                              'styling'    => form_fetch_element('release_styling') );
 
   // Edit the release
   releases_edit(  $release_edit_id    ,
@@ -154,7 +157,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$releases_list[$i]['date']?>
         </td>
 
-        <td class="align_center">
+        <td class="align_center bold uppercase <?=$releases_list[$i]['styling']?>">
           <?=$releases_list[$i]['name']?>
         </td>
 

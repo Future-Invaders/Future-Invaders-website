@@ -553,6 +553,8 @@ ___('admin_release_add_name_fr',  'EN', "Name (French)");
 ___('admin_release_add_name_fr',  'FR', "Nom (Français)");
 ___('admin_release_add_date',     'EN', "Date (YYYY-MM-DD)");
 ___('admin_release_add_date',     'FR', "Date (AAAA-MM-JJ)");
+___('admin_release_add_styling',  'EN', "CSS styling");
+___('admin_release_add_styling',  'FR', "Style CSS");
 ___('admin_release_add_submit',   'EN', "Add release");
 ___('admin_release_add_submit',   'FR', "Ajouter la version");
 

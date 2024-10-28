@@ -389,6 +389,7 @@ function cards_list( string   $sort_by    = 'name'  ,
                               releases.name_$lang           AS 'r_name'       ,
                               releases.name_en              AS 'r_name_en'    ,
                               releases.name_fr              AS 'r_name_fr'    ,
+                              releases.styling              AS 'r_styling'    ,
                               card_types.id                 AS 'ct_id'        ,
                               card_types.name_en            AS 'ct_name_en'   ,
                               card_types.name_fr            AS 'ct_name_fr'   ,
@@ -441,6 +442,7 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['release']      = sanitize_output(string_truncate($row['r_name'], 12, '...'));
       $data[$i]['release_en']   = sanitize_output($row['r_name_en']);
       $data[$i]['release_fr']   = sanitize_output($row['r_name_fr']);
+      $data[$i]['release_css']  = sanitize_output($row['r_styling']);
       $data[$i]['type']         = sanitize_output($row['ct_name']);
       $data[$i]['type_css']     = sanitize_output($row['ct_styling']);
       $data[$i]['faction']      = sanitize_output($row['f_name']);
@@ -1581,6 +1583,7 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 releases.name_en                AS 'r_name_en'      ,
                                 releases.name_fr                AS 'r_name_fr'      ,
                                 releases.name_$lang             AS 'r_name'         ,
+                                releases.styling                AS 'r_styling'      ,
                                 formats.uuid                    AS 'f_uuid'         ,
                                 formats.name_en                 AS 'f_name_en'      ,
                                 formats.name_fr                 AS 'f_name_fr'      ,
@@ -1609,6 +1612,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['name_en']        = sanitize_output($row['a_name_en']);
       $data[$i]['name_fr']        = sanitize_output($row['a_name_fr']);
       $data[$i]['release']        = sanitize_output($row['r_name']);
+      $data[$i]['release_css']    = sanitize_output($row['r_styling']);
       $data[$i]['format']         = sanitize_output($row['f_name']);
       $data[$i]['format_css']     = sanitize_output($row['f_styling']);
       $data[$i]['difficulty']     = sanitize_output($row['ad_name']);
@@ -2190,7 +2194,8 @@ function releases_get(  int    $release_id                ,
                                   releases.uuid         AS 'r_uuid'     ,
                                   releases.name_en      AS 'r_name_en'  ,
                                   releases.name_fr      AS 'r_name_fr'  ,
-                                  releases.release_date AS 'r_date'
+                                  releases.release_date AS 'r_date'     ,
+                                  releases.styling      AS 'r_styling'
                           FROM    releases
                           WHERE   releases.id = '$release_id' ",
                           fetch_row: true);
@@ -2203,6 +2208,7 @@ function releases_get(  int    $release_id                ,
     $data['name_fr']  = sanitize_output($release_data['r_name_fr']);
     $data['date']     = sanitize_output(date_to_ddmmyy($release_data['r_date']));
     $data['datesql']  = sanitize_output($release_data['r_date']);
+    $data['styling']  = sanitize_output($release_data['r_styling']);
   }
 
   // Prepare for the API
@@ -2264,7 +2270,8 @@ function releases_list( string  $sort_by  = 'path'  ,
                                 releases.uuid         AS 'r_uuid'     ,
                                 releases.name_en      AS 'r_name_en'  ,
                                 releases.name_fr      AS 'r_name_fr'  ,
-                                releases.release_date AS 'r_date'
+                                releases.release_date AS 'r_date'     ,
+                                releases.styling      AS 'r_styling'
                         FROM    releases
                         $query_search
                         $query_sort ");
@@ -2280,6 +2287,7 @@ function releases_list( string  $sort_by  = 'path'  ,
       $data[$i]['name_fr']  = sanitize_output($row['r_name_fr']);
       $data[$i]['name']     = sanitize_output($row['r_name_'.$lang]);
       $data[$i]['date']     = sanitize_output(date_to_ddmmyy($row['r_date']));
+      $data[$i]['styling']  = sanitize_output($row['r_styling']);
     }
 
     // Prepare for the API
@@ -2324,13 +2332,15 @@ function releases_add( array $data ) : void
   $release_date     = sanitize_array_element($data, 'date', 'string');
   $release_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $release_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
+  $release_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Add the release to the database
   query(" INSERT INTO releases
           SET         releases.uuid         = UUID()              ,
                       releases.name_en      = '$release_name_en'  ,
                       releases.name_fr      = '$release_name_fr'  ,
-                      releases.release_date = '$release_date'     ");
+                      releases.release_date = '$release_date'     ,
+                      releases.styling      = '$release_styling'  ");
 }
 
 
@@ -2353,6 +2363,7 @@ function releases_edit( int   $release_id ,
   $release_name_en  = sanitize_array_element($data, 'name_en', 'string');
   $release_name_fr  = sanitize_array_element($data, 'name_fr', 'string');
   $release_date     = sanitize_array_element($data, 'date', 'string');
+  $release_styling  = sanitize_array_element($data, 'styling', 'string');
 
   // Stop here if the release does not exist
   if(!database_row_exists('releases', $release_id))
@@ -2362,7 +2373,8 @@ function releases_edit( int   $release_id ,
   query(" UPDATE  releases
           SET     releases.name_en      = '$release_name_en'  ,
                   releases.name_fr      = '$release_name_fr'  ,
-                  releases.release_date = '$release_date'
+                  releases.release_date = '$release_date'     ,
+                  releases.styling      = '$release_styling'
           WHERE   releases.id           = '$release_id' ");
 }
 

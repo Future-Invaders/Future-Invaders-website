@@ -47,9 +47,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <input class="indiv" type="text" name="release_name_fr">
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label for="release_date"><?=__('admin_release_add_date')?></label>
         <input class="indiv" type="text" name="release_date">
+      </div>
+
+      <div class="padding_bot">
+        <label for="release_styling"><?=__('admin_release_add_styling')?></label>
+        <input class="indiv" type="text" name="release_styling">
       </div>
 
       <input type="submit" name="release_add" value="<?=__('admin_release_add_submit')?>">

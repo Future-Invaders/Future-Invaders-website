@@ -279,7 +279,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr id="admin_arsenals_row_<?=$arsenals_list[$i]['id']?>">
 
-        <td class="align_center nowrap">
+        <td class="align_center nowrap uppercase bold <?=$arsenals_list[$i]['release_css']?>">
           <?=$arsenals_list[$i]['release']?>
         </td>
 

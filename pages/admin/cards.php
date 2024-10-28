@@ -387,7 +387,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <tr id="admin_cards_row_<?=$cards_list[$i]['id']?>">
 
         <?php if($cards_list[$i]['release']) : ?>
-        <td class="align_center nowrap tooltip_container">
+        <td class="align_center nowrap tooltip_container uppercase bold <?=$cards_list[$i]['release_css']?>">
           <?=$cards_list[$i]['release']?>
           <div class="tooltip">
             <?=$cards_list[$i]['release_en']?><br>
