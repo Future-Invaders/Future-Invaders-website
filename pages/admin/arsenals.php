@@ -68,6 +68,8 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_gameplan_fr  = form_fetch_element('arsenal_gameplan_fr');
   $arsenal_add_reserves_en  = form_fetch_element('arsenal_reserves_en');
   $arsenal_add_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
+  $arsenal_add_extra_en     = form_fetch_element('arsenal_extra_en');
+  $arsenal_add_extra_fr     = form_fetch_element('arsenal_extra_fr');
   $arsenal_add_hidden       = form_fetch_element('arsenal_hidden');
 
   // Gather factions postdata
@@ -97,6 +99,8 @@ if(isset($_POST['arsenal_add']))
                               'gameplan_fr'   => $arsenal_add_gameplan_fr   ,
                               'reserves_en'   => $arsenal_add_reserves_en   ,
                               'reserves_fr'   => $arsenal_add_reserves_fr   ,
+                              'extra_en'      => $arsenal_add_extra_en      ,
+                              'extra_fr'      => $arsenal_add_extra_fr      ,
                               'hidden'        => $arsenal_add_hidden        ,
                               'factions'      => $arsenal_add_factions      ,
                               'arsenal_tags'  => $arsenal_add_tags          );
@@ -130,6 +134,8 @@ if(isset($_POST['arsenal_edit']))
   $arsenal_edit_gameplan_fr  = form_fetch_element('arsenal_gameplan_fr');
   $arsenal_edit_reserves_en  = form_fetch_element('arsenal_reserves_en');
   $arsenal_edit_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
+  $arsenal_edit_extra_en     = form_fetch_element('arsenal_extra_en');
+  $arsenal_edit_extra_fr     = form_fetch_element('arsenal_extra_fr');
   $arsenal_edit_hidden       = form_fetch_element('arsenal_hidden');
 
   // Gather factions postdata
@@ -159,6 +165,8 @@ if(isset($_POST['arsenal_edit']))
                               'gameplan_fr'   => $arsenal_edit_gameplan_fr  ,
                               'reserves_en'   => $arsenal_edit_reserves_en  ,
                               'reserves_fr'   => $arsenal_edit_reserves_fr  ,
+                              'extra_en'      => $arsenal_edit_extra_en     ,
+                              'extra_fr'      => $arsenal_edit_extra_fr     ,
                               'hidden'        => $arsenal_edit_hidden       ,
                               'factions'      => $arsenal_edit_factions     ,
                               'arsenal_tags'  => $arsenal_edit_tags         );
@@ -392,30 +400,52 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
         </td>
 
+        <?php if($arsenals_list[$i]['length_en'] + $arsenals_list[$i]['length_fr'] === 0): ?>
+        <td class="align_center">
+          &nbsp;
+        </td>
+        <?php else: ?>
         <td class="align_center tooltip_container">
           <?=$arsenals_list[$i]['length_en']?> - <?=$arsenals_list[$i]['length_fr']?>
           <div class="tooltip dowrap">
             <div class="smallpadding_top smallpadding_bot spaced">
+              <?php if($arsenals_list[$i]['summary_en']): ?>
               <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_en']?><br>
               <br>
+              <?php endif; if($arsenals_list[$i]['gameplan_en']): ?>
               <span class="bold"><?=__('admin_arsenal_list_gameplan').__(':')?></span><br>
               <?=$arsenals_list[$i]['gameplan_en']?><br>
               <br>
+              <?php endif; if($arsenals_list[$i]['reserves_en']): ?>
               <span class="bold"><?=__('admin_arsenal_list_reserves').__(':')?></span><br>
-              <?=$arsenals_list[$i]['reserves_en']?>
+              <?=$arsenals_list[$i]['reserves_en']?><br>
+              <br>
+              <?php endif; if($arsenals_list[$i]['extra_en']): ?>
+              <span class="bold"><?=__('admin_arsenal_list_extra').__(':')?></span><br>
+              <?=$arsenals_list[$i]['extra_en']?><br>
+              <?php endif; ?>
             </div>
             <hr>
             <div class="smallpadding_top smallpadding_bot spaced">
+              <?php if($arsenals_list[$i]['summary_fr']): ?>
               <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_fr']?><br>
               <br>
+              <?php endif; if($arsenals_list[$i]['gameplan_fr']): ?>
               <span class="bold"><?=__('admin_arsenal_list_gameplan').__(':')?></span><br>
               <?=$arsenals_list[$i]['gameplan_fr']?><br>
               <br>
+              <?php endif; if($arsenals_list[$i]['reserves_fr']): ?>
               <span class="bold"><?=__('admin_arsenal_list_reserves').__(':')?></span><br>
-              <?=$arsenals_list[$i]['reserves_fr']?>
+              <?=$arsenals_list[$i]['reserves_fr']?><br>
+              <br>
+              <?php endif; if($arsenals_list[$i]['extra_fr']): ?>
+              <span class="bold"><?=__('admin_arsenal_list_extra').__(':')?></span><br>
+              <?=$arsenals_list[$i]['extra_fr']?><br>
+              <?php endif; ?>
             </div>
           </div>
         </td>
+        <?php endif; ?>
 
         <td class="align_center nowrap">
 

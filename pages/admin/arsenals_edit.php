@@ -215,9 +215,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <textarea class="indiv shorter" name="arsenal_gameplan_en"><?=$admin_arsenal_data['gameplan_en']?></textarea>
           </div>
 
-          <div>
+          <div class="smallpadding_bot">
             <label for="arsenal_reserves_en"><?=__('admin_arsenal_add_reserves_en')?></label>
             <textarea class="indiv shorter" name="arsenal_reserves_en"><?=$admin_arsenal_data['reserves_en']?></textarea>
+          </div>
+
+          <div>
+            <label for="arsenal_extra_en"><?=__('admin_arsenal_add_extra_en')?></label>
+            <textarea class="indiv shorter" name="arsenal_extra_en"><?=$admin_arsenal_data['extra_en']?></textarea>
           </div>
 
         </div>
@@ -246,9 +251,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <textarea class="indiv shorter" name="arsenal_gameplan_fr"><?=$admin_arsenal_data['gameplan_fr']?></textarea>
           </div>
 
-          <div>
+          <div class="smallpadding_bot">
             <label for="arsenal_reserves_fr"><?=__('admin_arsenal_add_reserves_fr')?></label>
             <textarea class="indiv shorter" name="arsenal_reserves_fr"><?=$admin_arsenal_data['reserves_fr']?></textarea>
+          </div>
+
+          <div>
+            <label for="arsenal_extra_fr"><?=__('admin_arsenal_add_extra_fr')?></label>
+            <textarea class="indiv shorter" name="arsenal_extra_fr"><?=$admin_arsenal_data['extra_fr']?></textarea>
           </div>
 
         </div>

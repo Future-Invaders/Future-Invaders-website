@@ -1395,7 +1395,9 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                                   arsenals.gameplan_en              AS 'a_gameplan_en'  ,
                                   arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
                                   arsenals.reserves_en              AS 'a_reserves_en'  ,
-                                  arsenals.reserves_fr              AS 'a_reserves_fr'
+                                  arsenals.reserves_fr              AS 'a_reserves_fr'  ,
+                                  arsenals.extra_en                 AS 'a_extra_en'     ,
+                                  arsenals.extra_fr                 AS 'a_extra_fr'
                             FROM  arsenals
                             $query_where ",
                             fetch_row: true);
@@ -1408,9 +1410,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   $arsenal_id = sanitize($arsenal_data['a_id'], 'int');
 
   // Fetch linked factions
-  $qfactions = query("  SELECT    factions.id AS 'f_id'
+  $qfactions = query("  SELECT    arsenals_factions.fk_factions AS 'f_id'
                         FROM      arsenals_factions
-                        LEFT JOIN factions ON arsenals_factions.fk_factions = factions.id
                         WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
 
   // Prepare the data for display
@@ -1431,6 +1432,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['gameplan_fr']  = sanitize_output($arsenal_data['a_gameplan_fr']);
     $data['reserves_en']  = sanitize_output($arsenal_data['a_reserves_en']);
     $data['reserves_fr']  = sanitize_output($arsenal_data['a_reserves_fr']);
+    $data['extra_en']     = sanitize_output($arsenal_data['a_extra_en']);
+    $data['extra_fr']     = sanitize_output($arsenal_data['a_extra_fr']);
 
     // Faction data
     for($i = 0; $dfactions = query_row($qfactions); $i++)
@@ -1470,6 +1473,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['game_plan']['fr']          = sanitize_json($arsenal_data['a_gameplan_fr']);
     $data['reserves_game_plan']['en'] = sanitize_json($arsenal_data['a_reserves_en']);
     $data['reserves_game_plan']['fr'] = sanitize_json($arsenal_data['a_reserves_fr']);
+    $data['extra_text']['en']         = sanitize_json($arsenal_data['a_extra_en']);
+    $data['extra_text']['fr']         = sanitize_json($arsenal_data['a_extra_fr']);
 
     // Add linked tags
     if(!$no_depth)
@@ -1649,16 +1654,20 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 arsenals.playstyle_$lang        AS 'a_playstyle'    ,
                                   LENGTH(arsenals.summary_en)
                                 + LENGTH(arsenals.gameplan_en)
-                                + LENGTH(arsenals.reserves_en)  AS 'a_length_en'    ,
+                                + LENGTH(arsenals.reserves_en)
+                                + LENGTH(arsenals.extra_en)     AS 'a_length_en'    ,
                                   LENGTH(arsenals.summary_fr)
                                 + LENGTH(arsenals.gameplan_fr)
-                                + LENGTH(arsenals.reserves_fr)  AS 'a_length_fr'    ,
+                                + LENGTH(arsenals.reserves_fr)
+                                + LENGTH(arsenals.extra_fr)     AS 'a_length_fr'    ,
                                 arsenals.summary_en             AS 'a_summary_en'   ,
                                 arsenals.summary_fr             AS 'a_summary_fr'   ,
                                 arsenals.gameplan_en            AS 'a_gameplan_en'  ,
                                 arsenals.gameplan_fr            AS 'a_gameplan_fr'  ,
                                 arsenals.reserves_en            AS 'a_reserves_en'  ,
                                 arsenals.reserves_fr            AS 'a_reserves_fr'  ,
+                                arsenals.extra_en               AS 'a_extra_en'     ,
+                                arsenals.extra_fr               AS 'a_extra_fr'     ,
                                 releases.uuid                   AS 'r_uuid'         ,
                                 releases.name_en                AS 'r_name_en'      ,
                                 releases.name_fr                AS 'r_name_fr'      ,
@@ -1722,6 +1731,8 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['gameplan_fr']    = nl2br($row['a_gameplan_fr']);
       $data[$i]['reserves_en']    = nl2br($row['a_reserves_en']);
       $data[$i]['reserves_fr']    = nl2br($row['a_reserves_fr']);
+      $data[$i]['extra_en']       = nl2br($row['a_extra_en']);
+      $data[$i]['extra_fr']       = nl2br($row['a_extra_fr']);
       $data[$i]['hidden']         = sanitize_output($row['a_hidden']);
       $data[$i]['ntags']          = sanitize_output($row['at_count']);
       $data[$i]['tags']           = sanitize_output($row['at_names']);
@@ -1769,6 +1780,8 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['game_plan']['fr']          = sanitize_json($row['a_gameplan_fr']);
       $data[$i]['reserves_game_plan']['en'] = sanitize_json($row['a_reserves_en']);
       $data[$i]['reserves_game_plan']['fr'] = sanitize_json($row['a_reserves_fr']);
+      $data[$i]['extra_text']['en']         = sanitize_json($row['a_extra_en']);
+      $data[$i]['extra_text']['fr']         = sanitize_json($row['a_extra_fr']);
       $data[$i]['tags']                     = ($row['at_names']) ? explode(', ', $row['at_names']) : array();
       $data[$i]['endpoint']                 = sanitize_json($GLOBALS['website_url'].'api/arsenal/'.$row['a_uuid']);
     }
@@ -1817,6 +1830,8 @@ function arsenals_add( array $data ) : void
   $arsenal_gameplan_fr  = sanitize_array_element($data, 'gameplan_fr', 'string');
   $arsenal_reserves_en  = sanitize_array_element($data, 'reserves_en', 'string');
   $arsenal_reserves_fr  = sanitize_array_element($data, 'reserves_fr', 'string');
+  $arsenal_extra_en     = sanitize_array_element($data, 'extra_en', 'string');
+  $arsenal_extra_fr     = sanitize_array_element($data, 'extra_fr', 'string');
 
   // Add the arsenal to the database
   query(" INSERT INTO arsenals
@@ -1834,7 +1849,9 @@ function arsenals_add( array $data ) : void
                       arsenals.gameplan_en              = '$arsenal_gameplan_en'  ,
                       arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
                       arsenals.reserves_en              = '$arsenal_reserves_en'  ,
-                      arsenals.reserves_fr              = '$arsenal_reserves_fr'  ");
+                      arsenals.reserves_fr              = '$arsenal_reserves_fr'  ,
+                      arsenals.extra_en                 = '$arsenal_extra_en'     ,
+                      arsenals.extra_fr                 = '$arsenal_extra_fr'     ");
 
   // Get the newly created arsenal's id
   $arsenal_id = sanitize(query_id(), "int");
@@ -1897,6 +1914,8 @@ function arsenals_edit( int   $arsenal_id  ,
   $arsenal_gameplan_fr  = sanitize_array_element($data, 'gameplan_fr', 'string');
   $arsenal_reserves_en  = sanitize_array_element($data, 'reserves_en', 'string');
   $arsenal_reserves_fr  = sanitize_array_element($data, 'reserves_fr', 'string');
+  $arsenal_extra_en     = sanitize_array_element($data, 'extra_en', 'string');
+  $arsenal_extra_fr     = sanitize_array_element($data, 'extra_fr', 'string');
 
   // Stop here if the arsenal does not exist
   if(!database_row_exists('arsenals', $arsenal_id))
@@ -1917,7 +1936,9 @@ function arsenals_edit( int   $arsenal_id  ,
                   arsenals.gameplan_en              = '$arsenal_gameplan_en'  ,
                   arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
                   arsenals.reserves_en              = '$arsenal_reserves_en'  ,
-                  arsenals.reserves_fr              = '$arsenal_reserves_fr'
+                  arsenals.reserves_fr              = '$arsenal_reserves_fr'  ,
+                  arsenals.extra_en                 = '$arsenal_extra_en'     ,
+                  arsenals.extra_fr                 = '$arsenal_extra_fr'
           WHERE   arsenals.id                       = '$arsenal_id' ");
 
   // Fetch a list of arsenal tags
@@ -1965,9 +1986,10 @@ function arsenals_edit( int   $arsenal_id  ,
   foreach($missing_factions as $missing_faction)
   {
     $missing_faction = sanitize($missing_faction, 'int');
-    query(" INSERT INTO arsenals_factions
-            SET         arsenals_factions.fk_arsenals = '$arsenal_id' ,
-                        arsenals_factions.fk_factions = '$missing_faction' ");
+    if($missing_faction !== 0)
+      query(" INSERT INTO arsenals_factions
+              SET         arsenals_factions.fk_arsenals = '$arsenal_id' ,
+                          arsenals_factions.fk_factions = '$missing_faction' ");
   }
 
   // Look for extra factions in the edited data and remove them from the database

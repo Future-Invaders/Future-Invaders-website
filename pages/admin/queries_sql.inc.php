@@ -881,14 +881,14 @@ if($last_query < 13)
   sql_create_field('arsenals_compositions', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenals');
   sql_create_field('arsenals_compositions', 'amount_main', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
   sql_create_field('arsenals_compositions', 'amount_reserves', 'INT UNSIGNED NOT NULL DEFAULT 0', 'amount_main');
-  sql_create_field('arsenals_compositions', 'is_documentation', 'INT UNSIGNED NOT NULL DEFAULT 0', 'amount_reserves');
-  sql_create_field('arsenals_compositions', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_documentation');
+  sql_create_field('arsenals_compositions', 'is_extra', 'INT UNSIGNED NOT NULL DEFAULT 0', 'amount_reserves');
+  sql_create_field('arsenals_compositions', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_extra');
 
   sql_create_index('arsenals_compositions', 'arsenals_compositions_arsenal', 'fk_arsenals');
   sql_create_index('arsenals_compositions', 'arsenals_compositions_card', 'fk_cards');
   sql_create_index('arsenals_compositions', 'arsenals_compositions_main', 'amount_main');
   sql_create_index('arsenals_compositions', 'arsenals_compositions_reserves', 'amount_reserves');
-  sql_create_index('arsenals_compositions', 'arsenals_compositions_documentation', 'is_documentation');
+  sql_create_index('arsenals_compositions', 'arsenals_compositions_extra', 'is_extra');
   sql_create_index('arsenals_compositions', 'arsenals_compositions_sorting', 'sorting_order');
 
   sql_create_table('tags_arsenals');

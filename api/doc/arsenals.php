@@ -165,6 +165,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "en": string,
         "fr": string
       }
+      "extra_text": {
+        "en": string,
+        "fr": string
+      },
       "tags": [
         "tag1",
         "tag2",
@@ -268,6 +272,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "en": string,
       "fr": string
     }
+    "extra_text": {
+      "en": string,
+      "fr": string
+    },
     "tags": [
       {
         "tag": {
