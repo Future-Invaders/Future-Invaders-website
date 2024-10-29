@@ -52,6 +52,14 @@ $list_arsenal_difficulties = arsenal_difficulties_list();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch images
+
+$images_list = images_list(search: array('unused' => true));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch factions
 
 $factions_list = factions_list();
@@ -110,6 +118,38 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <option value="<?=$list_arsenal_difficulties[$i]['id']?>"><?=$list_arsenal_difficulties[$i]['name']?></option>
           <?php endfor; ?>
         </select>
+      </div>
+
+      <div class="flexcontainer smallpadding_bot">
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_image_en"><?=__('admin_arsenal_add_image_en')?></label>
+            <select class="indiv align_left" name="arsenal_image_en">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $images_list['rows']; $i++): ?>
+              <option value="<?=$images_list[$i]['id']?>"><?=$images_list[$i]['spath']?> (<?=$images_list[$i]['name']?>)</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+
+        </div>
+        <div style="flex: 1">
+          &nbsp;
+        </div>
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_image_fr"><?=__('admin_arsenal_add_image_fr')?></label>
+            <select class="indiv align_left" name="arsenal_image_fr">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $images_list['rows']; $i++): ?>
+              <option value="<?=$images_list[$i]['id']?>"><?=$images_list[$i]['spath']?> (<?=$images_list[$i]['name']?>)</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+
+        </div>
       </div>
 
       <div class="flexcontainer padding_bot">

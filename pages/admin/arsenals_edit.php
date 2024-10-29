@@ -95,6 +95,31 @@ for($i = 0; $i < $list_arsenal_difficulties['rows']; $i++)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch images
+
+// Fetch a list of all images
+$images_list = images_list();
+
+// Select the english image
+for($i = 0; $i < $images_list['rows']; $i++)
+{
+  $arsenal_image_selected_en[$i] = '';
+  if($images_list[$i]['id'] === $admin_arsenal_data['image_id_en'])
+    $arsenal_image_selected_en[$i] = ' selected';
+}
+
+// Select the french image
+for($i = 0; $i < $images_list['rows']; $i++)
+{
+  $arsenal_image_selected_fr[$i] = '';
+  if($images_list[$i]['id'] === $admin_arsenal_data['image_id_fr'])
+    $arsenal_image_selected_fr[$i] = ' selected';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch arsenal factions
 
 // Fetch a list of all factions
@@ -190,6 +215,38 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <option value="<?=$list_arsenal_difficulties[$i]['id']?>"<?=$arsenal_difficulty_selected[$i]?>><?=$list_arsenal_difficulties[$i]['name']?></option>
           <?php endfor; ?>
         </select>
+      </div>
+
+      <div class="flexcontainer smallpadding_bot">
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_image_en"><?=__('admin_arsenal_add_image_en')?></label>
+            <select class="indiv align_left" name="arsenal_image_en">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $images_list['rows']; $i++): ?>
+              <option value="<?=$images_list[$i]['id']?>"<?=$arsenal_image_selected_en[$i]?>><?=$images_list[$i]['spath']?> (<?=$images_list[$i]['name']?>)</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+
+        </div>
+        <div style="flex: 1">
+          &nbsp;
+        </div>
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_image_fr"><?=__('admin_arsenal_add_image_fr')?></label>
+            <select class="indiv align_left" name="arsenal_image_fr">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $images_list['rows']; $i++): ?>
+              <option value="<?=$images_list[$i]['id']?>"<?=$arsenal_image_selected_fr[$i]?>><?=$images_list[$i]['spath']?> (<?=$images_list[$i]['name']?>)</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+
+        </div>
       </div>
 
       <div class="flexcontainer smallpadding_bot">

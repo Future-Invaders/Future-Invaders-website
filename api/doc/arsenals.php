@@ -169,6 +169,18 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "en": string,
         "fr": string
       },
+      "images": {
+        "en": {
+          "uuid": string,
+          "path": string,
+          "endpoint": string
+        },
+        "fr": {
+          "uuid": string,
+          "path": string,
+          "endpoint": string
+        }
+      },
       "tags": [
         "tag1",
         "tag2",
@@ -275,6 +287,22 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "extra_text": {
       "en": string,
       "fr": string
+    },
+    "images": {
+      "en": {
+        "uuid": string,
+        "name": string,
+        "language": string,
+        "artist": string,
+        "path": string,
+      },
+      "fr": {
+        "uuid": string,
+        "name": string,
+        "language": string,
+        "artist": string,
+        "path": string,
+      }
     },
     "tags": [
       {

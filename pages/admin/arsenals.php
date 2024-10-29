@@ -58,6 +58,8 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_release      = form_fetch_element('arsenal_release');
   $arsenal_add_format       = form_fetch_element('arsenal_format');
   $arsenal_add_difficulty   = form_fetch_element('arsenal_difficulty');
+  $arsenal_add_image_en     = form_fetch_element('arsenal_image_en');
+  $arsenal_add_image_fr     = form_fetch_element('arsenal_image_fr');
   $arsenal_add_name_en      = form_fetch_element('arsenal_name_en');
   $arsenal_add_name_fr      = form_fetch_element('arsenal_name_fr');
   $arsenal_add_playstyle_en = form_fetch_element('arsenal_playstyle_en');
@@ -89,6 +91,8 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_data = array(  'release'       => $arsenal_add_release       ,
                               'format'        => $arsenal_add_format        ,
                               'difficulty'    => $arsenal_add_difficulty    ,
+                              'image_en'      => $arsenal_add_image_en      ,
+                              'image_fr'      => $arsenal_add_image_fr      ,
                               'name_en'       => $arsenal_add_name_en       ,
                               'name_fr'       => $arsenal_add_name_fr       ,
                               'playstyle_en'  => $arsenal_add_playstyle_en  ,
@@ -124,6 +128,8 @@ if(isset($_POST['arsenal_edit']))
   $arsenal_edit_release      = form_fetch_element('arsenal_release');
   $arsenal_edit_format       = form_fetch_element('arsenal_format');
   $arsenal_edit_difficulty   = form_fetch_element('arsenal_difficulty');
+  $arsenal_edit_image_en     = form_fetch_element('arsenal_image_en');
+  $arsenal_edit_image_fr     = form_fetch_element('arsenal_image_fr');
   $arsenal_edit_name_en      = form_fetch_element('arsenal_name_en');
   $arsenal_edit_name_fr      = form_fetch_element('arsenal_name_fr');
   $arsenal_edit_playstyle_en = form_fetch_element('arsenal_playstyle_en');
@@ -155,6 +161,8 @@ if(isset($_POST['arsenal_edit']))
   $arsenal_edit_data = array( 'release'       => $arsenal_edit_release      ,
                               'format'        => $arsenal_edit_format       ,
                               'difficulty'    => $arsenal_edit_difficulty   ,
+                              'image_en'      => $arsenal_edit_image_en     ,
+                              'image_fr'      => $arsenal_edit_image_fr     ,
                               'name_en'       => $arsenal_edit_name_en      ,
                               'name_fr'       => $arsenal_edit_name_fr      ,
                               'playstyle_en'  => $arsenal_edit_playstyle_en ,
@@ -334,6 +342,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <select class="table_search" name="admin_arsenals_search_data" id="admin_arsenals_search_data" onchange="admin_arsenals_search();">
             <option value="0">&nbsp;</option>
             <option value="1"><?=__('admin_arsenal_list_data_hidden')?></option>
+            <option value="10"><?=__('admin_arsenal_list_image_yes')?></option>
+            <option value="11"><?=__('admin_arsenal_list_image_one')?></option>
+            <option value="12"><?=__('admin_arsenal_list_image_no')?></option>
           </select>
         </th>
         <th class="align_center">
@@ -451,6 +462,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
           <?php if($arsenals_list[$i]['hidden']): ?>
           <?=__icon('user_delete', is_small: true, alt: __('admin_arsenal_list_hidden'), title: __('admin_arsenal_list_hidden'), class: 'valign_middle')?>
+          <?php endif; ?>
+
+          <?php if($arsenals_list[$i]['image_en']): ?>
+          <?=__icon('image', is_small: true, alt: 'I', title: __('image'), title_case: 'initials', href: $arsenals_list[$i]['image_en'], popup: true)?>
+          <?php endif;
+
+          if($arsenals_list[$i]['image_fr']): ?>
+          <?=__icon('image', is_small: true, alt: 'I', title: __('image'), title_case: 'initials', href: $arsenals_list[$i]['image_fr'], popup: true)?>
           <?php endif; ?>
 
         </td>
