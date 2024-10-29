@@ -1421,6 +1421,14 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                         FROM      arsenals_factions
                         WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
 
+  // Fetch linked cards
+  $qcards = query(" SELECT    arsenals_compositions.fk_cards        AS 'c_id'       ,
+                              arsenals_compositions.amount_main     AS 'c_main'     ,
+                              arsenals_compositions.amount_reserves AS 'c_reserves' ,
+                              arsenals_compositions.sorting_order   AS 'c_order'
+                    FROM      arsenals_compositions
+                    WHERE     arsenals_compositions.fk_arsenals = '$arsenal_id' ");
+
   // Prepare the data for display
   if($format === 'html')
   {
@@ -1448,6 +1456,16 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     for($i = 0; $dfactions = query_row($qfactions); $i++)
       $data['factions']['id'][$i] = $dfactions['f_id'];
     $data['factions']['rows'] = $i;
+
+    // Linked card data
+    for($i = 0; $dcards = query_row($qcards); $i++)
+    {
+      $data['cards']['id'][$i]        = $dcards['c_id'];
+      $data['cards']['main'][$i]      = $dcards['c_main'];
+      $data['cards']['reserves'][$i]  = $dcards['c_reserves'];
+      $data['cards']['order'][$i]     = $dcards['c_order'];
+    }
+    $data['cards']['rows'] = $i;
   }
 
   // Prepare the data for the API
@@ -2124,6 +2142,95 @@ function arsenals_edit( int   $arsenal_id  ,
             WHERE       arsenals_factions.fk_arsenals = '$arsenal_id'
             AND         arsenals_factions.fk_factions = '$extra_faction'");
   }
+
+  // Fetch a list of arsenal linked cards
+  $qcards = query(" SELECT  arsenals_compositions.fk_cards AS 'af_id'
+                    FROM    arsenals_compositions
+                    WHERE   arsenals_compositions.fk_arsenals = '$arsenal_id' ");
+
+  // Place those cards in an array
+  $arsenal_cards = array();
+  while($dcards = query_row($qcards))
+    $arsenal_cards[] = $dcards['af_id'];
+
+  // Look for cards missing from the edited data and add them to the database
+  $missing_cards = array_diff($data['cards']['id'], $arsenal_cards);
+  foreach($missing_cards as $missing_card)
+  {
+    // Find the card in the postdata
+    for($i = 0; $i < $data['cards']['count']; $i++)
+    {
+      if($data['cards']['id'][$i] === $missing_card)
+        $card_array_id = $i;
+    }
+
+    // Continue only if the card has been found
+    if($missing_card !== 0 && isset($card_array_id) && $data['cards'][$card_array_id]['id'] !== 0)
+    {
+      // Sanitize the postdata
+      $card_id        = sanitize($data['cards'][$card_array_id]['id'], 'int');
+      $card_main      = sanitize($data['cards'][$card_array_id]['main'], 'int');
+      $card_reserves  = sanitize($data['cards'][$card_array_id]['reserves'], 'int');
+      $card_extra     = ($data['cards'][$card_array_id]['extra']) ? true : false;
+      $card_order     = sanitize($data['cards'][$card_array_id]['extra'], 'int');
+
+      // Add the card to the database
+      query(" INSERT INTO arsenals_compositions
+              SET         arsenals_compositions.fk_arsenals     = '$arsenal_id'     ,
+                          arsenals_compositions.fk_cards        = '$card_id'        ,
+                          arsenals_compositions.amount_main     = '$card_main'      ,
+                          arsenals_compositions.amount_reserves = '$card_reserves'  ,
+                          arsenals_compositions.is_extra        = '$card_extra'     ,
+                          arsenals_compositions.sorting_order   = '$card_order'     ");
+    }
+  }
+
+  // Look for unchanged cards and update them in case they changed
+  $same_cards = array_intersect($arsenal_cards, $data['cards']['id']);
+  foreach($same_cards as $same_card)
+  {
+    // Find the card in the postdata
+    for($i = 0; $i < $data['cards']['count']; $i++)
+    {
+      if($data['cards']['id'][$i] === $same_card)
+        $card_array_id = $i;
+    }
+
+    // Continue only if the card has been found
+    if($same_card !== 0 && isset($card_array_id) && $data['cards'][$card_array_id]['id'] !== 0)
+    {
+      // Sanitize the postdata
+      $card_id        = sanitize($data['cards'][$card_array_id]['id'], 'int');
+      $card_main      = sanitize($data['cards'][$card_array_id]['main'], 'int');
+      $card_reserves  = sanitize($data['cards'][$card_array_id]['reserves'], 'int');
+      $card_extra     = ($data['cards'][$card_array_id]['extra']) ? true : false;
+      $card_order     = sanitize($data['cards'][$card_array_id]['extra'], 'int');
+
+      // Add the card to the database
+      query(" UPDATE  arsenals_compositions
+              SET     arsenals_compositions.amount_main     = '$card_main'      ,
+                      arsenals_compositions.amount_reserves = '$card_reserves'  ,
+                      arsenals_compositions.is_extra        = '$card_extra'     ,
+                      arsenals_compositions.sorting_order   = '$card_order'
+              WHERE   arsenals_compositions.fk_arsenals     = '$arsenal_id'
+              AND     arsenals_compositions.fk_cards        = '$card_id'        ");
+    }
+  }
+
+  // Look for extra cards in the edited data and remove them from the database
+  $extra_cards = array_diff($arsenal_cards, $data['cards']['id']);
+  foreach($extra_cards as $extra_card)
+  {
+    $extra_card = sanitize($extra_card, 'int');
+    query(" DELETE FROM arsenals_compositions
+            WHERE       arsenals_compositions.fk_arsenals = '$arsenal_id'
+            AND         arsenals_compositions.fk_cards    = '$extra_card' ");
+  }
+
+  // Wipe any leftover cards from the arsenal after these operations
+  query(" DELETE FROM arsenals_compositions
+          WHERE       arsenals_compositions.fk_arsenals = '$arsenal_id'
+          AND         arsenals_compositions.fk_cards    = 0 ");
 }
 
 
@@ -2153,6 +2260,10 @@ function arsenals_delete( int $arsenal_id ) : void
   // Delete arsenal factions
   query(" DELETE FROM arsenals_factions
           WHERE       arsenals_factions.fk_arsenals = '$arsenal_id' ");
+
+  // Delete linked cards
+  query(" DELETE FROM arsenals_compositions
+          WHERE       arsenals_compositions.fk_arsenals = '$arsenal_id' ");
 }
 
 

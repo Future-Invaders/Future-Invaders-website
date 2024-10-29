@@ -162,6 +162,27 @@ for($i = 0; $i < $arsenal_all_tags['rows']; $i++)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch arsenal card compositions
+
+// Fetch a list of all cards
+$card_list = cards_list();
+
+// Select the arsenal's cards
+for($i = 0; $i < $admin_arsenal_data['cards']['rows']; $i++)
+{
+  for($j = 0; $j < $card_list['rows']; $j++)
+  {
+    if($card_list[$j]['id'] === $admin_arsenal_data['cards']['id'][$i])
+      $arsenal_card_selected[$i][$j] = ' selected';
+    else
+      $arsenal_card_selected[$i][$j] = '';
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare checkboxes
 
 // Hidden arsenal
@@ -375,6 +396,84 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
         </div>
         <?php endfor; ?>
+      </div>
+
+      <div class="smallpadding_bot" id="arsenal_cards_container">
+        <label><?=__('admin_arsenal_add_cards')?></label>
+        <div class="smallpadding_bot">
+          <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_arsenals_duplicate_cards();')?>
+          <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_arsenals_unduplicate_cards();')?>
+        </div>
+
+        <?php if($admin_arsenal_data['cards']['rows']): ?>
+        <?php for($i = 0; $i < $admin_arsenal_data['cards']['rows']; $i++): ?>
+        <div id="arsenal_cards">
+          <div class="tinypadding_bot">
+            <label for="arsenal_card[]"><?=__('admin_arsenal_add_cardname')?></label>
+            <select class="indiv align_left" name="arsenal_card[]">
+              <option value="">&nbsp;</option>
+              <?php for($j = 0; $j < $card_list['rows']; $j++): ?>
+              <option value="<?=$card_list[$j]['id']?>"<?=$arsenal_card_selected[$i][$j]?>><?=$card_list[$j]['name']?> [<?=$card_list[$j]['release']?>] [<?=$card_list[$j]['type']?>]</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+          <div class="smallpadding_bot flexcontainer">
+            <div style="flex: 2">
+              <label for="arsenal_amount_main[]"><?=__('admin_arsenal_add_amount_main')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_main[]" value="<?=$admin_arsenal_data['cards']['main'][$i]?>">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 2">
+              <label for="arsenal_amount_reserves[]"><?=__('admin_arsenal_add_amount_reserves')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_reserves[]" value="<?=$admin_arsenal_data['cards']['reserves'][$i]?>">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 12">
+              <label for="arsenal_amount_extra[]"><?=__('admin_arsenal_add_order_extra')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_extra[]" value="<?=$admin_arsenal_data['cards']['order'][$i]?>">
+            </div>
+          </div>
+        </div>
+        <?php endfor; ?>
+
+        <?php else: ?>
+        <div id="arsenal_cards">
+          <div class="tinypadding_bot">
+            <label for="arsenal_card[]"><?=__('admin_arsenal_add_cardname')?></label>
+            <select class="indiv align_left" name="arsenal_card[]">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
+              <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+          <div class="smallpadding_bot flexcontainer">
+            <div style="flex: 2">
+              <label for="arsenal_amount_main[]"><?=__('admin_arsenal_add_amount_main')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_main[]">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 2">
+              <label for="arsenal_amount_reserves[]"><?=__('admin_arsenal_add_amount_reserves')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_reserves[]">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 12">
+              <label for="arsenal_amount_extra[]"><?=__('admin_arsenal_add_order_extra')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_extra[]">
+            </div>
+          </div>
+        </div>
+        <?php endif; ?>
+
       </div>
 
       <input type="submit" name="arsenal_edit" value="<?=__('admin_arsenal_edit_submit')?>">

@@ -176,6 +176,25 @@ if(isset($_POST['arsenal_edit']))
   for($i = 0; $i < $arsenal_tags['rows']; $i++)
     $arsenal_edit_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
 
+  // Gather linked cards postdata
+  if(isset($_POST['arsenal_card']))
+  {
+    for($i = 0; $i < count($_POST['arsenal_card']); $i++)
+    {
+      $arsenal_edit_cards['id'][$i]       = $_POST['arsenal_card'][$i];
+      $arsenal_edit_cards[$i]['id']       = $_POST['arsenal_card'][$i];
+      $arsenal_edit_cards[$i]['main']     = $_POST['arsenal_amount_main'][$i];
+      $arsenal_edit_cards[$i]['reserves'] = $_POST['arsenal_amount_reserves'][$i];
+      $arsenal_edit_cards[$i]['extra']    = $_POST['arsenal_amount_extra'][$i];
+    }
+    $arsenal_edit_cards['count'] = $i;
+  }
+  else
+  {
+    $arsenal_edit_cards       = array();
+    $arsenal_edit_cards['id'] = array();
+  }
+
   // Assemble an array with the postdata
   $arsenal_edit_data = array( 'release'       => $arsenal_edit_release      ,
                               'format'        => $arsenal_edit_format       ,
@@ -196,7 +215,8 @@ if(isset($_POST['arsenal_edit']))
                               'extra_fr'      => $arsenal_edit_extra_fr     ,
                               'hidden'        => $arsenal_edit_hidden       ,
                               'factions'      => $arsenal_edit_factions     ,
-                              'arsenal_tags'  => $arsenal_edit_tags         );
+                              'arsenal_tags'  => $arsenal_edit_tags         ,
+                              'cards'         => $arsenal_edit_cards        );
 
   // Edit the arsenal
   arsenals_edit(  $arsenal_edit_id    ,
