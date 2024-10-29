@@ -75,6 +75,14 @@ $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch cards
+
+$card_list = cards_list(search: array('public' => true));
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -248,7 +256,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <label class="label_inline" for="arsenal_hidden"><?=__('admin_arsenal_add_hidden')?></label><br>
       </div>
 
-      <div class="padding_bot">
+      <div class="smallpadding_bot">
         <label><?=__('admin_arsenal_add_tags')?></label>
         <?php for($i = 0; $i < $arsenal_tags['rows']; $i++): ?>
         <div class="tooltip_container">
@@ -259,6 +267,45 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
         </div>
         <?php endfor; ?>
+      </div>
+
+      <div class="smallpadding_bot" id="arsenal_cards_container">
+        <label><?=__('admin_arsenal_add_cards')?></label>
+        <div class="smallpadding_bot">
+          <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_arsenals_duplicate_cards();')?>
+          <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_arsenals_unduplicate_cards();')?>
+        </div>
+        <div id="arsenal_cards">
+          <div class="tinypadding_bot">
+            <label for="arsenal_card[]"><?=__('admin_arsenal_add_cardname')?></label>
+            <select class="indiv align_left" name="arsenal_card[]">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
+              <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+          <div class="smallpadding_bot flexcontainer">
+            <div style="flex: 2">
+              <label for="arsenal_amount_main[]"><?=__('admin_arsenal_add_amount_main')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_main[]">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 2">
+              <label for="arsenal_amount_reserves[]"><?=__('admin_arsenal_add_amount_reserves')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_reserves[]">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 12">
+              <label for="arsenal_amount_extra[]"><?=__('admin_arsenal_add_order_extra')?></label>
+              <input class="indiv" type="text" name="arsenal_amount_extra[]">
+            </div>
+          </div>
+        </div>
       </div>
 
       <input type="submit" name="arsenal_add" value="<?=__('admin_arsenal_add_submit')?>">

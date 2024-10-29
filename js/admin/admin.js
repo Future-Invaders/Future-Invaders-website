@@ -16,6 +16,8 @@
 /*                                                                                                                   */
 /*  admin_arsenals_duplicate_factions       Duplicate the factions dropdown menu when editing an arsenal.            */
 /*  admin_arsenals_unduplicate_factions     Delete the last created factions dropdown menu when editing an arsenal.  */
+/*  admin_arsenals_duplicate_cards          Duplicate the cards creation form when editing an arsenal.               */
+/*  admin_arsenals_unduplicate_cards        Delete the last created card creation form when editing an arsenal.      */
 /*  admin_arsenals_search                   Searches the arsenal list.                                               */
 /*  admin_arsenals_delete                   Triggers the deletion of an entry in the arsenal list.                   */
 /*                                                                                                                   */
@@ -304,8 +306,8 @@ function admin_arsenals_unduplicate_factions()
   // If there's more than one faction selector, delete the last one
   if(factions_list_container.children.length > 1 && factions_list_container.lastElementChild !== factions_list_div)
   {
-    const foctions_list_last_dfactions_list_div = factions_list_container.lastElementChild;
-    factions_list_container.removeChild(foctions_list_last_dfactions_list_div);
+    const factions_list_last_element = factions_list_container.lastElementChild;
+    factions_list_container.removeChild(factions_list_last_element);
   }
 
   // If there's only one faction selector left, clear its input and select values
@@ -314,6 +316,63 @@ function admin_arsenals_unduplicate_factions()
     const inputs = factions_list_div.querySelectorAll("input");
     inputs.forEach(input => input.value = "");
     const selects = factions_list_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
+  }
+}
+
+
+
+
+/**
+ * Duplicate the cards creation form when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_duplicate_cards()
+{
+  // Fetch the element containing the card form and clone it
+  const cards_form_div      = document.getElementById("arsenal_cards");
+  const new_cards_form_div  = cards_form_div.cloneNode(true);
+
+  // Clear input and select values in the cloned div
+  const inputs = new_cards_form_div.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+  const selects = new_cards_form_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
+
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("arsenal_cards_container").appendChild(new_cards_form_div);
+}
+
+
+
+
+/**
+ * Delete the last created card creation form when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_unduplicate_cards()
+{
+  // Fetch the element containing the card form and its parent container
+  const cards_form_container  = document.getElementById("arsenal_cards_container");
+  const cards_form_div        = document.getElementById("arsenal_cards");
+
+  // If there's more than one card selector, delete the last one
+  if(cards_form_container.children.length > 1 && cards_form_container.lastElementChild !== cards_form_div)
+  {
+    const cards_form_last_element = cards_form_container.lastElementChild;
+    cards_form_container.removeChild(cards_form_last_element);
+  }
+
+  // If there's only one card selector left, clear its input and select values
+  else
+  {
+    const inputs = cards_form_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = cards_form_div.querySelectorAll("select");
     selects.forEach(select => select.value = "0");
   }
 }

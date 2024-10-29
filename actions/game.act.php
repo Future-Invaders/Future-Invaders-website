@@ -1941,6 +1941,26 @@ function arsenals_add( array $data ) : void
               SET         arsenals_factions.fk_arsenals = '$arsenal_id' ,
                           arsenals_factions.fk_factions = '$faction_id'  ");
   }
+
+  // Add the arsenal's cards to the database
+  for($i = 0; $i < $data['arsenal_cards']['count']; $i++)
+  {
+    // Sanitize the data
+    $card_id        = sanitize($data['arsenal_cards'][$i]['id'], 'int');
+    $card_main      = sanitize($data['arsenal_cards'][$i]['main'], 'int');
+    $card_reverves  = sanitize($data['arsenal_cards'][$i]['reserves'], 'int');
+    $card_extra     = ($data['arsenal_cards'][$i]['extra']) ? true : false;
+    $card_order     = sanitize($data['arsenal_cards'][$i]['extra'], 'int');
+
+    // Add the card to the database
+    query(" INSERT INTO arsenals_compositions
+            SET         arsenals_compositions.fk_arsenals     = '$arsenal_id'     ,
+                        arsenals_compositions.fk_cards        = '$card_id'        ,
+                        arsenals_compositions.amount_main     = '$card_main'      ,
+                        arsenals_compositions.amount_reserves = '$card_reverves'  ,
+                        arsenals_compositions.is_extra        = '$card_extra'     ,
+                        arsenals_compositions.sorting_order   = '$card_order'     ");
+  }
 }
 
 

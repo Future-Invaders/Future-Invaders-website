@@ -87,6 +87,21 @@ if(isset($_POST['arsenal_add']))
   for($i = 0; $i < $arsenal_tags['rows']; $i++)
     $arsenal_add_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
 
+  // Gather cards postdata
+  if(isset($_POST['arsenal_card']))
+  {
+    for($i = 0; $i < count($_POST['arsenal_card']); $i++)
+    {
+      $arsenal_add_card[$i]['id']       = $_POST['arsenal_card'][$i];
+      $arsenal_add_card[$i]['main']     = $_POST['arsenal_amount_main'][$i];
+      $arsenal_add_card[$i]['reserves'] = $_POST['arsenal_amount_reserves'][$i];
+      $arsenal_add_card[$i]['extra']    = $_POST['arsenal_amount_extra'][$i];
+    }
+    $arsenal_add_card['count'] = $i;
+  }
+  else
+    $arsenal_add_card = array();
+
   // Assemble an array with the postdata
   $arsenal_add_data = array(  'release'       => $arsenal_add_release       ,
                               'format'        => $arsenal_add_format        ,
@@ -107,7 +122,8 @@ if(isset($_POST['arsenal_add']))
                               'extra_fr'      => $arsenal_add_extra_fr      ,
                               'hidden'        => $arsenal_add_hidden        ,
                               'factions'      => $arsenal_add_factions      ,
-                              'arsenal_tags'  => $arsenal_add_tags          );
+                              'arsenal_tags'  => $arsenal_add_tags          ,
+                              'arsenal_cards' => $arsenal_add_card          );
 
   // Add the arsenal to the database
   arsenals_add($arsenal_add_data);
