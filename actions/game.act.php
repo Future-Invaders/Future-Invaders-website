@@ -1453,6 +1453,10 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['format']                   = ($arsenal_data['a_format_id'])
                                       ? formats_get($arsenal_data['a_format_id'], format: 'api', no_parent_array: true)
                                       : array();
+    for($i = 0; $dfactions = query_row($qfactions); $i++)
+      $data['factions'][$i]           = factions_get($dfactions['f_id'], format: 'api');
+    if($i === 0)
+      $data['factions']               = array();
     $data['difficulty']               = ($arsenal_data['a_level_id'])
                                       ? arsenal_difficulties_get( arsenal_difficulty_id:  $arsenal_data['a_level_id'] ,
                                                                   format: 'api'                                       ,
@@ -1748,6 +1752,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       }
       else
         $data[$i]['format']                 = array();
+      $data[$i]['factions']                 = ($row['af_names']) ? explode(',', $row['af_names']) : array();
       if(isset($row['ad_uuid']))
       {
         $data[$i]['difficulty']['uuid']     = sanitize_json($row['ad_uuid']);

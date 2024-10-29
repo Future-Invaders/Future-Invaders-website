@@ -139,6 +139,11 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "en": string,
         "fr": string
       },
+      "factions": [
+        "faction1",
+        "faction2",
+        ...
+      ],
       "difficulty": {
         "uuid": string,
         "en": string,
@@ -228,6 +233,18 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
     },
+    "factions": [
+      {
+        "faction": {
+          "uuid": string,
+          "name": {
+            "en": string,
+            "fr": string
+          },
+        }
+      }
+      ...
+    ]
     "difficulty": {
       "uuid": string,
       "name": {
