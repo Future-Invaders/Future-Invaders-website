@@ -40,6 +40,9 @@ $formats_list = formats_list();
 // List of arsenal difficulties
 $arsenal_difficulties_list = arsenal_difficulties_list();
 
+// List of factions
+$factions_list = factions_list();
+
 // List of arsenal tags
 $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
 
@@ -67,6 +70,10 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
   $arsenal_add_hidden       = form_fetch_element('arsenal_hidden');
 
+  // Gather factions postdata
+  for($i = 0; $i < count($_POST['arsenal_faction']); $i++)
+    $arsenal_add_factions[$i] = $_POST['arsenal_faction'][$i];
+
   // Gather tags postdata
   for($i = 0; $i < $arsenal_tags['rows']; $i++)
     $arsenal_add_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
@@ -86,7 +93,8 @@ if(isset($_POST['arsenal_add']))
                               'reserves_en'   => $arsenal_add_reserves_en   ,
                               'reserves_fr'   => $arsenal_add_reserves_fr   ,
                               'hidden'        => $arsenal_add_hidden        ,
-                              'arsenal_tags'  => $arsenal_add_tags         );
+                              'factions'      => $arsenal_add_factions      ,
+                              'arsenal_tags'  => $arsenal_add_tags          );
 
   // Add the arsenal to the database
   arsenals_add($arsenal_add_data);
@@ -165,6 +173,7 @@ $admin_arsenals_sort    = form_fetch_element('admin_arsenals_sort', '');
 $admin_arsenals_search  = array(  'release'     => form_fetch_element('admin_arsenals_search_release')    ,
                                   'format'      => form_fetch_element('admin_arsenals_search_format')     ,
                                   'name'        => form_fetch_element('admin_arsenals_search_name')       ,
+                                  'faction'     => form_fetch_element('admin_arsenals_search_faction')    ,
                                   'difficulty'  => form_fetch_element('admin_arsenals_search_difficulty') ,
                                   'playstyle'   => form_fetch_element('admin_arsenals_search_playstyle')  ,
                                   'text'        => form_fetch_element('admin_arsenals_search_text')       ,
@@ -225,6 +234,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('name');")?>
         </th>
         <th class="align_center">
+          <?=__('admin_arsenal_list_factions')?>
+        </th>
+        <th class="align_center">
           <?=__('admin_arsenal_list_difficulty')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('difficulty');")?>
         </th>
@@ -272,6 +284,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <input type="text" class="table_search" name="admin_arsenals_search_name" id="admin_arsenals_search_name" value="" onkeyup="admin_arsenals_search();">
         </th>
         <th>
+          <select class="table_search" name="admin_arsenals_search_faction" id="admin_arsenals_search_faction" onchange="admin_arsenals_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $factions_list['rows']; $i++): ?>
+            <option value="<?=$factions_list[$i]['id']?>" class="bold uppercase <?=$factions_list[$i]['styling']?>"><?=$factions_list[$i]['name']?></option>
+            <?php endfor; ?>
+            <option value="-1" class="bold uppercase"><?=string_change_case(__('none'), 'initials')?></option>
+          </select>
+        </th>
+        <th>
           <select class="table_search" name="admin_arsenals_search_difficulty" id="admin_arsenals_search_difficulty" onchange="admin_arsenals_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $arsenal_difficulties_list['rows']; $i++): ?>
@@ -313,7 +334,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="9" class="uppercase text_light dark bold align_center">
+        <td colspan="10" class="uppercase text_light dark bold align_center">
           <?=__('admin_arsenal_list_count', preset_values: array($arsenals_list['rows']), amount: $arsenals_list['rows'])?>
         </td>
       </tr>
@@ -335,6 +356,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <div class="tooltip">
             <?=$arsenals_list[$i]['name_en']?><br>
             <?=$arsenals_list[$i]['name_fr']?>
+          </div>
+        </td>
+
+        <td class="align_center nowrap">
+          <div class="flexcontainer">
+            <?=$arsenals_list[$i]['factions']?>
           </div>
         </td>
 

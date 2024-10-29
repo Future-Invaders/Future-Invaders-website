@@ -1,36 +1,38 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  admin_menu                          Navigates between administration pages.                                      */
+/*  admin_menu                              Navigates between administration pages.                                  */
 /*                                                                                                                   */
-/*  admin_cards_search                  Searches the card list.                                                      */
-/*  admin_cards_delete                  Triggers the deletion of an entry in the card list.                          */
-/*  admin_card_hide_stats               Hides stats for extra cards.                                                 */
+/*  admin_cards_search                      Searches the card list.                                                  */
+/*  admin_cards_delete                      Triggers the deletion of an entry in the card list.                      */
+/*  admin_card_hide_stats                   Hides stats for extra cards.                                             */
 /*                                                                                                                   */
-/*  admin_card_types_delete             Triggers the deletion of an entry in the card type list.                     */
+/*  admin_card_types_delete                 Triggers the deletion of an entry in the card type list.                 */
 /*                                                                                                                   */
-/*  admin_card_rarities_delete          Triggers the deletion of an entry in the card rarity list.                   */
+/*  admin_card_rarities_delete              Triggers the deletion of an entry in the card rarity list.               */
 /*                                                                                                                   */
-/*  admin_images_search                 Searches the image list.                                                     */
-/*  admin_images_preview                Fetches the preview of an image.                                             */
-/*  admin_images_delete                 Triggers the deletion of an entry in the image list.                         */
+/*  admin_images_search                     Searches the image list.                                                 */
+/*  admin_images_preview                    Fetches the preview of an image.                                         */
+/*  admin_images_delete                     Triggers the deletion of an entry in the image list.                     */
 /*                                                                                                                   */
-/*  admin_arsenals_search               Searches the arsenal list.                                                   */
-/*  admin_arsenals_delete               Triggers the deletion of an entry in the arsenal list.                       */
+/*  admin_arsenals_duplicate_factions       Duplicate the factions dropdown menu when editing an arsenal.            */
+/*  admin_arsenals_unduplicate_factions     Delete the last created factions dropdown menu when editing an arsenal.  */
+/*  admin_arsenals_search                   Searches the arsenal list.                                               */
+/*  admin_arsenals_delete                   Triggers the deletion of an entry in the arsenal list.                   */
 /*                                                                                                                   */
-/*  admin_arsenal_difficulties_delete   Triggers the deletion of an entry in the arsenal difficulty list.            */
+/*  admin_arsenal_difficulties_delete       Triggers the deletion of an entry in the arsenal difficulty list.        */
 /*                                                                                                                   */
-/*  admin_tags_search                   Searches the tag list.                                                       */
-/*  admin_tags_delete                   Triggers the deletion of an entry in the tag list.                           */
+/*  admin_tags_search                       Searches the tag list.                                                   */
+/*  admin_tags_delete                       Triggers the deletion of an entry in the tag list.                       */
 /*                                                                                                                   */
-/*  admin_releases_search               Searches the release list.                                                   */
-/*  admin_releases_delete               Triggers the deletion of an entry in the release list.                       */
+/*  admin_releases_search                   Searches the release list.                                               */
+/*  admin_releases_delete                   Triggers the deletion of an entry in the release list.                   */
 /*                                                                                                                   */
-/*  admin_factions_delete               Triggers the deletion of an entry in the faction list.                       */
+/*  admin_factions_delete                   Triggers the deletion of an entry in the faction list.                   */
 /*                                                                                                                   */
-/*  admin_formats_delete                Triggers the deletion of an entry in the game formats list.                  */
+/*  admin_formats_delete                    Triggers the deletion of an entry in the game formats list.              */
 /*                                                                                                                   */
-/*  admin_page_stats_search             Searches the page stats list.                                                */
-/*  admin_page_stats_delete             Triggers the deletion of an entry in the page stats list.                    */
+/*  admin_page_stats_search                 Searches the page stats list.                                            */
+/*  admin_page_stats_delete                 Triggers the deletion of an entry in the page stats list.                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -263,6 +265,59 @@ function admin_images_delete( message   ,
 
 
 /**
+ * Duplicate the factions dropdown menu when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_duplicate_factions()
+{
+  // Get the original form div
+  const originalForm = document.getElementById("arsenal_factions");
+
+  // Clone the form
+  const newForm = originalForm.cloneNode(true);
+
+  // Clear input values in the cloned form
+  const inputs = newForm.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+
+  // Optionally clear textareas, selects, etc., if they are present
+  // const textareas = newForm.querySelectorAll("textarea");
+  // textareas.forEach(textarea => textarea.value = "");
+
+  // Append the cloned, cleared form to the container
+  document.getElementById("arsenal_factions_container").appendChild(newForm);
+}
+
+
+
+
+/**
+ * Delete the last created factions dropdown menu when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_unduplicate_factions()
+{
+  // Get the container and the original form
+  const originalFormContainer = document.getElementById("arsenal_factions_container");
+  const originalForm = document.getElementById("arsenal_factions");
+
+  // Check if there are more than one children and the last child is not the original form
+  if (originalFormContainer.children.length > 1 && originalFormContainer.lastElementChild !== originalForm) {
+      const lastClone = originalFormContainer.lastElementChild;
+      originalFormContainer.removeChild(lastClone);
+  } else {
+      console.log("Cannot delete the last remaining form.");
+  }
+}
+
+
+
+
+/**
  * Searches the arsenal list.
  *
  * @param   {string}  [sort_data] The column which should be used to sort the data.
@@ -281,6 +336,7 @@ function admin_arsenals_search( sort_data = null )
   postdata += '&admin_arsenals_search_release='    + document.getElementById('admin_arsenals_search_release').value;
   postdata += '&admin_arsenals_search_format='     + document.getElementById('admin_arsenals_search_format').value;
   postdata += '&admin_arsenals_search_name='       + document.getElementById('admin_arsenals_search_name').value;
+  postdata += '&admin_arsenals_search_faction='    + document.getElementById('admin_arsenals_search_faction').value;
   postdata += '&admin_arsenals_search_difficulty=' + document.getElementById('admin_arsenals_search_difficulty').value;
   postdata += '&admin_arsenals_search_playstyle='  + document.getElementById('admin_arsenals_search_playstyle').value;
   postdata += '&admin_arsenals_search_text='       + document.getElementById('admin_arsenals_search_text').value;

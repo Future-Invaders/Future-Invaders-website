@@ -47,6 +47,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  factions_get                    Returns data related to a faction                                                */
 /*  factions_list                   Lists factions in the database                                                   */
+/*  factions_abbreviate             Transforms a list of factions into a list of faction initials                    */
 /*  factions_add                    Adds a faction to the database                                                   */
 /*  factions_edit                   Edits a faction in the database                                                  */
 /*  factions_delete                 Deletes a faction from the database                                              */
@@ -1510,6 +1511,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_format          = sanitize_array_element($search, 'format', 'int');
   $search_format_uuid     = sanitize_array_element($search, 'format_uuid', 'string');
   $search_name            = sanitize_array_element($search, 'name', 'string');
+  $search_faction_id      = sanitize_array_element($search, 'faction', 'int');
   $search_difficulty      = sanitize_array_element($search, 'difficulty', 'int');
   $search_difficulty_uuid = sanitize_array_element($search, 'difficulty_uuid', 'string');
   $search_playstyle       = sanitize_array_element($search, 'playstyle', 'string');
@@ -1553,6 +1555,8 @@ function arsenals_list( string  $sort_by  = ''      ,
   $query_search .= ($search_tag_id === -1)
                                       ? " AND   tags.id                   IS NULL "                       : "";
   $query_search .= ($search_tag)      ? " AND   tags.name                 LIKE '$search_tag' "            : "";
+  $query_search .= ($search_faction_id === -1)
+                                      ? " AND   arsenals_factions.fk_factions IS NULL "                   : "";
 
   // Don't show hidden arsenals in the API
   $query_search .= ($format === 'api')
@@ -1561,6 +1565,11 @@ function arsenals_list( string  $sort_by  = ''      ,
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
                 ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                : " HAVING 1 = 1 ";
+
+  // Use a different search technique for factions
+  $query_having .= ($search_faction_id && $search_faction_id !== -1)
+                ? " AND FIND_IN_SET('$search_faction_id', GROUP_CONCAT(factions.id)) > 0 "
                 : "";
 
   // Sort the data
@@ -1647,15 +1656,22 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 arsenal_difficulties.name_fr    AS 'ad_name_fr'     ,
                                 arsenal_difficulties.name_$lang AS 'ad_name'        ,
                                 arsenal_difficulties.styling    AS 'ad_style'       ,
-                                COUNT(tags.id)                  AS 'at_count'       ,
-                                GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
-                                                                AS 'at_names'
+                                COUNT(DISTINCT tags.id)         AS 'at_count'       ,
+                                GROUP_CONCAT( DISTINCT tags.name
+                                              ORDER BY tags.name ASC
+                                              SEPARATOR ', ')   AS 'at_names'       ,
+                                GROUP_CONCAT( DISTINCT factions.name_en
+                                              ORDER BY factions.sorting_order ASC
+                                              SEPARATOR ',')    AS 'af_names'
                       FROM      arsenals
                       LEFT JOIN releases              ON arsenals.fk_releases             = releases.id
                       LEFT JOIN formats               ON arsenals.fk_formats              = formats.id
                       LEFT JOIN arsenal_difficulties  ON arsenals.fk_arsenal_difficulties = arsenal_difficulties.id
                       LEFT JOIN tags_arsenals         ON tags_arsenals.fk_arsenals        = arsenals.id
                       LEFT JOIN tags                  ON tags.id                          = tags_arsenals.fk_tags
+                      LEFT JOIN arsenals_factions     ON arsenals_factions.fk_arsenals    = arsenals.id
+                      LEFT JOIN factions              ON factions.id
+                                                      =  arsenals_factions.fk_factions
                       $query_search
                       GROUP BY  arsenals.id
                       $query_having
@@ -1691,6 +1707,9 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['hidden']         = sanitize_output($row['a_hidden']);
       $data[$i]['ntags']          = sanitize_output($row['at_count']);
       $data[$i]['tags']           = sanitize_output($row['at_names']);
+      $data[$i]['factions']       = $row['af_names']
+                                  ? factions_abbreviate(sanitize_output($row['af_names']), style: true)
+                                  : '';
     }
 
     // Prepare for the API
@@ -1894,6 +1913,16 @@ function arsenals_add( array $data ) : void
       query(" INSERT INTO tags_arsenals
               SET         tags_arsenals.fk_arsenals = '$arsenal_id' ,
                           tags_arsenals.fk_tags     = '$tag_id'     ");
+  }
+
+  // Add the arsenal's factions to the database
+  foreach($data['factions'] as $faction_id)
+  {
+    $faction_id = sanitize($faction_id, 'int');
+    if($faction_id !== 0)
+      query(" INSERT INTO arsenals_factions
+              SET         arsenals_factions.fk_arsenals = '$arsenal_id' ,
+                          arsenals_factions.fk_factions = '$faction_id'  ");
   }
 }
 
@@ -2679,6 +2708,50 @@ function factions_list( string $format = 'html' ) : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+/**
+ * Transforms a list of factions into a list of faction initials.
+ *
+ * @param   string  $factions   A string containing a list of factions separated by commas.
+ * @param   bool    $style      If set, add styling to the factions.
+ *
+ * @return  string              A string containing the faction's initials.
+ */
+
+function factions_abbreviate( string  $factions         ,
+                              bool    $style    = false ) : string
+{
+  // Transform the comma separated list into an array
+  $factions = explode(',', $factions);
+
+  // Loop through the factions
+  for($i = 0; $i < count($factions); $i++)
+  {
+    // Keep the faction name for styling
+    $faction_name = string_change_case($factions[$i], 'lowercase');
+
+    // Rename neutrals to X
+    if($factions[$i] === 'Neutrals' || $factions[$i] === 'Neutres')
+      $factions[$i] = 'X';
+
+    // Reduce every entry to its initials
+    $factions[$i] = mb_substr($factions[$i], 0, 1);
+
+    // Style the entries if requested
+    if($style)
+    {
+      $factions[$i] = '<span class="spaced bold flex '.$faction_name.'">'.$factions[$i].'</span>';
+    }
+  }
+
+  // Transform the array back into a comma separated list
+  $factions = implode('', $factions);
+
+  // Return the abbreviated faction list
+  return $factions;
 }
 
 

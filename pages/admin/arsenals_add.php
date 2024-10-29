@@ -52,6 +52,14 @@ $list_arsenal_difficulties = arsenal_difficulties_list();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch factions
+
+$factions_list = factions_list();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch arsenal tags
 
 $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
@@ -104,7 +112,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </select>
       </div>
 
-      <div class="flexcontainer smallpadding_bot">
+      <div class="flexcontainer padding_bot">
         <div style="flex: 8">
 
           <div class="smallpadding_bot">
@@ -138,7 +146,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
         <div style="flex: 8">
 
-          <div class="padding_bot">
+          <div class="smallpadding_bot">
             <label for="arsenal_name_fr"><?=__('admin_arsenal_add_name_fr')?></label>
             <input class="indiv" type="text" name="arsenal_name_fr">
           </div>
@@ -164,6 +172,26 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
 
         </div>
+      </div>
+
+      <div class="smallpadding_bot" id="arsenal_factions_container">
+        <label><?=__('admin_arsenal_add_factions')?></label>
+        <div class="smallpadding_bot">
+          <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_arsenals_duplicate_factions();')?>
+          <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_arsenals_unduplicate_factions();')?>
+        </div>
+
+        <div id="arsenal_factions" class="smallpadding_bot flexcontainer">
+          <div style="flex: 6">
+            <select class="indiv align_left" name="arsenal_faction[]">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $factions_list['rows']; $i++): ?>
+              <option value="<?=$factions_list[$i]['id']?>" class="bold uppercase <?=$factions_list[$i]['styling']?>"><?=$factions_list[$i]['name']?></option>
+              <?php endfor; ?>
+            </select>
+          </div>
+        </div>
+
       </div>
 
       <div class="smallpadding_bot">
