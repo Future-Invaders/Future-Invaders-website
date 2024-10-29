@@ -71,8 +71,13 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_hidden       = form_fetch_element('arsenal_hidden');
 
   // Gather factions postdata
-  for($i = 0; $i < count($_POST['arsenal_faction']); $i++)
-    $arsenal_add_factions[$i] = $_POST['arsenal_faction'][$i];
+  if(isset($_POST['arsenal_faction']))
+  {
+    for($i = 0; $i < count($_POST['arsenal_faction']); $i++)
+      $arsenal_add_factions[$i] = $_POST['arsenal_faction'][$i];
+  }
+  else
+    $arsenal_add_factions = array();
 
   // Gather tags postdata
   for($i = 0; $i < $arsenal_tags['rows']; $i++)
@@ -127,6 +132,15 @@ if(isset($_POST['arsenal_edit']))
   $arsenal_edit_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
   $arsenal_edit_hidden       = form_fetch_element('arsenal_hidden');
 
+  // Gather factions postdata
+  if(isset($_POST['arsenal_faction']))
+  {
+    for($i = 0; $i < count($_POST['arsenal_faction']); $i++)
+      $arsenal_edit_factions[$i] = $_POST['arsenal_faction'][$i];
+  }
+  else
+    $arsenal_edit_factions = array();
+
   // Gather tags postdata
   for($i = 0; $i < $arsenal_tags['rows']; $i++)
     $arsenal_edit_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
@@ -146,6 +160,7 @@ if(isset($_POST['arsenal_edit']))
                               'reserves_en'   => $arsenal_edit_reserves_en  ,
                               'reserves_fr'   => $arsenal_edit_reserves_fr  ,
                               'hidden'        => $arsenal_edit_hidden       ,
+                              'factions'      => $arsenal_edit_factions     ,
                               'arsenal_tags'  => $arsenal_edit_tags         );
 
   // Edit the arsenal

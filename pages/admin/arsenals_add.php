@@ -180,7 +180,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_arsenals_duplicate_factions();')?>
           <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_arsenals_unduplicate_factions();')?>
         </div>
-
         <div id="arsenal_factions" class="smallpadding_bot flexcontainer">
           <div style="flex: 6">
             <select class="indiv align_left" name="arsenal_faction[]">
@@ -191,7 +190,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </select>
           </div>
         </div>
-
       </div>
 
       <div class="smallpadding_bot">

@@ -272,22 +272,18 @@ function admin_images_delete( message   ,
 
 function admin_arsenals_duplicate_factions()
 {
-  // Get the original form div
-  const originalForm = document.getElementById("arsenal_factions");
+  // Fetch the element containing the factions selector and clone it
+  const factions_list_div     = document.getElementById("arsenal_factions");
+  const new_factions_list_div = factions_list_div.cloneNode(true);
 
-  // Clone the form
-  const newForm = originalForm.cloneNode(true);
-
-  // Clear input values in the cloned form
-  const inputs = newForm.querySelectorAll("input");
+  // Clear input and select values in the cloned div
+  const inputs = new_factions_list_div.querySelectorAll("input");
   inputs.forEach(input => input.value = "");
+  const selects = new_factions_list_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
 
-  // Optionally clear textareas, selects, etc., if they are present
-  // const textareas = newForm.querySelectorAll("textarea");
-  // textareas.forEach(textarea => textarea.value = "");
-
-  // Append the cloned, cleared form to the container
-  document.getElementById("arsenal_factions_container").appendChild(newForm);
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("arsenal_factions_container").appendChild(new_factions_list_div);
 }
 
 
@@ -301,16 +297,24 @@ function admin_arsenals_duplicate_factions()
 
 function admin_arsenals_unduplicate_factions()
 {
-  // Get the container and the original form
-  const originalFormContainer = document.getElementById("arsenal_factions_container");
-  const originalForm = document.getElementById("arsenal_factions");
+  // Fetch the element containing the factions selector and its parent container
+  const factions_list_container = document.getElementById("arsenal_factions_container");
+  const factions_list_div       = document.getElementById("arsenal_factions");
 
-  // Check if there are more than one children and the last child is not the original form
-  if (originalFormContainer.children.length > 1 && originalFormContainer.lastElementChild !== originalForm) {
-      const lastClone = originalFormContainer.lastElementChild;
-      originalFormContainer.removeChild(lastClone);
-  } else {
-      console.log("Cannot delete the last remaining form.");
+  // If there's more than one faction selector, delete the last one
+  if(factions_list_container.children.length > 1 && factions_list_container.lastElementChild !== factions_list_div)
+  {
+    const foctions_list_last_dfactions_list_div = factions_list_container.lastElementChild;
+    factions_list_container.removeChild(foctions_list_last_dfactions_list_div);
+  }
+
+  // If there's only one faction selector left, clear its input and select values
+  else
+  {
+    const inputs = factions_list_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = factions_list_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
   }
 }
 

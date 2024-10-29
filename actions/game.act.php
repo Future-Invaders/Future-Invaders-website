@@ -1404,9 +1404,19 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   if($format === 'api' && $arsenal_data['a_hidden'])
     return null;
 
+  // Sanitize the arsenal's id
+  $arsenal_id = sanitize($arsenal_data['a_id'], 'int');
+
+  // Fetch linked factions
+  $qfactions = query("  SELECT    factions.id AS 'f_id'
+                        FROM      arsenals_factions
+                        LEFT JOIN factions ON arsenals_factions.fk_factions = factions.id
+                        WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
+
   // Prepare the data for display
   if($format === 'html')
   {
+    // Arsenal data
     $data['release']      = sanitize_output($arsenal_data['a_release_id']);
     $data['format']       = sanitize_output($arsenal_data['a_format_id']);
     $data['difficulty']   = sanitize_output($arsenal_data['a_level_id']);
@@ -1421,6 +1431,11 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['gameplan_fr']  = sanitize_output($arsenal_data['a_gameplan_fr']);
     $data['reserves_en']  = sanitize_output($arsenal_data['a_reserves_en']);
     $data['reserves_fr']  = sanitize_output($arsenal_data['a_reserves_fr']);
+
+    // Faction data
+    for($i = 0; $dfactions = query_row($qfactions); $i++)
+      $data['factions']['id'][$i] = $dfactions['f_id'];
+    $data['factions']['rows'] = $i;
   }
 
   // Prepare the data for the API
@@ -1456,7 +1471,6 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     if(!$no_depth)
     {
       // Fetch linked tags
-      $arsenal_id = sanitize($arsenal_data['a_id'], 'int');
       $qtags = query("  SELECT  tags_arsenals.fk_tags AS 'ct_id'
                         FROM    tags_arsenals
                         WHERE   tags_arsenals.fk_arsenals = '$arsenal_id' ");
@@ -1774,6 +1788,83 @@ function arsenals_list( string  $sort_by  = ''      ,
 
 
 /**
+ * Adds an arsenal to the database.
+ *
+ * @param   array   $data  An array containing the arsenal's data.
+ *
+ * @return  void
+ */
+
+function arsenals_add( array $data ) : void
+{
+  // Sanitize the data
+  $arsenal_release      = sanitize_array_element($data, 'release', 'int');
+  $arsenal_format       = sanitize_array_element($data, 'format', 'int');
+  $arsenal_difficulty   = sanitize_array_element($data, 'difficulty', 'int');
+  $arsenal_hidden       = sanitize_array_element($data, 'hidden', 'bool');
+  $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
+  $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
+  $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
+  $arsenal_playstyle_fr = sanitize_array_element($data, 'playstyle_fr', 'string');
+  $arsenal_summary_en   = sanitize_array_element($data, 'summary_en', 'string');
+  $arsenal_summary_fr   = sanitize_array_element($data, 'summary_fr', 'string');
+  $arsenal_gameplan_en  = sanitize_array_element($data, 'gameplan_en', 'string');
+  $arsenal_gameplan_fr  = sanitize_array_element($data, 'gameplan_fr', 'string');
+  $arsenal_reserves_en  = sanitize_array_element($data, 'reserves_en', 'string');
+  $arsenal_reserves_fr  = sanitize_array_element($data, 'reserves_fr', 'string');
+
+  // Add the arsenal to the database
+  query(" INSERT INTO arsenals
+          SET         arsenals.uuid                     = UUID()                  ,
+                      arsenals.fk_releases              = '$arsenal_release'      ,
+                      arsenals.fk_formats               = '$arsenal_format'       ,
+                      arsenals.fk_arsenal_difficulties  = '$arsenal_difficulty'   ,
+                      arsenals.is_hidden                = '$arsenal_hidden'       ,
+                      arsenals.name_en                  = '$arsenal_name_en'      ,
+                      arsenals.name_fr                  = '$arsenal_name_fr'      ,
+                      arsenals.playstyle_en             = '$arsenal_playstyle_en' ,
+                      arsenals.playstyle_fr             = '$arsenal_playstyle_fr' ,
+                      arsenals.summary_en               = '$arsenal_summary_en'   ,
+                      arsenals.summary_fr               = '$arsenal_summary_fr'   ,
+                      arsenals.gameplan_en              = '$arsenal_gameplan_en'  ,
+                      arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
+                      arsenals.reserves_en              = '$arsenal_reserves_en'  ,
+                      arsenals.reserves_fr              = '$arsenal_reserves_fr'  ");
+
+  // Get the newly created arsenal's id
+  $arsenal_id = sanitize(query_id(), "int");
+
+  // Fetch a list of arsenal tags
+  $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
+
+  // Add the arsenal's tags to the database
+  for($i = 0; $i < $arsenal_tags['rows']; $i++)
+  {
+    $tag_id = $arsenal_tags[$i]['id'];
+    if($data['arsenal_tags'][$arsenal_tags[$i]['id']])
+      query(" INSERT INTO tags_arsenals
+              SET         tags_arsenals.fk_arsenals = '$arsenal_id' ,
+                          tags_arsenals.fk_tags     = '$tag_id'     ");
+  }
+
+  // Get rid of double faction entries
+  $data['factions'] = array_unique($data['factions']);
+
+  // Add the arsenal's factions to the database
+  foreach($data['factions'] as $faction_id)
+  {
+    $faction_id = sanitize($faction_id, 'int');
+    if($faction_id !== 0)
+      query(" INSERT INTO arsenals_factions
+              SET         arsenals_factions.fk_arsenals = '$arsenal_id' ,
+                          arsenals_factions.fk_factions = '$faction_id'  ");
+  }
+}
+
+
+
+
+/**
  * Edits an arsenal in the database.
  *
  * @param   int         $arsenal_id   The id of the arsenal to edit.
@@ -1850,79 +1941,38 @@ function arsenals_edit( int   $arsenal_id  ,
               WHERE       tags_arsenals.fk_arsenals = '$arsenal_id'
               AND         tags_arsenals.fk_tags     = '$tag_id'   ");
   }
-}
 
+  // Fetch a list of arsenal factions
+  $qfactions = query("  SELECT  arsenals_factions.fk_factions AS 'af_id'
+                        FROM    arsenals_factions
+                        WHERE   arsenals_factions.fk_arsenals = '$arsenal_id' ");
 
+  // Place those factions in an array
+  $arsenal_factions = array();
+  while($dfactions = query_row($qfactions))
+    $arsenal_factions[] = $dfactions['af_id'];
 
+  // Get rid of double entries in the edited data
+  $data['factions'] = array_unique($data['factions']);
 
-/**
- * Adds an arsenal to the database.
- *
- * @param   array   $data  An array containing the arsenal's data.
- *
- * @return  void
- */
-
-function arsenals_add( array $data ) : void
-{
-  // Sanitize the data
-  $arsenal_release      = sanitize_array_element($data, 'release', 'int');
-  $arsenal_format       = sanitize_array_element($data, 'format', 'int');
-  $arsenal_difficulty   = sanitize_array_element($data, 'difficulty', 'int');
-  $arsenal_hidden       = sanitize_array_element($data, 'hidden', 'bool');
-  $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
-  $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
-  $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
-  $arsenal_playstyle_fr = sanitize_array_element($data, 'playstyle_fr', 'string');
-  $arsenal_summary_en   = sanitize_array_element($data, 'summary_en', 'string');
-  $arsenal_summary_fr   = sanitize_array_element($data, 'summary_fr', 'string');
-  $arsenal_gameplan_en  = sanitize_array_element($data, 'gameplan_en', 'string');
-  $arsenal_gameplan_fr  = sanitize_array_element($data, 'gameplan_fr', 'string');
-  $arsenal_reserves_en  = sanitize_array_element($data, 'reserves_en', 'string');
-  $arsenal_reserves_fr  = sanitize_array_element($data, 'reserves_fr', 'string');
-
-  // Add the arsenal to the database
-  query(" INSERT INTO arsenals
-          SET         arsenals.uuid                     = UUID()                  ,
-                      arsenals.fk_releases              = '$arsenal_release'      ,
-                      arsenals.fk_formats               = '$arsenal_format'       ,
-                      arsenals.fk_arsenal_difficulties  = '$arsenal_difficulty'   ,
-                      arsenals.is_hidden                = '$arsenal_hidden'       ,
-                      arsenals.name_en                  = '$arsenal_name_en'      ,
-                      arsenals.name_fr                  = '$arsenal_name_fr'      ,
-                      arsenals.playstyle_en             = '$arsenal_playstyle_en' ,
-                      arsenals.playstyle_fr             = '$arsenal_playstyle_fr' ,
-                      arsenals.summary_en               = '$arsenal_summary_en'   ,
-                      arsenals.summary_fr               = '$arsenal_summary_fr'   ,
-                      arsenals.gameplan_en              = '$arsenal_gameplan_en'  ,
-                      arsenals.gameplan_fr              = '$arsenal_gameplan_fr'  ,
-                      arsenals.reserves_en              = '$arsenal_reserves_en'  ,
-                      arsenals.reserves_fr              = '$arsenal_reserves_fr'  ");
-
-  // Get the newly created arsenal's id
-  $arsenal_id = sanitize(query_id(), "int");
-
-  // Fetch a list of arsenal tags
-  $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
-
-  // Add the arsenal's tags to the database
-  for($i = 0; $i < $arsenal_tags['rows']; $i++)
+  // Look for factions missing from the edited data and add them to the database
+  $missing_factions = array_diff($data['factions'], $arsenal_factions);
+  foreach($missing_factions as $missing_faction)
   {
-    $tag_id = $arsenal_tags[$i]['id'];
-    if($data['arsenal_tags'][$arsenal_tags[$i]['id']])
-      query(" INSERT INTO tags_arsenals
-              SET         tags_arsenals.fk_arsenals = '$arsenal_id' ,
-                          tags_arsenals.fk_tags     = '$tag_id'     ");
+    $missing_faction = sanitize($missing_faction, 'int');
+    query(" INSERT INTO arsenals_factions
+            SET         arsenals_factions.fk_arsenals = '$arsenal_id' ,
+                        arsenals_factions.fk_factions = '$missing_faction' ");
   }
 
-  // Add the arsenal's factions to the database
-  foreach($data['factions'] as $faction_id)
+  // Look for extra factions in the edited data and remove them from the database
+  $extra_factions = array_diff($arsenal_factions, $data['factions']);
+  foreach($extra_factions as $extra_faction)
   {
-    $faction_id = sanitize($faction_id, 'int');
-    if($faction_id !== 0)
-      query(" INSERT INTO arsenals_factions
-              SET         arsenals_factions.fk_arsenals = '$arsenal_id' ,
-                          arsenals_factions.fk_factions = '$faction_id'  ");
+    $extra_faction = sanitize($extra_faction, 'int');
+    query(" DELETE FROM arsenals_factions
+            WHERE       arsenals_factions.fk_arsenals = '$arsenal_id'
+            AND         arsenals_factions.fk_factions = '$extra_faction'");
   }
 }
 
@@ -1949,6 +1999,10 @@ function arsenals_delete( int $arsenal_id ) : void
   // Delete tags linked to the arsenal
   query(" DELETE FROM tags_arsenals
           WHERE       tags_arsenals.fk_arsenals = '$arsenal_id' ");
+
+  // Delete arsenal factions
+  query(" DELETE FROM arsenals_factions
+          WHERE       arsenals_factions.fk_arsenals = '$arsenal_id' ");
 }
 
 
