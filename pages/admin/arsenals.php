@@ -43,6 +43,9 @@ $arsenal_difficulties_list = arsenal_difficulties_list();
 // List of factions
 $factions_list = factions_list();
 
+// List of cards
+$card_list = cards_list();
+
 // List of arsenal tags
 $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
 
@@ -224,6 +227,7 @@ $admin_arsenals_search  = array(  'release'     => form_fetch_element('admin_ars
                                   'difficulty'  => form_fetch_element('admin_arsenals_search_difficulty') ,
                                   'playstyle'   => form_fetch_element('admin_arsenals_search_playstyle')  ,
                                   'text'        => form_fetch_element('admin_arsenals_search_text')       ,
+                                  'card_id'     => form_fetch_element('admin_arsenals_search_card')       ,
                                   'data'        => form_fetch_element('admin_arsenals_search_data')       ,
                                   'tag_id'      => form_fetch_element('admin_arsenals_search_tags')       );
 
@@ -296,6 +300,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('text');")?>
         </th>
         <th class="align_center">
+          <?=__('admin_arsenal_list_cards')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_arsenals_search('cards');")?>
+        </th>
+        <th class="align_center">
           <?=__('admin_arsenal_list_data')?>
         </th>
         <th class="align_center">
@@ -354,6 +362,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <th>
           <input type="text" class="table_search" name="admin_arsenals_search_text" id="admin_arsenals_search_text" value="" onkeyup="admin_arsenals_search();">
         </th>
+        <th>
+          <select class="table_search" name="admin_arsenals_search_card" id="admin_arsenals_search_card" onchange="admin_arsenals_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
+            <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
+            <?php endfor; ?>
+            <option value="-1" class="bold"><?=string_change_case(__('none'), 'initials')?></option>
+          </select>
+        </th>
         <th class="align_center">
           <select class="table_search" name="admin_arsenals_search_data" id="admin_arsenals_search_data" onchange="admin_arsenals_search();">
             <option value="0">&nbsp;</option>
@@ -384,7 +401,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="10" class="uppercase text_light dark bold align_center">
+        <td colspan="11" class="uppercase text_light dark bold align_center">
           <?=__('admin_arsenal_list_count', preset_values: array($arsenals_list['rows']), amount: $arsenals_list['rows'])?>
         </td>
       </tr>
@@ -471,6 +488,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
               <?php endif; ?>
             </div>
           </div>
+        </td>
+        <?php endif; ?>
+
+        <?php if($arsenals_list[$i]['cards']): ?>
+        <td class="align_center nowrap tooltip_container">
+          <span class="bold"><?=$arsenals_list[$i]['cards_main']?> - <?=$arsenals_list[$i]['cards_reserves']?> - <?=$arsenals_list[$i]['cards_extra']?></span>
+          <div class="tooltip">
+            <?=str_replace(', ', '<br>', $arsenals_list[$i]['cards'])?>
+          </div>
+        </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
         </td>
         <?php endif; ?>
 

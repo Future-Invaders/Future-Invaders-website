@@ -403,6 +403,7 @@ function admin_arsenals_search( sort_data = null )
   postdata += '&admin_arsenals_search_difficulty=' + document.getElementById('admin_arsenals_search_difficulty').value;
   postdata += '&admin_arsenals_search_playstyle='  + document.getElementById('admin_arsenals_search_playstyle').value;
   postdata += '&admin_arsenals_search_text='       + document.getElementById('admin_arsenals_search_text').value;
+  postdata += '&admin_arsenals_search_card='       + document.getElementById('admin_arsenals_search_card').value;
   postdata += '&admin_arsenals_search_data='       + document.getElementById('admin_arsenals_search_data').value;
   postdata += '&admin_arsenals_search_tags='       + document.getElementById('admin_arsenals_search_tags').value;
 

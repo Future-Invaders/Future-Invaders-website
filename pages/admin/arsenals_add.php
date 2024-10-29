@@ -78,7 +78,7 @@ $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch cards
 
-$card_list = cards_list(search: array('public' => true));
+$card_list = cards_list();
 
 
 

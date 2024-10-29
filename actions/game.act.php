@@ -1556,6 +1556,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_format_uuid     = sanitize_array_element($search, 'format_uuid', 'string');
   $search_name            = sanitize_array_element($search, 'name', 'string');
   $search_faction_id      = sanitize_array_element($search, 'faction', 'int');
+  $search_card_id         = sanitize_array_element($search, 'card_id', 'int');
   $search_difficulty      = sanitize_array_element($search, 'difficulty', 'int');
   $search_difficulty_uuid = sanitize_array_element($search, 'difficulty_uuid', 'string');
   $search_playstyle       = sanitize_array_element($search, 'playstyle', 'string');
@@ -1597,21 +1598,23 @@ function arsenals_list( string  $sort_by  = ''      ,
   $query_search .= ($search_data === 1)
                                       ? " AND   arsenals.is_hidden        = '1' "                         : "";
   $query_search .= ($search_data === 10 )
-                                      ? " AND   arsenals.fk_images_en != ''
-                                          AND   arsenals.fk_images_fr != '' "                             : "";
+                                      ? " AND   arsenals.fk_images_en     != ''
+                                          AND   arsenals.fk_images_fr     != '' "                         : "";
   $query_search .= ($search_data === 11 )
-                                      ? " AND ( arsenals.fk_images_en != ''
-                                          AND   arsenals.fk_images_fr  = '' )
-                                          OR  ( arsenals.fk_images_en  = ''
-                                          AND   arsenals.fk_images_fr != '' ) "                           : "";
+                                      ? " AND ( arsenals.fk_images_en     != ''
+                                          AND   arsenals.fk_images_fr     = '' )
+                                          OR  ( arsenals.fk_images_en     = ''
+                                          AND   arsenals.fk_images_fr     != '' ) "                       : "";
   $query_search .= ($search_data === 12 )
-                                      ? " AND   arsenals.fk_images_en  = ''
-                                          AND   arsenals.fk_images_fr  = '' "                             : "";
+                                      ? " AND   arsenals.fk_images_en     = ''
+                                          AND   arsenals.fk_images_fr     = '' "                          : "";
   $query_search .= ($search_tag_id === -1)
                                       ? " AND   tags.id                   IS NULL "                       : "";
   $query_search .= ($search_tag)      ? " AND   tags.name                 LIKE '$search_tag' "            : "";
   $query_search .= ($search_faction_id === -1)
-                                      ? " AND   arsenals_factions.fk_factions IS NULL "                   : "";
+                                      ? " AND   arsenals_factions.fk_factions   IS NULL "                 : "";
+  $query_search .= ($search_card_id === -1)
+                                      ? " AND   arsenals_compositions.fk_cards  IS NULL "                 : "";
 
   // Don't show hidden arsenals in the API
   $query_search .= ($format === 'api')
@@ -1625,6 +1628,11 @@ function arsenals_list( string  $sort_by  = ''      ,
   // Use a different search technique for factions
   $query_having .= ($search_faction_id && $search_faction_id !== -1)
                 ? " AND FIND_IN_SET('$search_faction_id', GROUP_CONCAT(factions.id)) > 0 "
+                : "";
+
+  // Use a different search technique for cards
+  $query_having .= ($search_card_id && $search_card_id !== -1)
+                ? " AND FIND_IN_SET('$search_card_id', GROUP_CONCAT(cards.id)) > 0 "
                 : "";
 
   // Sort the data
@@ -1664,6 +1672,19 @@ function arsenals_list( string  $sort_by  = ''      ,
                                   arsenal_difficulties.sorting_order  ASC     ,
                                   arsenals.name_en                    = ''    ,
                                   arsenals.name_en                    ASC     ",
+    'cards'       => "  ORDER BY  SUM(DISTINCT arsenals_compositions.amount_main)
+                                + SUM(DISTINCT arsenals_compositions.amount_reserves) DESC ,
+                                  SUM(DISTINCT arsenals_compositions.amount_main)
+                                + SUM(DISTINCT arsenals_compositions.amount_reserves)
+                                + SUM(DISTINCT arsenals_compositions.is_extra) ASC ,
+                                  releases.release_date               IS NULL ,
+                                  releases.release_date               DESC    ,
+                                  formats.sorting_order               IS NULL ,
+                                  formats.sorting_order               ASC     ,
+                                  arsenal_difficulties.sorting_order  IS NULL ,
+                                  arsenal_difficulties.sorting_order  ASC     ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
     default       => "  ORDER BY  releases.release_date               IS NULL ,
                                   releases.release_date               DESC    ,
                                   formats.sorting_order               IS NULL ,
@@ -1715,30 +1736,42 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 arsenal_difficulties.name_fr    AS 'ad_name_fr'     ,
                                 arsenal_difficulties.name_$lang AS 'ad_name'        ,
                                 arsenal_difficulties.styling    AS 'ad_style'       ,
-                                COUNT(DISTINCT tags.id)         AS 'at_count'       ,
                                 images_en.id                    AS 'i_id_en'        ,
                                 images_en.uuid                  AS 'i_uuid_en'      ,
                                 images_en.path                  AS 'i_path_en'      ,
                                 images_fr.id                    AS 'i_id_fr'        ,
                                 images_fr.uuid                  AS 'i_uuid_fr'      ,
                                 images_fr.path                  AS 'i_path_fr'      ,
-                                GROUP_CONCAT( DISTINCT tags.name
-                                              ORDER BY tags.name ASC
+                                COUNT(DISTINCT tags.id)         AS 'at_count'       ,
+                                COUNT(DISTINCT cards.id)        AS 'ac_count'       ,
+                                SUM(DISTINCT arsenals_compositions.amount_main)
+                                                                AS 'am_main'        ,
+                                SUM(DISTINCT arsenals_compositions.amount_reserves)
+                                                                AS 'am_reserves'    ,
+                                SUM(DISTINCT arsenals_compositions.is_extra)
+                                                                AS 'am_extra'       ,
+                                GROUP_CONCAT( DISTINCT  tags.name
+                                              ORDER BY  tags.name ASC
                                               SEPARATOR ', ')   AS 'at_names'       ,
-                                GROUP_CONCAT( DISTINCT factions.name_en
-                                              ORDER BY factions.sorting_order ASC
-                                              SEPARATOR ',')    AS 'af_names'
+                                GROUP_CONCAT( DISTINCT  factions.name_en
+                                              ORDER BY  factions.sorting_order ASC
+                                              SEPARATOR ',')    AS 'af_names'       ,
+                                GROUP_CONCAT( DISTINCT  cards.name_en
+                                              ORDER BY  cards.name_en ASC
+                                              SEPARATOR ', ')   AS 'ac_names'
                       FROM      arsenals
-                      LEFT JOIN releases              ON arsenals.fk_releases             = releases.id
-                      LEFT JOIN formats               ON arsenals.fk_formats              = formats.id
-                      LEFT JOIN arsenal_difficulties  ON arsenals.fk_arsenal_difficulties = arsenal_difficulties.id
-                      LEFT JOIN images AS images_en   ON arsenals.fk_images_en            = images_en.id
-                      LEFT JOIN images AS images_fr   ON arsenals.fk_images_fr            = images_fr.id
-                      LEFT JOIN tags_arsenals         ON tags_arsenals.fk_arsenals        = arsenals.id
-                      LEFT JOIN tags                  ON tags.id                          = tags_arsenals.fk_tags
-                      LEFT JOIN arsenals_factions     ON arsenals_factions.fk_arsenals    = arsenals.id
+                      LEFT JOIN releases              ON arsenals.fk_releases               = releases.id
+                      LEFT JOIN formats               ON arsenals.fk_formats                = formats.id
+                      LEFT JOIN arsenal_difficulties  ON arsenals.fk_arsenal_difficulties   = arsenal_difficulties.id
+                      LEFT JOIN images AS images_en   ON arsenals.fk_images_en              = images_en.id
+                      LEFT JOIN images AS images_fr   ON arsenals.fk_images_fr              = images_fr.id
+                      LEFT JOIN tags_arsenals         ON tags_arsenals.fk_arsenals          = arsenals.id
+                      LEFT JOIN tags                  ON tags.id                            = tags_arsenals.fk_tags
+                      LEFT JOIN arsenals_factions     ON arsenals_factions.fk_arsenals      = arsenals.id
                       LEFT JOIN factions              ON factions.id
                                                       =  arsenals_factions.fk_factions
+                      LEFT JOIN arsenals_compositions ON arsenals_compositions.fk_arsenals  = arsenals.id
+                      LEFT JOIN cards                 ON arsenals_compositions.fk_cards     = cards.id
                       $query_search
                       GROUP BY  arsenals.id
                       $query_having
@@ -1780,6 +1813,12 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['tags']           = sanitize_output($row['at_names']);
       $data[$i]['factions']       = $row['af_names']
                                   ? factions_abbreviate(sanitize_output($row['af_names']), style: true)
+                                  : '';
+      $data[$i]['cards_main']     = sanitize_output($row['am_main']);
+      $data[$i]['cards_reserves'] = sanitize_output($row['am_reserves']);
+      $data[$i]['cards_extra']    = sanitize_output($row['am_extra']);
+      $data[$i]['cards']          = $row['ac_names']
+                                  ? sanitize_output($row['ac_names'])
                                   : '';
     }
 

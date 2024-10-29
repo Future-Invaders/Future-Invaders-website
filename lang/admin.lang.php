@@ -328,6 +328,8 @@ ___('admin_arsenal_list_reserves',    'EN', "Reserves strategies");
 ___('admin_arsenal_list_reserves',    'FR', "Stratégies de réserve");
 ___('admin_arsenal_list_extra',       'EN', "Extra text");
 ___('admin_arsenal_list_extra',       'FR', "Texte additionnel");
+___('admin_arsenal_list_cards',       'EN', "Cards");
+___('admin_arsenal_list_cards',       'FR', "Cartes");
 ___('admin_arsenal_list_data',        'EN', "Data");
 ___('admin_arsenal_list_data',        'FR', "Data");
 ___('admin_arsenal_list_data_hidden', 'EN', "Hidden arsenal");
