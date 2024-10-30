@@ -1422,6 +1422,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   $qcards = query(" SELECT    arsenals_compositions.fk_cards        AS 'c_id'       ,
                               arsenals_compositions.amount_main     AS 'c_main'     ,
                               arsenals_compositions.amount_reserves AS 'c_reserves' ,
+                              arsenals_compositions.is_extra        AS 'c_extra'    ,
                               arsenals_compositions.sorting_order   AS 'c_order'
                     FROM      arsenals_compositions
                     LEFT JOIN cards ON arsenals_compositions.fk_cards = cards.id
@@ -1515,6 +1516,20 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                                                     no_depth:         true                            ,
                                                     no_parent_array:  true                            )
                                       : array();
+
+    // Add linked cards
+    if(!$no_depth)
+    {
+      for($i = 0; $dcards = query_row($qcards); $i++)
+      {
+        $data['cards'][$i]                        = cards_get($dcards['c_id'], format: 'api', no_depth: true);
+        $data['cards'][$i]['amount']['main']      = (int)sanitize_json($dcards['c_main']);
+        $data['cards'][$i]['amount']['reserves']  = (int)sanitize_json($dcards['c_reserves']);
+        $data['cards'][$i]['amount']['extra']     = (int)sanitize_json($dcards['c_extra']);
+      }
+      if($i === 0)
+        $data['cards']      = array();
+    }
 
     // Add linked tags
     if(!$no_depth)
@@ -1767,12 +1782,16 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 images_fr.uuid                  AS 'i_uuid_fr'      ,
                                 images_fr.path                  AS 'i_path_fr'      ,
                                 COUNT(DISTINCT tags.id)         AS 'at_count'       ,
+                                COUNT(DISTINCT cards.id)        AS 'ac_count'       ,
                                 GROUP_CONCAT( DISTINCT  tags.name
                                               ORDER BY  tags.name ASC
                                               SEPARATOR ', ')   AS 'at_names'       ,
                                 GROUP_CONCAT( DISTINCT  factions.name_en
                                               ORDER BY  factions.sorting_order ASC
-                                              SEPARATOR ',')    AS 'af_names'
+                                              SEPARATOR ',')    AS 'af_names'       ,
+                                GROUP_CONCAT( DISTINCT  cards.name_en
+                                              ORDER BY  cards.name_en ASC
+                                              SEPARATOR ',')    AS 'ac_names'
                       FROM      arsenals
                       LEFT JOIN releases              ON arsenals.fk_releases               = releases.id
                       LEFT JOIN formats               ON arsenals.fk_formats                = formats.id
@@ -1784,6 +1803,8 @@ function arsenals_list( string  $sort_by  = ''      ,
                       LEFT JOIN arsenals_factions     ON arsenals_factions.fk_arsenals      = arsenals.id
                       LEFT JOIN factions              ON factions.id
                                                       =  arsenals_factions.fk_factions
+                      LEFT JOIN arsenals_compositions ON arsenals_compositions.fk_arsenals = arsenals.id
+                      LEFT JOIN cards                 ON arsenals_compositions.fk_cards     = cards.id
                       $query_search
                       GROUP BY  arsenals.id
                       $query_having
@@ -1829,7 +1850,6 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['cards_main']       = sanitize_output($row['a_count']);
       $data[$i]['cards_reserves']   = sanitize_output($row['a_rcount']);
       $data[$i]['cards_extra']      = sanitize_output($row['a_ecount']);
-      $data[$i]['cards_total']      = sanitize_output($row['a_count'] + $row['a_rcount'] + $row['a_ecount']);
       $data[$i]['card_list_en']     = ($row['a_clist_en']) ? cards_format_body($row['a_clist_en']) : '';
       $data[$i]['card_list_fr']     = ($row['a_clist_fr']) ? cards_format_body($row['a_clist_fr']) : '';
       $data[$i]['reserves_list_en'] = ($row['a_rlist_en']) ? cards_format_body($row['a_rlist_en']) : '';
@@ -1891,6 +1911,10 @@ function arsenals_list( string  $sort_by  = ''      ,
         $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
                                                 .'api/image/'.$row['i_uuid_fr']);
       }
+      $data[$i]['card_count']['main']       = (int)sanitize_json($row['a_count']);
+      $data[$i]['card_count']['reserves']   = (int)sanitize_json($row['a_rcount']);
+      $data[$i]['card_count']['extras']     = (int)sanitize_json($row['a_ecount']);
+      $data[$i]['cards']                    = ($row['ac_names']) ? explode(',', $row['ac_names']) : array();
       $data[$i]['tags']                     = ($row['at_names']) ? explode(', ', $row['at_names']) : array();
       $data[$i]['endpoint']                 = sanitize_json($GLOBALS['website_url'].'api/arsenal/'.$row['a_uuid']);
     }

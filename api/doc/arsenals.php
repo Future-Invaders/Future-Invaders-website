@@ -181,6 +181,16 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
           "endpoint": string
         }
       },
+      card_count: {
+        main: int,
+        reserves: int,
+        extras: int
+      },
+      cards: [
+        "card1",
+        "card2",
+        ...
+      ],
       "tags": [
         "tag1",
         "tag2",
@@ -304,6 +314,19 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "path": string,
       }
     },
+    "cards": [
+      {
+        "card": {
+          ...
+        }
+        "amount": {
+          "main": int,
+          "reserves": int,
+          "extra": int
+        }
+      },
+      ...
+    ]
     "tags": [
       {
         "tag": {
@@ -315,7 +338,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
             "fr": string
           },
         }
-      }
+      },
       ...
     ]
   }

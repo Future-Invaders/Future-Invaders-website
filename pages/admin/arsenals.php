@@ -511,7 +511,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <?php if($arsenals_list[$i]['cards_total']): ?>
+        <?php if($arsenals_list[$i]['cards_main'] + $arsenals_list[$i]['cards_reserves'] > 0): ?>
         <td class="align_center nowrap tooltip_container">
           <span class="bold"><?=$arsenals_list[$i]['cards_main']?> - <?=$arsenals_list[$i]['cards_reserves']?> - <?=$arsenals_list[$i]['cards_extra']?></span>
           <div class="tooltip">
@@ -543,6 +543,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </div>
             <?php endif; ?>
           </div>
+        </td>
+        <?php elseif($arsenals_list[$i]['cards_extra'] > 0): ?>
+        <td class="align_center nowrap bold">
+          <?=$arsenals_list[$i]['cards_main']?> - <?=$arsenals_list[$i]['cards_reserves']?> - <?=$arsenals_list[$i]['cards_extra']?>
         </td>
         <?php else: ?>
         <td>
