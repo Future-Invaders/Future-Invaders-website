@@ -1126,12 +1126,14 @@ function images_list( string  $sort_by  = 'path'  ,
 
 function images_list_directories() : array
 {
-  $directories = array( 'rules'     ,
-                        'lore'      ,
-                        'cards/en'  ,
-                        'cards/fr'  ,
-                        'extras/en' ,
-                        'extras/fr' );
+  $directories = array( 'rules'       ,
+                        'lore'        ,
+                        'arsenals/en' ,
+                        'arsenals/fr' ,
+                        'cards/en'    ,
+                        'cards/fr'    ,
+                        'extras/en'   ,
+                        'extras/fr'   );
 
   // Return the directories
   return $directories;
