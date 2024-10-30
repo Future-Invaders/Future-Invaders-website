@@ -590,6 +590,97 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       </tr>
 
+      <?php if(isset($_GET['fullbody'])): ?>
+      <tr class="row_separator_dark">
+        <td colspan="11">
+          <div class="flexcontainer dowrap align_left smallpadding_top smallpadding_bot">
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 2">
+              <img src="<?=$path.$arsenals_list[$i]['image_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 6">
+
+              <?php if($arsenals_list[$i]['summary_en']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_en']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['gameplan_en']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_gameplan').__(':')?></span><br>
+                <?=$arsenals_list[$i]['gameplan_en']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['reserves_en']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_reserves').__(':')?></span><br>
+                <?=$arsenals_list[$i]['reserves_en']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['extra_en']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_extra').__(':')?></span><br>
+                <?=$arsenals_list[$i]['extra_en']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['card_list_en']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <?=$arsenals_list[$i]['card_list_en']?>
+              </div>
+              <?php endif; if($arsenals_list[$i]['reserves_list_en']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <?=$arsenals_list[$i]['reserves_list_en']?>
+              </div>
+              <?php endif; ?>
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 6">
+              <?php if($arsenals_list[$i]['summary_fr']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_fr']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['gameplan_fr']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_gameplan').__(':')?></span><br>
+                <?=$arsenals_list[$i]['gameplan_fr']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['reserves_fr']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_reserves').__(':')?></span><br>
+                <?=$arsenals_list[$i]['reserves_fr']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['extra_fr']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <span class="bold"><?=__('admin_arsenal_list_extra').__(':')?></span><br>
+                <?=$arsenals_list[$i]['extra_fr']?><br>
+              </div>
+              <?php endif; if($arsenals_list[$i]['card_list_fr']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <?=$arsenals_list[$i]['card_list_fr']?>
+              </div>
+              <?php endif; if($arsenals_list[$i]['reserves_list_fr']): ?>
+              <div class="smallpadding_top smallpadding_bot spaced dark2">
+                <?=$arsenals_list[$i]['reserves_list_fr']?>
+              </div>
+              <?php endif; ?>
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+            <div style="flex: 2">
+              <img src="<?=$path.$arsenals_list[$i]['image_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+            </div>
+            <div style="flex: 1">
+              &nbsp;
+            </div>
+          </div>
+        </td>
+      </tr>
+      <?php endif; ?>
+
       <?php endfor; ?>
 
     </tbody>
