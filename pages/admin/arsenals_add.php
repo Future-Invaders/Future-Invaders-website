@@ -269,12 +269,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <?php endfor; ?>
       </div>
 
-      <div class="smallpadding_bot" id="arsenal_cards_container">
-        <label><?=__('admin_arsenal_add_cards')?></label>
-        <div class="smallpadding_bot">
-          <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_arsenals_duplicate_cards();')?>
-          <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_arsenals_unduplicate_cards();')?>
-        </div>
+      <div id="arsenal_cards_container">
         <div id="arsenal_cards">
           <div class="tinypadding_bot">
             <label for="arsenal_card[]"><?=__('admin_arsenal_add_cardname')?></label>
@@ -306,6 +301,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </div>
           </div>
         </div>
+      </div>
+      <div class="padding_bot">
+        <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_arsenals_duplicate_cards();')?>
+        <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_arsenals_unduplicate_cards();')?>
       </div>
 
       <input type="submit" name="arsenal_add" value="<?=__('admin_arsenal_add_submit')?>">
