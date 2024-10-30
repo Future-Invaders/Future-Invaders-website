@@ -135,6 +135,8 @@ ___('admin_card_list_hidden',     'EN', "Hidden card");
 ___('admin_card_list_hidden',     'FR', "Carte cachée");
 ___('admin_card_list_tags',       'EN', "Tags");
 ___('admin_card_list_tags',       'FR', "Tags");
+___('admin_card_list_arsenals',   'EN', "Ars.");
+___('admin_card_list_arsenals',   'FR', "Ars.");
 ___('admin_card_list_view',       'EN', "View card");
 ___('admin_card_list_view',       'FR', "Voir la carte");
 ___('admin_card_list_count',      'EN', "{{1}} card");

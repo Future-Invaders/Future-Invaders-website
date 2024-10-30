@@ -270,6 +270,7 @@ function cards_list( string   $sort_by    = 'name'  ,
   $search_durability    = sanitize_array_element($search, 'durability', 'int');
   $search_body          = sanitize_array_element($search, 'body', 'string');
   $search_extra         = sanitize_array_element($search, 'extra', 'int');
+  $search_arsenal_id    = sanitize_array_element($search, 'arsenal_id', 'int');
   $search_tag_id        = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag           = sanitize_array_element($search, 'tag', 'string');
   $search_public        = sanitize_array_element($search, 'public', 'bool');
@@ -318,18 +319,27 @@ function cards_list( string   $sort_by    = 'name'  ,
                                                 AND   cards.fk_images_fr  = '' "                      : "";
   $query_search .= ($search_tag_id === -1)  ? " AND   tags.id             IS NULL "                   : "";
   $query_search .= ($search_tag)            ? " AND   tags.name           LIKE '$search_tag' "        : "";
+  $query_search .= ($search_arsenal_id === -1)
+                                            ? " AND   arsenals.id         IS NULL "                   : "";
   $query_search .= ($search_public)         ? " AND   cards.is_hidden     = '0' "                     : "";
   $query_search .= ($search_game_cards)     ? " AND   cards.is_extra_card = '0' "                     : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
                 ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                : " HAVING 1 = 1 ";
+
+  // Use a different search technique for arsenals
+  $query_having .= ($search_arsenal_id && $search_arsenal_id !== -1)
+                ? " AND FIND_IN_SET('$search_arsenal_id', GROUP_CONCAT(arsenals.id)) > 0 "
                 : "";
 
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'tags'        => " ORDER BY COUNT(tags.id)              DESC    ,
+    'tags'        => " ORDER BY COUNT(DISTINCT tags.id)     DESC    ,
+                                cards.name_$lang            ASC     ",
+    'arsenals'    => " ORDER BY COUNT(DISTINCT arsenals.id) DESC    ,
                                 cards.name_$lang            ASC     ",
     'api'         => " ORDER BY cards.name_en               ASC     ",
     'name'        => " ORDER BY cards.name_$lang            ASC     ",
@@ -418,20 +428,26 @@ function cards_list( string   $sort_by    = 'name'  ,
                               images_fr.id                  AS 'i_id_fr'      ,
                               images_fr.uuid                AS 'i_uuid_fr'    ,
                               images_fr.path                AS 'i_path_fr'    ,
-                              COUNT(tags.id)                AS 'ct_count'     ,
-                              GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
-                                                            AS 'ct_names'
+                              COUNT(DISTINCT tags.id)       AS 'ct_count'     ,
+                              COUNT(DISTINCT arsenals.id)   AS 'ar_count'     ,
+                              GROUP_CONCAT(DISTINCT tags.name ORDER BY tags.name ASC SEPARATOR ', ')
+                                                            AS 'ct_names'     ,
+                              GROUP_CONCAT(DISTINCT arsenals.name_en ORDER BY arsenals.name_en ASC SEPARATOR ', ')
+                                                            AS 'ar_names'
                     FROM      cards
-                    LEFT JOIN releases            ON releases.id          = cards.fk_releases
-                    LEFT JOIN factions            ON factions.id          = cards.fk_factions
-                    LEFT JOIN card_types          ON card_types.id        = cards.fk_card_types
-                    LEFT JOIN card_rarities       ON card_rarities.id     = cards.fk_card_rarities
-                    LEFT JOIN images AS images_en ON images_en.id         = cards.fk_images_en
-                    LEFT JOIN images AS images_fr ON images_fr.id         = cards.fk_images_fr
-                    LEFT JOIN tags_cards          ON tags_cards.fk_cards  = cards.id
-                    LEFT JOIN tags                ON tags.id              = tags_cards.fk_tags
+                    LEFT JOIN releases              ON releases.id                    = cards.fk_releases
+                    LEFT JOIN factions              ON factions.id                    = cards.fk_factions
+                    LEFT JOIN card_types            ON card_types.id                  = cards.fk_card_types
+                    LEFT JOIN card_rarities         ON card_rarities.id               = cards.fk_card_rarities
+                    LEFT JOIN images AS images_en   ON images_en.id                   = cards.fk_images_en
+                    LEFT JOIN images AS images_fr   ON images_fr.id                   = cards.fk_images_fr
+                    LEFT JOIN tags_cards            ON tags_cards.fk_cards            = cards.id
+                    LEFT JOIN tags                  ON tags.id                        = tags_cards.fk_tags
+                    LEFT JOIN arsenals_compositions ON arsenals_compositions.fk_cards = cards.id
+                    LEFT JOIN arsenals              ON arsenals.id
+                                                    = arsenals_compositions.fk_arsenals
                     $query_search
-                    GROUP BY  cards.id
+                    GROUP BY cards.id
                     $query_having
                     $query_sort ");
 
@@ -442,7 +458,7 @@ function cards_list( string   $sort_by    = 'name'  ,
     if($format === 'html')
     {
       $data[$i]['id']           = sanitize_output($row['c_id']);
-      $data[$i]['name']         = sanitize_output(string_truncate($row['c_name'], 25, '...'));
+      $data[$i]['name']         = sanitize_output(string_truncate($row['c_name'], 20, '...'));
       $data[$i]['name_en']      = sanitize_output($row['c_name_en']);
       $data[$i]['name_fr']      = sanitize_output($row['c_name_fr']);
       $data[$i]['release']      = sanitize_output(string_truncate($row['r_name'], 12, '...'));
@@ -469,6 +485,8 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['image_fr']     = sanitize_output($row['i_path_fr']);
       $data[$i]['extra']        = sanitize_output($row['c_extra']);
       $data[$i]['hidden']       = sanitize_output($row['c_hidden']);
+      $data[$i]['narsenals']    = sanitize_output($row['ar_count']);
+      $data[$i]['arsenals']     = sanitize_output($row['ar_names']);
       $data[$i]['ntags']        = sanitize_output($row['ct_count']);
       $data[$i]['tags']         = sanitize_output($row['ct_names']);
     }

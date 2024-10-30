@@ -82,6 +82,7 @@ function admin_cards_search( sort_data = null )
   postdata += '&admin_cards_search_durability=' + document.getElementById('admin_cards_search_durability').value;
   postdata += '&admin_cards_search_body='       + document.getElementById('admin_cards_search_body').value;
   postdata += '&admin_cards_search_extra='      + document.getElementById('admin_cards_search_extra').value;
+  postdata += '&admin_cards_search_arsenals='   + document.getElementById('admin_cards_search_arsenals').value;
   postdata += '&admin_cards_search_tags='       + document.getElementById('admin_cards_search_tags').value;
 
   // Submit the search

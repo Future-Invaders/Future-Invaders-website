@@ -43,6 +43,9 @@ $factions_list = factions_list();
 // List of card rarities
 $card_rarities_list = card_rarities_list();
 
+// List of arsenals
+$arsenals_list = arsenals_list(sort_by: 'name');
+
 // List of card tags
 $card_tags_list = tags_list(search: array('ftype' => 'Card'));
 
@@ -189,6 +192,7 @@ $admin_cards_search = array(  'name'        => form_fetch_element('admin_cards_s
                               'durability'  => form_fetch_element('admin_cards_search_durability')  ,
                               'body'        => form_fetch_element('admin_cards_search_body')        ,
                               'extra'       => form_fetch_element('admin_cards_search_extra')       ,
+                              'arsenal_id'  => form_fetch_element('admin_cards_search_arsenals')    ,
                               'tag_id'      => form_fetch_element('admin_cards_search_tags')        );
 
 // Fetch the cards
@@ -282,6 +286,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__('admin_card_list_data')?>
         </th>
         <th class="align_center">
+          <?=__('admin_card_list_arsenals')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_cards_search('arsenals');")?>
+        </th>
+        <th class="align_center">
           <?=__('admin_card_list_tags')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_cards_search('tags');")?>
         </th>
@@ -357,6 +365,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </select>
         </th>
         <th>
+          <select class="table_search" name="admin_cards_search_arsenals" id="admin_cards_search_arsenals" onchange="admin_cards_search();">
+            <option value="">&nbsp;</option>
+            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <?php for($i = 0; $i < $arsenals_list['rows']; $i++): ?>
+            <option value="<?=$arsenals_list[$i]['id']?>"><?=$arsenals_list[$i]['name']?></option>
+            <?php endfor; ?>
+          </select>
+        </th>
+        <th>
           <select class="table_search" name="admin_cards_search_tags" id="admin_cards_search_tags" onchange="admin_cards_search();">
             <option value="">&nbsp;</option>
             <option value="-1"><?=string_change_case(__('none'), 'lowercase')?></option>
@@ -377,7 +394,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="13" class="uppercase text_light dark bold align_center">
+        <td colspan="14" class="uppercase text_light dark bold align_center">
           <?=__('admin_card_list_count', preset_values: array($cards_list['rows']), amount: $cards_list['rows'])?>
         </td>
       </tr>
@@ -475,6 +492,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
         </td>
 
+        <?php if($cards_list[$i]['narsenals'] > 0): ?>
+        <td class="align_center bold tooltip_container">
+          <?=$cards_list[$i]['narsenals']?>
+          <div class="tooltip">
+            <?=str_replace(', ', '<br>', $cards_list[$i]['arsenals'])?>
+          </div>
+        </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php endif; ?>
+
         <?php if($cards_list[$i]['tags']): ?>
         <td class="align_center tooltip_container">
           <span class="bold"><?=$cards_list[$i]['ntags']?></span>
@@ -497,7 +527,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <?php if(isset($_GET['fullbody'])): ?>
       <tr class="row_separator_dark">
-        <td colspan="13">
+        <td colspan="14">
           <div class="flexcontainer dowrap align_left smallpadding_top smallpadding_bot">
             <div style="flex: 1">
               &nbsp;
