@@ -89,6 +89,8 @@ if(isset($_POST['arsenal_add']))
   // Gather tags postdata
   for($i = 0; $i < $arsenal_tags['rows']; $i++)
     $arsenal_add_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
+  if(!isset($arsenal_add_tags))
+    $arsenal_add_tags = array();
 
   // Gather cards postdata
   if(isset($_POST['arsenal_card']))
@@ -175,6 +177,8 @@ if(isset($_POST['arsenal_edit']))
   // Gather tags postdata
   for($i = 0; $i < $arsenal_tags['rows']; $i++)
     $arsenal_edit_tags[$arsenal_tags[$i]['id']] = form_fetch_element("arsenal_tag_".$arsenal_tags[$i]['id'], element_exists: true);
+  if(!isset($arsenal_edit_tags))
+    $arsenal_edit_tags = array();
 
   // Gather linked cards postdata
   if(isset($_POST['arsenal_card']))

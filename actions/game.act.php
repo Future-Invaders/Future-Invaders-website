@@ -2038,12 +2038,16 @@ function arsenals_update_card_data( int $arsenal_id ) : void
                                           : $row['ac_count'];
 
     // Format the card types
-    $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
+    if(isset($row['ct_name_en']))
+      $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
 
     // Format the costs
     $formatted_cost = "";
-    for($i = 0; $i < strlen($row['c_cost']); $i++)
-      $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+    if(isset($row['c_cost']))
+    {
+      for($i = 0; $i < strlen($row['c_cost']); $i++)
+        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+    }
 
     // Assemble the main card list
     if($row['ac_count'] > 0)
@@ -2085,12 +2089,16 @@ function arsenals_update_card_data( int $arsenal_id ) : void
   for($i = 0; $row =query_row($qcards); $i++)
   {
     // Format the card types
-    $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
+    if(isset($row['ct_name_en']))
+      $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
 
     // Format the costs
     $formatted_cost = "";
-    for($i = 0; $i < strlen($row['c_cost']); $i++)
-      $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+    if(isset($row['c_cost']))
+    {
+      for($i = 0; $i < strlen($row['c_cost']); $i++)
+        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+    }
 
     // Assemble the main card list
     if($row['ac_count'] > 0)
