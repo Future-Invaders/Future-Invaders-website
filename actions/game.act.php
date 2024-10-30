@@ -28,6 +28,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  arsenals_get                    Returns data related to an arsenal                                               */
 /*  arsenals_list                   Lists arsenals in the database                                                   */
+/*  arsenals_update_card_data       Recalculates the data related to cards linked to an arsenal                      */
 /*  arsenals_add                    Adds an arsenal to the database                                                  */
 /*  arsenals_edit                   Edits an arsenal in the database                                                 */
 /*  arsenals_delete                 Deletes an arsenal from the database                                             */
@@ -1690,11 +1691,9 @@ function arsenals_list( string  $sort_by  = ''      ,
                                   arsenal_difficulties.sorting_order  ASC     ,
                                   arsenals.name_en                    = ''    ,
                                   arsenals.name_en                    ASC     ",
-    'cards'       => "  ORDER BY  SUM(DISTINCT arsenals_compositions.amount_main)
-                                + SUM(DISTINCT arsenals_compositions.amount_reserves) DESC ,
-                                  SUM(DISTINCT arsenals_compositions.amount_main)
-                                + SUM(DISTINCT arsenals_compositions.amount_reserves)
-                                + SUM(DISTINCT arsenals_compositions.is_extra) ASC ,
+    'cards'       => "  ORDER BY  arsenals.card_count                 DESC    ,
+                                  arsenals.card_count
+                                + arsenals.reserves_count             DESC    ,
                                   releases.release_date               IS NULL ,
                                   releases.release_date               DESC    ,
                                   formats.sorting_order               IS NULL ,
@@ -1739,6 +1738,13 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 arsenals.reserves_fr            AS 'a_reserves_fr'  ,
                                 arsenals.extra_en               AS 'a_extra_en'     ,
                                 arsenals.extra_fr               AS 'a_extra_fr'     ,
+                                arsenals.card_count             AS 'a_count'        ,
+                                arsenals.reserves_count         AS 'a_rcount'       ,
+                                arsenals.extra_count            AS 'a_ecount'       ,
+                                arsenals.cards_list_en          AS 'a_clist_en'     ,
+                                arsenals.cards_list_fr          AS 'a_clist_fr'     ,
+                                arsenals.reserves_list_en       AS 'a_rlist_en'     ,
+                                arsenals.reserves_list_fr       AS 'a_rlist_fr'     ,
                                 releases.uuid                   AS 'r_uuid'         ,
                                 releases.name_en                AS 'r_name_en'      ,
                                 releases.name_fr                AS 'r_name_fr'      ,
@@ -1761,22 +1767,12 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 images_fr.uuid                  AS 'i_uuid_fr'      ,
                                 images_fr.path                  AS 'i_path_fr'      ,
                                 COUNT(DISTINCT tags.id)         AS 'at_count'       ,
-                                COUNT(DISTINCT cards.id)        AS 'ac_count'       ,
-                                SUM(DISTINCT arsenals_compositions.amount_main)
-                                                                AS 'am_main'        ,
-                                SUM(DISTINCT arsenals_compositions.amount_reserves)
-                                                                AS 'am_reserves'    ,
-                                SUM(DISTINCT arsenals_compositions.is_extra)
-                                                                AS 'am_extra'       ,
                                 GROUP_CONCAT( DISTINCT  tags.name
                                               ORDER BY  tags.name ASC
                                               SEPARATOR ', ')   AS 'at_names'       ,
                                 GROUP_CONCAT( DISTINCT  factions.name_en
                                               ORDER BY  factions.sorting_order ASC
-                                              SEPARATOR ',')    AS 'af_names'       ,
-                                GROUP_CONCAT( DISTINCT  cards.name_en
-                                              ORDER BY  cards.name_en ASC
-                                              SEPARATOR ', ')   AS 'ac_names'
+                                              SEPARATOR ',')    AS 'af_names'
                       FROM      arsenals
                       LEFT JOIN releases              ON arsenals.fk_releases               = releases.id
                       LEFT JOIN formats               ON arsenals.fk_formats                = formats.id
@@ -1788,8 +1784,6 @@ function arsenals_list( string  $sort_by  = ''      ,
                       LEFT JOIN arsenals_factions     ON arsenals_factions.fk_arsenals      = arsenals.id
                       LEFT JOIN factions              ON factions.id
                                                       =  arsenals_factions.fk_factions
-                      LEFT JOIN arsenals_compositions ON arsenals_compositions.fk_arsenals  = arsenals.id
-                      LEFT JOIN cards                 ON arsenals_compositions.fk_cards     = cards.id
                       $query_search
                       GROUP BY  arsenals.id
                       $query_having
@@ -1801,43 +1795,45 @@ function arsenals_list( string  $sort_by  = ''      ,
     // Prepare for display
     if($format === 'html')
     {
-      $data[$i]['id']             = sanitize_output($row['a_id']);
-      $data[$i]['name']           = sanitize_output(string_truncate($row['a_name'], 20, '...'));
-      $data[$i]['name_en']        = sanitize_output($row['a_name_en']);
-      $data[$i]['name_fr']        = sanitize_output($row['a_name_fr']);
-      $data[$i]['release']        = sanitize_output($row['r_name']);
-      $data[$i]['release_css']    = sanitize_output($row['r_styling']);
-      $data[$i]['format']         = sanitize_output($row['f_name']);
-      $data[$i]['format_css']     = sanitize_output($row['f_styling']);
-      $data[$i]['difficulty']     = sanitize_output($row['ad_name']);
-      $data[$i]['difficulty_css'] = sanitize_output($row['ad_style']);
-      $data[$i]['playstyle']      = sanitize_output(string_truncate($row['a_playstyle'], 20, '...'));
-      $data[$i]['playstyle_en']   = sanitize_output($row['a_playstyle_en']);
-      $data[$i]['playstyle_fr']   = sanitize_output($row['a_playstyle_fr']);
-      $data[$i]['length_en']      = sanitize_output($row['a_length_en']);
-      $data[$i]['length_fr']      = sanitize_output($row['a_length_fr']);
-      $data[$i]['summary_en']     = sanitize_output($row['a_summary_en']);
-      $data[$i]['summary_fr']     = sanitize_output($row['a_summary_fr']);
-      $data[$i]['gameplan_en']    = nl2br($row['a_gameplan_en']);
-      $data[$i]['gameplan_fr']    = nl2br($row['a_gameplan_fr']);
-      $data[$i]['reserves_en']    = nl2br($row['a_reserves_en']);
-      $data[$i]['reserves_fr']    = nl2br($row['a_reserves_fr']);
-      $data[$i]['extra_en']       = nl2br($row['a_extra_en']);
-      $data[$i]['extra_fr']       = nl2br($row['a_extra_fr']);
-      $data[$i]['hidden']         = sanitize_output($row['a_hidden']);
-      $data[$i]['image_en']       = sanitize_output($row['i_path_en']);
-      $data[$i]['image_fr']       = sanitize_output($row['i_path_fr']);
-      $data[$i]['ntags']          = sanitize_output($row['at_count']);
-      $data[$i]['tags']           = sanitize_output($row['at_names']);
-      $data[$i]['factions']       = $row['af_names']
-                                  ? factions_abbreviate(sanitize_output($row['af_names']), style: true)
-                                  : '';
-      $data[$i]['cards_main']     = sanitize_output($row['am_main']);
-      $data[$i]['cards_reserves'] = sanitize_output($row['am_reserves']);
-      $data[$i]['cards_extra']    = sanitize_output($row['am_extra']);
-      $data[$i]['cards']          = $row['ac_names']
-                                  ? sanitize_output($row['ac_names'])
-                                  : '';
+      $data[$i]['id']               = sanitize_output($row['a_id']);
+      $data[$i]['name']             = sanitize_output(string_truncate($row['a_name'], 20, '...'));
+      $data[$i]['name_en']          = sanitize_output($row['a_name_en']);
+      $data[$i]['name_fr']          = sanitize_output($row['a_name_fr']);
+      $data[$i]['release']          = sanitize_output($row['r_name']);
+      $data[$i]['release_css']      = sanitize_output($row['r_styling']);
+      $data[$i]['format']           = sanitize_output($row['f_name']);
+      $data[$i]['format_css']       = sanitize_output($row['f_styling']);
+      $data[$i]['difficulty']       = sanitize_output($row['ad_name']);
+      $data[$i]['difficulty_css']   = sanitize_output($row['ad_style']);
+      $data[$i]['playstyle']        = sanitize_output(string_truncate($row['a_playstyle'], 20, '...'));
+      $data[$i]['playstyle_en']     = sanitize_output($row['a_playstyle_en']);
+      $data[$i]['playstyle_fr']     = sanitize_output($row['a_playstyle_fr']);
+      $data[$i]['length_en']        = sanitize_output($row['a_length_en']);
+      $data[$i]['length_fr']        = sanitize_output($row['a_length_fr']);
+      $data[$i]['summary_en']       = sanitize_output($row['a_summary_en']);
+      $data[$i]['summary_fr']       = sanitize_output($row['a_summary_fr']);
+      $data[$i]['gameplan_en']      = nl2br($row['a_gameplan_en']);
+      $data[$i]['gameplan_fr']      = nl2br($row['a_gameplan_fr']);
+      $data[$i]['reserves_en']      = nl2br($row['a_reserves_en']);
+      $data[$i]['reserves_fr']      = nl2br($row['a_reserves_fr']);
+      $data[$i]['extra_en']         = nl2br($row['a_extra_en']);
+      $data[$i]['extra_fr']         = nl2br($row['a_extra_fr']);
+      $data[$i]['hidden']           = sanitize_output($row['a_hidden']);
+      $data[$i]['image_en']         = sanitize_output($row['i_path_en']);
+      $data[$i]['image_fr']         = sanitize_output($row['i_path_fr']);
+      $data[$i]['ntags']            = sanitize_output($row['at_count']);
+      $data[$i]['tags']             = sanitize_output($row['at_names']);
+      $data[$i]['factions']         = $row['af_names']
+                                    ? factions_abbreviate(sanitize_output($row['af_names']), style: true)
+                                    : '';
+      $data[$i]['cards_main']       = sanitize_output($row['a_count']);
+      $data[$i]['cards_reserves']   = sanitize_output($row['a_rcount']);
+      $data[$i]['cards_extra']      = sanitize_output($row['a_ecount']);
+      $data[$i]['cards_total']      = sanitize_output($row['a_count'] + $row['a_rcount'] + $row['a_ecount']);
+      $data[$i]['card_list_en']     = ($row['a_clist_en']) ? cards_format_body($row['a_clist_en']) : '';
+      $data[$i]['card_list_fr']     = ($row['a_clist_fr']) ? cards_format_body($row['a_clist_fr']) : '';
+      $data[$i]['reserves_list_en'] = ($row['a_rlist_en']) ? cards_format_body($row['a_rlist_en']) : '';
+      $data[$i]['reserves_list_fr'] = ($row['a_rlist_fr']) ? cards_format_body($row['a_rlist_fr']) : '';
     }
 
     // Prepare for the API
@@ -1914,6 +1910,188 @@ function arsenals_list( string  $sort_by  = ''      ,
   // Return the prepared data
   return $data;
 }
+
+
+
+
+/**
+ * Recalculates the data on cards linked to an arsenal.
+ *
+ * @param   int     $arsenal_id  The id of the arsenal to update.
+ *
+ * @return  void
+ */
+
+function arsenals_update_card_data( int $arsenal_id ) : void
+{
+  // Sanitize the arsenal's id
+  $arsenal_id = sanitize($arsenal_id, 'int');
+
+  // Stop here if the arsenal doesn't exist
+  if(!database_row_exists('arsenals', $arsenal_id))
+    return;
+
+  // Get the arsenal's cards in english
+  $qcards = query(" SELECT    arsenals_compositions.amount_main     AS 'ac_count'   ,
+                              arsenals_compositions.amount_reserves AS 'ac_reserves',
+                              arsenals_compositions.is_extra        AS 'ac_extra'   ,
+                              card_types.name_en                    AS 'ct_name_en' ,
+                              cards.name_en                         AS 'c_name_en'  ,
+                              cards.cost                            AS 'c_cost'
+                    FROM      arsenals_compositions
+                    LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
+                    LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
+                    WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
+                    ORDER BY  cards.cost                ASC ,
+                              card_types.sorting_order  ASC ,
+                              cards.name_en             ASC ");
+
+  // Initialize the variables used to store arsenal data
+  $count_main     = 0;
+  $count_reserves = 0;
+  $count_extra    = 0;
+  $count_types    = array();
+  $arsenal_types  = "";
+  $arsenal_en     = "";
+  $arsenal_fr     = "";
+  $reserves_en    = "";
+  $reserves_fr    = "";
+
+  // Loop through the cards
+  for($i = 0; $row =query_row($qcards); $i++)
+  {
+    // Increment the counters
+    $count_main     += $row['ac_count'];
+    $count_reserves += $row['ac_reserves'];
+    $count_extra    += $row['ac_extra'];
+
+    // Count the types
+    if($row['ac_count'])
+      $count_types[$row['ct_name_en']] =  (isset($count_types[$row['ct_name_en']]))
+                                          ? $count_types[$row['ct_name_en']] + $row['ac_count']
+                                          : $row['ac_count'];
+
+    // Format the card types
+    $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
+
+    // Format the costs
+    $formatted_cost = "";
+    for($i = 0; $i < strlen($row['c_cost']); $i++)
+      $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+
+    // Assemble the main card list
+    if($row['ac_count'] > 0)
+    {
+      $arsenal_en .= ($arsenal_en !== "") ? "<br>" : "";
+      $arsenal_en .= "[".$formatted_type."] ";
+      $arsenal_en .= '<span class="bold">'.$row['ac_count']."</span> ";
+      $arsenal_en .= ($formatted_cost) ? $formatted_cost." " : "";
+      $arsenal_en .= $row['c_name_en'];
+    }
+
+    // Assemble the reserves card list
+    if($row['ac_reserves'] > 0)
+    {
+      $reserves_en .= ($reserves_en !== "") ? "<br>" : "";
+      $reserves_en .= "[".$formatted_type."] ";
+      $reserves_en .= '<span class="bold">'.$row['ac_reserves']."</span> ";
+      $reserves_en .= ($formatted_cost) ? $formatted_cost." " : "";
+      $reserves_en .= $row['c_name_en'];
+    }
+  }
+
+  // Get the arsenal's cards in french
+  $qcards = query(" SELECT    arsenals_compositions.amount_main     AS 'ac_count'   ,
+                              arsenals_compositions.amount_reserves AS 'ac_reserves',
+                              arsenals_compositions.is_extra        AS 'ac_extra'   ,
+                              card_types.name_en                    AS 'ct_name_en' ,
+                              cards.name_fr                         AS 'c_name_fr'  ,
+                              cards.cost                            AS 'c_cost'
+                    FROM      arsenals_compositions
+                    LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
+                    LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
+                    WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
+                    ORDER BY  cards.cost                ASC ,
+                              card_types.sorting_order  ASC ,
+                              cards.name_fr             ASC ");
+
+  // Loop through the cards
+  for($i = 0; $row =query_row($qcards); $i++)
+  {
+    // Format the card types
+    $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
+
+    // Format the costs
+    $formatted_cost = "";
+    for($i = 0; $i < strlen($row['c_cost']); $i++)
+      $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+
+    // Assemble the main card list
+    if($row['ac_count'] > 0)
+    {
+      $arsenal_fr .= ($arsenal_fr !== "") ? "<br>" : "";
+      $arsenal_fr .= "[".$formatted_type."] ";
+      $arsenal_fr .= '<span class="bold">'.$row['ac_count']."</span> ";
+      $arsenal_fr .= ($formatted_cost) ? $formatted_cost." " : "";
+      $arsenal_fr .= $row['c_name_fr'];
+    }
+
+    // Assemble the reserves card list
+    if($row['ac_reserves'] > 0)
+    {
+      $reserves_fr .= ($reserves_fr !== "") ? "<br>" : "";
+      $reserves_fr .= "[".$formatted_type."] ";
+      $reserves_fr .= '<span class="bold">'.$row['ac_reserves']."</span> ";
+      $reserves_fr .= ($formatted_cost) ? $formatted_cost." " : "";
+      $reserves_fr .= $row['c_name_fr'];
+    }
+  }
+
+  // Fetch card types
+  $qtypes = query(" SELECT    card_types.name_en AS 'ct_name_en'
+                    FROM      card_types
+                    ORDER BY  card_types.sorting_order ASC ");
+
+  // Loop through the card types
+  while($dtypes = query_row($qtypes))
+  {
+    // Check if there is a card count for this card type
+    if(isset($count_types[$dtypes['ct_name_en']]))
+    {
+      // Prepare a string for this count
+      $temp_type = ($dtypes['ct_name_en'] === "Structure") ? 'B' : mb_substr($dtypes['ct_name_en'], 0, 1);
+
+      // Update the arsenal types string)
+      $arsenal_types .= ($arsenal_types !== "") ? " &nbsp; " : "";
+      $arsenal_types .= "[".$temp_type.'] <span class="bold">'.$count_types[$dtypes['ct_name_en']].'</span>';
+    }
+  }
+
+  // Prepend card types to arsenals
+  $arsenal_en = ($arsenal_en) ? $arsenal_types."<br><br>".$arsenal_en : "";
+  $arsenal_fr = ($arsenal_fr) ? $arsenal_types."<br><br>".$arsenal_fr : "";
+
+  // Sanitize the results
+  $count_main     = sanitize($count_main, 'int');
+  $count_reserves = sanitize($count_reserves, 'int');
+  $count_extra    = sanitize($count_extra, 'int');
+  $arsenal_en     = sanitize($arsenal_en, 'string');
+  $arsenal_fr     = sanitize($arsenal_fr, 'string');
+  $reserves_en    = sanitize($reserves_en, 'string');
+  $reserves_fr    = sanitize($reserves_fr, 'string');
+
+  // Update the arsenal data
+  query(" UPDATE  arsenals
+          SET     arsenals.card_count       = '$count_main'     ,
+                  arsenals.reserves_count   = '$count_reserves' ,
+                  arsenals.extra_count      = '$count_extra'    ,
+                  arsenals.cards_list_en    = '$arsenal_en'     ,
+                  arsenals.cards_list_fr    = '$arsenal_fr'     ,
+                  arsenals.reserves_list_en = '$reserves_en'    ,
+                  arsenals.reserves_list_fr = '$reserves_fr'
+          WHERE   arsenals.id               = '$arsenal_id' ");
+}
+
 
 
 
@@ -2018,6 +2196,9 @@ function arsenals_add( array $data ) : void
                         arsenals_compositions.is_extra        = '$card_extra'     ,
                         arsenals_compositions.sorting_order   = '$card_order'     ");
   }
+
+  // Recalculate arsenal card data
+  arsenals_update_card_data($arsenal_id);
 }
 
 
@@ -2231,6 +2412,9 @@ function arsenals_edit( int   $arsenal_id  ,
   query(" DELETE FROM arsenals_compositions
           WHERE       arsenals_compositions.fk_arsenals = '$arsenal_id'
           AND         arsenals_compositions.fk_cards    = 0 ");
+
+  // Recalculate arsenal card data
+  arsenals_update_card_data($arsenal_id);
 }
 
 

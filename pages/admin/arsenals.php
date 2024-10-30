@@ -511,11 +511,37 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <?php if($arsenals_list[$i]['cards']): ?>
+        <?php if($arsenals_list[$i]['cards_total']): ?>
         <td class="align_center nowrap tooltip_container">
           <span class="bold"><?=$arsenals_list[$i]['cards_main']?> - <?=$arsenals_list[$i]['cards_reserves']?> - <?=$arsenals_list[$i]['cards_extra']?></span>
           <div class="tooltip">
-            <?=str_replace(', ', '<br>', $arsenals_list[$i]['cards'])?>
+            <?php if($arsenals_list[$i]['card_list_en']): ?>
+            <div class="spaced smallpadding_top smallpadding_bot">
+              <span class="bold"><?=__('admin_arsenal_list_clist_en').__(':')?></span><br>
+              <br>
+              <?=$arsenals_list[$i]['card_list_en']?>
+            </div>
+            <?php endif; if($arsenals_list[$i]['reserves_list_en']): ?>
+            <div class="spaced smallpadding_top smallpadding_bot">
+              <span class="bold"><?=__('admin_arsenal_list_rlist_en').__(':')?></span><br>
+              <br>
+              <?=$arsenals_list[$i]['reserves_list_en']?>
+            </div>
+            <?php endif; ?>
+            <hr>
+            <?php if($arsenals_list[$i]['card_list_fr']): ?>
+            <div class="spaced smallpadding_top smallpadding_bot">
+              <span class="bold"><?=__('admin_arsenal_list_clist_fr').__(':')?></span><br>
+              <br>
+              <?=$arsenals_list[$i]['card_list_fr']?>
+            </div>
+            <?php endif; if($arsenals_list[$i]['reserves_list_fr']): ?>
+            <div class="spaced smallpadding_top smallpadding_bot">
+              <span class="bold"><?=__('admin_arsenal_list_rlist_fr').__(':')?></span><br>
+              <br>
+              <?=$arsenals_list[$i]['reserves_list_fr']?>
+            </div>
+            <?php endif; ?>
           </div>
         </td>
         <?php else: ?>

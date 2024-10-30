@@ -854,7 +854,10 @@ if($last_query < 13)
   sql_create_field('arsenals', 'fk_images_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_en');
   sql_create_field('arsenals', 'fk_formats', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_fr');
   sql_create_field('arsenals', 'fk_arsenal_difficulties', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_formats');
-  sql_create_field('arsenals', 'is_hidden', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenal_difficulties');
+  sql_create_field('arsenals', 'card_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_arsenal_difficulties');
+  sql_create_field('arsenals', 'reserves_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'card_count');
+  sql_create_field('arsenals', 'extra_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'reserves_count');
+  sql_create_field('arsenals', 'is_hidden', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'extra_count');
   sql_create_field('arsenals', 'name_en', 'TINYTEXT NOT NULL', 'is_hidden');
   sql_create_field('arsenals', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
   sql_create_field('arsenals', 'playstyle_en', 'TINYTEXT', 'name_fr');
@@ -867,12 +870,21 @@ if($last_query < 13)
   sql_create_field('arsenals', 'reserves_fr', 'LONGTEXT', 'reserves_en');
   sql_create_field('arsenals', 'extra_en', 'LONGTEXT', 'reserves_fr');
   sql_create_field('arsenals', 'extra_fr', 'LONGTEXT', 'extra_en');
+  sql_create_field('arsenals', 'cards_list_en', 'LONGTEXT', 'extra_fr');
+  sql_create_field('arsenals', 'cards_list_fr', 'LONGTEXT', 'cards_list_en');
+  sql_create_field('arsenals', 'reserves_list_en', 'LONGTEXT', 'cards_list_fr');
+  sql_create_field('arsenals', 'reserves_list_fr', 'LONGTEXT', 'reserves_list_en');
 
   sql_create_index('arsenals', 'arsenals_uuid', 'uuid');
   sql_create_index('arsenals', 'arsenals_release', 'fk_releases');
   sql_create_index('arsenals', 'arsenals_images_en', 'fk_images_en');
   sql_create_index('arsenals', 'arsenals_images_fr', 'fk_images_fr');
   sql_create_index('arsenals', 'arsenals_format', 'fk_formats');
+  sql_create_index('arsenals', 'arsenals_difficulty', 'fk_arsenal_difficulties');
+  sql_create_index('arsenals', 'arsenals_card_count', 'card_count');
+  sql_create_index('arsenals', 'arsenals_reserves_count', 'reserves_count');
+  sql_create_index('arsenals', 'arsenals_extra_count', 'extra_count');
+  sql_create_index('arsenals', 'arsenals_is_hidden', 'is_hidden');
   sql_create_index('arsenals', 'arsenals_name_en', 'name_en(40)');
   sql_create_index('arsenals', 'arsenals_name_fr', 'name_fr(40)');
 
