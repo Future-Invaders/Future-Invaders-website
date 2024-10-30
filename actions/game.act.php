@@ -981,20 +981,16 @@ function images_list( string  $sort_by  = 'path'  ,
   $query_search .= ($search_tag_id === -1)    ? " AND   tags.id         IS NULL "                 : "";
   $query_search .= ($search_tag)              ? " AND   tags.name       LIKE '$search_tag' "      : "";
   $query_search .= ($search_unused)           ? " AND   cards_en.id     IS NULL
-                                                  AND   cards_fr.id     IS NULL
-                                                  AND   arsenals_en.id  IS NULL
-                                                  AND   arsenals_fr.id  IS NULL "                 : "";
+                                                  AND   cards_fr.id     IS NULL "                 : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
                 ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
                 : "";
 
-  // Join cards and arsenals if looking for unused images
+  // Join cards if looking for unused images
   $query_unused = ($search_unused)  ? " LEFT JOIN cards     AS cards_en     ON cards_en.fk_images_en    = images.id
-                                        LEFT JOIN cards     AS cards_fr     ON cards_fr.fk_images_fr    = images.id
-                                        LEFT JOIN arsenals  AS arsenals_en  ON arsenals_en.fk_images_en = images.id
-                                        LEFT JOIN arsenals  AS arsenals_fr  ON arsenals_fr.fk_images_fr = images.id "
+                                        LEFT JOIN cards     AS cards_fr     ON cards_fr.fk_images_fr    = images.id"
                                     : "";
 
   // Sort the data

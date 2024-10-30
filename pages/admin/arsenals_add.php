@@ -54,7 +54,7 @@ $list_arsenal_difficulties = arsenal_difficulties_list();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch images
 
-$images_list = images_list(search: array('unused' => true));
+$images_list = images_list();
 
 
 
