@@ -213,7 +213,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="arsenal_release">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $list_releases['rows']; $i++): ?>
-          <option value="<?=$list_releases[$i]['id']?>"<?=$arsenal_release_selected[$i]?>><?=$list_releases[$i]['name']?></option>
+          <option value="<?=$list_releases[$i]['id']?>" class="uppercase bold <?=$list_releases[$i]['styling']?>"<?=$arsenal_release_selected[$i]?>><?=$list_releases[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
@@ -223,7 +223,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="arsenal_format">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $list_formats['rows']; $i++): ?>
-          <option value="<?=$list_formats[$i]['id']?>"<?=$arsenal_format_selected[$i]?>><?=$list_formats[$i]['name']?></option>
+          <option value="<?=$list_formats[$i]['id']?>" class="uppercase bold <?=$list_formats[$i]['styling']?>"<?=$arsenal_format_selected[$i]?>><?=$list_formats[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
@@ -233,7 +233,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="arsenal_difficulty">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $list_arsenal_difficulties['rows']; $i++): ?>
-          <option value="<?=$list_arsenal_difficulties[$i]['id']?>"<?=$arsenal_difficulty_selected[$i]?>><?=$list_arsenal_difficulties[$i]['name']?></option>
+          <option value="<?=$list_arsenal_difficulties[$i]['id']?>" class="uppercase bold <?=$list_arsenal_difficulties[$i]['styling']?>"<?=$arsenal_difficulty_selected[$i]?>><?=$list_arsenal_difficulties[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>

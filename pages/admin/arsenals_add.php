@@ -103,7 +103,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="arsenal_release">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $list_releases['rows']; $i++): ?>
-          <option value="<?=$list_releases[$i]['id']?>"><?=$list_releases[$i]['name']?></option>
+          <option value="<?=$list_releases[$i]['id']?>" class="uppercase bold <?=$list_releases[$i]['styling']?>"><?=$list_releases[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
@@ -113,7 +113,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="arsenal_format">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $list_formats['rows']; $i++): ?>
-          <option value="<?=$list_formats[$i]['id']?>"><?=$list_formats[$i]['name']?></option>
+          <option value="<?=$list_formats[$i]['id']?>" class="uppercase bold <?=$list_formats[$i]['styling']?>"><?=$list_formats[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
@@ -123,7 +123,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="arsenal_difficulty">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $list_arsenal_difficulties['rows']; $i++): ?>
-          <option value="<?=$list_arsenal_difficulties[$i]['id']?>"><?=$list_arsenal_difficulties[$i]['name']?></option>
+          <option value="<?=$list_arsenal_difficulties[$i]['id']?>" class="uppercase bold <?=$list_arsenal_difficulties[$i]['styling']?>"><?=$list_arsenal_difficulties[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
