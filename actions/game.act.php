@@ -1424,7 +1424,11 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                               arsenals_compositions.amount_reserves AS 'c_reserves' ,
                               arsenals_compositions.sorting_order   AS 'c_order'
                     FROM      arsenals_compositions
-                    WHERE     arsenals_compositions.fk_arsenals = '$arsenal_id' ");
+                    LEFT JOIN cards ON arsenals_compositions.fk_cards = cards.id
+                    WHERE     arsenals_compositions.fk_arsenals = '$arsenal_id'
+                    ORDER BY  arsenals_compositions.amount_main     = 0   ,
+                              arsenals_compositions.sorting_order   ASC   ,
+                              cards.name_en                         ASC   ");
 
   // Prepare the data for display
   if($format === 'html')
