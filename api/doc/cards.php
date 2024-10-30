@@ -194,6 +194,11 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
           "endpoint": string
         }
       },
+      "arsenals": [
+        "arsenal1",
+        "arsenal2",
+        ...
+      ],
       "tags": [
         "tag1",
         "tag2",
@@ -297,6 +302,14 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "path": string,
       }
     },
+    "arsenals": [
+      {
+        "arsenal": {
+          ...
+        }
+      },
+      ...
+    ],
     "tags": [
       {
         "tag": {

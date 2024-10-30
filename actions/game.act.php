@@ -204,11 +204,32 @@ function cards_get( int     $card_id    = null    ,
                           ? images_get($card_data['c_img_fr_id'], format: 'api', no_depth: true,no_parent_array: true)
                           : array();
 
+    // Sanitize the card's id
+    $card_id = sanitize($card_data['c_id'], 'int');
+
+    // Add linked arsenals
+    if(!$no_depth)
+    {
+      // Fetch linked arsenals
+      $qarsenals = query("  SELECT  arsenals_compositions.fk_arsenals AS 'ac_id'
+                            FROM    arsenals_compositions
+                            WHERE   arsenals_compositions.fk_cards = '$card_id' ");
+
+      // Prepare linked tags for display
+      for($i = 0; $darsenals = query_row($qarsenals); $i++)
+        $data['arsenals'][$i] = arsenals_get( arsenal_id: $darsenals['ac_id'] ,
+                                              format:     $format             ,
+                                              no_depth:   true                );
+
+      // If there are no linked tags, show an empty array
+      if($i === 0)
+        $data['arsenals'] = array();
+    }
+
     // Add linked tags
     if(!$no_depth)
     {
       // Fetch linked tags
-      $card_id = sanitize($card_data['c_id'], 'int');
       $qtags = query("  SELECT  tags_cards.fk_tags AS 'ct_id'
                         FROM    tags_cards
                         WHERE   tags_cards.fk_cards = '$card_id' ");
@@ -585,6 +606,7 @@ function cards_list( string   $sort_by    = 'name'  ,
           $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
                                                   .'api/image/'.$row['i_uuid_fr']);
         }
+        $data[$i]['arsenals'] = ($row['ar_names']) ? explode(', ', $row['ar_names']) : array();
         $data[$i]['tags']     = ($row['ct_names']) ? explode(', ', $row['ct_names']) : array();
         $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
       }
