@@ -1460,6 +1460,10 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                         FROM      arsenals_factions
                         WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
 
+  // Don't show hidden cards in the API
+  $query_api = ($format === 'api') ? '  AND cards.is_hidden     = 0
+                                        AND cards.is_extra_card = 0 ' : "";
+
   // Fetch linked cards
   $qcards = query(" SELECT    arsenals_compositions.fk_cards        AS 'c_id'       ,
                               arsenals_compositions.amount_main     AS 'c_main'     ,
@@ -1469,6 +1473,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                     FROM      arsenals_compositions
                     LEFT JOIN cards ON arsenals_compositions.fk_cards = cards.id
                     WHERE     arsenals_compositions.fk_arsenals = '$arsenal_id'
+                    $query_api
                     ORDER BY  arsenals_compositions.amount_main     = 0   ,
                               arsenals_compositions.sorting_order   ASC   ,
                               cards.name_en                         ASC   ");
@@ -1692,9 +1697,11 @@ function arsenals_list( string  $sort_by  = ''      ,
   $query_search .= ($search_card_id === -1)
                                       ? " AND   arsenals_compositions.fk_cards  IS NULL "                 : "";
 
-  // Don't show hidden arsenals in the API
+  // Don't show hidden arsenals or hidden cards in the API
   $query_search .= ($format === 'api')
-                                      ? " AND   arsenals.is_hidden        = '0' "                         : "";
+                                      ? " AND   arsenals.is_hidden        = '0'
+                                          AND   cards.is_hidden           = '0'
+                                          AND   cards.is_extra_card       = '0'  "                        : "";
 
   // Use a different search technique for tags
   $query_having = ($search_tag_id && $search_tag_id !== -1)
