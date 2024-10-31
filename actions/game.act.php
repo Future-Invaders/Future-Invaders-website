@@ -2015,7 +2015,7 @@ function arsenals_update_card_data( int $arsenal_id ) : void
                     LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
                     LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
                     WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
-                    ORDER BY  cards.cost                ASC ,
+                    ORDER BY  LENGTH(cards.cost)        ASC ,
                               card_types.sorting_order  ASC ,
                               cards.name_en             ASC ");
 
@@ -2088,7 +2088,7 @@ function arsenals_update_card_data( int $arsenal_id ) : void
                     LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
                     LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
                     WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
-                    ORDER BY  cards.cost                ASC ,
+                    ORDER BY  LENGTH(cards.cost)        ASC ,
                               card_types.sorting_order  ASC ,
                               cards.name_fr             ASC ");
 

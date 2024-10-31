@@ -598,18 +598,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <tr class="row_separator_dark">
         <td colspan="11">
           <div class="flexcontainer dowrap align_left smallpadding_top smallpadding_bot">
-            <div style="flex: 1">
-              &nbsp;
-            </div>
-            <div style="flex: 2">
-              <img src="<?=$path.$arsenals_list[$i]['image_en']?>" alt="<?=__('admin_card_list_no_image')?>">
-            </div>
-            <div style="flex: 1">
-              &nbsp;
-            </div>
-            <div style="flex: 6">
-
-              <?php if($arsenals_list[$i]['summary_en']): ?>
+            <div class="flex arsenal_preview">
+              <?php if($arsenals_list[$i]['image_en']): ?>
+              <div class="align_center smallpadding_top smallpadding_bot dark2">
+                <img class="image_preview_small" src="<?=$path.$arsenals_list[$i]['image_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+              </div>
+              <?php endif; if($arsenals_list[$i]['summary_en']): ?>
               <div class="smallpadding_top smallpadding_bot spaced dark2">
                 <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_en']?><br>
               </div>
@@ -638,11 +632,12 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
               </div>
               <?php endif; ?>
             </div>
-            <div style="flex: 1">
-              &nbsp;
-            </div>
-            <div style="flex: 6">
-              <?php if($arsenals_list[$i]['summary_fr']): ?>
+            <div class="flex arsenal_preview">
+              <?php if($arsenals_list[$i]['image_fr']): ?>
+              <div class="align_center smallpadding_top smallpadding_bot dark2">
+                <img class="image_preview_small" src="<?=$path.$arsenals_list[$i]['image_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+              </div>
+              <?php endif; if($arsenals_list[$i]['summary_fr']): ?>
               <div class="smallpadding_top smallpadding_bot spaced dark2">
                 <span class="bold"><?=__('admin_arsenal_list_summary').__(':')?></span> <?=$arsenals_list[$i]['summary_fr']?><br>
               </div>
@@ -670,15 +665,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
                 <?=$arsenals_list[$i]['reserves_list_fr']?>
               </div>
               <?php endif; ?>
-            </div>
-            <div style="flex: 1">
-              &nbsp;
-            </div>
-            <div style="flex: 2">
-              <img src="<?=$path.$arsenals_list[$i]['image_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
-            </div>
-            <div style="flex: 1">
-              &nbsp;
             </div>
           </div>
         </td>
