@@ -408,7 +408,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <select class="indiv align_left" name="arsenal_card[]">
               <option value="">&nbsp;</option>
               <?php for($j = 0; $j < $card_list['rows']; $j++): ?>
-              <option value="<?=$card_list[$j]['id']?>"<?=$arsenal_card_selected[$i][$j]?>><?=$card_list[$j]['name']?> [<?=$card_list[$j]['release']?>] [<?=$card_list[$j]['type']?>]</option>
+              <option value="<?=$card_list[$j]['id']?>"<?=$arsenal_card_selected[$i][$j]?>><?=$card_list[$j]['name_en']?> [<?=$card_list[$j]['release']?>] [<?=$card_list[$j]['type']?>]</option>
               <?php endfor; ?>
             </select>
           </div>
@@ -442,7 +442,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <select class="indiv align_left" name="arsenal_card[]">
               <option value="">&nbsp;</option>
               <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
-              <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
+              <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name_en']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
               <?php endfor; ?>
             </select>
           </div>

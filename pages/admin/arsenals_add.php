@@ -276,7 +276,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <select class="indiv align_left" name="arsenal_card[]">
               <option value="">&nbsp;</option>
               <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
-              <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
+              <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name_en']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
               <?php endfor; ?>
             </select>
           </div>
