@@ -5,6 +5,7 @@
 conf/main.conf.php
 
 # Card images shouldn't be stored in the repository
+img/arsenals/*
 img/cards/*
 img/extras/*
 img/lore/*

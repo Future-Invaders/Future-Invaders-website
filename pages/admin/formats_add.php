@@ -8,16 +8,15 @@ include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
-$page_url       = "pages/admin/releases";
-$page_title_en  = "Admin: Releases";
-$page_title_fr  = "Admin : Versions";
+$page_url       = "pages/admin/formats";
+$page_title_en  = "Admin: Game formats";
+$page_title_fr  = "Admin : Formats de jeu";
 
 // Admin menu selection
-$admin_menu['releases'] = 1;
+$admin_menu['formats'] = 1;
 
 // Extra CSS & JS
 $css  = array('admin');
-$js   = array('admin/admin');
 
 
 
@@ -31,33 +30,67 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 <div class="width_50 padding_top">
 
   <h2 class="padding_bot">
-    <?=__('admin_release_add_title')?>
+    <?=__link('pages/admin/formats', __('admin_format_add_title'), 'text_light')?>
   </h2>
 
-  <form action="releases" method="POST">
+  <form action="formats" method="POST">
     <fieldset>
 
       <div class="smallpadding_bot">
-        <label for="release_name_en"><?=__('admin_release_add_name_en')?></label>
-        <input class="indiv" type="text" name="release_name_en">
+        <label for="format_sort"><?=__('admin_format_add_sort')?></label>
+        <input class="indiv" type="text" name="format_sort">
       </div>
 
-      <div class="smallpadding_bot">
-        <label for="release_name_fr"><?=__('admin_release_add_name_fr')?></label>
-        <input class="indiv" type="text" name="release_name_fr">
+      <div class="flexcontainer smallpadding_bot">
+        <div style="flex: 8">
+
+          <div>
+            <label for="format_name_en"><?=__('admin_format_add_name_en')?></label>
+            <input class="indiv" type="text" name="format_name_en">
+          </div>
+
+        </div>
+        <div style="flex: 1">
+          &nbsp;
+        </div>
+        <div style="flex: 8">
+
+          <div>
+            <label for="format_name_fr"><?=__('admin_format_add_name_fr')?></label>
+            <input class="indiv" type="text" name="format_name_fr">
+          </div>
+
+        </div>
       </div>
 
-      <div class="smallpadding_bot">
-        <label for="release_date"><?=__('admin_release_add_date')?></label>
-        <input class="indiv" type="text" name="release_date">
+      <div class="flexcontainer smallpadding_bot">
+        <div style="flex: 8">
+
+          <div>
+            <label for="format_body_en"><?=__('admin_format_add_body_en')?></label>
+            <textarea class="indiv shorter" name="format_body_en"></textarea>
+          </div>
+
+        </div>
+        <div style="flex: 1">
+          &nbsp;
+        </div>
+        <div style="flex: 8">
+
+          <div>
+            <label for="format_body_fr"><?=__('admin_format_add_body_fr')?></label>
+            <textarea class="indiv shorter" name="format_body_fr"></textarea>
+          </div>
+
+        </div>
       </div>
 
       <div class="padding_bot">
-        <label for="release_styling"><?=__('admin_release_add_styling')?></label>
-        <input class="indiv" type="text" name="release_styling">
+        <label for="format_styling"><?=__('admin_format_add_styling')?></label>
+        <input class="indiv" type="text" name="format_styling">
       </div>
 
-      <input type="submit" name="release_add" value="<?=__('admin_release_add_submit')?>">
+      <input type="submit" name="format_add" value="<?=__('admin_format_add_submit')?>">
 
     </fieldset>
   </form>

@@ -8,38 +8,15 @@ include_once './../../actions/game.act.php';  # Game actions
 include_once './../../lang/admin.lang.php';   # Admin translations
 
 // Page summary
-$page_url       = "pages/admin/releases";
-$page_title_en  = "Admin: Releases";
-$page_title_fr  = "Admin : Versions";
+$page_url       = "pages/admin/arsenal_difficulties";
+$page_title_en  = "Admin: Arsenal difficulty levels";
+$page_title_fr  = "Admin : Niveaux de difficulté des arsenaux";
 
 // Admin menu selection
-$admin_menu['releases'] = 1;
+$admin_menu['arsenals'] = 1;
 
 // Extra CSS & JS
 $css  = array('admin');
-$js   = array('admin/admin');
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                     BACK END                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch release data
-
-// Fetch the release's id
-$admin_release_id = (int)form_fetch_element('release', request_type: 'GET');
-
-// Fetch the release data
-$admin_release_data = releases_get($admin_release_id);
-
-// Stop here if the release does not exist
-if(!$admin_release_data)
-  exit(header("Location: ".$path."pages/admin/releases"));
 
 
 
@@ -50,38 +27,36 @@ if(!$admin_release_data)
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top padding_bot">
+<div class="width_50 padding_top">
 
   <h2 class="padding_bot">
-    <?=__link('pages/admin/releases', __('admin_release_edit_title'), 'text_light')?>
+    <?=__link('pages/admin/arsenal_difficulties', __('admin_arsenal_difficulty_add_title'), 'text_light')?>
   </h2>
 
-  <form action="releases" method="POST">
+  <form action="arsenal_difficulties" method="POST">
     <fieldset>
 
-      <input type="hidden" name="release_id" value="<?=$admin_release_id?>">
-
       <div class="smallpadding_bot">
-        <label for="release_name_en"><?=__('admin_release_add_name_en')?></label>
-        <input class="indiv" type="text" name="release_name_en" value="<?=$admin_release_data['name_en']?>">
+        <label for="difficulty_sort"><?=__('admin_arsenal_difficulty_add_order')?></label>
+        <input class="indiv" type="text" name="difficulty_sort">
       </div>
 
       <div class="smallpadding_bot">
-        <label for="release_name_fr"><?=__('admin_release_add_name_fr')?></label>
-        <input class="indiv" type="text" name="release_name_fr" value="<?=$admin_release_data['name_fr']?>">
+        <label for="difficulty_name_en"><?=__('admin_arsenal_difficulty_add_name_en')?></label>
+        <input class="indiv" type="text" name="difficulty_name_en">
       </div>
 
       <div class="smallpadding_bot">
-        <label for="release_date"><?=__('admin_release_add_date')?></label>
-        <input class="indiv" type="text" name="release_date" value="<?=$admin_release_data['datesql']?>">
+        <label for="difficulty_name_fr"><?=__('admin_arsenal_difficulty_add_name_fr')?></label>
+        <input class="indiv" type="text" name="difficulty_name_fr">
       </div>
 
       <div class="padding_bot">
-        <label for="release_styling"><?=__('admin_release_add_styling')?></label>
-        <input class="indiv" type="text" name="release_styling" value="<?=$admin_release_data['styling']?>">
+        <label for="difficulty_styling"><?=__('admin_arsenal_difficulty_add_styling')?></label>
+        <input class="indiv" type="text" name="difficulty_styling">
       </div>
 
-      <input type="submit" name="release_edit" value="<?=__('admin_release_edit_submit')?>">
+      <input type="submit" name="difficulty_add" value="<?=__('admin_arsenal_difficulty_add_submit')?>">
 
     </fieldset>
   </form>

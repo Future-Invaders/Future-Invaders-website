@@ -135,6 +135,8 @@ ___('admin_card_list_hidden',     'EN', "Hidden card");
 ___('admin_card_list_hidden',     'FR', "Carte cachée");
 ___('admin_card_list_tags',       'EN', "Tags");
 ___('admin_card_list_tags',       'FR', "Tags");
+___('admin_card_list_arsenals',   'EN', "Ars.");
+___('admin_card_list_arsenals',   'FR', "Ars.");
 ___('admin_card_list_view',       'EN', "View card");
 ___('admin_card_list_view',       'FR', "Voir la carte");
 ___('admin_card_list_count',      'EN', "{{1}} card");
@@ -223,7 +225,7 @@ ___('admin_card_type_add_name_en',  'FR', "Nom (Anglais)");
 ___('admin_card_type_add_name_fr',  'EN', "Name (French)");
 ___('admin_card_type_add_name_fr',  'FR', "Nom (Français)");
 ___('admin_card_type_add_styling',  'EN', "CSS styling");
-___('admin_card_type_add_styling',  'FR', "Stylage CSS");
+___('admin_card_type_add_styling',  'FR', "Style CSS");
 ___('admin_card_type_add_submit',   'EN', "Add card type");
 ___('admin_card_type_add_submit',   'FR', "Ajouter le type de carte");
 
@@ -267,7 +269,7 @@ ___('admin_card_rarity_add_name_fr',    'FR', "Nom (Français)");
 ___('admin_card_rarity_add_max_count',  'EN', "Max count per arsenal");
 ___('admin_card_rarity_add_max_count',  'FR', "Maximum par arsenal");
 ___('admin_card_rarity_add_styling',    'EN', "CSS styling");
-___('admin_card_rarity_add_styling',    'FR', "Stylage CSS");
+___('admin_card_rarity_add_styling',    'FR', "Style CSS");
 ___('admin_card_rarity_add_submit',     'EN', "Add rarity");
 ___('admin_card_rarity_add_submit',     'FR', "Ajouter la rareté");
 
@@ -282,6 +284,190 @@ ___('admin_card_rarity_edit_submit',    'FR', "Modifier la rareté");
 // Delete a card rarity
 ___('admin_card_rarity_delete_confirm', 'EN', "Confirm the deletion of this rarity");
 ___('admin_card_rarity_delete_confirm', 'FR', "Confirmez la suppression de cette rareté");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      ARSENALS                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Arsenal management
+___('admin_arsenal_management',               'EN', "Arsenal management");
+___('admin_arsenal_management',               'FR', "Gestion des arsenaux");
+___('admin_arsenal_management_add',           'EN', "Add an arsenal");
+___('admin_arsenal_management_add',           'FR', "Ajouter un arsenal");
+___('admin_arsenal_management_difficulties',  'EN', "Difficulty levels");
+___('admin_arsenal_management_difficulties',  'FR', "Niveaux de difficulté");
+___('admin_arsenal_management_show_body',     'EN', "Show arsenal previews");
+___('admin_arsenal_management_show_body',     'FR', "Prévisualiser les arsenaux");
+___('admin_arsenal_management_hide_body',     'EN', "Hide arsenal previews");
+___('admin_arsenal_management_hide_body',     'FR', "Masquer les prévisualisations");
+
+
+// Arsenals list
+___('admin_arsenal_list_release',     'EN', "Release");
+___('admin_arsenal_list_release',     'FR', "Version");
+___('admin_arsenal_list_format',      'EN', "Format");
+___('admin_arsenal_list_format',      'FR', "Format");
+___('admin_arsenal_list_name',        'EN', "Name");
+___('admin_arsenal_list_name',        'FR', "Nom");
+___('admin_arsenal_list_factions',    'EN', "Factions");
+___('admin_arsenal_list_factions',    'FR', "Factions");
+___('admin_arsenal_list_difficulty',  'EN', "Level");
+___('admin_arsenal_list_difficulty',  'FR', "Niveau");
+___('admin_arsenal_list_playstyle',   'EN', "Playstyle");
+___('admin_arsenal_list_playstyle',   'FR', "Style de jeu");
+___('admin_arsenal_list_body',        'EN', "Text");
+___('admin_arsenal_list_body',        'FR', "Texte");
+___('admin_arsenal_list_summary',     'EN', "Strategy");
+___('admin_arsenal_list_summary',     'FR', "Stratégie");
+___('admin_arsenal_list_gameplan',    'EN', "Game plan");
+___('admin_arsenal_list_gameplan',    'FR', "Plan de jeu");
+___('admin_arsenal_list_reserves',    'EN', "Reserves strategies");
+___('admin_arsenal_list_reserves',    'FR', "Stratégies de réserve");
+___('admin_arsenal_list_extra',       'EN', "Extra text");
+___('admin_arsenal_list_extra',       'FR', "Texte additionnel");
+___('admin_arsenal_list_cards',       'EN', "Cards");
+___('admin_arsenal_list_cards',       'FR', "Cartes");
+___('admin_arsenal_list_clist_en',    'EN', "Arsenal composition");
+___('admin_arsenal_list_clist_en',    'FR', "Arsenal composition");
+___('admin_arsenal_list_clist_fr',    'EN', "Composition de l'arsenal");
+___('admin_arsenal_list_clist_fr',    'FR', "Composition de l'arsenal");
+___('admin_arsenal_list_rlist_en',    'EN', "Arsenal reserves");
+___('admin_arsenal_list_rlist_en',    'FR', "Arsenal reserves");
+___('admin_arsenal_list_rlist_fr',    'EN', "Cartes en réserve");
+___('admin_arsenal_list_rlist_fr',    'FR', "Cartes en réserve");
+___('admin_arsenal_list_data',        'EN', "Data");
+___('admin_arsenal_list_data',        'FR', "Data");
+___('admin_arsenal_list_data_hidden', 'EN', "Hidden arsenal");
+___('admin_arsenal_list_data_hidden', 'FR', "Arsenal caché");
+___('admin_arsenal_list_hidden',      'EN', "Hidden from the public");
+___('admin_arsenal_list_hidden',      'FR', "Arsenal caché du public");
+___('admin_arsenal_list_image_yes',   'EN', "Two images");
+___('admin_arsenal_list_image_yes',   'FR', "Deux images");
+___('admin_arsenal_list_image_one',   'EN', "Only one image");
+___('admin_arsenal_list_image_one',   'FR', "Une seule image");
+___('admin_arsenal_list_image_no',    'EN', "No image");
+___('admin_arsenal_list_image_no',    'FR', "Pas d'image");
+___('admin_arsenal_list_tags',        'EN', "Tags");
+___('admin_arsenal_list_tags',        'FR', "Tags");
+___('admin_arsenal_list_count',       'EN', "{{1}} arsenal");
+___('admin_arsenal_list_count',       'FR', "{{1}} arsenal");
+___('admin_arsenal_list_count+',      'EN', "{{1}} arsenals");
+___('admin_arsenal_list_count+',      'FR', "{{1}} arsenaux");
+
+
+// Add an arsenal
+___('admin_arsenal_add_title',            'EN', "Add an arsenal");
+___('admin_arsenal_add_title',            'FR', "Ajouter un arsenal");
+___('admin_arsenal_add_release',          'EN', "Release");
+___('admin_arsenal_add_release',          'FR', "Version");
+___('admin_arsenal_add_format',           'EN', "Format");
+___('admin_arsenal_add_format',           'FR', "Format");
+___('admin_arsenal_add_difficulty',       'EN', "Difficulty level");
+___('admin_arsenal_add_difficulty',       'FR', "Niveau de difficulté");
+___('admin_arsenal_add_image_en',         'EN', "Image (English)");
+___('admin_arsenal_add_image_en',         'FR', "Image (Anglais)");
+___('admin_arsenal_add_image_fr',         'EN', "Image (French)");
+___('admin_arsenal_add_image_fr',         'FR', "Image (Français)");
+___('admin_arsenal_add_name_en',          'EN', "Name (English)");
+___('admin_arsenal_add_name_en',          'FR', "Nom (Anglais)");
+___('admin_arsenal_add_name_fr',          'EN', "Name (French)");
+___('admin_arsenal_add_name_fr',          'FR', "Nom (Français)");
+___('admin_arsenal_add_playstyle_en',     'EN', "Playstyle (English)");
+___('admin_arsenal_add_playstyle_en',     'FR', "Style de jeu (Anglais)");
+___('admin_arsenal_add_playstyle_fr',     'EN', "Playstyle (French)");
+___('admin_arsenal_add_playstyle_fr',     'FR', "Style de jeu (Français)");
+___('admin_arsenal_add_summary_en',       'EN', "Summary (English)");
+___('admin_arsenal_add_summary_en',       'FR', "Résumé (Anglais)");
+___('admin_arsenal_add_summary_fr',       'EN', "Summary (French)");
+___('admin_arsenal_add_summary_fr',       'FR', "Résumé (Français)");
+___('admin_arsenal_add_gameplan_en',      'EN', "Gameplan (English)");
+___('admin_arsenal_add_gameplan_en',      'FR', "Plan du jeu (Anglais)");
+___('admin_arsenal_add_gameplan_fr',      'EN', "Gameplan (French)");
+___('admin_arsenal_add_gameplan_fr',      'FR', "Plan du jeu (Français)");
+___('admin_arsenal_add_reserves_en',      'EN', "Reserves (English)");
+___('admin_arsenal_add_reserves_en',      'FR', "Réserves (Anglais)");
+___('admin_arsenal_add_reserves_fr',      'EN', "Reserves (French)");
+___('admin_arsenal_add_reserves_fr',      'FR', "Réserves (Français)");
+___('admin_arsenal_add_extra_en',         'EN', "Extra (English)");
+___('admin_arsenal_add_extra_en',         'FR', "Extra (Anglais)");
+___('admin_arsenal_add_extra_fr',         'EN', "Extra (French)");
+___('admin_arsenal_add_extra_fr',         'FR', "Extra (Français)");
+___('admin_arsenal_add_factions',         'EN', "Factions");
+___('admin_arsenal_add_factions',         'FR', "Factions");
+___('admin_arsenal_add_properties',       'EN', "Properties");
+___('admin_arsenal_add_properties',       'FR', "Propriétés");
+___('admin_arsenal_add_hidden',           'EN', "Hidden from the public");
+___('admin_arsenal_add_hidden',           'FR', "Arsenal caché du public");
+___('admin_arsenal_add_tags',             'EN', "Tags");
+___('admin_arsenal_add_tags',             'FR', "Tags");
+___('admin_arsenal_add_cards',            'EN', "Arsenal composition");
+___('admin_arsenal_add_cards',            'FR', "Composition de l'arsenal");
+___('admin_arsenal_add_cardname',         'EN', "Card name");
+___('admin_arsenal_add_cardname',         'FR', "Nom de la carte");
+___('admin_arsenal_add_amount_main',      'EN', "Amount");
+___('admin_arsenal_add_amount_main',      'FR', "Quantité");
+___('admin_arsenal_add_amount_reserves',  'EN', "Reserves");
+___('admin_arsenal_add_amount_reserves',  'FR', "Reserves");
+___('admin_arsenal_add_order_extra',      'EN', "Extra (sorting order)");
+___('admin_arsenal_add_order_extra',      'FR', "Bonus (ordre de tri)");
+___('admin_arsenal_add_submit',           'EN', "Add arsenal");
+___('admin_arsenal_add_submit',           'FR', "Ajouter l'arsenal");
+
+
+// Edit an arsenal
+___('admin_arsenal_edit_title',   'EN', "Edit arsenal");
+___('admin_arsenal_edit_title',   'FR', "Modifier un arsenal");
+___('admin_arsenal_edit_submit',  'EN', "Edit arsenal");
+___('admin_arsenal_edit_submit',  'FR', "Modifier l'arsenal");
+
+
+// Delete an arsenal
+___('admin_arsenal_delete_confirm', 'EN', "Confirm the deletion of this arsenal");
+___('admin_arsenal_delete_confirm', 'FR', "Confirmez la suppression de cet arsenal");
+
+
+// List arsenal difficulties
+___('admin_arsenal_difficulty_list_title',  'EN', "Arsenal levels");
+___('admin_arsenal_difficulty_list_title',  'FR', "Niveaux des arsenaux");
+___('admin_arsenal_difficulty_list_order',  'EN', "Order");
+___('admin_arsenal_difficulty_list_order',  'FR', "Ordre");
+___('admin_arsenal_difficulty_list_name',   'EN', "Name");
+___('admin_arsenal_difficulty_list_name',   'FR', "Nom");
+___('admin_arsenal_difficulty_list_count',  'EN', "{{1}} difficulty level");
+___('admin_arsenal_difficulty_list_count',  'FR', "{{1}} niveau de difficulté");
+___('admin_arsenal_difficulty_list_count+', 'EN', "{{1}} difficulty levels");
+___('admin_arsenal_difficulty_list_count+', 'FR', "{{1}} niveaux de difficulté");
+
+
+// Add an arsenal difficulty level
+___('admin_arsenal_difficulty_add_title',   'EN', "Add a difficulty level");
+___('admin_arsenal_difficulty_add_title',   'FR', "Ajouter une difficulté");
+___('admin_arsenal_difficulty_add_order',   'EN', "Sorting order");
+___('admin_arsenal_difficulty_add_order',   'FR', "Ordre de tri");
+___('admin_arsenal_difficulty_add_name_en', 'EN', "Name (English)");
+___('admin_arsenal_difficulty_add_name_en', 'FR', "Nom (Anglais)");
+___('admin_arsenal_difficulty_add_name_fr', 'EN', "Name (French)");
+___('admin_arsenal_difficulty_add_name_fr', 'FR', "Nom (Français)");
+___('admin_arsenal_difficulty_add_styling', 'EN', "CSS styling");
+___('admin_arsenal_difficulty_add_styling', 'FR', "Style CSS");
+___('admin_arsenal_difficulty_add_submit',  'EN', "Add difficulty level");
+___('admin_arsenal_difficulty_add_submit',  'FR', "Ajouter la difficulté");
+
+
+// Edit an arsenal difficulty level
+___('admin_arsenal_difficulty_edit_title',  'EN', "Edit difficulty level");
+___('admin_arsenal_difficulty_edit_title',  'FR', "Modifier une difficulté");
+___('admin_arsenal_difficulty_edit_submit', 'EN', "Edit difficulty level");
+___('admin_arsenal_difficulty_edit_submit', 'FR', "Modifier la difficulté");
+
+// Delete an arsenal difficulty level
+___('admin_arsenal_difficulty_delete_confirm', 'EN', "Confirm the deletion of this arsenal difficulty level");
+___('admin_arsenal_difficulty_delete_confirm', 'FR', "Confirmez la suppression de ce niveau de difficulté");
 
 
 
@@ -423,6 +609,8 @@ ___('admin_release_add_name_fr',  'EN', "Name (French)");
 ___('admin_release_add_name_fr',  'FR', "Nom (Français)");
 ___('admin_release_add_date',     'EN', "Date (YYYY-MM-DD)");
 ___('admin_release_add_date',     'FR', "Date (AAAA-MM-JJ)");
+___('admin_release_add_styling',  'EN', "CSS styling");
+___('admin_release_add_styling',  'FR', "Style CSS");
 ___('admin_release_add_submit',   'EN', "Add release");
 ___('admin_release_add_submit',   'FR', "Ajouter la version");
 
@@ -437,6 +625,58 @@ ___('admin_release_edit_submit',  'FR', "Modifier la version");
 // Delete a release
 ___('admin_release_delete_confirm', 'EN', "Confirm the deletion of this release");
 ___('admin_release_delete_confirm', 'FR', "Confirmez la suppression de cette version");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   GAME FORMATS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// List game formats
+___('admin_format_list_order',        'EN', "Order");
+___('admin_format_list_order',        'FR', "Ordre");
+___('admin_format_list_name',         'EN', "Name");
+___('admin_format_list_name',         'FR', "Nom");
+___('admin_format_list_description',  'EN', "Description");
+___('admin_format_list_description',  'FR', "Description");
+___('admin_format_list_count',        'EN', "{{1}} game format");
+___('admin_format_list_count',        'FR', "{{1}} format de jeu");
+___('admin_format_list_count+',       'EN', "{{1}} game formats");
+___('admin_format_list_count+',       'FR', "{{1}} formats de jeu");
+
+
+// Add a game format
+___('admin_format_add_title',   'EN', "Add a game format");
+___('admin_format_add_title',   'FR', "Ajouter un format de jeu");
+___('admin_format_add_sort',    'EN', "Sorting order");
+___('admin_format_add_sort',    'FR', "Ordre de tri");
+___('admin_format_add_name_en', 'EN', "Name (English)");
+___('admin_format_add_name_en', 'FR', "Nom (Anglais)");
+___('admin_format_add_name_fr', 'EN', "Name (French)");
+___('admin_format_add_name_fr', 'FR', "Nom (Français)");
+___('admin_format_add_body_en', 'EN', "Description (English)");
+___('admin_format_add_body_en', 'FR', "Description (Anglais)");
+___('admin_format_add_body_fr', 'EN', "Description (French)");
+___('admin_format_add_body_fr', 'FR', "Description (Français)");
+___('admin_format_add_styling', 'EN', "CSS styling");
+___('admin_format_add_styling', 'FR', "Style CSS");
+___('admin_format_add_submit',  'EN', "Add format");
+___('admin_format_add_submit',  'FR', "Ajouter le format");
+
+
+// Edit a game format
+___('admin_format_edit_title',   'EN', "Edit game format");
+___('admin_format_edit_title',   'FR', "Modifier un format de jeu");
+___('admin_format_edit_submit',  'EN', "Edit game format");
+___('admin_format_edit_submit',  'FR', "Modifier le format de jeu");
+
+
+// Delete a game format
+___('admin_format_delete_confirm', 'EN', "Confirm the deletion of this game format");
+___('admin_format_delete_confirm', 'FR', "Confirmez la suppression de ce format de jeu");
 
 
 
@@ -468,7 +708,7 @@ ___('admin_faction_add_name_en',        'FR', "Nom (Anglais)");
 ___('admin_faction_add_name_fr',        'EN', "Name (French)");
 ___('admin_faction_add_name_fr',        'FR', "Nom (Français)");
 ___('admin_faction_add_styling',        'EN', "CSS styling");
-___('admin_faction_add_styling',        'FR', "Stylage CSS");
+___('admin_faction_add_styling',        'FR', "Style CSS");
 ___('admin_faction_add_submit',         'EN', "Add faction");
 ___('admin_faction_add_submit',         'FR', "Ajouter une faction");
 

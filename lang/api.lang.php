@@ -19,12 +19,16 @@ ___('api_menu_title',     'EN', "Future Invaders API");
 ___('api_menu_title',     'FR', "API Future Invaders");
 ___('api_menu_intro',     'EN', "Introduction");
 ___('api_menu_intro',     'FR', "Introduction");
+___('api_menu_arsenals',  'EN', "Arsenals");
+___('api_menu_arsenals',  'FR', "Arsenaux");
 ___('api_menu_cards',     'EN', "Cards");
 ___('api_menu_cards',     'FR', "Cartes");
 ___('api_menu_releases',  'EN', "Releases");
 ___('api_menu_releases',  'FR', "Versions");
 ___('api_menu_factions',  'EN', "Factions");
 ___('api_menu_factions',  'FR', "Factions");
+___('api_menu_formats',   'EN', "Formats");
+___('api_menu_formats',   'FR', "Formats");
 ___('api_menu_images',    'EN', "Images");
 ___('api_menu_images',    'FR', "Images");
 ___('api_menu_tags',      'EN', "Tags");
@@ -186,6 +190,52 @@ ___('api_rules_list_summary', 'FR', "Récupère la liste de toutes les cartes de
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                     ARSENALS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_arsenals_intro', 'EN', <<<EOD
+Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested preconstructed arsenals, to give you ideas on how to build your own. The API lists all such preconstructed arsenals.
+EOD
+);
+___('api_arsenals_intro', 'FR', <<<EOD
+Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux préconstruits, pour vous donner des idées sur la façon de construire vos propres arsenaux. L'API liste tous ces arsenaux préconstruits.
+EOD
+);
+
+
+// List arsenals
+___('api_arsenals_list_summary',    'EN', "Retrieves a list of all arsenals.");
+___('api_arsenals_list_summary',    'FR', "Récupère la liste de tous les arsenaux.");
+___('api_arsenals_list_name',       'EN', "Search for arsenals by name. Searches in all languages at once.");
+___('api_arsenals_list_name',       'FR', "Recherche des arsenaux par nom. Cherche dans toutes les langues à la fois.");
+___('api_arsenals_list_release',    'EN', "Search for arsenals by release UUID. Find release UUIDs using {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_arsenals_list_release',    'FR', "Recherche des arsenaux par UUID de version. Trouvez les UUIDs des versions en utilisant {{link|api/doc/releases#list_releases|GET /api/releases}}.");
+___('api_arsenals_list_format',     'EN', "Search for arsenals by format UUID. Find format UUIDs using {{link|api/doc/formats#list_formats|GET /api/formats}}.");
+___('api_arsenals_list_format',     'FR', "Recherche des arsenaux par UUID de format. Trouvez les UUIDs des formats en utilisant {{link|api/doc/formats#list_formats|GET /api/formats}}.");
+___('api_arsenals_list_difficulty', 'EN', "Search for arsenals by difficulty UUID. Find difficulty UUIDs using {{link|api/doc/arsenals#list_arsenal_difficulties|GET /api/arsenal_difficulties}}.");
+___('api_arsenals_list_difficulty', 'FR', "Recherche des arsenaux par UUID de difficulté. Trouvez les UUIDs des difficultés en utilisant {{link|api/doc/arsenals#list_arsenal_difficulties|GET /api/arsenal_difficulties}}.");
+___('api_arsenals_list_tag',       'EN', "Search for arsenals with a specific tag.");
+___('api_arsenals_list_tag',       'FR', "Recherche des arsenaux avec un tag spécifique.");
+
+
+// Get arsenal
+___('api_arsenals_get_summary', 'EN', "Retrieves an arsenal by its UUID.");
+___('api_arsenals_get_summary', 'FR', "Récupère un arsenal par son UUID.");
+___('api_arsenals_get_uuid',    'EN', "The UUID of the arsenal to retrieve.");
+___('api_arsenals_get_uuid',    'FR', "L'UUID de l'arsenal à récupérer.");
+
+
+// Arsenal difficulties
+___('api_arsenal_difficulties_list_summary', 'EN', "Retrieves a list of difficulty levels used to classify arsenals.");
+___('api_arsenal_difficulties_list_summary', 'FR', "Récupère la liste des niveaux de difficultés utilisés pour classer les arsenaux.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                     RELEASES                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -228,6 +278,30 @@ EOD
 // List factions
 ___('api_factions_list_summary',  'EN', "Retrieves a list of all factions.");
 ___('api_factions_list_summary',  'FR', "Récupère la liste de toutes les factions.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   GAME FORMATS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_formats_intro', 'EN', <<<EOD
+Future Invaders can be played in various different ways. Each unique way to play the game is called a format. This list of official game formats is just a small list of ideas, feel free to come up with your own.
+EOD
+);
+___('api_formats_intro', 'FR', <<<EOD
+Future Invaders peut être joué de différentes façons. Chaque façon de jouer au jeu est appelée un format. Cette liste de formats de jeu officiels est juste une petite liste d'idées, n'hésitez pas à inventer vos propres formats.
+EOD
+);
+
+
+// List factions
+___('api_formats_list_summary', 'EN', "Retrieves a list of game formats.");
+___('api_formats_list_summary', 'FR', "Récupère la liste des formats de jeu.");
 
 
 
@@ -300,7 +374,7 @@ ___('api_tags_list_desc',     'FR', "Recherche dans la description des tags, dan
 
 
 // Get tag
-___('api_tags_get_summary',   'EN', "Retrieves a tag by its UUID.");
-___('api_tags_get_summary',   'FR', "Récupère un tag par son UUID.");
+___('api_tags_get_summary',   'EN', "Retrieves a tag by its UUID. For a description of the data returned for linked elements, see their individual routes documentation.");
+___('api_tags_get_summary',   'FR', "Récupère un tag par son UUID. Pour une description des données renvoyées pour les éléments liés aux tags, voir la documentation de chaque route individuelle.");
 ___('api_tags_get_uuid',      'EN', "The UUID of the tag to retrieve.");
 ___('api_tags_get_uuid',      'FR', "L'UUID du tag à récupérer.");

@@ -1,29 +1,40 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  admin_menu                  Navigates between administration pages.                                              */
+/*  admin_menu                              Navigates between administration pages.                                  */
 /*                                                                                                                   */
-/*  admin_cards_search          Searches the card list.                                                              */
-/*  admin_cards_delete          Triggers the deletion of an entry in the card list.                                  */
-/*  admin_card_hide_stats       Hides stats for extra cards.                                                         */
+/*  admin_cards_search                      Searches the card list.                                                  */
+/*  admin_cards_delete                      Triggers the deletion of an entry in the card list.                      */
+/*  admin_card_hide_stats                   Hides stats for extra cards.                                             */
 /*                                                                                                                   */
-/*  admin_card_types_delete     Triggers the deletion of an entry in the card type list.                             */
+/*  admin_card_types_delete                 Triggers the deletion of an entry in the card type list.                 */
 /*                                                                                                                   */
-/*  admin_card_rarities_delete  Triggers the deletion of an entry in the card rarity list.                           */
+/*  admin_card_rarities_delete              Triggers the deletion of an entry in the card rarity list.               */
 /*                                                                                                                   */
-/*  admin_images_search         Searches the image list.                                                             */
-/*  admin_images_preview        Fetches the preview of an image.                                                     */
-/*  admin_images_delete         Triggers the deletion of an entry in the image list.                                 */
+/*  admin_images_search                     Searches the image list.                                                 */
+/*  admin_images_preview                    Fetches the preview of an image.                                         */
+/*  admin_images_delete                     Triggers the deletion of an entry in the image list.                     */
 /*                                                                                                                   */
-/*  admin_tags_search           Searches the tag list.                                                               */
-/*  admin_tags_delete           Triggers the deletion of an entry in the tag list.                                   */
+/*  admin_arsenals_duplicate_factions       Duplicate the factions dropdown menu when editing an arsenal.            */
+/*  admin_arsenals_unduplicate_factions     Delete the last created factions dropdown menu when editing an arsenal.  */
+/*  admin_arsenals_duplicate_cards          Duplicate the cards creation form when editing an arsenal.               */
+/*  admin_arsenals_unduplicate_cards        Delete the last created card creation form when editing an arsenal.      */
+/*  admin_arsenals_search                   Searches the arsenal list.                                               */
+/*  admin_arsenals_delete                   Triggers the deletion of an entry in the arsenal list.                   */
 /*                                                                                                                   */
-/*  admin_releases_search       Searches the release list.                                                           */
-/*  admin_releases_delete       Triggers the deletion of an entry in the release list.                               */
+/*  admin_arsenal_difficulties_delete       Triggers the deletion of an entry in the arsenal difficulty list.        */
 /*                                                                                                                   */
-/*  admin_factions_delete       Triggers the deletion of an entry in the faction list.                               */
+/*  admin_tags_search                       Searches the tag list.                                                   */
+/*  admin_tags_delete                       Triggers the deletion of an entry in the tag list.                       */
 /*                                                                                                                   */
-/*  admin_page_stats_search     Searches the page stats list.                                                        */
-/*  admin_page_stats_delete     Triggers the deletion of an entry in the page stats list.                            */
+/*  admin_releases_search                   Searches the release list.                                               */
+/*  admin_releases_delete                   Triggers the deletion of an entry in the release list.                   */
+/*                                                                                                                   */
+/*  admin_factions_delete                   Triggers the deletion of an entry in the faction list.                   */
+/*                                                                                                                   */
+/*  admin_formats_delete                    Triggers the deletion of an entry in the game formats list.              */
+/*                                                                                                                   */
+/*  admin_page_stats_search                 Searches the page stats list.                                            */
+/*  admin_page_stats_delete                 Triggers the deletion of an entry in the page stats list.                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -71,6 +82,7 @@ function admin_cards_search( sort_data = null )
   postdata += '&admin_cards_search_durability=' + document.getElementById('admin_cards_search_durability').value;
   postdata += '&admin_cards_search_body='       + document.getElementById('admin_cards_search_body').value;
   postdata += '&admin_cards_search_extra='      + document.getElementById('admin_cards_search_extra').value;
+  postdata += '&admin_cards_search_arsenals='   + document.getElementById('admin_cards_search_arsenals').value;
   postdata += '&admin_cards_search_tags='       + document.getElementById('admin_cards_search_tags').value;
 
   // Submit the search
@@ -256,6 +268,200 @@ function admin_images_delete( message   ,
 
 
 /**
+ * Duplicate the factions dropdown menu when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_duplicate_factions()
+{
+  // Fetch the element containing the factions selector and clone it
+  const factions_list_div     = document.getElementById("arsenal_factions");
+  const new_factions_list_div = factions_list_div.cloneNode(true);
+
+  // Clear input and select values in the cloned div
+  const inputs = new_factions_list_div.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+  const selects = new_factions_list_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
+
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("arsenal_factions_container").appendChild(new_factions_list_div);
+}
+
+
+
+
+/**
+ * Delete the last created factions dropdown menu when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_unduplicate_factions()
+{
+  // Fetch the element containing the factions selector and its parent container
+  const factions_list_container = document.getElementById("arsenal_factions_container");
+  const factions_list_div       = document.getElementById("arsenal_factions");
+
+  // If there's more than one faction selector, delete the last one
+  if(factions_list_container.children.length > 1 && factions_list_container.lastElementChild !== factions_list_div)
+  {
+    const factions_list_last_element = factions_list_container.lastElementChild;
+    factions_list_container.removeChild(factions_list_last_element);
+  }
+
+  // If there's only one faction selector left, clear its input and select values
+  else
+  {
+    const inputs = factions_list_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = factions_list_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
+  }
+}
+
+
+
+
+/**
+ * Duplicate the cards creation form when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_duplicate_cards()
+{
+  // Fetch the element containing the card form and clone it
+  const cards_form_div      = document.getElementById("arsenal_cards");
+  const new_cards_form_div  = cards_form_div.cloneNode(true);
+
+  // Clear input and select values in the cloned div
+  const inputs = new_cards_form_div.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+  const selects = new_cards_form_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
+
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("arsenal_cards_container").appendChild(new_cards_form_div);
+}
+
+
+
+
+/**
+ * Delete the last created card creation form when editing an arsenal.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_unduplicate_cards()
+{
+  // Fetch the element containing the card form and its parent container
+  const cards_form_container  = document.getElementById("arsenal_cards_container");
+  const cards_form_div        = document.getElementById("arsenal_cards");
+
+  // If there's more than one card selector, delete the last one
+  if(cards_form_container.children.length > 1 && cards_form_container.lastElementChild !== cards_form_div)
+  {
+    const cards_form_last_element = cards_form_container.lastElementChild;
+    cards_form_container.removeChild(cards_form_last_element);
+  }
+
+  // If there's only one card selector left, clear its input and select values
+  else
+  {
+    const inputs = cards_form_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = cards_form_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
+  }
+}
+
+
+
+
+/**
+ * Searches the arsenal list.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_search( sort_data = null )
+{
+  // Update the search input if required
+  if(sort_data)
+    document.getElementById('admin_arsenals_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata =  'admin_arsenals_sort='               + document.getElementById('admin_arsenals_sort').value;
+  postdata += '&admin_arsenals_search_release='    + document.getElementById('admin_arsenals_search_release').value;
+  postdata += '&admin_arsenals_search_format='     + document.getElementById('admin_arsenals_search_format').value;
+  postdata += '&admin_arsenals_search_name='       + document.getElementById('admin_arsenals_search_name').value;
+  postdata += '&admin_arsenals_search_faction='    + document.getElementById('admin_arsenals_search_faction').value;
+  postdata += '&admin_arsenals_search_difficulty=' + document.getElementById('admin_arsenals_search_difficulty').value;
+  postdata += '&admin_arsenals_search_playstyle='  + document.getElementById('admin_arsenals_search_playstyle').value;
+  postdata += '&admin_arsenals_search_text='       + document.getElementById('admin_arsenals_search_text').value;
+  postdata += '&admin_arsenals_search_card='       + document.getElementById('admin_arsenals_search_card').value;
+  postdata += '&admin_arsenals_search_data='       + document.getElementById('admin_arsenals_search_data').value;
+  postdata += '&admin_arsenals_search_tags='       + document.getElementById('admin_arsenals_search_tags').value;
+
+  // Submit the search
+  fetch_page('arsenals', 'admin_arsenals_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the arsenal list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     arsenal   The id of the arsenal to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_delete( message   ,
+                                arsenal   )
+{
+  // Assemble the postdata
+  postdata = 'admin_arsenals_delete=' + fetch_sanitize(arsenal);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('arsenals', 'admin_arsenals_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the arsenal difficulty list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     difficulty The id of the arsenal difficulty level to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenal_difficulties_delete( message   ,
+                                            difficulty )
+{
+  // Assemble the postdata
+  postdata = 'admin_arsenal_difficulties_delete=' + fetch_sanitize(difficulty);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('arsenal_difficulties', 'admin_arsenal_difficulties_tbody', postdata);
+}
+
+
+
+
+/**
  * Searches for tags.
  *
  * @param   {string}  [sort_data] The column which should be used to sort the data.
@@ -372,6 +578,29 @@ function admin_factions_delete( message     ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('factions', 'admin_factions_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the game formats list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     format    The id of the format to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_formats_delete( message   ,
+                               format    )
+{
+  // Assemble the postdata
+  postdata = 'admin_formats_delete=' + fetch_sanitize(format);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('formats', 'admin_formats_tbody', postdata);
 }
 
 

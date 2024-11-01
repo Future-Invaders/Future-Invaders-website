@@ -178,6 +178,8 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
             "fr": string
           },
         }
+      }
+      ...
     ]
   }
 }</pre>

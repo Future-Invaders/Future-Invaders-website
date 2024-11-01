@@ -278,7 +278,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <label><?=__('admin_card_add_type')?></label>
         <select class="indiv align_left" name="card_type">
           <?php for($i = 0; $i < $card_types['rows']; $i++): ?>
-          <option value="<?=$card_types[$i]['id']?>"<?=$card_type_selected[$i]?>><?=$card_types[$i]['name']?></option>
+          <option value="<?=$card_types[$i]['id']?>" class="bold uppercase <?=$card_types[$i]['styling']?>"<?=$card_type_selected[$i]?>><?=$card_types[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
@@ -288,7 +288,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="card_faction">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $card_factions['rows']; $i++): ?>
-          <option value="<?=$card_factions[$i]['id']?>"<?=$card_faction_selected[$i]?>><?=$card_factions[$i]['name']?></option>
+          <option value="<?=$card_factions[$i]['id']?>" class="bold uppercase <?=$card_factions[$i]['styling']?>"<?=$card_faction_selected[$i]?>><?=$card_factions[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
@@ -298,7 +298,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="card_rarity">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $card_rarities['rows']; $i++): ?>
-          <option value="<?=$card_rarities[$i]['id']?>"<?=$card_rarity_selected[$i]?>><?=$card_rarities[$i]['name']?></option>
+          <option value="<?=$card_rarities[$i]['id']?>" class="bold uppercase <?=$card_rarities[$i]['styling']?>"<?=$card_rarity_selected[$i]?>><?=$card_rarities[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>
@@ -308,7 +308,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <select class="indiv align_left" name="card_release">
           <option value="">&nbsp;</option>
           <?php for($i = 0; $i < $releases_list['rows']; $i++): ?>
-          <option value="<?=$releases_list[$i]['id']?>"<?=$card_release_selected[$i]?>><?=$releases_list[$i]['name']?></option>
+          <option value="<?=$releases_list[$i]['id']?>" class="bold uppercase <?=$releases_list[$i]['styling']?>"<?=$card_release_selected[$i]?>><?=$releases_list[$i]['name']?></option>
           <?php endfor; ?>
         </select>
       </div>

@@ -8,13 +8,13 @@ include_once './../../lang/api.lang.php';     # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "api/doc/cards";
-$page_title_en    = "API: Cards";
-$page_title_fr    = "API : Cartes";
+$page_url         = "api/doc/arsenals";
+$page_title_en    = "API: Arsenals";
+$page_title_fr    = "API : Arsenaux";
 $page_description = "Future Invaders' API allows you to interact with the website without using a browser.";
 
 // API doc menu selection
-$api_menu['cards'] = true;
+$api_menu['arsenals'] = true;
 
 // Extra CSS & JS
 $css  = array('api');
@@ -36,35 +36,31 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h1>
 
   <h4>
-    <?=__('api_menu_cards')?>
+    <?=__('api_menu_arsenals')?>
   </h4>
 
   <p>
-    <?=__('api_cards_intro')?>
+    <?=__('api_arsenals_intro')?>
   </p>
 
   <ul class="tinypadding_top">
-    <li><?=__link('#list_cards', 'GET /api/cards', is_internal: false)?></li>
-    <li><?=__link('#get_card', 'GET /api/card/{uuid}', is_internal: false)?></li>
-    <li><?=__link('#list_card_types', 'GET /api/card_types', is_internal: false)?></li>
-    <li><?=__link('#list_card_rarities', 'GET /api/card_rarities', is_internal: false)?></li>
-    <li><?=__link('#list_lore', 'GET /api/lore', is_internal: false)?></li>
-    <li><?=__link('#list_reminders', 'GET /api/reminders', is_internal: false)?></li>
-    <li><?=__link('#list_rules', 'GET /api/rules', is_internal: false)?></li>
+    <li><?=__link('#list_arsenals', 'GET /api/arsenals', is_internal: false)?></li>
+    <li><?=__link('#get_arsenal', 'GET /api/arsenal/{uuid}', is_internal: false)?></li>
+    <li><?=__link('#list_arsenal_difficulties', 'GET /api/arsenal_difficulties', is_internal: false)?></li>
   </ul>
 
 </div>
 
-<hr id="list_cards">
+<hr id="list_arsenals">
 
 <div class="width_50 padding_top bigpadding_bot">
 
   <h4>
-    GET /api/cards
+    GET /api/arsenals
   </h4>
 
   <p>
-    <?=__('api_cards_list_summary')?>
+    <?=__('api_arsenals_list_summary')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
@@ -78,17 +74,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_list_name')?>
-  </p>
-
-  <hr class="api_doc_parameters">
-
-  <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">body</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
-  </p>
-
-  <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_list_body')?>
+    <?=__('api_arsenals_list_name')?>
   </p>
 
   <hr class="api_doc_parameters">
@@ -98,37 +84,27 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_list_release')?>
+    <?=__('api_arsenals_list_release')?>
   </p>
 
   <hr class="api_doc_parameters">
 
   <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">faction</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+    <span class="bold underlined">format</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_list_faction')?>
+    <?=__('api_arsenals_list_format')?>
   </p>
 
   <hr class="api_doc_parameters">
 
   <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">type</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+    <span class="bold underlined">difficulty</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_list_type')?>
-  </p>
-
-  <hr class="api_doc_parameters">
-
-  <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">rarity</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
-  </p>
-
-  <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_list_rarity')?>
+    <?=__('api_arsenals_list_difficulty')?>
   </p>
 
   <hr class="api_doc_parameters">
@@ -138,7 +114,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_list_tag')?>
+    <?=__('api_arsenals_list_tag')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
@@ -146,18 +122,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h6>
 
   <pre>{
-  "cards": [
+  "arsenals": [
     {
       "uuid": string,
       "name": {
-        "en": string,
-        "fr": string
-      },
-      "cost": string,
-      "income": string,
-      "weapons": int,
-      "durability": int,
-      "body": {
         "en": string,
         "fr": string
       },
@@ -166,21 +134,40 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "en": string,
         "fr": string
       },
-      "faction": {
+      "format": {
         "uuid": string,
         "en": string,
         "fr": string
       },
-      "type": {
+      "factions": [
+        "faction1",
+        "faction2",
+        ...
+      ],
+      "difficulty": {
         "uuid": string,
         "en": string,
         "fr": string
       },
-      "rarity": {
-        "uuid": string,
+      "playstyle": {
         "en": string,
         "fr": string
-        "max_card_count": int,
+      },
+      "strategy_summary": {
+        "en": string,
+        "fr": string
+      },
+      "game_plan": {
+        "en": string,
+        "fr": string
+      },
+      "reserves_game_plan": {
+        "en": string,
+        "fr": string
+      }
+      "extra_text": {
+        "en": string,
+        "fr": string
       },
       "images": {
         "en": {
@@ -194,9 +181,14 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
           "endpoint": string
         }
       },
-      "arsenals": [
-        "arsenal1",
-        "arsenal2",
+      card_count: {
+        main: int,
+        reserves: int,
+        extras: int
+      },
+      cards: [
+        "card1",
+        "card2",
         ...
       ],
       "tags": [
@@ -211,16 +203,16 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
 </div>
 
-<hr id="get_card">
+<hr id="get_arsenal">
 
 <div class="width_50 padding_top bigpadding_bot">
 
   <h4>
-    GET /api/card/{uuid}
+    GET /api/arsenal/{uuid}
   </h4>
 
   <p>
-    <?=__('api_cards_get_summary')?>
+    <?=__('api_arsenals_get_summary')?>
   </p>
 
   <h6 class="bigpadding_top">
@@ -234,7 +226,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <p class="nopadding_top tinypadding_bot">
-    <?=__('api_cards_get_uuid')?>
+    <?=__('api_arsenals_get_uuid')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
@@ -242,17 +234,9 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h6>
 
   <pre>{
-  "card": {
+  "arsenal": {
     "uuid": string,
     "name": {
-      "en": string,
-      "fr": string
-    },
-    "cost": string,
-    "income": string,
-    "weapons": int,
-    "durability": int,
-    "body": {
       "en": string,
       "fr": string
     },
@@ -264,27 +248,55 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
     },
-    "faction": {
+    "format": {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
+      "description": {
+        "en": string,
+        "fr": string
+      }
+    },
+    "factions": [
+      {
+        "faction": {
+          "uuid": string,
+          "name": {
+            "en": string,
+            "fr": string
+          },
+        }
+      }
+      ...
+    ]
+    "difficulty": {
       "uuid": string,
       "name": {
         "en": string,
         "fr": string
       }
     },
-    "type": {
-      "uuid": string,
-      "name": {
-        "en": string,
-        "fr": string
-      }
+    "playstyle": {
+      "en": string,
+      "fr": string
     },
-    "rarity": {
-      "uuid": string,
-      "name": {
-        "en": string,
-        "fr": string
-      },
-      "max_card_count": int
+    "strategy_summary": {
+      "en": string,
+      "fr": string
+    },
+    "game_plan": {
+      "en": string,
+      "fr": string
+    },
+    "reserves_game_plan": {
+      "en": string,
+      "fr": string
+    }
+    "extra_text": {
+      "en": string,
+      "fr": string
     },
     "images": {
       "en": {
@@ -302,202 +314,48 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "path": string,
       }
     },
-    "arsenals": [
+    "cards": [
       {
-        "arsenal": {
+        "card": {
           ...
+        }
+        "amount": {
+          "main": int,
+          "reserves": int,
+          "extra": int
         }
       },
       ...
-    ],
+    ]
     "tags": [
       {
         "tag": {
           "uuid": string,
+          "type": string,
           "name": string,
           "description": {
             "en": string,
             "fr": string
           },
-        },
-      }
+        }
+      },
       ...
-    ],
+    ]
   }
 }</pre>
-</div>
-
-<hr id="list_card_types">
-
-<div class="width_50 padding_top bigpadding_bot">
-
-  <h4>
-    GET /api/card_types
-  </h4>
-
-  <p>
-    <?=__('api_card_types_list_summary')?>
-  </p>
-
-  <h6 class="bigpadding_top smallpadding_bot">
-    <?=__('api_response_schema')?>
-  </h6>
-
-  <pre>{
-  "card_types": [
-    {
-      "uuid": string,
-      "type": {
-        "en": string,
-        "fr": string
-      }
-    },
-  ]
-}</pre>
 
 </div>
 
-<hr id="list_card_rarities">
-
-<div class="width_50 padding_top bigpadding_bot">
-
-  <h4>
-    GET /api/card_rarities
-  </h4>
-
-  <p>
-    <?=__('api_card_rarities_list_summary')?>
-  </p>
-
-  <h6 class="bigpadding_top smallpadding_bot">
-    <?=__('api_response_schema')?>
-  </h6>
-
-  <pre>{
-  "card_rarities": [
-    {
-      "uuid": string,
-      "max_card_count": int,
-      "name": {
-        "en": string,
-        "fr": string
-      }
-    },
-  ]
-}</pre>
-
-</div>
-
-<hr id="list_lore">
-
-<div class="width_50 padding_top bigpadding_bot">
-
-  <h4>
-    GET /api/lore
-  </h4>
-
-  <p>
-    <?=__('api_lore_list_summary')?>
-  </p>
-
-  <h6 class="bigpadding_top smallpadding_bot">
-    <?=__('api_response_schema')?>
-  </h6>
-
-  <pre>{
-  "cards": [
-    {
-      "uuid": string,
-      "name": {
-        "en": string,
-        "fr": string
-      },
-      "body": {
-        "en": string,
-        "fr": string
-      }
-      "release": {
-        "en": string,
-        "fr": string
-      },
-      "images": {
-        "en": {
-          "uuid": string,
-          "path": string,
-          "endpoint": string
-        },
-        "fr": {
-          "uuid": string,
-          "path": string,
-          "endpoint": string
-        }
-      }
-    }
-  ]
-}</pre>
-
-</div>
-
-<hr id="list_reminders">
-
-<div class="width_50 padding_top bigpadding_bot">
-
-  <h4>
-    GET /api/reminders
-  </h4>
-
-  <p>
-    <?=__('api_reminders_list_summary')?>
-  </p>
-
-  <h6 class="bigpadding_top smallpadding_bot">
-    <?=__('api_response_schema')?>
-  </h6>
-
-  <pre>{
-  "cards": [
-    {
-      "uuid": string,
-      "name": {
-        "en": string,
-        "fr": string
-      },
-      "body": {
-        "en": string,
-        "fr": string
-      }
-      "release": {
-        "en": string,
-        "fr": string
-      },
-      "images": {
-        "en": {
-          "uuid": string,
-          "path": string,
-          "endpoint": string
-        },
-        "fr": {
-          "uuid": string,
-          "path": string,
-          "endpoint": string
-        }
-      }
-    }
-  ]
-}</pre>
-
-</div>
-
-<hr id="list_rules">
+<hr id="list_arsenal_difficulties">
 
 <div class="width_50 padding_top">
 
   <h4>
-    GET /api/rules
+    GET /api/arsenal_difficulties
   </h4>
 
   <p>
-    <?=__('api_rules_list_summary')?>
+    <?=__('api_arsenal_difficulties_list_summary')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
@@ -505,34 +363,14 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h6>
 
   <pre>{
-  "cards": [
+  "arsenal_difficulties": [
     {
       "uuid": string,
       "name": {
         "en": string,
         "fr": string
-      },
-      "body": {
-        "en": string,
-        "fr": string
       }
-      "release": {
-        "en": string,
-        "fr": string
-      },
-      "images": {
-        "en": {
-          "uuid": string,
-          "path": string,
-          "endpoint": string
-        },
-        "fr": {
-          "uuid": string,
-          "path": string,
-          "endpoint": string
-        }
-      }
-    }
+    },
   ]
 }</pre>
 

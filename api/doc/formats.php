@@ -4,20 +4,21 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/game.act.php';  # Game actions
-include_once './../../lang/admin.lang.php';   # Admin translations
+include_once './../../lang/api.lang.php';     # Translations
 
 // Page summary
-$page_url       = "pages/admin/releases";
-$page_title_en  = "Admin: Releases";
-$page_title_fr  = "Admin : Versions";
+$page_lang        = array('FR', 'EN');
+$page_url         = "api/doc/formats";
+$page_title_en    = "API: Game formats";
+$page_title_fr    = "API : Formats de jeu";
+$page_description = "Future Invaders' API allows you to interact with the website without using a browser.";
 
-// Admin menu selection
-$admin_menu['releases'] = 1;
+// API doc menu selection
+$api_menu['formats'] = true;
 
 // Extra CSS & JS
-$css  = array('admin');
-$js   = array('admin/admin');
+$css  = array('api');
+$js   = array('api/doc');
 
 
 
@@ -26,41 +27,59 @@ $js   = array('admin/admin');
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
+if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.php'; /*******/ include './menu.php'; ?>
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h1>
+    <?=__('api')?>
+  </h1>
+
+  <h4>
+    <?=__('api_menu_formats')?>
+  </h4>
+
+  <p>
+    <?=__('api_formats_intro')?>
+  </p>
+
+  <ul class="tinypadding_top">
+    <li><?=__link('#list_formats', 'GET /api/formats', is_internal: false)?></li>
+  </ul>
+
+</div>
+
+<hr id="list_formats">
 
 <div class="width_50 padding_top">
 
-  <h2 class="padding_bot">
-    <?=__('admin_release_add_title')?>
-  </h2>
+  <h4>
+    GET /api/formats
+  </h4>
 
-  <form action="releases" method="POST">
-    <fieldset>
+  <p>
+    <?=__('api_formats_list_summary')?>
+  </p>
 
-      <div class="smallpadding_bot">
-        <label for="release_name_en"><?=__('admin_release_add_name_en')?></label>
-        <input class="indiv" type="text" name="release_name_en">
-      </div>
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
 
-      <div class="smallpadding_bot">
-        <label for="release_name_fr"><?=__('admin_release_add_name_fr')?></label>
-        <input class="indiv" type="text" name="release_name_fr">
-      </div>
-
-      <div class="smallpadding_bot">
-        <label for="release_date"><?=__('admin_release_add_date')?></label>
-        <input class="indiv" type="text" name="release_date">
-      </div>
-
-      <div class="padding_bot">
-        <label for="release_styling"><?=__('admin_release_add_styling')?></label>
-        <input class="indiv" type="text" name="release_styling">
-      </div>
-
-      <input type="submit" name="release_add" value="<?=__('admin_release_add_submit')?>">
-
-    </fieldset>
-  </form>
+  <pre>{
+  "formats": [
+    {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
+      "description": {
+        "en": string,
+        "fr": string
+      }
+    },
+  ]
+}</pre>
 
 </div>
 
@@ -68,4 +87,4 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
-/************************************************************************/ include './../../inc/footer.inc.php'; endif;
+/*****************************************************************************/ include './../../inc/footer.inc.php'; }
