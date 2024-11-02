@@ -506,6 +506,14 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['body_fr_raw']  = cards_format_body($row['c_body_fr']);
       $data[$i]['image_en']     = sanitize_output($row['i_path_en']);
       $data[$i]['image_fr']     = sanitize_output($row['i_path_fr']);
+      $temp_thumb_path_en       = (isset($row['i_path_en']))
+                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
+                                : '';
+      $temp_thumb_path_fr       = (isset($row['i_path_fr']))
+                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
+                                : '';
+      $data[$i]['thumb_en']     = sanitize_output($temp_thumb_path_en);
+      $data[$i]['thumb_fr']     = sanitize_output($temp_thumb_path_fr);
       $data[$i]['extra']        = sanitize_output($row['c_extra']);
       $data[$i]['hidden']       = sanitize_output($row['c_hidden']);
       $data[$i]['narsenals']    = sanitize_output($row['ar_count']);
@@ -1081,6 +1089,8 @@ function images_list( string  $sort_by  = 'path'  ,
       $data[$i]['spath']    = sanitize_output(mb_substr($row['i_path'], 4));
       $data[$i]['ppath']    = sanitize_output(string_truncate($row['i_path'], 25, '...'));
       $data[$i]['bpath']    = sanitize_output(basename($row['i_path']));
+      $temp_thumb_path      = './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path']);
+      $data[$i]['thumb']    = sanitize_output($temp_thumb_path);
       $data[$i]['name']     = sanitize_output(string_truncate($row['i_name'], 20, '...'));
       $data[$i]['fname']    = sanitize_output($row['i_name']);
       $data[$i]['lang']     = sanitize_output($row['i_lang']);
@@ -2004,6 +2014,14 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['hidden']           = sanitize_output($row['a_hidden']);
       $data[$i]['image_en']         = sanitize_output($row['i_path_en']);
       $data[$i]['image_fr']         = sanitize_output($row['i_path_fr']);
+      $temp_thumb_path_en           = (isset($row['i_path_en']))
+                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
+                                    : '';
+      $temp_thumb_path_fr           = (isset($row['i_path_fr']))
+                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
+                                    : '';
+      $data[$i]['thumb_en']         = sanitize_output($temp_thumb_path_en);
+      $data[$i]['thumb_fr']         = sanitize_output($temp_thumb_path_fr);
       $data[$i]['ntags']            = sanitize_output($row['at_count']);
       $data[$i]['tags']             = sanitize_output($row['at_names']);
       $data[$i]['factions']         = $row['af_names']

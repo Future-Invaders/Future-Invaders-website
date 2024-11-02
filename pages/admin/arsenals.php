@@ -601,7 +601,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <div class="flex arsenal_preview">
               <?php if($arsenals_list[$i]['image_en']): ?>
               <div class="align_center smallpadding_top smallpadding_bot dark2">
-                <img class="image_preview_small" src="<?=$path.$arsenals_list[$i]['image_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+                <a href="<?=$path.$arsenals_list[$i]['image_en']?>" target="_blank">
+                  <img class="image_preview_small" src="<?=$arsenals_list[$i]['thumb_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+                </a>
               </div>
               <?php endif; if($arsenals_list[$i]['summary_en']): ?>
               <div class="smallpadding_top smallpadding_bot spaced dark2">
@@ -635,7 +637,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             <div class="flex arsenal_preview">
               <?php if($arsenals_list[$i]['image_fr']): ?>
               <div class="align_center smallpadding_top smallpadding_bot dark2">
-                <img class="image_preview_small" src="<?=$path.$arsenals_list[$i]['image_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+                <a href="<?=$path.$arsenals_list[$i]['image_fr']?>" target="_blank">
+                  <img class="image_preview_small" src="<?=$arsenals_list[$i]['thumb_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+                </a>
               </div>
               <?php endif; if($arsenals_list[$i]['summary_fr']): ?>
               <div class="smallpadding_top smallpadding_bot spaced dark2">
