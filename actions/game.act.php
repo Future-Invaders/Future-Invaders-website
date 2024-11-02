@@ -24,6 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_list_languages           Lists languages with which images are tagged                                     */
 /*  images_add                      Adds an image to the database                                                    */
 /*  images_edit                     Edits an image in the database                                                   */
+/*  images_generate_thumbnail       Generates a thumbnail for an image                                               */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
 /*  arsenals_get                    Returns data related to an arsenal                                               */
@@ -1292,6 +1293,9 @@ function images_add( array $data ) : void
               SET         tags_images.fk_images = '$image_id' ,
                           tags_images.fk_tags   = '$tag_id'   ");
   }
+
+  // Create the image's thumbnail
+  images_generate_thumbnail($image_id);
 }
 
 
@@ -1351,6 +1355,93 @@ function images_edit( int   $image_id ,
       query(" DELETE FROM tags_images
               WHERE       tags_images.fk_images = '$image_id'
               AND         tags_images.fk_tags   = '$tag_id'   ");
+  }
+}
+
+
+
+
+/**
+ * Generates a thumbnail for an image
+ *
+ * @param   int   $image_id                 The id of the image which needs a thumbnail.
+ * @param   int   $thumb_width  (OPTIONAL)  The thumbnail's desired width, in px (defaults to 250px).
+ * @param   bool  $overwrite    (OPTIONAL)  Whether to overwrite any previously created thumbnail for this image.
+ *
+ * @return  void
+ */
+
+function images_generate_thumbnail( int   $image_id             ,
+                                    int   $thumb_width  = 250   ,
+                                    bool  $overwrite    = false ) : void
+{
+  // Sanitize the image's id
+  $image_id = sanitize($image_id, 'int');
+
+  // Stop here if the image doesn't exist
+  if(!database_row_exists('images', $image_id))
+    return;
+
+  // Get the image's path
+  $image_data = images_get($image_id);
+
+  // Stop here if the image wasn't retrieved or if it has an empty path
+  if(!isset($image_data['path']) || !$image_data['path'])
+    return;
+
+  // Determine the image's path and the thumbnail's path
+  $root_path      = root_path();
+  $image_path     = $root_path.$image_data['path'];
+  $thumbnail_path = $root_path.'img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $image_data['path']);
+
+  // Stop here if the image does not exist
+  if(!file_exists($image_path))
+    return;
+
+  // Stop here if the thumbnail has already been generated and overwrite is set to false
+  if(file_exists($thumbnail_path) && !$overwrite)
+    return;
+
+  // Grab data on the image
+  list($image_width, $image_height, $image_type) = getimagesize($image_path);
+
+  // Calculate the thumbnail's height
+  $thumb_height = floor($image_height * ($thumb_width / $image_width));
+
+  // Create the thumbnail
+  $thumbnail = imagecreatetruecolor($thumb_width, $thumb_height);
+
+  // Create the source image, stop here if the image type isn't supported
+  switch ($image_type)
+  {
+    case IMAGETYPE_JPEG:
+        $source_image = imagecreatefromjpeg($image_path);
+        break;
+    case IMAGETYPE_PNG:
+        $source_image = imagecreatefrompng($image_path);
+        break;
+    case IMAGETYPE_GIF:
+        $source_image = imagecreatefromgif($image_path);
+        break;
+    default:
+        return;
+  }
+
+  // Resize the image into its thumbnail
+  imagecopyresampled($thumbnail, $source_image, 0, 0, 0, 0, $thumb_width, $thumb_height, $image_width, $image_height);
+
+  // Save the thumbnail
+  switch ($image_type)
+  {
+    case IMAGETYPE_JPEG:
+        imagejpeg($thumbnail, $thumbnail_path);
+        break;
+    case IMAGETYPE_PNG:
+        imagepng($thumbnail, $thumbnail_path);
+        break;
+    case IMAGETYPE_GIF:
+        imagegif($thumbnail, $thumbnail_path);
+        break;
   }
 }
 
