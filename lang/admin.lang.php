@@ -488,22 +488,26 @@ ___('admin_uncategorized_images_hide',    'FR', "Masquer les images non catégor
 
 
 // Image list
-___('admin_image_list_path',      'EN', "Path");
-___('admin_image_list_path',      'FR', "Chemin");
-___('admin_image_list_name',      'EN', "Name");
-___('admin_image_list_name',      'FR', "Nom");
-___('admin_image_list_language',  'EN', "Lang");
-___('admin_image_list_language',  'FR', "Lang");
-___('admin_image_list_artist',    'EN', "Artist");
-___('admin_image_list_artist',    'FR', "Artiste");
-___('admin_image_list_tags',      'EN', "Tags");
-___('admin_image_list_tags',      'FR', "Tags");
-___('admin_image_list_count',     'EN', "{{1}} image");
-___('admin_image_list_count',     'FR', "{{1}} image");
-___('admin_image_list_count+',    'EN', "{{1}} images");
-___('admin_image_list_count+',    'FR', "{{1}} images");
-___('admin_images_nolang',        'EN', "None");
-___('admin_images_nolang',        'FR', "Aucune");
+___('admin_image_list_path',          'EN', "Path");
+___('admin_image_list_path',          'FR', "Chemin");
+___('admin_image_list_name',          'EN', "Name");
+___('admin_image_list_name',          'FR', "Nom");
+___('admin_image_list_language',      'EN', "Lang");
+___('admin_image_list_language',      'FR', "Lang");
+___('admin_image_list_artist',        'EN', "Artist");
+___('admin_image_list_artist',        'FR', "Artiste");
+___('admin_image_list_tags',          'EN', "Tags");
+___('admin_image_list_tags',          'FR', "Tags");
+___('admin_image_list_count',         'EN', "{{1}} image");
+___('admin_image_list_count',         'FR', "{{1}} image");
+___('admin_image_list_count+',        'EN', "{{1}} images");
+___('admin_image_list_count+',        'FR', "{{1}} images");
+___('admin_images_nolang',            'EN', "None");
+___('admin_images_nolang',            'FR', "Aucune");
+___('admin_images_regen_thumb',       'EN', "Regenerate image thumbnail");
+___('admin_images_regen_thumb',       'FR', "Régénérer le thumbnail de l'image");
+___('admin_images_regen_all_thumbs',  'EN', "Confirm the regeneration of all image thumbnails (might be very long)");
+___('admin_images_regen_all_thumbs',  'FR', "Confirmer la régénération de tous les thumbnails d\'images (risque d\'être très long)");
 
 
 // Add an image

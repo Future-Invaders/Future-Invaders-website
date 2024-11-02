@@ -4,17 +4,47 @@
 # Local config should not be committed
 conf/main.conf.php
 
-# Card images shouldn't be stored in the repository
-img/arsenals/*
-img/cards/*
-img/extras/*
-img/lore/*
-img/rules/*
-!img/rules/index.php
-
 # Anything AI generated shouldn't be committed
 img/404/*
 !img/404/index.php
 img/gameplay/*
 !img/gameplay/index.php
 img/homepage.jpg
+
+# Card images shouldn't be stored in the repository
+img/arsenals/en/*
+!img/arsenals/en/index.php
+img/thumbnails/arsenals/en/*
+!img/thumbnails/arsenals/en/index.php
+img/arsenals/fr/*
+!img/arsenals/fr/index.php
+img/thumbnails/arsenals/fr/*
+!img/thumbnails/arsenals/fr/index.php
+
+img/cards/en/*
+!img/cards/en/index.php
+img/thumbnails/cards/en/*
+!img/thumbnails/cards/en/index.php
+img/cards/fr/*
+!img/cards/fr/index.php
+img/thumbnails/cards/fr/*
+!img/thumbnails/cards/fr/index.php
+
+img/extras/en/*
+!img/extras/en/index.php
+img/thumbnails/extras/en/*
+!img/thumbnails/extras/en/index.php
+img/extras/fr/*
+!img/extras/fr/index.php
+img/thumbnails/extras/fr/*
+!img/thumbnails/extras/fr/index.php
+
+img/lore/*
+!img/lore/index.php
+img/thumbnails/lore/*
+!img/thumbnails/lore/index.php
+
+img/rules/*
+!img/rules/index.php
+img/thumbnails/rules/*
+!img/thumbnails/rules/index.php

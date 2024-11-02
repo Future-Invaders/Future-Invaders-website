@@ -24,6 +24,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_list_languages           Lists languages with which images are tagged                                     */
 /*  images_add                      Adds an image to the database                                                    */
 /*  images_edit                     Edits an image in the database                                                   */
+/*  images_generate_thumbnail       Generates a thumbnail for an image                                               */
+/*  images_regenerate_thumbnail     Regenerates thumbnails for all images                                            */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
 /*  arsenals_get                    Returns data related to an arsenal                                               */
@@ -504,6 +506,14 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['body_fr_raw']  = cards_format_body($row['c_body_fr']);
       $data[$i]['image_en']     = sanitize_output($row['i_path_en']);
       $data[$i]['image_fr']     = sanitize_output($row['i_path_fr']);
+      $temp_thumb_path_en       = (isset($row['i_path_en']))
+                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
+                                : '';
+      $temp_thumb_path_fr       = (isset($row['i_path_fr']))
+                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
+                                : '';
+      $data[$i]['thumb_en']     = sanitize_output($temp_thumb_path_en);
+      $data[$i]['thumb_fr']     = sanitize_output($temp_thumb_path_fr);
       $data[$i]['extra']        = sanitize_output($row['c_extra']);
       $data[$i]['hidden']       = sanitize_output($row['c_hidden']);
       $data[$i]['narsenals']    = sanitize_output($row['ar_count']);
@@ -1073,19 +1083,22 @@ function images_list( string  $sort_by  = 'path'  ,
     // Prepare for display
     if($format === 'html')
     {
-      $data[$i]['id']     = sanitize_output($row['i_id']);
-      $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
-      $data[$i]['dpath']  = sanitize_output($row['i_path']);
-      $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
-      $data[$i]['ppath']  = sanitize_output(string_truncate($row['i_path'], 25, '...'));
-      $data[$i]['bpath']  = sanitize_output(basename($row['i_path']));
-      $data[$i]['name']   = sanitize_output(string_truncate($row['i_name'], 20, '...'));
-      $data[$i]['fname']  = sanitize_output($row['i_name']);
-      $data[$i]['lang']   = sanitize_output($row['i_lang']);
-      $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
-      $data[$i]['artist'] = sanitize_output($row['i_artist']);
-      $data[$i]['ntags']  = sanitize_output($row['it_count']);
-      $data[$i]['tags']   = sanitize_output($row['it_names']);
+      $data[$i]['id']       = sanitize_output($row['i_id']);
+      $data[$i]['path']     = './../../'.sanitize_output($row['i_path']);
+      $data[$i]['dpath']    = sanitize_output($row['i_path']);
+      $data[$i]['spath']    = sanitize_output(mb_substr($row['i_path'], 4));
+      $data[$i]['ppath']    = sanitize_output(string_truncate($row['i_path'], 25, '...'));
+      $data[$i]['bpath']    = sanitize_output(basename($row['i_path']));
+      $temp_thumb_path      = './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path']);
+      $data[$i]['thumb']    = sanitize_output($temp_thumb_path);
+      $data[$i]['name']     = sanitize_output(string_truncate($row['i_name'], 20, '...'));
+      $data[$i]['fname']    = sanitize_output($row['i_name']);
+      $data[$i]['lang']     = sanitize_output($row['i_lang']);
+      $data[$i]['blang']    = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
+      $data[$i]['artist']   = sanitize_output(string_truncate($row['i_artist'], 20, '...'));
+      $data[$i]['fartist']  = sanitize_output($row['i_artist']);
+      $data[$i]['ntags']    = sanitize_output($row['it_count']);
+      $data[$i]['tags']     = sanitize_output($row['it_names']);
     }
 
     // Prepare for the API
@@ -1292,6 +1305,9 @@ function images_add( array $data ) : void
               SET         tags_images.fk_images = '$image_id' ,
                           tags_images.fk_tags   = '$tag_id'   ");
   }
+
+  // Create the image's thumbnail
+  images_generate_thumbnail($image_id);
 }
 
 
@@ -1352,6 +1368,113 @@ function images_edit( int   $image_id ,
               WHERE       tags_images.fk_images = '$image_id'
               AND         tags_images.fk_tags   = '$tag_id'   ");
   }
+}
+
+
+
+
+/**
+ * Generates a thumbnail for an image
+ *
+ * @param   int   $image_id                 The id of the image which needs a thumbnail.
+ * @param   int   $thumb_width  (OPTIONAL)  The thumbnail's desired width, in px (defaults to 250px).
+ * @param   bool  $overwrite    (OPTIONAL)  Whether to overwrite any previously created thumbnail for this image.
+ *
+ * @return  void
+ */
+
+function images_generate_thumbnail( int   $image_id             ,
+                                    int   $thumb_width  = 250   ,
+                                    bool  $overwrite    = false ) : void
+{
+  // Sanitize the image's id
+  $image_id = sanitize($image_id, 'int');
+
+  // Stop here if the image doesn't exist
+  if(!database_row_exists('images', $image_id))
+    return;
+
+  // Get the image's path
+  $image_data = images_get($image_id);
+
+  // Stop here if the image wasn't retrieved or if it has an empty path
+  if(!isset($image_data['path']) || !$image_data['path'])
+    return;
+
+  // Determine the image's path and the thumbnail's path
+  $root_path      = root_path();
+  $image_path     = $root_path.$image_data['path'];
+  $thumbnail_path = $root_path.'img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $image_data['path']);
+
+  // Stop here if the image does not exist
+  if(!file_exists($image_path))
+    return;
+
+  // Stop here if the thumbnail has already been generated and overwrite is set to false
+  if(file_exists($thumbnail_path) && !$overwrite)
+    return;
+
+  // Grab data on the image
+  list($image_width, $image_height, $image_type) = getimagesize($image_path);
+
+  // Calculate the thumbnail's height
+  $thumb_height = floor($image_height * ($thumb_width / $image_width));
+
+  // Create the thumbnail
+  $thumbnail = imagecreatetruecolor($thumb_width, $thumb_height);
+
+  // Create the source image, stop here if the image type isn't supported
+  switch ($image_type)
+  {
+    case IMAGETYPE_JPEG:
+        $source_image = imagecreatefromjpeg($image_path);
+        break;
+    case IMAGETYPE_PNG:
+        $source_image = imagecreatefrompng($image_path);
+        break;
+    case IMAGETYPE_GIF:
+        $source_image = imagecreatefromgif($image_path);
+        break;
+    default:
+        return;
+  }
+
+  // Resize the image into its thumbnail
+  imagecopyresampled($thumbnail, $source_image, 0, 0, 0, 0, $thumb_width, $thumb_height, $image_width, $image_height);
+
+  // Save the thumbnail
+  switch ($image_type)
+  {
+    case IMAGETYPE_JPEG:
+        imagejpeg($thumbnail, $thumbnail_path);
+        break;
+    case IMAGETYPE_PNG:
+        imagepng($thumbnail, $thumbnail_path);
+        break;
+    case IMAGETYPE_GIF:
+        imagegif($thumbnail, $thumbnail_path);
+        break;
+  }
+}
+
+
+
+
+/**
+ * Regenerates thumbnails for all images
+ *
+ * @return void
+ */
+
+function images_regenerate_thumbnails() : void
+{
+  // Get a list of all images in the database
+  $images = images_list();
+
+  // Loop through the images and regenerate their thumbnails
+  for($i = 0; $i < $images['rows']; $i++)
+    images_generate_thumbnail(  image_id:   $images[$i]['id'] ,
+                                overwrite:  true              );
 }
 
 
@@ -1891,6 +2014,14 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['hidden']           = sanitize_output($row['a_hidden']);
       $data[$i]['image_en']         = sanitize_output($row['i_path_en']);
       $data[$i]['image_fr']         = sanitize_output($row['i_path_fr']);
+      $temp_thumb_path_en           = (isset($row['i_path_en']))
+                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
+                                    : '';
+      $temp_thumb_path_fr           = (isset($row['i_path_fr']))
+                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
+                                    : '';
+      $data[$i]['thumb_en']         = sanitize_output($temp_thumb_path_en);
+      $data[$i]['thumb_fr']         = sanitize_output($temp_thumb_path_fr);
       $data[$i]['ntags']            = sanitize_output($row['at_count']);
       $data[$i]['tags']             = sanitize_output($row['at_names']);
       $data[$i]['factions']         = $row['af_names']

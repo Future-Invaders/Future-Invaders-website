@@ -76,6 +76,20 @@ if(isset($_POST['image_edit']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Regenerate thumbnails
+
+// Regenerate an image's thumbnail
+if(isset($_POST['admin_images_regenerate']))
+  images_generate_thumbnail(  image_id:   form_fetch_element('admin_images_regenerate') ,
+                              overwrite:  true                                          );
+
+// Regenerate all images' thumbnails
+if(isset($_POST['admin_images_regenerate_all']))
+  images_regenerate_thumbnails();
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List uncategorized images
@@ -204,7 +218,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </select>
         </th>
         <th>
-          &nbsp;
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer tinyspaced_right', alt: 'R', title: __('admin_images_regen_thumb'), onclick: "admin_images_regenerate_all_thumbnails('".__('admin_images_regen_all_thumbs')."')")?>
         </th>
       </tr>
 
@@ -250,9 +264,18 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <td>
+        <?php if($list_images[$i]['artist']): ?>
+        <td class="tooltip_container">
           <?=$list_images[$i]['artist']?>
+          <div class="tooltip">
+            <?=$list_images[$i]['fartist']?>
+          </div>
         </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php endif; ?>
 
         <?php if($list_images[$i]['tags']): ?>
         <td class="align_center tooltip_container">
@@ -267,8 +290,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <td class="align_center nowrap">
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/images_edit?image='.$list_images[$i]['id'])?>
+        <td class="align_center nowrap image_action_icons">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer tinyspaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/images_edit?image='.$list_images[$i]['id'])?>
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer tinyspaced_right', alt: 'R', title: __('admin_images_regen_thumb'), onclick: "admin_images_regenerate_thumbnail('".$list_images[$i]['id']."')")?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_images_delete('".__('admin_image_delete_confirm')."','".$list_images[$i]['id']."')")?>
         </td>
 

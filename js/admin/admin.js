@@ -12,6 +12,8 @@
 /*                                                                                                                   */
 /*  admin_images_search                     Searches the image list.                                                 */
 /*  admin_images_preview                    Fetches the preview of an image.                                         */
+/*  admin_images_regenerate_thumbnail       Regenerates an image's thumbnail.                                        */
+/*  admin_images_regenerate_all_thumbnails  Regenerates all image thumbnails.                                        */
 /*  admin_images_delete                     Triggers the deletion of an entry in the image list.                     */
 /*                                                                                                                   */
 /*  admin_arsenals_duplicate_factions       Duplicate the factions dropdown menu when editing an arsenal.            */
@@ -239,6 +241,44 @@ function admin_images_preview(  image_id    ,
 
   // Prevent the fetch from happening more than once
   document.getElementById('admin_image_preview_cell_' + image_id).onmouseover = null;
+}
+
+
+
+
+/**
+ * Regenerates an image's thumbnail.
+ *
+ * @param   {int}     image_id  The id of the image to regenerate.
+ *
+ * @returns {void}
+ */
+
+function admin_images_regenerate_thumbnail( image_id )
+{
+  // Assemble the postdata
+  postdata = 'admin_images_regenerate=' + fetch_sanitize(image_id);
+
+  // Order the thumbnail regeneration
+  fetch_page('images', 'admin_images_tbody', postdata);
+}
+
+
+
+
+/**
+ * Regenerates all image thumbnails.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ *
+ * @returns {void}
+ */
+
+function admin_images_regenerate_all_thumbnails( message )
+{
+  // Make sure the user knows what they're doing, then trigger the global thumbnail regeneration
+  if(confirm(message))
+    fetch_page('images', 'admin_images_tbody', 'admin_images_regenerate_all=true');
 }
 
 
