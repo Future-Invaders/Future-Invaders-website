@@ -25,6 +25,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  images_add                      Adds an image to the database                                                    */
 /*  images_edit                     Edits an image in the database                                                   */
 /*  images_generate_thumbnail       Generates a thumbnail for an image                                               */
+/*  images_regenerate_thumbnail     Regenerates thumbnails for all images                                            */
 /*  images_delete                   Deletes an image from the database                                               */
 /*                                                                                                                   */
 /*  arsenals_get                    Returns data related to an arsenal                                               */
@@ -1074,19 +1075,20 @@ function images_list( string  $sort_by  = 'path'  ,
     // Prepare for display
     if($format === 'html')
     {
-      $data[$i]['id']     = sanitize_output($row['i_id']);
-      $data[$i]['path']   = './../../'.sanitize_output($row['i_path']);
-      $data[$i]['dpath']  = sanitize_output($row['i_path']);
-      $data[$i]['spath']  = sanitize_output(mb_substr($row['i_path'], 4));
-      $data[$i]['ppath']  = sanitize_output(string_truncate($row['i_path'], 25, '...'));
-      $data[$i]['bpath']  = sanitize_output(basename($row['i_path']));
-      $data[$i]['name']   = sanitize_output(string_truncate($row['i_name'], 20, '...'));
-      $data[$i]['fname']  = sanitize_output($row['i_name']);
-      $data[$i]['lang']   = sanitize_output($row['i_lang']);
-      $data[$i]['blang']  = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
-      $data[$i]['artist'] = sanitize_output($row['i_artist']);
-      $data[$i]['ntags']  = sanitize_output($row['it_count']);
-      $data[$i]['tags']   = sanitize_output($row['it_names']);
+      $data[$i]['id']       = sanitize_output($row['i_id']);
+      $data[$i]['path']     = './../../'.sanitize_output($row['i_path']);
+      $data[$i]['dpath']    = sanitize_output($row['i_path']);
+      $data[$i]['spath']    = sanitize_output(mb_substr($row['i_path'], 4));
+      $data[$i]['ppath']    = sanitize_output(string_truncate($row['i_path'], 25, '...'));
+      $data[$i]['bpath']    = sanitize_output(basename($row['i_path']));
+      $data[$i]['name']     = sanitize_output(string_truncate($row['i_name'], 20, '...'));
+      $data[$i]['fname']    = sanitize_output($row['i_name']);
+      $data[$i]['lang']     = sanitize_output($row['i_lang']);
+      $data[$i]['blang']    = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
+      $data[$i]['artist']   = sanitize_output(string_truncate($row['i_artist'], 20, '...'));
+      $data[$i]['fartist']  = sanitize_output($row['i_artist']);
+      $data[$i]['ntags']    = sanitize_output($row['it_count']);
+      $data[$i]['tags']     = sanitize_output($row['it_names']);
     }
 
     // Prepare for the API
@@ -1443,6 +1445,26 @@ function images_generate_thumbnail( int   $image_id             ,
         imagegif($thumbnail, $thumbnail_path);
         break;
   }
+}
+
+
+
+
+/**
+ * Regenerates thumbnails for all images
+ *
+ * @return void
+ */
+
+function images_regenerate_thumbnails() : void
+{
+  // Get a list of all images in the database
+  $images = images_list();
+
+  // Loop through the images and regenerate their thumbnails
+  for($i = 0; $i < $images['rows']; $i++)
+    images_generate_thumbnail(  image_id:   $images[$i]['id'] ,
+                                overwrite:  true              );
 }
 
 
