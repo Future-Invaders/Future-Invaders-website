@@ -534,7 +534,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </div>
             <div style="flex: 2">
               <a href="<?=$path.$cards_list[$i]['image_en']?>" target="_blank">
-                <img src="<?=$cards_list[$i]['thumb_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+                <img src="<?=$cards_list[$i]['thumb_en']?>" alt="<?=__('admin_card_list_no_image')?>" loading="lazy">
               </a>
             </div>
             <div style="flex: 1">
@@ -558,7 +558,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </div>
             <div style="flex: 2">
               <a href="<?=$path.$cards_list[$i]['image_fr']?>" target="_blank">
-                <img src="<?=$cards_list[$i]['thumb_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+                <img src="<?=$cards_list[$i]['thumb_fr']?>" alt="<?=__('admin_card_list_no_image')?>" loading="lazy">
               </a>
             </div>
             <div style="flex: 1">
