@@ -1384,7 +1384,7 @@ function images_edit( int   $image_id ,
  */
 
 function images_generate_thumbnail( int   $image_id             ,
-                                    int   $thumb_width  = 250   ,
+                                    int   $thumb_width  = 300   ,
                                     bool  $overwrite    = false ) : void
 {
   // Sanitize the image's id
@@ -1446,7 +1446,7 @@ function images_generate_thumbnail( int   $image_id             ,
   switch ($image_type)
   {
     case IMAGETYPE_JPEG:
-        imagejpeg($thumbnail, $thumbnail_path);
+        imagejpeg($thumbnail, $thumbnail_path, 100);
         break;
     case IMAGETYPE_PNG:
         imagepng($thumbnail, $thumbnail_path);
