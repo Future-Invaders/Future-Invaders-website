@@ -935,15 +935,39 @@ function images_get(  ?int    $image_id         = null    ,
   $query_where = ($image_id) ? " WHERE images.id = '$image_id' " : " WHERE images.uuid = '$image_uuid' ";
 
   // Fetch the image's data
-  $image_data = query(" SELECT  images.id       AS 'i_id'   ,
-                                images.uuid     AS 'i_uuid' ,
-                                images.path     AS 'i_path' ,
-                                images.name     AS 'i_name' ,
-                                images.language AS 'i_lang' ,
-                                images.artist   AS 'i_artist'
-                        FROM    images
+  $image_data = query(" SELECT    images.id             AS 'i_id'         ,
+                                  images.uuid           AS 'i_uuid'       ,
+                                  images.path           AS 'i_path'       ,
+                                  images.name           AS 'i_name'       ,
+                                  images.language       AS 'i_lang'       ,
+                                  images.artist         AS 'i_artist'     ,
+                                  cards_en.id           AS 'c_id_en'      ,
+                                  cards_en.is_hidden    AS 'c_hidden_en'  ,
+                                  cards_fr.id           AS 'c_id_fr'      ,
+                                  cards_fr.is_hidden    AS 'c_hidden_fr'  ,
+                                  arsenals_en.id        AS 'a_id_en'      ,
+                                  arsenals_en.is_hidden AS 'a_hidden_en'  ,
+                                  arsenals_fr.id        AS 'a_id_fr'      ,
+                                  arsenals_fr.is_hidden AS 'a_hidden_fr'
+                        FROM      images
+                        LEFT JOIN cards     AS cards_en     ON cards_en.fk_images_en    = images.id
+                        LEFT JOIN cards     AS cards_fr     ON cards_fr.fk_images_fr    = images.id
+                        LEFT JOIN arsenals  AS arsenals_en  ON arsenals_en.fk_images_en = images.id
+                        LEFT JOIN arsenals  AS arsenals_fr  ON arsenals_fr.fk_images_fr = images.id
                         $query_where ",
                         fetch_row: true);
+
+  // Don't show images linked to hidden cards in the API
+  if($format === 'api' && ($image_data['c_hidden_en'] || $image_data['c_hidden_fr']))
+    return null;
+
+  // Don't show images linked to hidden arsenals in the API
+  if($format === 'api' && ($image_data['a_hidden_en'] || $image_data['a_hidden_fr']))
+    return null;
+
+  // Don't show images linked to nothing in the API
+  if($format === 'api' && !$image_data['c_id_en'] && !$image_data['c_id_fr'] && !$image_data['a_id_en'] && !$image_data['a_id_fr'])
+    return null;
 
   // Prepare the data for display
   if($format === 'html')
@@ -1034,6 +1058,14 @@ function images_list( string  $sort_by  = 'path'  ,
   $query_search .= ($search_unused)           ? " AND   cards_en.id     IS NULL
                                                   AND   cards_fr.id     IS NULL "                 : "";
 
+  // Only show images linked to non-extra non-hidden cards in the API
+  $query_search .= ($format === 'api')        ? " AND ( cards_en.id     IS NOT NULL
+                                                  OR    cards_fr.id     IS NOT NULL )
+                                                  AND ( cards_en.is_extra_card = 0
+                                                  OR    cards_fr.is_extra_card = 0 )
+                                                  AND ( cards_en.is_hidden     = 0
+                                                  OR    cards_fr.is_hidden     = 0 ) "            : "";
+
   // Use a different search technique for tags and cards
   $query_having   = ($search_cards === 1)
                   ? " HAVING  ( COUNT(DISTINCT cards_en.id) = 0
@@ -1050,8 +1082,6 @@ function images_list( string  $sort_by  = 'path'  ,
   $query_having  .= ($search_tag_id && $search_tag_id !== -1)
                   ? " AND FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
                   : "";
-
-
 
   // Join cards if looking for unused images
   $query_unused = ($search_unused)  ? " LEFT JOIN cards     AS cards_en     ON cards_en.fk_images_en    = images.id
