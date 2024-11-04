@@ -1018,6 +1018,7 @@ function images_list( string  $sort_by  = 'path'  ,
   $search_lang    = sanitize_array_element($search, 'lang', 'string');
   $search_artist  = sanitize_array_element($search, 'artist', 'string');
   $search_tag_id  = sanitize_array_element($search, 'tag_id', 'int');
+  $search_cards   = sanitize_array_element($search, 'cards', 'int');
   $search_tag     = sanitize_array_element($search, 'tag', 'string');
   $search_unused  = sanitize_array_element($search, 'unused', 'bool', default: false);
 
@@ -1033,10 +1034,24 @@ function images_list( string  $sort_by  = 'path'  ,
   $query_search .= ($search_unused)           ? " AND   cards_en.id     IS NULL
                                                   AND   cards_fr.id     IS NULL "                 : "";
 
-  // Use a different search technique for tags
-  $query_having = ($search_tag_id && $search_tag_id !== -1)
-                ? " HAVING FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
-                : "";
+  // Use a different search technique for tags and cards
+  $query_having   = ($search_cards === 1)
+                  ? " HAVING  ( COUNT(DISTINCT cards_en.id) = 0
+                      AND       COUNT(DISTINCT cards_fr.id) = 0 ) "
+                  : " HAVING 1 = 1 ";
+  $query_having  .= ($search_cards === 2)
+                  ? " AND     ( COUNT(DISTINCT cards_en.id)
+                      +         COUNT(DISTINCT cards_fr.id) ) = 1 "
+                  : "";
+  $query_having  .= ($search_cards === 3)
+                  ? " AND     ( COUNT(DISTINCT cards_en.id)
+                      +         COUNT(DISTINCT cards_fr.id) ) > 1 "
+                  : "";
+  $query_having  .= ($search_tag_id && $search_tag_id !== -1)
+                  ? " AND FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                  : "";
+
+
 
   // Join cards if looking for unused images
   $query_unused = ($search_unused)  ? " LEFT JOIN cards     AS cards_en     ON cards_en.fk_images_en    = images.id
@@ -1053,27 +1068,45 @@ function images_list( string  $sort_by  = 'path'  ,
                             images.path     ASC   ",
     'artist'  => " ORDER BY images.artist   ASC   ,
                             images.path     ASC   ",
-    'tags'    => " ORDER BY COUNT(tags.id)  DESC  ,
+    'tags'    => " ORDER BY COUNT(DISTINCT tags.id)
+                                            DESC  ,
+                            images.path     ASC   ",
+    'cards'   => " ORDER BY ( COUNT(DISTINCT cards_en.id)
+                            + COUNT(DISTINCT cards_fr.id) )
+                                            DESC  ,
                             images.path     ASC   ",
     default   => " ORDER BY images.path     ASC   ",
   };
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    images.id       AS 'i_id'     ,
-                                images.uuid     AS 'i_uuid'   ,
-                                images.path     AS 'i_path'   ,
-                                images.name     AS 'i_name'   ,
-                                images.language AS 'i_lang'   ,
-                                images.artist   AS 'i_artist' ,
-                                COUNT(tags.id)  AS 'it_count' ,
-                                GROUP_CONCAT(tags.name ORDER BY tags.name ASC SEPARATOR ', ')
-                                                AS 'it_names'
+  $qimages = query("  SELECT    images.id                   AS 'i_id'       ,
+                                images.uuid                 AS 'i_uuid'     ,
+                                images.path                 AS 'i_path'     ,
+                                images.name                 AS 'i_name'     ,
+                                images.language             AS 'i_lang'     ,
+                                images.artist               AS 'i_artist'   ,
+                                COUNT(DISTINCT cards_en.id) AS 'c_count_en' ,
+                                COUNT(DISTINCT cards_fr.id) AS 'c_count_fr' ,
+                                COUNT(DISTINCT tags.id)     AS 'it_count'   ,
+                                GROUP_CONCAT(DISTINCT tags.name ORDER BY tags.name ASC SEPARATOR ', ')
+                                                            AS 'it_names'   ,
+                                GROUP_CONCAT(DISTINCT cards_en.name_en ORDER BY cards_en.name_en ASC SEPARATOR ', ')
+                                                            AS 'c_names_en' ,
+                                GROUP_CONCAT(DISTINCT cards_fr.name_en ORDER BY cards_fr.name_en ASC SEPARATOR ', ')
+                                                            AS 'c_names_fr'
                       FROM      images
-                      LEFT JOIN tags_images ON tags_images.fk_images  = images.id
-                      LEFT JOIN tags        ON tags.id                = tags_images.fk_tags
+                      LEFT JOIN tags_images       ON tags_images.fk_images  = images.id
+                      LEFT JOIN tags              ON tags.id                = tags_images.fk_tags
+                      LEFT JOIN cards AS cards_en ON cards_en.fk_images_en  = images.id
+                      LEFT JOIN cards AS cards_fr ON cards_fr.fk_images_fr  = images.id
                       $query_unused
                       $query_search
-                      GROUP BY  images.id
+                      GROUP BY  images.id       ,
+                                images.uuid     ,
+                                images.path     ,
+                                images.name     ,
+                                images.language ,
+                                images.artist
                       $query_having
                       $query_sort ");
 
@@ -1097,6 +1130,9 @@ function images_list( string  $sort_by  = 'path'  ,
       $data[$i]['blang']    = sanitize_output(string_change_case($row['i_lang'], 'uppercase'));
       $data[$i]['artist']   = sanitize_output(string_truncate($row['i_artist'], 20, '...'));
       $data[$i]['fartist']  = sanitize_output($row['i_artist']);
+      $data[$i]['ncards']   = sanitize_output($row['c_count_en'] + $row['c_count_fr']);
+      $data[$i]['cards']    = sanitize_output($row['c_names_en']);
+      $data[$i]['cards']   .= ($row['c_names_en']) ? ", ".$row['c_names_fr'] : "".$row['c_names_fr'];
       $data[$i]['ntags']    = sanitize_output($row['it_count']);
       $data[$i]['tags']     = sanitize_output($row['it_names']);
     }

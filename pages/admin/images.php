@@ -116,6 +116,7 @@ $admin_images_search_data = array(  'path'    =>  form_fetch_element('admin_imag
                                     'name'    =>  form_fetch_element('admin_images_search_name')    ,
                                     'lang'    =>  form_fetch_element('admin_images_search_lang')    ,
                                     'artist'  =>  form_fetch_element('admin_images_search_artist')  ,
+                                    'cards'   =>  form_fetch_element('admin_images_search_cards')   ,
                                     'tag_id'  =>  form_fetch_element('admin_images_search_tags')    );
 
 // Fetch the images
@@ -179,6 +180,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__('admin_image_list_artist')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('artist');")?>
         </th>
+        <th class="align_center">
+          <?=__('admin_image_list_cards')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('cards');")?>
+        </th>
         <th>
           <?=__('admin_image_list_tags')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_images_search('tags');")?>
@@ -209,6 +214,14 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <input type="text" class="table_search" name="admin_images_search_artist" id="admin_images_search_artist" value="" onkeyup="admin_images_search();">
         </th>
         <th>
+          <select class="table_search" name="admin_images_search_cards" id="admin_images_search_cards" onchange="admin_images_search();">
+            <option value="">&nbsp;</option>
+            <option value="1"><?=__('admin_images_cards_no')?></option>
+            <option value="2"><?=__('admin_images_cards_yes')?></option>
+            <option value="3"><?=__('admin_images_cards_many')?></option>
+          </select>
+        </th>
+        <th>
           <select class="table_search" name="admin_images_search_tags" id="admin_images_search_tags" onchange="admin_images_search();">
             <option value="">&nbsp;</option>
             <option value="-1"><?=string_change_case(__('none'), 'lowercase')?></option>
@@ -229,7 +242,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="6" class="uppercase text_light dark bold align_center">
+        <td colspan="7" class="uppercase text_light dark bold align_center">
           <?=__('admin_image_list_count', preset_values: array($list_images['rows']), amount: $list_images['rows'])?>
         </td>
       </tr>
@@ -269,6 +282,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=$list_images[$i]['artist']?>
           <div class="tooltip">
             <?=$list_images[$i]['fartist']?>
+          </div>
+        </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php endif; ?>
+
+        <?php if($list_images[$i]['ncards']): ?>
+        <td class="align_center tooltip_container">
+          <span class="bold"><?=$list_images[$i]['ncards']?></span>
+          <div class="tooltip">
+            <?=str_replace(', ', '<br>', $list_images[$i]['cards'])?>
           </div>
         </td>
         <?php else: ?>
