@@ -1613,27 +1613,52 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   $query_where = ($arsenal_id) ? " WHERE arsenals.id = '$arsenal_id' " : " WHERE arsenals.uuid = '$arsenal_uuid' ";
 
   // Fetch the arsenal's data
-  $arsenal_data = query(" SELECT  arsenals.id                       AS 'a_id'           ,
-                                  arsenals.uuid                     AS 'a_uuid'         ,
-                                  arsenals.fk_releases              AS 'a_release_id'   ,
-                                  arsenals.fk_formats               AS 'a_format_id'    ,
-                                  arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
-                                  arsenals.fk_images_en             AS 'a_image_id_en'  ,
-                                  arsenals.fk_images_fr             AS 'a_image_id_fr'  ,
-                                  arsenals.is_hidden                AS 'a_hidden'       ,
-                                  arsenals.name_en                  AS 'a_name_en'      ,
-                                  arsenals.name_fr                  AS 'a_name_fr'      ,
-                                  arsenals.playstyle_en             AS 'a_playstyle_en' ,
-                                  arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
-                                  arsenals.summary_en               AS 'a_summary_en'   ,
-                                  arsenals.summary_fr               AS 'a_summary_fr'   ,
-                                  arsenals.gameplan_en              AS 'a_gameplan_en'  ,
-                                  arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
-                                  arsenals.reserves_en              AS 'a_reserves_en'  ,
-                                  arsenals.reserves_fr              AS 'a_reserves_fr'  ,
-                                  arsenals.extra_en                 AS 'a_extra_en'     ,
-                                  arsenals.extra_fr                 AS 'a_extra_fr'
-                            FROM  arsenals
+  $arsenal_data = query(" SELECT      arsenals.id                       AS 'a_id'           ,
+                                      arsenals.uuid                     AS 'a_uuid'         ,
+                                      arsenals.fk_releases              AS 'a_release_id'   ,
+                                      arsenals.fk_formats               AS 'a_format_id'    ,
+                                      arsenals.fk_arsenal_difficulties  AS 'a_level_id'     ,
+                                      arsenals.fk_images_en             AS 'a_image_id_en'  ,
+                                      arsenals.fk_images_fr             AS 'a_image_id_fr'  ,
+                                      arsenals.card_count               AS 'a_count'        ,
+                                      arsenals.reserves_count           AS 'a_rcount'       ,
+                                      arsenals.extra_count              AS 'a_ecount'       ,
+                                      arsenals.is_hidden                AS 'a_hidden'       ,
+                                      arsenals.name_en                  AS 'a_name_en'      ,
+                                      arsenals.name_fr                  AS 'a_name_fr'      ,
+                                      arsenals.playstyle_en             AS 'a_playstyle_en' ,
+                                      arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
+                                      arsenals.summary_en               AS 'a_summary_en'   ,
+                                      arsenals.summary_fr               AS 'a_summary_fr'   ,
+                                      arsenals.gameplan_en              AS 'a_gameplan_en'  ,
+                                      arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
+                                      arsenals.reserves_en              AS 'a_reserves_en'  ,
+                                      arsenals.reserves_fr              AS 'a_reserves_fr'  ,
+                                      arsenals.extra_en                 AS 'a_extra_en'     ,
+                                      arsenals.extra_fr                 AS 'a_extra_fr'     ,
+                                      releases.uuid                     AS 'r_uuid'         ,
+                                      releases.name_en                  AS 'r_name_en'      ,
+                                      releases.name_fr                  AS 'r_name_fr'      ,
+                                      releases.release_date             AS 'r_date'         ,
+                                      formats.uuid                      AS 'f_uuid'         ,
+                                      formats.name_en                   AS 'f_name_en'      ,
+                                      formats.name_fr                   AS 'f_name_fr'      ,
+                                      arsenal_difficulties.uuid         AS 'ad_uuid'        ,
+                                      arsenal_difficulties.name_en      AS 'ad_name_en'     ,
+                                      arsenal_difficulties.name_fr      AS 'ad_name_fr'     ,
+                                      images_en.uuid                    AS 'ai_en_uuid'     ,
+                                      images_en.path                    AS 'ai_en_path'     ,
+                                      images_fr.uuid                    AS 'ai_fr_uuid'     ,
+                                      images_fr.path                    AS 'ai_fr_path'
+                            FROM      arsenals
+                            LEFT JOIN releases  ON arsenals.fk_releases = releases.id
+                            LEFT JOIN formats   ON arsenals.fk_formats  = formats.id
+                            LEFT JOIN arsenal_difficulties
+                                   ON arsenals.fk_arsenal_difficulties  = arsenal_difficulties.id
+                            LEFT JOIN images AS images_en
+                                   ON arsenals.fk_images_en = images_en.id
+                            LEFT JOIN images AS images_fr
+                                   ON arsenals.fk_images_fr = images_fr.id
                             $query_where ",
                             fetch_row: true);
 
@@ -1649,12 +1674,23 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                         FROM      arsenals_factions
                         WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
 
-  // Don't show hidden cards in the API
+  // Fetch linked factions
+  $qfactions = query("  SELECT    factions.uuid     AS 'f_uuid'     ,
+                                  factions.name_en  AS 'f_name_en'  ,
+                                  factions.name_fr  AS 'f_name_fr'
+                        FROM      arsenals_factions
+                        LEFT JOIN factions ON arsenals_factions.fk_factions = factions.id
+                        WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
+
+  // Don't show hidden or extra cards in the API
   $query_api = ($format === 'api') ? '  AND cards.is_hidden     = 0
                                         AND cards.is_extra_card = 0 ' : "";
 
   // Fetch linked cards
-  $qcards = query(" SELECT    arsenals_compositions.fk_cards        AS 'c_id'       ,
+  $qcards = query(" SELECT    cards.uuid                            AS 'c_uuid'     ,
+                              cards.name_en                         AS 'c_name_en'  ,
+                              cards.name_fr                         AS 'c_name_fr'  ,
+                              arsenals_compositions.fk_cards        AS 'c_id'       ,
                               arsenals_compositions.amount_main     AS 'c_main'     ,
                               arsenals_compositions.amount_reserves AS 'c_reserves' ,
                               arsenals_compositions.is_extra        AS 'c_extra'    ,
@@ -1666,6 +1702,14 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                     ORDER BY  arsenals_compositions.amount_main     = 0   ,
                               arsenals_compositions.sorting_order   ASC   ,
                               cards.name_en                         ASC   ");
+
+  // Fetch linked tags
+  $qtags = query("  SELECT    tags.uuid             AS 't_uuid' ,
+                              tags.name             AS 't_name' ,
+                              tags_arsenals.fk_tags AS 'ct_id'
+                    FROM      tags_arsenals
+                    LEFT JOIN tags ON tags_arsenals.fk_tags = tags.id
+                    WHERE     tags_arsenals.fk_arsenals = '$arsenal_id' ");
 
   // Prepare the data for display
   if($format === 'html')
@@ -1713,23 +1757,6 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['uuid']                     = sanitize_json($arsenal_data['a_uuid']);
     $data['name']['en']               = sanitize_json($arsenal_data['a_name_en']);
     $data['name']['fr']               = sanitize_json($arsenal_data['a_name_fr']);
-    $data['release']                  = ($arsenal_data['a_release_id'])
-                                      ? releases_get( release_id:     $arsenal_data['a_release_id'] ,
-                                                      format:         'api'                         ,
-                                                      no_parent_array: true                         )
-                                      : array();
-    $data['format']                   = ($arsenal_data['a_format_id'])
-                                      ? formats_get($arsenal_data['a_format_id'], format: 'api', no_parent_array: true)
-                                      : array();
-    for($i = 0; $dfactions = query_row($qfactions); $i++)
-      $data['factions'][$i]           = factions_get($dfactions['f_id'], format: 'api');
-    if($i === 0)
-      $data['factions']               = array();
-    $data['difficulty']               = ($arsenal_data['a_level_id'])
-                                      ? arsenal_difficulties_get( arsenal_difficulty_id:  $arsenal_data['a_level_id'] ,
-                                                                  format: 'api'                                       ,
-                                                                  no_parent_array:        true                        )
-                                      : array();
     $data['playstyle']['en']          = sanitize_json($arsenal_data['a_playstyle_en']);
     $data['playstyle']['fr']          = sanitize_json($arsenal_data['a_playstyle_fr']);
     $data['strategy_summary']['en']   = sanitize_json($arsenal_data['a_summary_en']);
@@ -1740,48 +1767,98 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['reserves_game_plan']['fr'] = sanitize_json($arsenal_data['a_reserves_fr']);
     $data['extra_text']['en']         = sanitize_json($arsenal_data['a_extra_en']);
     $data['extra_text']['fr']         = sanitize_json($arsenal_data['a_extra_fr']);
-    $data['images']['en']             = ($arsenal_data['a_image_id_en'])
-                                      ? images_get( image_id:         $arsenal_data['a_image_id_fr']  ,
-                                                    format:           'api'                           ,
-                                                    no_depth:         true                            ,
-                                                    no_parent_array:  true                            )
-                                      : array();
-    $data['images']['fr']             = ($arsenal_data['a_image_id_en'])
-                                      ? images_get( image_id:         $arsenal_data['a_image_id_fr']  ,
-                                                    format:           'api'                           ,
-                                                    no_depth:         true                            ,
-                                                    no_parent_array:  true                            )
-                                      : array();
 
-    // Add linked cards
+    // Release
+    if($arsenal_data['a_release_id'])
+    {
+      $data['release']['uuid']        = sanitize_json($arsenal_data['r_uuid']);
+      $data['release']['name']['en']  = sanitize_json($arsenal_data['r_name_en']);
+      $data['release']['name']['fr']  = sanitize_json($arsenal_data['r_name_fr']);
+      $data['release']['date']        = sanitize_json($arsenal_data['r_date']);
+    }
+    else
+      $data['release']                = array();
+
+    // Format
+    if($arsenal_data['a_format_id'])
+    {
+      $data['format']['uuid']       = sanitize_json($arsenal_data['f_uuid']);
+      $data['format']['name']['en'] = sanitize_json($arsenal_data['f_name_en']);
+      $data['format']['name']['fr'] = sanitize_json($arsenal_data['f_name_fr']);
+    }
+    else
+      $data['format']               = array();
+
+    // Factions
+    for($i = 0; $dfactions = query_row($qfactions); $i++)
+    {
+      $data['factions'][$i]['uuid']       = sanitize_json($dfactions['f_uuid']);
+      $data['factions'][$i]['name']['en'] = sanitize_json($dfactions['f_name_en']);
+      $data['factions'][$i]['name']['fr'] = sanitize_json($dfactions['f_name_fr']);
+    }
+    if($i === 0)
+      $data['factions']      = array();
+
+    // Difficulty
+    if($arsenal_data['a_level_id'])
+    {
+      $data['difficulty']['uuid']       = sanitize_json($arsenal_data['ad_uuid']);
+      $data['difficulty']['name']['en'] = sanitize_json($arsenal_data['ad_name_en']);
+      $data['difficulty']['name']['fr'] = sanitize_json($arsenal_data['ad_name_fr']);
+    }
+    else
+      $data['difficulty']               = array();
+
+    // Images
+    if($arsenal_data['a_image_id_en'])
+    {
+      $data['images']['en']['uuid']     = sanitize_json($arsenal_data['ai_en_uuid']);
+      $data['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$arsenal_data['ai_en_path']);
+      $data['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                          .'api/image/'.$arsenal_data['ai_en_uuid']);
+    }
+    if($arsenal_data['a_image_id_fr'])
+    {
+      $data['images']['fr']['uuid']     = sanitize_json($arsenal_data['ai_fr_uuid']);
+      $data['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$arsenal_data['ai_fr_path']);
+      $data['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                          .'api/image/'.$arsenal_data['ai_fr_uuid']);
+    }
+    if(!$arsenal_data['a_image_id_en'] && !$arsenal_data['a_image_id_fr'])
+      $data['images']                   = array();
+
+    // Card count
+    $data['card_count']['main']     = (int)sanitize_json($arsenal_data['a_count']);
+    $data['card_count']['reserves'] = (int)sanitize_json($arsenal_data['a_rcount']);
+    $data['card_count']['extras']   = (int)sanitize_json($arsenal_data['a_ecount']);
+
+    // Cards
     if(!$no_depth)
     {
       for($i = 0; $dcards = query_row($qcards); $i++)
       {
-        $data['cards'][$i]                        = cards_get($dcards['c_id'], format: 'api', no_depth: true);
+        $data['cards'][$i]['uuid']                = sanitize_json($dcards['c_uuid']);
+        $data['cards'][$i]['endpoint']            = sanitize_json($GLOBALS['website_url']
+                                                    .'api/card/'.$dcards['c_uuid']);
+        $data['cards'][$i]['name']['en']          = sanitize_json($dcards['c_name_en']);
+        $data['cards'][$i]['name']['fr']          = sanitize_json($dcards['c_name_fr']);
         $data['cards'][$i]['amount']['main']      = (int)sanitize_json($dcards['c_main']);
         $data['cards'][$i]['amount']['reserves']  = (int)sanitize_json($dcards['c_reserves']);
-        $data['cards'][$i]['amount']['extra']     = (int)sanitize_json($dcards['c_extra']);
       }
       if($i === 0)
-        $data['cards']      = array();
+        $data['cards'] = array();
     }
 
-    // Add linked tags
+    // Tags
     if(!$no_depth)
     {
-      // Fetch linked tags
-      $qtags = query("  SELECT  tags_arsenals.fk_tags AS 'ct_id'
-                        FROM    tags_arsenals
-                        WHERE   tags_arsenals.fk_arsenals = '$arsenal_id' ");
-
-      // Prepare linked tags for display
       for($i = 0; $dtags = query_row($qtags); $i++)
-        $data['tags'][$i] = tags_get( tag_id:   $dtags['ct_id'] ,
-                                      format:   $format         ,
-                                      no_depth:  true           );
-
-      // If there are no linked tags, show an empty array
+      {
+        $data['tags'][$i]['uuid']     = sanitize_json($dtags['t_uuid']);
+        $data['tags'][$i]['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                        .'api/card/'.$dtags['t_uuid']);
+        $data['tags'][$i]['name']     = $dtags['t_name'];
+      }
       if($i === 0)
         $data['tags'] = array();
     }
@@ -2002,6 +2079,7 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 releases.name_en                AS 'r_name_en'      ,
                                 releases.name_fr                AS 'r_name_fr'      ,
                                 releases.name_$lang             AS 'r_name'         ,
+                                releases.release_date           AS 'r_date'         ,
                                 releases.styling                AS 'r_styling'      ,
                                 formats.uuid                    AS 'f_uuid'         ,
                                 formats.name_en                 AS 'f_name_en'      ,
@@ -2024,12 +2102,27 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 GROUP_CONCAT( DISTINCT  tags.name
                                               ORDER BY  tags.name ASC
                                               SEPARATOR ', ')   AS 'at_names'       ,
+                                GROUP_CONCAT( DISTINCT  tags.uuid
+                                              ORDER BY  tags.name ASC
+                                              SEPARATOR ', ')   AS 'at_uuids'       ,
                                 GROUP_CONCAT( DISTINCT  factions.name_en
                                               ORDER BY  factions.sorting_order ASC
-                                              SEPARATOR ',')    AS 'af_names'       ,
+                                              SEPARATOR ',')    AS 'af_names_en'    ,
+                                GROUP_CONCAT( DISTINCT  factions.name_fr
+                                              ORDER BY  factions.sorting_order ASC
+                                              SEPARATOR ',')    AS 'af_names_fr'    ,
+                                GROUP_CONCAT( DISTINCT  factions.uuid
+                                              ORDER BY  factions.sorting_order ASC
+                                              SEPARATOR ',')    AS 'af_uuids'       ,
                                 GROUP_CONCAT( DISTINCT  cards.name_en
                                               ORDER BY  cards.name_en ASC
-                                              SEPARATOR ',')    AS 'ac_names'
+                                              SEPARATOR ',')    AS 'ac_names_en'    ,
+                                GROUP_CONCAT( DISTINCT  cards.name_fr
+                                              ORDER BY  cards.name_en ASC
+                                              SEPARATOR ',')    AS 'ac_names_fr'    ,
+                                GROUP_CONCAT( DISTINCT  cards.uuid
+                                              ORDER BY  cards.name_en ASC
+                                              SEPARATOR ',')    AS 'ac_uuids'
                       FROM      arsenals
                       LEFT JOIN releases              ON arsenals.fk_releases               = releases.id
                       LEFT JOIN formats               ON arsenals.fk_formats                = formats.id
@@ -2105,34 +2198,11 @@ function arsenals_list( string  $sort_by  = ''      ,
     // Prepare for the API
     if($format === 'api')
     {
+      // Sanitize the data
       $data[$i]['uuid']                     = sanitize_json($row['a_uuid']);
+      $data[$i]['endpoint']                 = sanitize_json($GLOBALS['website_url'].'api/arsenal/'.$row['a_uuid']);
       $data[$i]['name']['en']               = sanitize_json($row['a_name_en']);
       $data[$i]['name']['fr']               = sanitize_json($row['a_name_fr']);
-      if(isset($row['r_uuid']))
-      {
-        $data[$i]['release']['uuid']        = sanitize_json($row['r_uuid']);
-        $data[$i]['release']['en']          = sanitize_json($row['r_name_en']);
-        $data[$i]['release']['fr']          = sanitize_json($row['r_name_fr']);
-      }
-      else
-        $data[$i]['release']                = array();
-      if(isset($row['f_uuid']))
-      {
-        $data[$i]['format']['uuid']         = sanitize_json($row['f_uuid']);
-        $data[$i]['format']['en']           = sanitize_json($row['f_name_en']);
-        $data[$i]['format']['fr']           = sanitize_json($row['f_name_fr']);
-      }
-      else
-        $data[$i]['format']                 = array();
-      $data[$i]['factions']                 = ($row['af_names']) ? explode(',', $row['af_names']) : array();
-      if(isset($row['ad_uuid']))
-      {
-        $data[$i]['difficulty']['uuid']     = sanitize_json($row['ad_uuid']);
-        $data[$i]['difficulty']['en']       = sanitize_json($row['ad_name_en']);
-        $data[$i]['difficulty']['fr']       = sanitize_json($row['ad_name_fr']);
-      }
-      else
-        $data[$i]['difficulty']             = array();
       $data[$i]['playstyle']['en']          = sanitize_json($row['a_playstyle_en']);
       $data[$i]['playstyle']['fr']          = sanitize_json($row['a_playstyle_fr']);
       $data[$i]['strategy_summary']['en']   = sanitize_json($row['a_summary_en']);
@@ -2143,6 +2213,44 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['reserves_game_plan']['fr'] = sanitize_json($row['a_reserves_fr']);
       $data[$i]['extra_text']['en']         = sanitize_json($row['a_extra_en']);
       $data[$i]['extra_text']['fr']         = sanitize_json($row['a_extra_fr']);
+
+      // Release
+      if(isset($row['r_uuid']))
+      {
+        $data[$i]['release']['uuid']        = sanitize_json($row['r_uuid']);
+        $data[$i]['release']['name']['en']  = sanitize_json($row['r_name_en']);
+        $data[$i]['release']['name']['fr']  = sanitize_json($row['r_name_fr']);
+        $data[$i]['release']['date']        = sanitize_json($row['r_date']);
+      }
+      else
+        $data[$i]['release']                = array();
+
+      // Format
+      if(isset($row['f_uuid']))
+      {
+        $data[$i]['format']['uuid']         = sanitize_json($row['f_uuid']);
+        $data[$i]['format']['name']['en']   = sanitize_json($row['f_name_en']);
+        $data[$i]['format']['name']['fr']   = sanitize_json($row['f_name_fr']);
+      }
+      else
+        $data[$i]['format']                 = array();
+
+      // Factions
+      $data[$i]['factions']['uuids']        = ($row['af_uuids']) ? explode(',', $row['af_uuids']) : array();
+      $data[$i]['factions']['names']['en']  = ($row['af_names_en']) ? explode(',', $row['af_names_en']) : array();
+      $data[$i]['factions']['names']['fr']  = ($row['af_names_fr']) ? explode(',', $row['af_names_fr']) : array();
+
+      // Difficulty
+      if(isset($row['ad_uuid']))
+      {
+        $data[$i]['difficulty']['uuid']       = sanitize_json($row['ad_uuid']);
+        $data[$i]['difficulty']['name']['en'] = sanitize_json($row['ad_name_en']);
+        $data[$i]['difficulty']['name']['fr'] = sanitize_json($row['ad_name_fr']);
+      }
+      else
+        $data[$i]['difficulty']             = array();
+
+      // Images
       if($row['i_id_en'])
       {
         $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
@@ -2157,12 +2265,22 @@ function arsenals_list( string  $sort_by  = ''      ,
         $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
                                                 .'api/image/'.$row['i_uuid_fr']);
       }
+      if(!$row['i_id_en'] && !$row['i_id_fr'])
+        $data[$i]['images']                   = array();
+
+      // Card count
       $data[$i]['card_count']['main']       = (int)sanitize_json($row['a_count']);
       $data[$i]['card_count']['reserves']   = (int)sanitize_json($row['a_rcount']);
       $data[$i]['card_count']['extras']     = (int)sanitize_json($row['a_ecount']);
-      $data[$i]['cards']                    = ($row['ac_names']) ? explode(',', $row['ac_names']) : array();
-      $data[$i]['tags']                     = ($row['at_names']) ? explode(', ', $row['at_names']) : array();
-      $data[$i]['endpoint']                 = sanitize_json($GLOBALS['website_url'].'api/arsenal/'.$row['a_uuid']);
+
+      // Cards
+      $data[$i]['cards']['uuids']           = ($row['ac_uuids']) ? explode(',', $row['ac_uuids']) : array();
+      $data[$i]['cards']['names']['en']     = ($row['ac_names_en']) ? explode(',', $row['ac_names_en']) : array();
+      $data[$i]['cards']['names']['fr']     = ($row['ac_names_fr']) ? explode(',', $row['ac_names_fr']) : array();
+
+      // Tags
+      $data[$i]['tags']['uuids']            = ($row['at_uuids']) ? explode(', ', $row['at_uuids']) : array();
+      $data[$i]['tags']['names']            = ($row['at_names']) ? explode(', ', $row['at_names']) : array();
     }
   }
 

@@ -125,27 +125,8 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   "arsenals": [
     {
       "uuid": string,
+      "endpoint": string,
       "name": {
-        "en": string,
-        "fr": string
-      },
-      "release": {
-        "uuid": string,
-        "en": string,
-        "fr": string
-      },
-      "format": {
-        "uuid": string,
-        "en": string,
-        "fr": string
-      },
-      "factions": [
-        "faction1",
-        "faction2",
-        ...
-      ],
-      "difficulty": {
-        "uuid": string,
         "en": string,
         "fr": string
       },
@@ -169,6 +150,47 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "en": string,
         "fr": string
       },
+      "release": {
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
+        },
+        "date": string
+      },
+      "format": {
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
+        }
+      },
+      "factions": {
+        "uuids": [
+          "uuid1",
+          "uuid2",
+          ...
+        ],
+        "names": {
+          "en": [
+            "faction1",
+            "faction2",
+            ...
+          ],
+          "fr": [
+            "faction1",
+            "faction2",
+            ...
+          ]
+        }
+      }
+      "difficulty": {
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
+        }
+      },
       "images": {
         "en": {
           "uuid": string,
@@ -186,17 +208,37 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         reserves: int,
         extras: int
       },
-      cards: [
-        "card1",
-        "card2",
-        ...
-      ],
-      "tags": [
-        "tag1",
-        "tag2",
-        ...
-      ],
-      "endpoint": string
+      cards: {
+        "uuids": [
+          "uuid1",
+          "uuid2",
+          ...
+        ],
+        "names": {
+          "en": [
+            "card1",
+            "card2",
+            ...
+          ],
+          "fr": [
+            "card1",
+            "card2",
+            ...
+          ]
+        }
+      }
+      "tags": {
+        "uuids": [
+          "uuid1",
+          "uuid2",
+          ...
+        ],
+        "names": [
+          "tag1",
+          "tag2",
+          ...
+        ]
+      }
     },
   ]
 }</pre>
@@ -240,44 +282,6 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "en": string,
       "fr": string
     },
-    "release": {
-      "uuid": string,
-      "date": string,
-      "name": {
-        "en": string,
-        "fr": string
-      }
-    },
-    "format": {
-      "uuid": string,
-      "name": {
-        "en": string,
-        "fr": string
-      }
-      "description": {
-        "en": string,
-        "fr": string
-      }
-    },
-    "factions": [
-      {
-        "faction": {
-          "uuid": string,
-          "name": {
-            "en": string,
-            "fr": string
-          },
-        }
-      }
-      ...
-    ]
-    "difficulty": {
-      "uuid": string,
-      "name": {
-        "en": string,
-        "fr": string
-      }
-    },
     "playstyle": {
       "en": string,
       "fr": string
@@ -298,46 +302,75 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "en": string,
       "fr": string
     },
-    "images": {
-      "en": {
-        "uuid": string,
-        "name": string,
-        "language": string,
-        "artist": string,
-        "path": string,
-      },
-      "fr": {
-        "uuid": string,
-        "name": string,
-        "language": string,
-        "artist": string,
-        "path": string,
+    "release": {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string,
       }
-    },
-    "cards": [
+      "date": string
+    }
+    "format": {
+      "uuid": string
+      "name": {
+        "en": string
+        "fr": string
+      }
+    }
+    "factions": [
       {
-        "card": {
-          ...
-        }
-        "amount": {
-          "main": int,
-          "reserves": int,
-          "extra": int
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
         }
       },
       ...
-    ]
+    ],
+    "difficulty": {
+      "uuid": string,
+      "name": {
+        "en": string,
+        "fr": string
+      }
+    },
+    "images" {
+      "en": {
+        "uuid": string,
+        "path": string,
+        "endpoint": string
+      },
+      "fr": {
+        "uuid": string,
+        "path": string,
+        "endpoint": string
+      }
+    },
+    "card_count": {
+      "main": int,
+      "reserves": int,
+      "extras": int
+    },
+    "cards": [
+      {
+        "uuid": string,
+        "endpoint": string,
+        "name": {
+          "en": string,
+          "fr": string
+        },
+        "amount": {
+          "main": int,
+          "reserves": int
+        }
+      },
+      ...
+    ],
     "tags": [
       {
-        "tag": {
-          "uuid": string,
-          "type": string,
-          "name": string,
-          "description": {
-            "en": string,
-            "fr": string
-          },
-        }
+        "uuid": string,
+        "endpoint": string,
+        "name": string
       },
       ...
     ]

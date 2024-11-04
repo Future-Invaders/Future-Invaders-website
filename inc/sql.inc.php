@@ -35,7 +35,8 @@ $GLOBALS['query'] = 0;
 
 // Set the global charset in order to avoid encoding mishaps
 mysqli_set_charset($GLOBALS['db'], "utf8mb4");
-query(' SET NAMES utf8mb4 ', description: "Specify the charset for the session");
+query(' SET NAMES utf8mb4; ', description: "Specify the charset for the session");
+query(' SET SESSION group_concat_max_len = 65536; ', description: "Allow for long group_concat queries");
 
 
 
