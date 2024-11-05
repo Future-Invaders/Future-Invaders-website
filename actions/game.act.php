@@ -1046,6 +1046,28 @@ function images_get(  ?int    $image_id         = null    ,
   if($format === 'api' && !$image_data['c_id_en'] && !$image_data['c_id_fr'] && !$image_data['a_id_en'] && !$image_data['a_id_fr'])
     return null;
 
+  // Sanitize the image's id
+  $image_id = sanitize($image_data['i_id'], 'int');
+
+  // Fetch linked cards
+  $qcards = query(" SELECT    cards.uuid    AS 'c_uuid'     ,
+                              cards.name_en AS 'c_name_en'  ,
+                              cards.name_fr AS 'c_name_fr'
+                    FROM      cards
+                    WHERE   ( cards.fk_images_en = '$image_id'
+                    OR        cards.fk_images_fr = '$image_id' )
+                    ORDER BY  cards.name_en ASC ");
+
+
+  // Fetch linked tags
+  $qtags = query("  SELECT    tags.uuid           AS 't_uuid' ,
+                              tags.name           AS 't_name' ,
+                              tags_images.fk_tags AS 'it_id'
+                    FROM      tags_images
+                    LEFT JOIN tags ON tags_images.fk_tags = tags.id
+                    WHERE     tags_images.fk_images = '$image_id'
+                    ORDER BY  tags.name ASC ");
+
   // Prepare the data for display
   if($format === 'html')
   {
@@ -1058,31 +1080,41 @@ function images_get(  ?int    $image_id         = null    ,
   // Prepare the data for the API
   if($format === 'api')
   {
+    // Sanitize card data
     $data['uuid']     = sanitize_json($image_data['i_uuid']);
+    $data['path']     = sanitize_json($GLOBALS['website_url'].$image_data['i_path']);
     $data['name']     = sanitize_json($image_data['i_name']);
     $data['language'] = sanitize_json($image_data['i_lang']);
     $data['artist']   = sanitize_json($image_data['i_artist']);
-    $data['path']     = sanitize_json($GLOBALS['website_url'].$image_data['i_path']);
-  }
 
-  // Add linked tags
-  if(!$no_depth)
-  {
-    // Fetch linked tags
-    $image_id = sanitize($image_data['i_id'], 'int');
-    $qtags = query("  SELECT  tags_images.fk_tags AS 'it_id'
-                      FROM    tags_images
-                      WHERE   tags_images.fk_images = '$image_id' ");
+    // Cards
+    if(!$no_depth)
+    {
+      for($i = 0; $dcards = query_row($qcards); $i++)
+      {
+        $data['cards'][$i]['uuid']        = sanitize_json($dcards['c_uuid']);
+        $data['cards'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url']
+                                          .'api/card/'.$dcards['c_uuid']);
+        $data['cards'][$i]['name']['en']  = sanitize_json($dcards['c_name_en']);
+        $data['cards'][$i]['name']['fr']  = sanitize_json($dcards['c_name_fr']);
+      }
+      if($i === 0)
+        $data['cards']                    = array();
+    }
 
-    // Prepare linked tags for display
-    for($i = 0; $dtags = query_row($qtags); $i++)
-      $data['tags'][$i] = tags_get( tag_id:   $dtags['it_id'] ,
-                                    format:   $format         ,
-                                    no_depth:  true           );
-
-    // If there are no linked tags, show an empty array
-    if($i === 0)
-      $data['tags'] = array();
+    // Tags
+    if(!$no_depth)
+    {
+      for($i = 0; $dtags = query_row($qtags); $i++)
+      {
+        $data['tags'][$i]['uuid']     = sanitize_json($dtags['t_uuid']);
+        $data['tags'][$i]['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                      .'api/tag/'.$dtags['t_uuid']);
+        $data['tags'][$i]['name']     = sanitize_json($dtags['t_name']);
+      }
+      if($i === 0)
+        $data['tags']                 = array();
+    }
   }
 
   // Prepare for the API
@@ -1186,19 +1218,25 @@ function images_list( string  $sort_by  = 'path'  ,
   };
 
   // Get a list of all images in the database
-  $qimages = query("  SELECT    images.id                   AS 'i_id'       ,
-                                images.uuid                 AS 'i_uuid'     ,
-                                images.path                 AS 'i_path'     ,
-                                images.name                 AS 'i_name'     ,
-                                images.language             AS 'i_lang'     ,
-                                images.artist               AS 'i_artist'   ,
-                                COUNT(DISTINCT cards_en.id) AS 'c_count_en' ,
-                                COUNT(DISTINCT cards_fr.id) AS 'c_count_fr' ,
-                                COUNT(DISTINCT tags.id)     AS 'it_count'   ,
+  $qimages = query("  SELECT    images.id                   AS 'i_id'         ,
+                                images.uuid                 AS 'i_uuid'       ,
+                                images.path                 AS 'i_path'       ,
+                                images.name                 AS 'i_name'       ,
+                                images.language             AS 'i_lang'       ,
+                                images.artist               AS 'i_artist'     ,
+                                COUNT(DISTINCT cards_en.id) AS 'c_count_en'   ,
+                                COUNT(DISTINCT cards_fr.id) AS 'c_count_fr'   ,
+                                COUNT(DISTINCT tags.id)     AS 'it_count'     ,
+                                GROUP_CONCAT(DISTINCT tags.uuid ORDER BY tags.name ASC SEPARATOR ', ')
+                                                            AS 'it_uuids'     ,
                                 GROUP_CONCAT(DISTINCT tags.name ORDER BY tags.name ASC SEPARATOR ', ')
-                                                            AS 'it_names'   ,
+                                                            AS 'it_names'     ,
+                                GROUP_CONCAT(DISTINCT cards_en.uuid ORDER BY cards_en.name_en ASC SEPARATOR ', ')
+                                                            AS 'c_uuids'      ,
                                 GROUP_CONCAT(DISTINCT cards_en.name_en ORDER BY cards_en.name_en ASC SEPARATOR ', ')
-                                                            AS 'c_names_en' ,
+                                                            AS 'c_names_en'   ,
+                                GROUP_CONCAT(DISTINCT cards_en.name_fr ORDER BY cards_en.name_en ASC SEPARATOR ', ')
+                                                            AS 'c_names_fren' ,
                                 GROUP_CONCAT(DISTINCT cards_fr.name_en ORDER BY cards_fr.name_en ASC SEPARATOR ', ')
                                                             AS 'c_names_fr'
                       FROM      images
@@ -1247,13 +1285,22 @@ function images_list( string  $sort_by  = 'path'  ,
     // Prepare for the API
     if($format === 'api')
     {
+      // Sanitize image data
       $data[$i]['uuid']     = sanitize_json($row['i_uuid']);
+      $data[$i]['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path']);
+      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid']);
       $data[$i]['name']     = sanitize_json($row['i_name']);
       $data[$i]['language'] = sanitize_json($row['i_lang']);
       $data[$i]['artist']   = sanitize_json($row['i_artist']);
-      $data[$i]['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path']);
-      $data[$i]['tags']     = ($row['it_names']) ? explode(', ', $row['it_names']) : array();
-      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/image/'.$row['i_uuid']);
+
+      // Cards
+      $data[$i]['cards']['uuids']       = ($row['c_uuids']) ? explode(', ', $row['c_uuids']) : array();
+      $data[$i]['cards']['names']['en'] = ($row['c_names_en']) ? explode(', ', $row['c_names_en']) : array();
+      $data[$i]['cards']['names']['fr'] = ($row['c_names_fren']) ? explode(', ', $row['c_names_fren']) : array();
+
+      // Tags
+      $data[$i]['tags']['uuids']  = ($row['it_uuids']) ? explode(', ', $row['it_uuids']) : array();
+      $data[$i]['tags']['names']  = ($row['it_names']) ? explode(', ', $row['it_names']) : array();
     }
   }
 

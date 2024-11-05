@@ -114,17 +114,44 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   "images": [
     {
       "uuid": string,
+      "path": string,
+      "endpoint": string,
       "name": string,
       "language": string,
       "artist": string,
-      "path": string,
-      "tags": [
-        "tag1",
-        "tag2",
-        ...
-      ],
-      "endpoint": string
+      "cards": {
+        "uuids": [
+          "uuid1",
+          "uuid2",
+          ...
+        ],
+        "names": {
+          "en": [
+            "card1",
+            "card2",
+            ...
+          ],
+          "fr": [
+            "card1",
+            "card2",
+            ...
+          ]
+        }
+      },
+      "tags": {
+        "uuids": [
+          "uuid1",
+          "uuid2",
+          ...
+        ],
+        "names": [
+          "tag1",
+          "tag2",
+          ...
+        ]
+      }
     },
+    ...
   ]
 }</pre>
 
@@ -163,22 +190,27 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "image": {
     "uuid": string,
+    "path": string,
     "name": string,
     "language": string,
     "artist": string,
-    "path": string,
+    "cards": [
+      {
+        "uuid": string,
+        "endpoint": string,
+        "name": {
+          "en": string,
+          "fr": string
+        }
+      },
+      ...
+    ],
     "tags": [
       {
-        "tag": {
-          "uuid": string,
-          "type": string,
-          "name": string,
-          "description": {
-            "en": string,
-            "fr": string
-          },
-        }
-      }
+        "uuid": string,
+        "endpoint": string,
+        "name": string
+      },
       ...
     ]
   }
