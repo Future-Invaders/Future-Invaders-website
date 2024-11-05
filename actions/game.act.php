@@ -121,35 +121,75 @@ function cards_get( int     $card_id    = null    ,
   $query_where = ($card_id) ? " WHERE cards.id = '$card_id' " : " WHERE cards.uuid = '$card_uuid' ";
 
   // Fetch the card's data
-  $card_data = query("  SELECT    cards.id                AS 'c_id'         ,
-                                  cards.uuid              AS 'c_uuid'       ,
-                                  cards.fk_releases       AS 'c_release_id' ,
-                                  cards.fk_images_en      AS 'c_img_en_id'  ,
-                                  cards.fk_images_fr      AS 'c_img_fr_id'  ,
-                                  cards.fk_card_types     AS 'c_type_id'    ,
-                                  cards.fk_factions       AS 'c_faction_id' ,
-                                  cards.fk_card_rarities  AS 'c_rarity_id'  ,
-                                  cards.is_extra_card     AS 'c_extra'      ,
-                                  cards.is_hidden         AS 'c_hidden'     ,
-                                  cards.name_en           AS 'c_name_en'    ,
-                                  cards.name_fr           AS 'c_name_fr'    ,
-                                  cards.cost              AS 'c_cost'       ,
-                                  cards.income            AS 'c_income'     ,
-                                  cards.weapons           AS 'c_weapons'    ,
-                                  cards.durability        AS 'c_durability' ,
-                                  cards.body_en           AS 'c_body_en'    ,
-                                  cards.body_fr           AS 'c_body_fr'    ,
-                                  images_en.path          AS 'i_path_en'    ,
-                                  images_fr.path          AS 'i_path_fr'
+  $card_data = query("  SELECT    cards.id                      AS 'c_id'         ,
+                                  cards.uuid                    AS 'c_uuid'       ,
+                                  cards.fk_releases             AS 'c_release_id' ,
+                                  cards.fk_images_en            AS 'c_img_en_id'  ,
+                                  cards.fk_images_fr            AS 'c_img_fr_id'  ,
+                                  cards.fk_card_types           AS 'c_type_id'    ,
+                                  cards.fk_factions             AS 'c_faction_id' ,
+                                  cards.fk_card_rarities        AS 'c_rarity_id'  ,
+                                  cards.is_extra_card           AS 'c_extra'      ,
+                                  cards.is_hidden               AS 'c_hidden'     ,
+                                  cards.name_en                 AS 'c_name_en'    ,
+                                  cards.name_fr                 AS 'c_name_fr'    ,
+                                  cards.cost                    AS 'c_cost'       ,
+                                  cards.income                  AS 'c_income'     ,
+                                  cards.weapons                 AS 'c_weapons'    ,
+                                  cards.durability              AS 'c_durability' ,
+                                  cards.body_en                 AS 'c_body_en'    ,
+                                  cards.body_fr                 AS 'c_body_fr'    ,
+                                  releases.uuid                 AS 'r_uuid'       ,
+                                  releases.name_en              AS 'r_name_en'    ,
+                                  releases.name_fr              AS 'r_name_fr'    ,
+                                  releases.release_date         AS 'r_date'       ,
+                                  factions.uuid                 AS 'f_uuid'       ,
+                                  factions.name_en              AS 'f_name_en'    ,
+                                  factions.name_fr              AS 'f_name_fr'    ,
+                                  card_types.uuid               AS 'ct_uuid'      ,
+                                  card_types.name_en            AS 'ct_name_en'   ,
+                                  card_types.name_fr            AS 'ct_name_fr'   ,
+                                  card_rarities.uuid            AS 'cr_uuid'      ,
+                                  card_rarities.name_en         AS 'cr_name_en'   ,
+                                  card_rarities.name_fr         AS 'cr_name_fr'   ,
+                                  card_rarities.max_card_count  AS 'cr_max_count' ,
+                                  images_en.uuid                AS 'i_uuid_en'    ,
+                                  images_en.path                AS 'i_path_en'    ,
+                                  images_fr.uuid                AS 'i_uuid_fr'    ,
+                                  images_fr.path                AS 'i_path_fr'
                         FROM      cards
-                        LEFT JOIN images AS images_en ON images_en.id = cards.fk_images_en
-                        LEFT JOIN images AS images_fr ON images_fr.id = cards.fk_images_fr
+                        LEFT JOIN releases            ON releases.id      = cards.fk_releases
+                        LEFT JOIN factions            ON factions.id      = cards.fk_factions
+                        LEFT JOIN card_types          ON card_types.id    = cards.fk_card_types
+                        LEFT JOIN card_rarities       ON card_rarities.id = cards.fk_card_rarities
+                        LEFT JOIN images AS images_en ON images_en.id     = cards.fk_images_en
+                        LEFT JOIN images AS images_fr ON images_fr.id     = cards.fk_images_fr
                         $query_where ",
                         fetch_row: true);
 
   // Don't retrieve hidden or extra cards through the API
   if($format === 'api' && ($card_data['c_hidden'] || $card_data['c_extra']))
     return null;
+
+  // Sanitize the card's id
+  $card_id = sanitize($card_data['c_id'], 'int');
+
+  // Fetch linked arsenals
+  $qarsenals = query("  SELECT    arsenals.uuid                     AS 'a_uuid'     ,
+                                  arsenals.name_en                  AS 'a_name_en'  ,
+                                  arsenals.name_fr                  AS 'a_name_fr'  ,
+                                  arsenals_compositions.fk_arsenals AS 'ac_id'
+                        FROM      arsenals_compositions
+                        LEFT JOIN arsenals ON arsenals_compositions.fk_arsenals = arsenals.id
+                        WHERE     arsenals_compositions.fk_cards = '$card_id' ");
+
+  // Fetch linked tags
+  $qtags = query("  SELECT    tags.uuid           AS 't_uuid' ,
+                              tags.name           AS 't_name' ,
+                              tags_cards.fk_tags  AS 'ct_id'
+                    FROM      tags_cards
+                    LEFT JOIN tags ON tags.id = tags_cards.fk_tags
+                    WHERE     tags_cards.fk_cards = '$card_id' ");
 
   // Prepare the data for display
   if($format === 'html')
@@ -177,7 +217,7 @@ function cards_get( int     $card_id    = null    ,
   // Prepare for the API
   if($format === 'api')
   {
-    // Sanitize the data
+    // Sanitize card data
     $data['uuid']         = sanitize_json($card_data['c_uuid']);
     $data['name']['en']   = sanitize_json($card_data['c_name_en']);
     $data['name']['fr']   = sanitize_json($card_data['c_name_fr']);
@@ -187,64 +227,94 @@ function cards_get( int     $card_id    = null    ,
     $data['durability']   = (int)sanitize_json($card_data['c_durability']);
     $data['body']['en']   = sanitize_json($card_data['c_body_en']);
     $data['body']['fr']   = sanitize_json($card_data['c_body_fr']);
-    $data['release']      = ($card_data['c_release_id'])
-                          ? releases_get($card_data['c_release_id'], format: 'api', no_parent_array: true)
-                          : array();
-    $data['faction']      = ($card_data['c_faction_id'])
-                          ? factions_get($card_data['c_faction_id'], format: 'api', no_parent_array: true)
-                          : array();
-    $data['type']         = ($card_data['c_type_id'])
-                          ? card_types_get($card_data['c_type_id'], format: 'api', no_parent_array: true)
-                          : array();
-    $data['rarity']       = ($card_data['c_rarity_id'])
-                          ? card_rarities_get($card_data['c_rarity_id'], format: 'api', no_parent_array: true)
-                          : array();
-    $data['images']['en'] = ($card_data['c_img_en_id'])
-                          ? images_get($card_data['c_img_en_id'], format: 'api', no_depth: true, no_parent_array: true)
-                          : array();
-    $data['images']['fr'] = ($card_data['c_img_fr_id'])
-                          ? images_get($card_data['c_img_fr_id'], format: 'api', no_depth: true,no_parent_array: true)
-                          : array();
 
-    // Sanitize the card's id
-    $card_id = sanitize($card_data['c_id'], 'int');
+    // Release
+    if($card_data['c_release_id'])
+    {
+      $data['release']['uuid']        = sanitize_json($card_data['r_uuid']);
+      $data['release']['name']['en']  = sanitize_json($card_data['r_name_en']);
+      $data['release']['name']['fr']  = sanitize_json($card_data['r_name_fr']);
+      $data['release']['date']        = sanitize_json($card_data['r_date']);
+    }
+    else
+      $data['release']                = array();
 
-    // Add linked arsenals
+    // Faction
+    if($card_data['c_faction_id'])
+    {
+      $data['faction']['uuid']        = sanitize_json($card_data['f_uuid']);
+      $data['faction']['name']['en']  = sanitize_json($card_data['f_name_en']);
+      $data['faction']['name']['fr']  = sanitize_json($card_data['f_name_fr']);
+    }
+    else
+      $data['faction']                = array();
+
+    // Type
+    if($card_data['c_type_id'])
+    {
+      $data['type']['uuid']       = sanitize_json($card_data['ct_uuid']);
+      $data['type']['name']['en'] = sanitize_json($card_data['ct_name_en']);
+      $data['type']['name']['fr'] = sanitize_json($card_data['ct_name_fr']);
+    }
+    else
+      $data['type']               = array();
+
+    // Rarity
+    if($card_data['c_rarity_id'])
+    {
+      $data['rarity']['uuid']           = sanitize_json($card_data['cr_uuid']);
+      $data['rarity']['name']['en']     = sanitize_json($card_data['cr_name_en']);
+      $data['rarity']['name']['fr']     = sanitize_json($card_data['cr_name_fr']);
+      $data['rarity']['max_card_count'] = (int)sanitize_json($card_data['cr_max_count']);
+    }
+    else
+      $data['rarity']                   = array();
+
+    // Images
+    if($card_data['c_img_en_id'])
+    {
+      $data['images']['en']['uuid']     = sanitize_json($card_data['i_uuid_en']);
+      $data['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$card_data['i_path_en']);
+      $data['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                          .'api/image/'.$card_data['i_uuid_en']);
+    }
+    if($card_data['c_img_fr_id'])
+    {
+      $data['images']['fr']['uuid']     = sanitize_json($card_data['i_uuid_fr']);
+      $data['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$card_data['i_path_fr']);
+      $data['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                          .'api/image/'.$card_data['i_uuid_fr']);
+    }
+    if(!$card_data['c_img_en_id'] && !$card_data['c_img_fr_id'])
+      $data['images']                   = array();
+
+    // Arsenals
     if(!$no_depth)
     {
-      // Fetch linked arsenals
-      $qarsenals = query("  SELECT  arsenals_compositions.fk_arsenals AS 'ac_id'
-                            FROM    arsenals_compositions
-                            WHERE   arsenals_compositions.fk_cards = '$card_id' ");
-
-      // Prepare linked tags for display
       for($i = 0; $darsenals = query_row($qarsenals); $i++)
-        $data['arsenals'][$i] = arsenals_get( arsenal_id: $darsenals['ac_id'] ,
-                                              format:     $format             ,
-                                              no_depth:   true                );
-
-      // If there are no linked tags, show an empty array
+      {
+        $data['arsenals'][$i]['uuid']       = sanitize_json($darsenals['a_uuid']);
+        $data['arsenals'][$i]['endpoint']   = sanitize_json($GLOBALS['website_url']
+                                            .'api/arsenal/'.$darsenals['a_uuid']);
+        $data['arsenals'][$i]['name']['en'] = sanitize_json($darsenals['a_name_en']);
+        $data['arsenals'][$i]['name']['fr'] = sanitize_json($darsenals['a_name_fr']);
+      }
       if($i === 0)
-        $data['arsenals'] = array();
+        $data['arsenals']                   = array();
     }
 
-    // Add linked tags
+    // Tags
     if(!$no_depth)
     {
-      // Fetch linked tags
-      $qtags = query("  SELECT  tags_cards.fk_tags AS 'ct_id'
-                        FROM    tags_cards
-                        WHERE   tags_cards.fk_cards = '$card_id' ");
-
-      // Prepare linked tags for display
       for($i = 0; $dtags = query_row($qtags); $i++)
-        $data['tags'][$i] = tags_get( tag_id:   $dtags['ct_id'] ,
-                                      format:   $format         ,
-                                      no_depth:  true           );
-
-      // If there are no linked tags, show an empty array
+      {
+        $data['tags'][$i]['uuid']     = sanitize_json($dtags['t_uuid']);
+        $data['tags'][$i]['endpoint'] = sanitize_json($GLOBALS['website_url']
+                                      .'api/tag/'.$dtags['t_uuid']);
+        $data['tags'][$i]['name']     = sanitize_json($dtags['t_name']);
+      }
       if($i === 0)
-        $data['tags'] = array();
+        $data['tags']                 = array();
     }
 
     // Prepare for the API
@@ -426,6 +496,7 @@ function cards_list( string   $sort_by    = 'name'  ,
                               releases.name_en              AS 'r_name_en'    ,
                               releases.name_fr              AS 'r_name_fr'    ,
                               releases.styling              AS 'r_styling'    ,
+                              releases.release_date         AS 'r_date'       ,
                               card_types.id                 AS 'ct_id'        ,
                               card_types.uuid               AS 'ct_uuid'      ,
                               card_types.name_en            AS 'ct_name_en'   ,
@@ -453,10 +524,16 @@ function cards_list( string   $sort_by    = 'name'  ,
                               images_fr.path                AS 'i_path_fr'    ,
                               COUNT(DISTINCT tags.id)       AS 'ct_count'     ,
                               COUNT(DISTINCT arsenals.id)   AS 'ar_count'     ,
+                              GROUP_CONCAT(DISTINCT tags.uuid ORDER BY tags.name ASC SEPARATOR ', ')
+                                                            AS 'ct_uuids'     ,
                               GROUP_CONCAT(DISTINCT tags.name ORDER BY tags.name ASC SEPARATOR ', ')
                                                             AS 'ct_names'     ,
+                              GROUP_CONCAT(DISTINCT arsenals.uuid ORDER BY arsenals.name_en ASC SEPARATOR ', ')
+                                                            AS 'ar_uuids'     ,
                               GROUP_CONCAT(DISTINCT arsenals.name_en ORDER BY arsenals.name_en ASC SEPARATOR ', ')
-                                                            AS 'ar_names'
+                                                            AS 'ar_names_en'  ,
+                              GROUP_CONCAT(DISTINCT arsenals.name_fr ORDER BY arsenals.name_en ASC SEPARATOR ', ')
+                                                            AS 'ar_names_fr'
                     FROM      cards
                     LEFT JOIN releases              ON releases.id                    = cards.fk_releases
                     LEFT JOIN factions              ON factions.id                    = cards.fk_factions
@@ -517,7 +594,7 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['extra']        = sanitize_output($row['c_extra']);
       $data[$i]['hidden']       = sanitize_output($row['c_hidden']);
       $data[$i]['narsenals']    = sanitize_output($row['ar_count']);
-      $data[$i]['arsenals']     = sanitize_output($row['ar_names']);
+      $data[$i]['arsenals']     = sanitize_output($row['ar_names_en']);
       $data[$i]['ntags']        = sanitize_output($row['ct_count']);
       $data[$i]['tags']         = sanitize_output($row['ct_names']);
     }
@@ -525,100 +602,100 @@ function cards_list( string   $sort_by    = 'name'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      // Special cards (rules, lore, extras)
-      if($search_type !== null)
+      // Sanitize card data
+      $data[$i]['uuid']         = sanitize_json($row['c_uuid']);
+      if($search_type === null)
+        $data[$i]['endpoint']   = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
+      $data[$i]['name']['en']   = sanitize_json($row['c_name_en']);
+      $data[$i]['name']['fr']   = sanitize_json($row['c_name_fr']);
+      if($search_type === null)
       {
-        $data[$i]['uuid']                       = sanitize_json($row['c_uuid']);
-        $data[$i]['name']['en']                 = sanitize_json($row['c_name_en']);
-        $data[$i]['name']['fr']                 = sanitize_json($row['c_name_fr']);
-        $data[$i]['body']['en']                 = sanitize_json($row['c_body_en']);
-        $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
-        if($row['r_id'])
-        {
-          $data[$i]['release']['uuid']          = sanitize_json($row['r_uuid']);
-          $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
-          $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
-        }
-        if($row['i_id_en'])
-        {
-          $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
-          $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
-          $data[$i]['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                                  .'api/image/'.$row['i_uuid_en']);
-        }
-        if($row['i_id_fr'])
-        {
-          $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
-          $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
-          $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                                  .'api/image/'.$row['i_uuid_fr']);
-        }
+        $data[$i]['cost']       = sanitize_json($row['c_cost']);
+        $data[$i]['income']     = sanitize_json($row['c_income']);
+        $data[$i]['weapons']    = (int)sanitize_json($row['c_weapons']);
+        $data[$i]['durability'] = (int)sanitize_json($row['c_durability']);
       }
+      $data[$i]['body']['en']   = sanitize_json($row['c_body_en']);
+      $data[$i]['body']['fr']   = sanitize_json($row['c_body_fr']);
 
-      // Generic game cards
-      else
+      // Release
+      if($row['r_id'])
       {
-        $data[$i]['uuid']                       = sanitize_json($row['c_uuid']);
-        $data[$i]['name']['en']                 = sanitize_json($row['c_name_en']);
-        $data[$i]['name']['fr']                 = sanitize_json($row['c_name_fr']);
-        $data[$i]['cost']                       = sanitize_json($row['c_cost']);
-        $data[$i]['income']                     = sanitize_json($row['c_income']);
-        $data[$i]['weapons']                    = (int)sanitize_json($row['c_weapons']);
-        $data[$i]['durability']                 = (int)sanitize_json($row['c_durability']);
-        $data[$i]['body']['en']                 = sanitize_json($row['c_body_en']);
-        $data[$i]['body']['fr']                 = sanitize_json($row['c_body_fr']);
-        if($row['r_id'])
-        {
-          $data[$i]['release']['uuid']          = sanitize_json($row['r_uuid']);
-          $data[$i]['release']['en']            = sanitize_json($row['r_name_en']);
-          $data[$i]['release']['fr']            = sanitize_json($row['r_name_fr']);
-        }
-        else
-          $data[$i]['release']                  = array();
+        $data[$i]['release']['uuid']        = sanitize_json($row['r_uuid']);
+        $data[$i]['release']['name']['en']  = sanitize_json($row['r_name_en']);
+        $data[$i]['release']['name']['fr']  = sanitize_json($row['r_name_fr']);
+        $data[$i]['release']['date']        = sanitize_json($row['r_date']);
+      }
+      else
+        $data[$i]['release']                = array();
+
+      // Faction
+      if($search_type === null)
+      {
         if($row['f_id'])
         {
-          $data[$i]['faction']['uuid']          = sanitize_json($row['f_uuid']);
-          $data[$i]['faction']['en']            = sanitize_json($row['f_name_en']);
-          $data[$i]['faction']['fr']            = sanitize_json($row['f_name_fr']);
+          $data[$i]['faction']['uuid']        = sanitize_json($row['f_uuid']);
+          $data[$i]['faction']['name']['en']  = sanitize_json($row['f_name_en']);
+          $data[$i]['faction']['name']['fr']  = sanitize_json($row['f_name_fr']);
         }
         else
-          $data[$i]['faction']                  = array();
+          $data[$i]['faction']                = array();
+      }
+
+      // Type
+      if($search_type === null)
+      {
         if($row['ct_id'])
         {
-          $data[$i]['type']['uuid']             = sanitize_json($row['ct_uuid']);
-          $data[$i]['type']['en']               = sanitize_json($row['ct_name_en']);
-          $data[$i]['type']['fr']               = sanitize_json($row['ct_name_fr']);
+          $data[$i]['type']['uuid']       = sanitize_json($row['ct_uuid']);
+          $data[$i]['type']['name']['en'] = sanitize_json($row['ct_name_en']);
+          $data[$i]['type']['name']['fr'] = sanitize_json($row['ct_name_fr']);
         }
         else
-          $data[$i]['type']                     = array();
+          $data[$i]['type']               = array();
+      }
+
+      // Rarity
+      if($search_type === null)
+      {
         if($row['cr_id'])
         {
           $data[$i]['rarity']['uuid']           = sanitize_json($row['cr_uuid']);
-          $data[$i]['rarity']['en']             = sanitize_json($row['cr_name_en']);
-          $data[$i]['rarity']['fr']             = sanitize_json($row['cr_name_fr']);
+          $data[$i]['rarity']['name']['en']     = sanitize_json($row['cr_name_en']);
+          $data[$i]['rarity']['name']['fr']     = sanitize_json($row['cr_name_fr']);
           $data[$i]['rarity']['max_card_count'] = (int)sanitize_json($row['cr_max_count']);
         }
         else
           $data[$i]['rarity']                   = array();
-        if(!$row['i_id_en'] && !$row['i_id_fr'])
-          $data[$i]['images']                   = array();
-        if($row['i_id_en'])
-        {
-          $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
-          $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
-          $data[$i]['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                                  .'api/image/'.$row['i_uuid_en']);
-        }
-        if($row['i_id_fr'])
-        {
-          $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
-          $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
-          $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                                  .'api/image/'.$row['i_uuid_fr']);
-        }
-        $data[$i]['arsenals'] = ($row['ar_names']) ? explode(', ', $row['ar_names']) : array();
-        $data[$i]['tags']     = ($row['ct_names']) ? explode(', ', $row['ct_names']) : array();
-        $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
+      }
+
+      // Images
+      if($row['i_id_en'])
+      {
+        $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
+        $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
+      }
+      if($row['i_id_fr'])
+      {
+        $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
+        $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
+      }
+      if(!$row['i_id_en'] && !$row['i_id_fr'])
+        $data[$i]['images']                   = array();
+
+      // Arsenals
+      if($search_type === null)
+      {
+        $data[$i]['arsenals']['uuids']        = ($row['ar_uuids']) ? explode(', ', $row['ar_uuids']) : array();
+        $data[$i]['arsenals']['names']['en']  = ($row['ar_names_en']) ? explode(', ', $row['ar_names_en']) : array();
+        $data[$i]['arsenals']['names']['fr']  = ($row['ar_names_fr']) ? explode(', ', $row['ar_names_fr']) : array();
+      }
+
+      // Tags
+      if($search_type === null)
+      {
+        $data[$i]['tags']['uuids']  = ($row['ct_uuids']) ? explode(', ', $row['ct_uuids']) : array();
+        $data[$i]['tags']['names']  = ($row['ct_names']) ? explode(', ', $row['ct_names']) : array();
       }
     }
   }
@@ -1675,7 +1752,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                         WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
 
   // Fetch linked factions
-  $qfactions = query("  SELECT    factions.uuid     AS 'f_uuid'     ,
+  $qfactions = query("  SELECT    factions.id       AS 'f_id'       ,
+                                  factions.uuid     AS 'f_uuid'     ,
                                   factions.name_en  AS 'f_name_en'  ,
                                   factions.name_fr  AS 'f_name_fr'
                         FROM      arsenals_factions
@@ -2183,8 +2261,8 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['thumb_fr']         = sanitize_output($temp_thumb_path_fr);
       $data[$i]['ntags']            = sanitize_output($row['at_count']);
       $data[$i]['tags']             = sanitize_output($row['at_names']);
-      $data[$i]['factions']         = $row['af_names']
-                                    ? factions_abbreviate(sanitize_output($row['af_names']), style: true)
+      $data[$i]['factions']         = $row['af_names_en']
+                                    ? factions_abbreviate(sanitize_output($row['af_names_en']), style: true)
                                     : '';
       $data[$i]['cards_main']       = sanitize_output($row['a_count']);
       $data[$i]['cards_reserves']   = sanitize_output($row['a_rcount']);
@@ -2255,15 +2333,11 @@ function arsenals_list( string  $sort_by  = ''      ,
       {
         $data[$i]['images']['en']['uuid']     = sanitize_json($row['i_uuid_en']);
         $data[$i]['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_en']);
-        $data[$i]['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                                .'api/image/'.$row['i_uuid_en']);
       }
       if($row['i_id_fr'])
       {
         $data[$i]['images']['fr']['uuid']     = sanitize_json($row['i_uuid_fr']);
         $data[$i]['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$row['i_path_fr']);
-        $data[$i]['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                                .'api/image/'.$row['i_uuid_fr']);
       }
       if(!$row['i_id_en'] && !$row['i_id_fr'])
         $data[$i]['images']                   = array();

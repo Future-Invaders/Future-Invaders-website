@@ -268,7 +268,7 @@ $arsenals_list = arsenals_list( sort_by:  $admin_arsenals_sort    ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_60 padding_top">
+<div class="width_80 padding_top">
 
   <h5>
     <?=__('admin_arsenal_management').__(':')?>

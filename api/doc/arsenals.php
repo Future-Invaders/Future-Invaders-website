@@ -195,12 +195,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "en": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         },
         "fr": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         }
       },
       card_count: {
@@ -240,6 +238,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         ]
       }
     },
+    ...
   ]
 }</pre>
 
@@ -404,6 +403,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
     },
+    ...
   ]
 }</pre>
 

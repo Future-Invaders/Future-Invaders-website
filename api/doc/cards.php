@@ -149,6 +149,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   "cards": [
     {
       "uuid": string,
+      "endpoint": string,
       "name": {
         "en": string,
         "fr": string
@@ -163,50 +164,78 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       },
       "release": {
         "uuid": string,
-        "en": string,
-        "fr": string
+        "name": {
+          "en": string,
+          "fr": string
+        },
+        "date": string
       },
       "faction": {
         "uuid": string,
-        "en": string,
-        "fr": string
+        "name": {
+          "en": string,
+          "fr": string
+        }
       },
       "type": {
         "uuid": string,
-        "en": string,
-        "fr": string
+        "name": {
+          "en": string,
+          "fr": string
+        }
       },
       "rarity": {
         "uuid": string,
-        "en": string,
-        "fr": string
-        "max_card_count": int,
+        "name": {
+          "en": string,
+          "fr": string
+        },
+        "max_card_count": int
       },
       "images": {
         "en": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         },
         "fr": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         }
       },
-      "arsenals": [
-        "arsenal1",
-        "arsenal2",
-        ...
-      ],
-      "tags": [
-        "tag1",
-        "tag2",
-        ...
-      ],
-      "endpoint": string
-    },
-  ]
+      "arsenals": {
+        "uuids": [
+          "uuid1",
+          "uuid2",
+          ...
+        ],
+        "names": {
+          "en": [
+            "arsenal1",
+            "arsenal2",
+            ...
+          ],
+          "fr": [
+            "arsenal1",
+            "arsenal2",
+            ...
+          ]
+        }
+      },
+      "tags": {
+        "uuids": [
+          "uuid1",
+          "uuid2",
+          ...
+        ],
+        "names": [
+          "tag1",
+          "tag2",
+          ...
+        ]
+      }
+    }
+    ...
+  ],
 }</pre>
 
 </div>
@@ -258,11 +287,11 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     },
     "release": {
       "uuid": string,
-      "date": string,
       "name": {
         "en": string,
         "fr": string
-      }
+      },
+      "date": string
     },
     "faction": {
       "uuid": string,
@@ -289,40 +318,34 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "images": {
       "en": {
         "uuid": string,
-        "name": string,
-        "language": string,
-        "artist": string,
         "path": string,
+        "endpoint": string
       },
       "fr": {
         "uuid": string,
-        "name": string,
-        "language": string,
-        "artist": string,
         "path": string,
+        "endpoint": string
       }
     },
     "arsenals": [
       {
-        "arsenal": {
-          ...
+        "uuid": string,
+        "endpoint": string,
+        "name": {
+          "en": string,
+          "fr": string
         }
       },
       ...
     ],
     "tags": [
       {
-        "tag": {
-          "uuid": string,
-          "name": string,
-          "description": {
-            "en": string,
-            "fr": string
-          },
-        },
-      }
+        "uuid": string,
+        "endpoint": string,
+        "name": string
+      },
       ...
-    ],
+    ]
   }
 }</pre>
 </div>
@@ -352,6 +375,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
     },
+    ...
   ]
 }</pre>
 
@@ -383,6 +407,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
     },
+    ...
   ]
 }</pre>
 
@@ -417,22 +442,25 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
       "release": {
-        "en": string,
-        "fr": string
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
+        },
+        "date": string
       },
       "images": {
         "en": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         },
         "fr": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         }
       }
-    }
+    },
+    ...
   ]
 }</pre>
 
@@ -467,22 +495,25 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
       "release": {
-        "en": string,
-        "fr": string
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
+        },
+        "date": string
       },
       "images": {
         "en": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         },
         "fr": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         }
       }
-    }
+    },
+    ...
   ]
 }</pre>
 
@@ -517,22 +548,25 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "fr": string
       }
       "release": {
-        "en": string,
-        "fr": string
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
+        },
+        "date": string
       },
       "images": {
         "en": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         },
         "fr": {
           "uuid": string,
           "path": string,
-          "endpoint": string
         }
       }
-    }
+    },
+    ...
   ]
 }</pre>
 
