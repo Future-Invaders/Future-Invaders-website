@@ -156,32 +156,36 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "en": string,
       "fr": string
     },
-    "linked_images": [
+    "tagged_cards": [
       {
-        "image": {
-          ...
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
         },
-      }
+        "endpoint": string
+      },
       ...
     ],
-    "linked_cards": [
+    "tagged_arsenals": [
       {
-        {
-        "card": {
-          ...
+        "uuid": string,
+        "name": {
+          "en": string,
+          "fr": string
         },
-      }
+        "endpoint": string
+      },
       ...
     ],
-    "linked_arsenals": [
+    "tagged_images": [
       {
-        {
-        "arsenal": {
-          ...
-        },
-      }
+        "uuid": string,
+        "path": string,
+        "endpoint": string
+      },
       ...
-    ],
+    ]
   }
 }</pre>
 

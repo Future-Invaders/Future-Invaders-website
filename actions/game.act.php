@@ -3023,6 +3023,38 @@ function tags_get(  ?int    $tag_id   = NULL    ,
                       $query_where ",
                       fetch_row: true);
 
+  // Sanitize the tag's id
+  $tag_id = sanitize($tag_data['t_id'], 'int');
+
+  // Fetch linked images
+  $qimages = query("  SELECT    images.uuid           AS 'i_uuid' ,
+                                images.path           AS 'i_path' ,
+                                tags_images.fk_images AS 'ti_id'
+                      FROM      tags_images
+                      LEFT JOIN images ON images.id = tags_images.fk_images
+                      WHERE     tags_images.fk_tags = '$tag_id' ");
+
+  // Fetch linked cards
+  $qcards = query(" SELECT    cards.uuid          AS 'c_uuid'     ,
+                              cards.name_en       AS 'c_name_en'  ,
+                              cards.name_fr       AS 'c_name_fr'  ,
+                              tags_cards.fk_cards AS 'tc_id'
+                    FROM      tags_cards
+                    LEFT JOIN cards ON tags_cards.fk_cards = cards.id
+                    WHERE     tags_cards.fk_tags  = '$tag_id'
+                    AND       cards.is_hidden     = '0'
+                    AND       cards.is_extra_card = '0' ");
+
+  // Fetch linked arsenals
+  $qarsenals = query("  SELECT    arsenals.uuid             AS 'a_uuid'     ,
+                                  arsenals.name_en          AS 'a_name_en'  ,
+                                  arsenals.name_fr          AS 'a_name_fr'  ,
+                                  tags_arsenals.fk_arsenals AS 'ta_id'
+                        FROM      tags_arsenals
+                        LEFT JOIN arsenals ON tags_arsenals.fk_arsenals = arsenals.id
+                        WHERE     tags_arsenals.fk_tags  = '$tag_id'
+                        AND       arsenals.is_hidden     = '0' ");
+
   // Prepare the data for display
   if($format === 'html')
   {
@@ -3035,68 +3067,55 @@ function tags_get(  ?int    $tag_id   = NULL    ,
   // Prepare the data for the API
   if($format === 'api')
   {
-    // Sanitize the data
+    // Sanitize tag data
     $data['uuid']               = sanitize_json($tag_data['t_uuid']);
     $data['type']               = sanitize_json($tag_data['tt_name']);
     $data['name']               = sanitize_json($tag_data['t_name']);
     $data['description']['en']  = sanitize_json($tag_data['t_desc_en']);
     $data['description']['fr']  = sanitize_json($tag_data['t_desc_fr']);
 
-    // Sanitize the tag's id
-    $tag_id = sanitize($tag_data['t_id'], 'int');
-
-    // Add linked images
+    // Cards
     if(!$no_depth)
     {
-      // Fetch linked images
-      $qimages = query("  SELECT  tags_images.fk_images AS 'ti_id'
-                          FROM    tags_images
-                          WHERE   tags_images.fk_tags = '$tag_id' ");
-
-      // Prepare linked images for display
-      for($i = 0; $dimages = query_row($qimages); $i++)
-        $data['linked_images'][$i] = images_get(  image_id: $dimages['ti_id'] ,
-                                                  format:   'api'         ,
-                                                  no_depth: true          );
-
-      // If there are no linked images, show an empty array
-      if($i === 0)
-        $data['linked_images'] = array();
-
-      // Fetch linked cards
-      $qcards = query(" SELECT    tags_cards.fk_cards AS 'tc_id'
-                        FROM      tags_cards
-                        LEFT JOIN cards ON tags_cards.fk_cards = cards.id
-                        WHERE     tags_cards.fk_tags  = '$tag_id'
-                        AND       cards.is_hidden     = '0'
-                        AND       cards.is_extra_card = '0' ");
-
-      // Prepare linked cards for display
       for($i = 0; $dcards = query_row($qcards); $i++)
-        $data['linked_cards'][$i] = cards_get(  card_id: $dcards['tc_id'] ,
-                                                format:   'api'         ,
-                                                no_depth: true          );
-
-      // If there are no linked cards, show an empty array
+      {
+        $data['tagged_cards'][$i]['uuid']       = sanitize_json($dcards['c_uuid']);
+        $data['tagged_cards'][$i]['name']['en'] = sanitize_json($dcards['c_name_en']);
+        $data['tagged_cards'][$i]['name']['fr'] = sanitize_json($dcards['c_name_fr']);
+        $data['tagged_cards'][$i]['endpoint']   = sanitize_json($GLOBALS['website_url']
+                                                  .'api/card/'.$dcards['c_uuid']);
+      }
       if($i === 0)
-        $data['linked_cards'] = array();
+        $data['tagged_cards']                   = array();
+    }
 
-      // Fetch linked arsenals
-      $qarsenals = query("  SELECT    tags_arsenals.fk_arsenals AS 'ta_id'
-                            FROM      tags_arsenals
-                            LEFT JOIN arsenals ON tags_arsenals.fk_arsenals = arsenals.id
-                            WHERE     tags_arsenals.fk_tags  = '$tag_id'
-                            AND       arsenals.is_hidden     = '0' ");
-
-      // Prepare linked arsenals for display
+    // Arsenals
+    if(!$no_depth)
+    {
       for($i = 0; $darsenals = query_row($qarsenals); $i++)
-        $data['linked_arsenals'][$i] = arsenals_get(  arsenal_id: $darsenals['ta_id'] ,
-                                                      format:     'api'               ,
-                                                      no_depth:   true                );
-
-      // If there are no linked arsenals, show an empty array
+      {
+        $data['tagged_arsenals'][$i]['uuid']        = sanitize_json($darsenals['a_uuid']);
+        $data['tagged_arsenals'][$i]['name']['en']  = sanitize_json($darsenals['a_name_en']);
+        $data['tagged_arsenals'][$i]['name']['fr']  = sanitize_json($darsenals['a_name_fr']);
+        $data['tagged_arsenals'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url']
+                                                    .'api/arsenal/'.$darsenals['a_uuid']);
+      }
       if($i === 0)
-        $data['linked_arsenals'] = array();
+        $data['tagged_arsenals']                    = array();
+    }
+
+    // Images
+    if(!$no_depth)
+    {
+      for($i = 0; $dimages = query_row($qimages); $i++)
+      {
+        $data['tagged_images'][$i]['uuid']      = sanitize_json($dimages['i_uuid']);
+        $data['tagged_images'][$i]['path']      = sanitize_json($GLOBALS['website_url'].$dimages['i_path']);
+        $data['tagged_images'][$i]['endpoint']  = sanitize_json($GLOBALS['website_url']
+                                                .'api/image/'.$dimages['i_uuid']);
+      }
+      if($i === 0)
+        $data['tagged_images']                  = array();
     }
 
     // Prepare for the API
