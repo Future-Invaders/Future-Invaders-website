@@ -3,8 +3,8 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../inc/includes.inc.php'; # Core
-include_once './../actions/game.act.php'; # Game actions
+include_once './../inc/includes.inc.php';  # Core
+include_once './../actions/cards.act.php'; # Card management
 
 
 

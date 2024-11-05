@@ -183,7 +183,7 @@ For discussions about publishing the game, visit the {{link|pages/social/publish
 EOD
 );
 ___('contact_body_4', 'FR', <<<EOD
-Si vous souhaitez éditer le jeu ou discuter de sa publication, visitez la page {{link|pages/social/publish|page « Éditez ce jeu ! »}}.
+Si vous souhaitez éditer le jeu ou discuter de sa publication, visitez la {{link|pages/social/publish|page « Éditez ce jeu ! »}}.
 EOD
 );
 ___('contact_body_5', 'EN', <<<EOD

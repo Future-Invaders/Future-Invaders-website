@@ -3,9 +3,14 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/game.act.php';  # Game actions
-include_once './../../lang/admin.lang.php';   # Admin translations
+include_once './../../inc/includes.inc.php';      # Core
+include_once './../../actions/arsenals.act.php';  # Arsenal management
+include_once './../../actions/cards.act.php';     # Card management
+include_once './../../actions/tags.act.php';      # Tag management
+include_once './../../actions/releases.act.php';  # Game releases management
+include_once './../../actions/factions.act.php';  # Faction management
+include_once './../../actions/formats.act.php';   # Game formats management
+include_once './../../lang/admin.lang.php';       # Admin translations
 
 // Page summary
 $page_url       = "pages/admin/cards";
@@ -534,7 +539,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </div>
             <div style="flex: 2">
               <a href="<?=$path.$cards_list[$i]['image_en']?>" target="_blank">
-                <img src="<?=$cards_list[$i]['thumb_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+                <img src="<?=$cards_list[$i]['thumb_en']?>" alt="<?=__('admin_card_list_no_image')?>" loading="lazy">
               </a>
             </div>
             <div style="flex: 1">
@@ -558,7 +563,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </div>
             <div style="flex: 2">
               <a href="<?=$path.$cards_list[$i]['image_fr']?>" target="_blank">
-                <img src="<?=$cards_list[$i]['thumb_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+                <img src="<?=$cards_list[$i]['thumb_fr']?>" alt="<?=__('admin_card_list_no_image')?>" loading="lazy">
               </a>
             </div>
             <div style="flex: 1">

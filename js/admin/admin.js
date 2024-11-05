@@ -204,6 +204,7 @@ function admin_images_search( sort_data = null )
   postdata += '&admin_images_search_name='    + document.getElementById('admin_images_search_name').value;
   postdata += '&admin_images_search_lang='    + document.getElementById('admin_images_search_lang').value;
   postdata += '&admin_images_search_artist='  + document.getElementById('admin_images_search_artist').value;
+  postdata += '&admin_images_search_cards='   + document.getElementById('admin_images_search_cards').value;
   postdata += '&admin_images_search_tags='    + document.getElementById('admin_images_search_tags').value;
 
   // Submit the search

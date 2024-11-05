@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/game.act.php';  # Game actions
+include_once './../../actions/cards.act.php'; # Card management
 include_once './../../lang/game.lang.php';    # Translations
 
 // Page summary
@@ -124,7 +124,7 @@ $reminder_cards = cards_list( sort_by:  'name'                            ,
 
     <div class="align_center" style="flex: 4">
       <a href="<?=$path.$rules_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$rules_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$rules_cards[$i]['name_'.$card_lang]?>">
+        <img class="rules_image" src="<?=$rules_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$rules_cards[$i]['name_'.$card_lang]?>" loading="lazy">
       </a>
     </div>
 
@@ -163,7 +163,7 @@ $reminder_cards = cards_list( sort_by:  'name'                            ,
 
     <div class="align_center" style="flex: 4">
       <a href="<?=$path.$reminder_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$reminder_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$reminder_cards[$i]['name_'.$card_lang]?>">
+        <img class="rules_image" src="<?=$reminder_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$reminder_cards[$i]['name_'.$card_lang]?>" loading="lazy">
       </a>
     </div>
 

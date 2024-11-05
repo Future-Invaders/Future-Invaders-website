@@ -130,7 +130,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php else: ?>
         <td class="align_left nowrap bold tooltip_container">
-          <?=$page_stats_list[$i]['path']?>
+          <?=__link($page_stats_list[$i]['fpath'], $page_stats_list[$i]['path'])?>
           <div class="tooltip">
             <?=$page_stats_list[$i]['fpath']?>
           </div>

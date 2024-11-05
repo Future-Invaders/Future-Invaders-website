@@ -3,9 +3,14 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/game.act.php';  # Game actions
-include_once './../../lang/admin.lang.php';   # Admin translations
+include_once './../../inc/includes.inc.php';      # Core
+include_once './../../actions/arsenals.act.php';  # Arsenal management
+include_once './../../actions/cards.act.php';     # Card management
+include_once './../../actions/tags.act.php';      # Tag management
+include_once './../../actions/releases.act.php';  # Game releases management
+include_once './../../actions/factions.act.php';  # Faction management
+include_once './../../actions/formats.act.php';   # Game formats management
+include_once './../../lang/admin.lang.php';       # Admin translations
 
 // Page summary
 $page_url       = "pages/admin/arsenals";
@@ -268,7 +273,7 @@ $arsenals_list = arsenals_list( sort_by:  $admin_arsenals_sort    ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_60 padding_top">
+<div class="width_80 padding_top">
 
   <h5>
     <?=__('admin_arsenal_management').__(':')?>
@@ -602,7 +607,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
               <?php if($arsenals_list[$i]['image_en']): ?>
               <div class="align_center smallpadding_top smallpadding_bot dark2">
                 <a href="<?=$path.$arsenals_list[$i]['image_en']?>" target="_blank">
-                  <img class="image_preview_small" src="<?=$arsenals_list[$i]['thumb_en']?>" alt="<?=__('admin_card_list_no_image')?>">
+                  <img class="image_preview_small" src="<?=$arsenals_list[$i]['thumb_en']?>" alt="<?=__('admin_card_list_no_image')?>" loading="lazy">
                 </a>
               </div>
               <?php endif; if($arsenals_list[$i]['summary_en']): ?>
@@ -638,7 +643,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
               <?php if($arsenals_list[$i]['image_fr']): ?>
               <div class="align_center smallpadding_top smallpadding_bot dark2">
                 <a href="<?=$path.$arsenals_list[$i]['image_fr']?>" target="_blank">
-                  <img class="image_preview_small" src="<?=$arsenals_list[$i]['thumb_fr']?>" alt="<?=__('admin_card_list_no_image')?>">
+                  <img class="image_preview_small" src="<?=$arsenals_list[$i]['thumb_fr']?>" alt="<?=__('admin_card_list_no_image')?>" loading="lazy">
                 </a>
               </div>
               <?php endif; if($arsenals_list[$i]['summary_fr']): ?>
