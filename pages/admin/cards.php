@@ -3,9 +3,12 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/game.act.php';  # Game actions
-include_once './../../lang/admin.lang.php';   # Admin translations
+include_once './../../inc/includes.inc.php';      # Core
+include_once './../../actions/game.act.php';      # Game actions
+include_once './../../actions/arsenals.act.php';  # Arsenal management
+include_once './../../actions/cards.act.php';     # Card management
+include_once './../../actions/tags.act.php';      # Tag management
+include_once './../../lang/admin.lang.php';       # Admin translations
 
 // Page summary
 $page_url       = "pages/admin/cards";
