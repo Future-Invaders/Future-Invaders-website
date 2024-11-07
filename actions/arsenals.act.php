@@ -15,6 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  arsenals_delete                 Deletes an arsenal from the database                                             */
 /*                                                                                                                   */
 /*  arsenals_generate_slug          Generates a unique slug identifier for an arsenal                                */
+/*  arsenals_regenerate_all_slugs   Regenerates all arsenal slugs                                                    */
 /*  arsenals_update_card_data       Recalculates the data related to cards linked to an arsenal                      */
 /*                                                                                                                   */
 /*  arsenal_difficulties_get        Returns data related to an arsenal difficulty level                              */
@@ -1162,6 +1163,33 @@ function arsenals_generate_slug( string $arsenal_id ) : void
   query(" UPDATE  arsenals
           SET     arsenals.slug = '$slug'
           WHERE   arsenals.id   = '$arsenal_id' ");
+}
+
+
+
+
+/**
+ * Regenerates all arsenal slugs.
+ *
+ * @return void
+ */
+
+function arsenals_regenerate_all_slugs() : void
+{
+  // Delete all existing arsenal slugs
+  query(" UPDATE  arsenals
+          SET     arsenals.slug = '' ");
+
+  // Fetch every arsenal's id
+  $arsenals = query(" SELECT  arsenals.id AS 'a_id'
+                      FROM    arsenals ");
+
+  // Loop through all arsenals
+  for($i = 0; $row = query_row($arsenals); $i++)
+  {
+    // Regenerate the arsenal's slug
+    arsenals_generate_slug($row['a_id']);
+  }
 }
 
 

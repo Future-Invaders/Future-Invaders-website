@@ -180,6 +180,15 @@ if(isset($_POST['admin_cards_delete']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Regenerate all card slugs
+
+if(isset($_POST['admin_cards_regenerate_slugs']))
+  cards_regenerate_all_slugs();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of cards
 
 // Fetch the sorting order
@@ -389,6 +398,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </th>
         <th>
           <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/cards_add')?>
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer smallspaced_left', alt: 'R', title: __('admin_card_list_regenslugs'), onclick: "admin_cards_regenerate_all_slugs('".__('admin_card_list_regen_go')."')")?>
         </th>
       </tr>
 

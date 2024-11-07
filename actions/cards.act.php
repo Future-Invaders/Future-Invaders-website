@@ -15,6 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  cards_delete                    Deletes a card from the database                                                 */
 /*                                                                                                                   */
 /*  cards_generate_slug             Generates a unique slug identifier for a card                                    */
+/*  cards_regenerate_all_slugs      Regenerates all card slugs                                                       */
 /*  cards_format_body               Formats a card's body                                                            */
 /*  cards_format_cost               Formats a card's cost                                                            */
 /*                                                                                                                   */
@@ -903,6 +904,33 @@ function cards_generate_slug( string $card_id ) : void
   query(" UPDATE  cards
           SET     cards.slug = '$slug'
           WHERE   cards.id   = '$card_id' ");
+}
+
+
+
+
+/**
+ * Regenerates all card slugs.
+ *
+ * @return void
+ */
+
+function cards_regenerate_all_slugs() : void
+{
+  // Delete all existing card slugs
+  query(" UPDATE  cards
+          SET     cards.slug = '' ");
+
+  // Fetch every card's id
+  $cards = query("  SELECT  cards.id AS 'c_id'
+                    FROM    cards ");
+
+  // Loop through all cards
+  for($i = 0; $row = query_row($cards); $i++)
+  {
+    // Regenerate the card's slug
+    cards_generate_slug($row['c_id']);
+  }
 }
 
 

@@ -3,6 +3,7 @@
 /*  admin_menu                              Navigates between administration pages.                                  */
 /*                                                                                                                   */
 /*  admin_cards_search                      Searches the card list.                                                  */
+/*  admin_cards_regenerate_all_slugs        Triggers the regeneration of all card slugs.                             */
 /*  admin_cards_delete                      Triggers the deletion of an entry in the card list.                      */
 /*  admin_card_hide_stats                   Hides stats for extra cards.                                             */
 /*                                                                                                                   */
@@ -21,6 +22,7 @@
 /*  admin_arsenals_duplicate_cards          Duplicate the cards creation form when editing an arsenal.               */
 /*  admin_arsenals_unduplicate_cards        Delete the last created card creation form when editing an arsenal.      */
 /*  admin_arsenals_search                   Searches the arsenal list.                                               */
+/*  admin_arsenals_regenerate_all_slugs     Triggers the regeneration of all arsenal slugs.                          */
 /*  admin_arsenals_delete                   Triggers the deletion of an entry in the arsenal list.                   */
 /*                                                                                                                   */
 /*  admin_arsenal_difficulties_delete       Triggers the deletion of an entry in the arsenal difficulty list.        */
@@ -90,6 +92,25 @@ function admin_cards_search( sort_data = null )
   // Submit the search
   fetch_page('cards', 'admin_cards_tbody', postdata);
 }
+
+
+
+
+/**
+ * Triggers the regeneration of all card slugs.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ *
+ * @returns {void}
+ */
+
+function admin_cards_regenerate_all_slugs( message )
+{
+  // Make sure the user knows what they're doing, then trigger the global slug regeneration
+  if(confirm(message))
+    fetch_page('cards', 'admin_cards_tbody', 'admin_cards_regenerate_slugs=true');
+}
+
 
 
 
@@ -451,6 +472,24 @@ function admin_arsenals_search( sort_data = null )
 
   // Submit the search
   fetch_page('arsenals', 'admin_arsenals_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the regeneration of all arsenal slugs.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ *
+ * @returns {void}
+ */
+
+function admin_arsenals_regenerate_all_slugs( message )
+{
+  // Make sure the user knows what they're doing, then trigger the global slug regeneration
+  if(confirm(message))
+    fetch_page('arsenals', 'admin_arsenals_tbody', 'admin_arsenals_regenerate_slugs=true');
 }
 
 

@@ -950,7 +950,7 @@ if($last_query < 13)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Slugs
 
-if($last_query < 15)
+if($last_query < 14)
 {
   sql_create_field('cards', 'slug', 'VARCHAR(40) NOT NULL', 'name_fr');
   sql_create_index('cards', 'cards_slug', 'slug');
