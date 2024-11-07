@@ -10,10 +10,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  arsenals_get                    Returns data related to an arsenal                                               */
 /*  arsenals_list                   Lists arsenals in the database                                                   */
-/*  arsenals_update_card_data       Recalculates the data related to cards linked to an arsenal                      */
 /*  arsenals_add                    Adds an arsenal to the database                                                  */
 /*  arsenals_edit                   Edits an arsenal in the database                                                 */
 /*  arsenals_delete                 Deletes an arsenal from the database                                             */
+/*                                                                                                                   */
+/*  arsenals_generate_slug          Generates a unique slug identifier for an arsenal                                */
+/*  arsenals_update_card_data       Recalculates the data related to cards linked to an arsenal                      */
 /*                                                                                                                   */
 /*  arsenal_difficulties_get        Returns data related to an arsenal difficulty level                              */
 /*  arsenal_difficulties_list       Lists arsenal difficulty levels in the database                                  */
@@ -750,196 +752,6 @@ function arsenals_list( string  $sort_by  = ''      ,
 
 
 /**
- * Recalculates the data on cards linked to an arsenal.
- *
- * @param   int     $arsenal_id  The id of the arsenal to update.
- *
- * @return  void
- */
-
-function arsenals_update_card_data( int $arsenal_id ) : void
-{
-  // Sanitize the arsenal's id
-  $arsenal_id = sanitize($arsenal_id, 'int');
-
-  // Stop here if the arsenal doesn't exist
-  if(!database_row_exists('arsenals', $arsenal_id))
-    return;
-
-  // Get the arsenal's cards in english
-  $qcards = query(" SELECT    arsenals_compositions.amount_main     AS 'ac_count'   ,
-                              arsenals_compositions.amount_reserves AS 'ac_reserves',
-                              arsenals_compositions.is_extra        AS 'ac_extra'   ,
-                              card_types.name_en                    AS 'ct_name_en' ,
-                              cards.name_en                         AS 'c_name_en'  ,
-                              cards.cost                            AS 'c_cost'
-                    FROM      arsenals_compositions
-                    LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
-                    LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
-                    WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
-                    ORDER BY  LENGTH(cards.cost)        ASC ,
-                              card_types.sorting_order  ASC ,
-                              cards.name_en             ASC ");
-
-  // Initialize the variables used to store arsenal data
-  $count_main     = 0;
-  $count_reserves = 0;
-  $count_extra    = 0;
-  $count_types    = array();
-  $arsenal_types  = "";
-  $arsenal_en     = "";
-  $arsenal_fr     = "";
-  $reserves_en    = "";
-  $reserves_fr    = "";
-
-  // Loop through the cards
-  for($i = 0; $row =query_row($qcards); $i++)
-  {
-    // Increment the counters
-    $count_main     += $row['ac_count'];
-    $count_reserves += $row['ac_reserves'];
-    $count_extra    += $row['ac_extra'];
-
-    // Count the types
-    if($row['ac_count'])
-      $count_types[$row['ct_name_en']] =  (isset($count_types[$row['ct_name_en']]))
-                                          ? $count_types[$row['ct_name_en']] + $row['ac_count']
-                                          : $row['ac_count'];
-
-    // Format the card types
-    if(isset($row['ct_name_en']))
-      $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
-
-    // Format the costs
-    $formatted_cost = "";
-    if(isset($row['c_cost']))
-    {
-      for($i = 0; $i < strlen($row['c_cost']); $i++)
-        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
-    }
-
-    // Assemble the main card list
-    if($row['ac_count'] > 0)
-    {
-      $arsenal_en .= ($arsenal_en !== "") ? "<br>" : "";
-      $arsenal_en .= "[".$formatted_type."] ";
-      $arsenal_en .= '<span class="bold">'.$row['ac_count']."</span> ";
-      $arsenal_en .= ($formatted_cost) ? $formatted_cost." " : "";
-      $arsenal_en .= $row['c_name_en'];
-    }
-
-    // Assemble the reserves card list
-    if($row['ac_reserves'] > 0)
-    {
-      $reserves_en .= ($reserves_en !== "") ? "<br>" : "";
-      $reserves_en .= "[".$formatted_type."] ";
-      $reserves_en .= '<span class="bold">'.$row['ac_reserves']."</span> ";
-      $reserves_en .= ($formatted_cost) ? $formatted_cost." " : "";
-      $reserves_en .= $row['c_name_en'];
-    }
-  }
-
-  // Get the arsenal's cards in french
-  $qcards = query(" SELECT    arsenals_compositions.amount_main     AS 'ac_count'   ,
-                              arsenals_compositions.amount_reserves AS 'ac_reserves',
-                              arsenals_compositions.is_extra        AS 'ac_extra'   ,
-                              card_types.name_en                    AS 'ct_name_en' ,
-                              cards.name_fr                         AS 'c_name_fr'  ,
-                              cards.cost                            AS 'c_cost'
-                    FROM      arsenals_compositions
-                    LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
-                    LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
-                    WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
-                    ORDER BY  LENGTH(cards.cost)        ASC ,
-                              card_types.sorting_order  ASC ,
-                              cards.name_fr             ASC ");
-
-  // Loop through the cards
-  for($i = 0; $row =query_row($qcards); $i++)
-  {
-    // Format the card types
-    if(isset($row['ct_name_en']))
-      $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
-
-    // Format the costs
-    $formatted_cost = "";
-    if(isset($row['c_cost']))
-    {
-      for($i = 0; $i < strlen($row['c_cost']); $i++)
-        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
-    }
-
-    // Assemble the main card list
-    if($row['ac_count'] > 0)
-    {
-      $arsenal_fr .= ($arsenal_fr !== "") ? "<br>" : "";
-      $arsenal_fr .= "[".$formatted_type."] ";
-      $arsenal_fr .= '<span class="bold">'.$row['ac_count']."</span> ";
-      $arsenal_fr .= ($formatted_cost) ? $formatted_cost." " : "";
-      $arsenal_fr .= $row['c_name_fr'];
-    }
-
-    // Assemble the reserves card list
-    if($row['ac_reserves'] > 0)
-    {
-      $reserves_fr .= ($reserves_fr !== "") ? "<br>" : "";
-      $reserves_fr .= "[".$formatted_type."] ";
-      $reserves_fr .= '<span class="bold">'.$row['ac_reserves']."</span> ";
-      $reserves_fr .= ($formatted_cost) ? $formatted_cost." " : "";
-      $reserves_fr .= $row['c_name_fr'];
-    }
-  }
-
-  // Fetch card types
-  $qtypes = query(" SELECT    card_types.name_en AS 'ct_name_en'
-                    FROM      card_types
-                    ORDER BY  card_types.sorting_order ASC ");
-
-  // Loop through the card types
-  while($dtypes = query_row($qtypes))
-  {
-    // Check if there is a card count for this card type
-    if(isset($count_types[$dtypes['ct_name_en']]))
-    {
-      // Prepare a string for this count
-      $temp_type = ($dtypes['ct_name_en'] === "Structure") ? 'B' : mb_substr($dtypes['ct_name_en'], 0, 1);
-
-      // Update the arsenal types string)
-      $arsenal_types .= ($arsenal_types !== "") ? " &nbsp; " : "";
-      $arsenal_types .= "[".$temp_type.'] <span class="bold">'.$count_types[$dtypes['ct_name_en']].'</span>';
-    }
-  }
-
-  // Prepend card types to arsenals
-  $arsenal_en = ($arsenal_en) ? $arsenal_types."<br><br>".$arsenal_en : "";
-  $arsenal_fr = ($arsenal_fr) ? $arsenal_types."<br><br>".$arsenal_fr : "";
-
-  // Sanitize the results
-  $count_main     = sanitize($count_main, 'int');
-  $count_reserves = sanitize($count_reserves, 'int');
-  $count_extra    = sanitize($count_extra, 'int');
-  $arsenal_en     = sanitize($arsenal_en, 'string');
-  $arsenal_fr     = sanitize($arsenal_fr, 'string');
-  $reserves_en    = sanitize($reserves_en, 'string');
-  $reserves_fr    = sanitize($reserves_fr, 'string');
-
-  // Update the arsenal data
-  query(" UPDATE  arsenals
-          SET     arsenals.card_count       = '$count_main'     ,
-                  arsenals.reserves_count   = '$count_reserves' ,
-                  arsenals.extra_count      = '$count_extra'    ,
-                  arsenals.cards_list_en    = '$arsenal_en'     ,
-                  arsenals.cards_list_fr    = '$arsenal_fr'     ,
-                  arsenals.reserves_list_en = '$reserves_en'    ,
-                  arsenals.reserves_list_fr = '$reserves_fr'
-          WHERE   arsenals.id               = '$arsenal_id' ");
-}
-
-
-
-
-
-/**
  * Adds an arsenal to the database.
  *
  * @param   array   $data  An array containing the arsenal's data.
@@ -993,6 +805,9 @@ function arsenals_add( array $data ) : void
 
   // Get the newly created arsenal's id
   $arsenal_id = sanitize(query_id(), "int");
+
+  // Give the arsenal a slug
+  arsenals_generate_slug($arsenal_id);
 
   // Fetch a list of arsenal tags
   $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
@@ -1084,7 +899,7 @@ function arsenals_edit( int   $arsenal_id  ,
   if(!database_row_exists('arsenals', $arsenal_id))
     return;
 
-  // Edit the arsenal
+  // Edit the arsenal and reset its slug
   query(" UPDATE  arsenals
           SET     arsenals.fk_releases              = '$arsenal_release'      ,
                   arsenals.fk_formats               = '$arsenal_format'       ,
@@ -1105,6 +920,9 @@ function arsenals_edit( int   $arsenal_id  ,
                   arsenals.extra_en                 = '$arsenal_extra_en'     ,
                   arsenals.extra_fr                 = '$arsenal_extra_fr'
           WHERE   arsenals.id                       = '$arsenal_id' ");
+
+  // Regenerate the arsenal's slug
+  arsenals_generate_slug($arsenal_id);
 
   // Fetch a list of arsenal tags
   $arsenal_tags = tags_list(search: array('ftype' => 'Arsenal'));
@@ -1291,6 +1109,248 @@ function arsenals_delete( int $arsenal_id ) : void
   // Delete linked cards
   query(" DELETE FROM arsenals_compositions
           WHERE       arsenals_compositions.fk_arsenals = '$arsenal_id' ");
+}
+
+
+
+
+/**
+ * Generates a unique slug identifier for an arsenal.
+ *
+ * @param   string  $arsenal_id   The id of the arsenal.
+ *
+ * @return  void
+ */
+
+function arsenals_generate_slug( string $arsenal_id ) : void
+{
+  // Sanitize the arsenal's id
+  $arsenal_id = sanitize($arsenal_id, 'int');
+
+  // Make sure the arsenal exists
+  if(!database_row_exists('arsenals', $arsenal_id))
+    return;
+
+  // Grab the arsenal's name and release
+  $arsenal_data = query(" SELECT    arsenals.id       AS 'a_id'       ,
+                                    arsenals.name_en  AS 'a_name_en'  ,
+                                    releases.name_en  AS 'r_name_en'
+                          FROM      arsenals
+                          LEFT JOIN releases ON arsenals.fk_releases = releases.id
+                          WHERE     arsenals.id = '$arsenal_id' ",
+                          fetch_row: true);
+
+  // Assemble a tentative slug
+  $release      = ($arsenal_data['r_name_en'])
+                ? preg_replace("/[^a-zA-Z0-9]/", "", $arsenal_data['r_name_en'])
+                : 'arsenal';
+  $name         = ($arsenal_data['a_name_en'])
+                ? preg_replace("/[^a-zA-Z0-9]/", "", $arsenal_data['a_name_en'])
+                : $arsenal_data['a_id'];
+  $slug_release = string_truncate(string_change_case($release, 'lowercase'), 10);
+  $slug_name    = string_truncate(string_change_case($name, 'lowercase'), 29);
+  $slug         = $slug_release.'-'.$slug_name;
+
+  // Increment the slug until it's unique
+  while(database_entry_exists('arsenals', 'slug', $slug))
+    $slug = string_increment($slug);
+
+  // Sanitize the slug
+  $slug = sanitize($slug, 'string');
+
+  // Update the slug in the database
+  query(" UPDATE  arsenals
+          SET     arsenals.slug = '$slug'
+          WHERE   arsenals.id   = '$arsenal_id' ");
+}
+
+
+
+
+/**
+ * Recalculates the data on cards linked to an arsenal.
+ *
+ * @param   int     $arsenal_id  The id of the arsenal to update.
+ *
+ * @return  void
+ */
+
+function arsenals_update_card_data( int $arsenal_id ) : void
+{
+  // Sanitize the arsenal's id
+  $arsenal_id = sanitize($arsenal_id, 'int');
+
+  // Stop here if the arsenal doesn't exist
+  if(!database_row_exists('arsenals', $arsenal_id))
+    return;
+
+  // Get the arsenal's cards in english
+  $qcards = query(" SELECT    arsenals_compositions.amount_main     AS 'ac_count'   ,
+                              arsenals_compositions.amount_reserves AS 'ac_reserves',
+                              arsenals_compositions.is_extra        AS 'ac_extra'   ,
+                              card_types.name_en                    AS 'ct_name_en' ,
+                              cards.name_en                         AS 'c_name_en'  ,
+                              cards.cost                            AS 'c_cost'
+                    FROM      arsenals_compositions
+                    LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
+                    LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
+                    WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
+                    ORDER BY  LENGTH(cards.cost)        ASC ,
+                              card_types.sorting_order  ASC ,
+                              cards.name_en             ASC ");
+
+  // Initialize the variables used to store arsenal data
+  $count_main     = 0;
+  $count_reserves = 0;
+  $count_extra    = 0;
+  $count_types    = array();
+  $arsenal_types  = "";
+  $arsenal_en     = "";
+  $arsenal_fr     = "";
+  $reserves_en    = "";
+  $reserves_fr    = "";
+
+  // Loop through the cards
+  for($i = 0; $row =query_row($qcards); $i++)
+  {
+    // Increment the counters
+    $count_main     += $row['ac_count'];
+    $count_reserves += $row['ac_reserves'];
+    $count_extra    += $row['ac_extra'];
+
+    // Count the types
+    if($row['ac_count'])
+      $count_types[$row['ct_name_en']] =  (isset($count_types[$row['ct_name_en']]))
+                                          ? $count_types[$row['ct_name_en']] + $row['ac_count']
+                                          : $row['ac_count'];
+
+    // Format the card types
+    if(isset($row['ct_name_en']))
+      $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
+
+    // Format the costs
+    $formatted_cost = "";
+    if(isset($row['c_cost']))
+    {
+      for($i = 0; $i < strlen($row['c_cost']); $i++)
+        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+    }
+
+    // Assemble the main card list
+    if($row['ac_count'] > 0)
+    {
+      $arsenal_en .= ($arsenal_en !== "") ? "<br>" : "";
+      $arsenal_en .= "[".$formatted_type."] ";
+      $arsenal_en .= '<span class="bold">'.$row['ac_count']."</span> ";
+      $arsenal_en .= ($formatted_cost) ? $formatted_cost." " : "";
+      $arsenal_en .= $row['c_name_en'];
+    }
+
+    // Assemble the reserves card list
+    if($row['ac_reserves'] > 0)
+    {
+      $reserves_en .= ($reserves_en !== "") ? "<br>" : "";
+      $reserves_en .= "[".$formatted_type."] ";
+      $reserves_en .= '<span class="bold">'.$row['ac_reserves']."</span> ";
+      $reserves_en .= ($formatted_cost) ? $formatted_cost." " : "";
+      $reserves_en .= $row['c_name_en'];
+    }
+  }
+
+  // Get the arsenal's cards in french
+  $qcards = query(" SELECT    arsenals_compositions.amount_main     AS 'ac_count'   ,
+                              arsenals_compositions.amount_reserves AS 'ac_reserves',
+                              arsenals_compositions.is_extra        AS 'ac_extra'   ,
+                              card_types.name_en                    AS 'ct_name_en' ,
+                              cards.name_fr                         AS 'c_name_fr'  ,
+                              cards.cost                            AS 'c_cost'
+                    FROM      arsenals_compositions
+                    LEFT JOIN cards       ON arsenals_compositions.fk_cards = cards.id
+                    LEFT JOIN card_types  ON cards.fk_card_types            = card_types.id
+                    WHERE     arsenals_compositions.fk_arsenals             = '$arsenal_id'
+                    ORDER BY  LENGTH(cards.cost)        ASC ,
+                              card_types.sorting_order  ASC ,
+                              cards.name_fr             ASC ");
+
+  // Loop through the cards
+  for($i = 0; $row =query_row($qcards); $i++)
+  {
+    // Format the card types
+    if(isset($row['ct_name_en']))
+      $formatted_type = ($row['ct_name_en'] === "Structure") ? 'B' : mb_substr($row['ct_name_en'], 0, 1);
+
+    // Format the costs
+    $formatted_cost = "";
+    if(isset($row['c_cost']))
+    {
+      for($i = 0; $i < strlen($row['c_cost']); $i++)
+        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+    }
+
+    // Assemble the main card list
+    if($row['ac_count'] > 0)
+    {
+      $arsenal_fr .= ($arsenal_fr !== "") ? "<br>" : "";
+      $arsenal_fr .= "[".$formatted_type."] ";
+      $arsenal_fr .= '<span class="bold">'.$row['ac_count']."</span> ";
+      $arsenal_fr .= ($formatted_cost) ? $formatted_cost." " : "";
+      $arsenal_fr .= $row['c_name_fr'];
+    }
+
+    // Assemble the reserves card list
+    if($row['ac_reserves'] > 0)
+    {
+      $reserves_fr .= ($reserves_fr !== "") ? "<br>" : "";
+      $reserves_fr .= "[".$formatted_type."] ";
+      $reserves_fr .= '<span class="bold">'.$row['ac_reserves']."</span> ";
+      $reserves_fr .= ($formatted_cost) ? $formatted_cost." " : "";
+      $reserves_fr .= $row['c_name_fr'];
+    }
+  }
+
+  // Fetch card types
+  $qtypes = query(" SELECT    card_types.name_en AS 'ct_name_en'
+                    FROM      card_types
+                    ORDER BY  card_types.sorting_order ASC ");
+
+  // Loop through the card types
+  while($dtypes = query_row($qtypes))
+  {
+    // Check if there is a card count for this card type
+    if(isset($count_types[$dtypes['ct_name_en']]))
+    {
+      // Prepare a string for this count
+      $temp_type = ($dtypes['ct_name_en'] === "Structure") ? 'B' : mb_substr($dtypes['ct_name_en'], 0, 1);
+
+      // Update the arsenal types string)
+      $arsenal_types .= ($arsenal_types !== "") ? " &nbsp; " : "";
+      $arsenal_types .= "[".$temp_type.'] <span class="bold">'.$count_types[$dtypes['ct_name_en']].'</span>';
+    }
+  }
+
+  // Prepend card types to arsenals
+  $arsenal_en = ($arsenal_en) ? $arsenal_types."<br><br>".$arsenal_en : "";
+  $arsenal_fr = ($arsenal_fr) ? $arsenal_types."<br><br>".$arsenal_fr : "";
+
+  // Sanitize the results
+  $count_main     = sanitize($count_main, 'int');
+  $count_reserves = sanitize($count_reserves, 'int');
+  $count_extra    = sanitize($count_extra, 'int');
+  $arsenal_en     = sanitize($arsenal_en, 'string');
+  $arsenal_fr     = sanitize($arsenal_fr, 'string');
+  $reserves_en    = sanitize($reserves_en, 'string');
+  $reserves_fr    = sanitize($reserves_fr, 'string');
+
+  // Update the arsenal data
+  query(" UPDATE  arsenals
+          SET     arsenals.card_count       = '$count_main'     ,
+                  arsenals.reserves_count   = '$count_reserves' ,
+                  arsenals.extra_count      = '$count_extra'    ,
+                  arsenals.cards_list_en    = '$arsenal_en'     ,
+                  arsenals.cards_list_fr    = '$arsenal_fr'     ,
+                  arsenals.reserves_list_en = '$reserves_en'    ,
+                  arsenals.reserves_list_fr = '$reserves_fr'
+          WHERE   arsenals.id               = '$arsenal_id' ");
 }
 
 

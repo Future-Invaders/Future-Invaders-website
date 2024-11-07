@@ -948,6 +948,23 @@ if($last_query < 13)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Slugs
+
+if($last_query < 15)
+{
+  sql_create_field('cards', 'slug', 'VARCHAR(40) NOT NULL', 'name_fr');
+  sql_create_index('cards', 'cards_slug', 'slug');
+
+  sql_create_field('arsenals', 'slug', 'VARCHAR(40) NOT NULL', 'name_fr');
+  sql_create_index('arsenals', 'arsenals_slug', 'slug');
+
+  sql_update_query_id(14);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Rulings tags
 
 /*

@@ -13,6 +13,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  cards_add                       Adds a card to the database                                                      */
 /*  cards_edit                      Edits a card in the database                                                     */
 /*  cards_delete                    Deletes a card from the database                                                 */
+/*                                                                                                                   */
+/*  cards_generate_slug             Generates a unique slug identifier for a card                                    */
 /*  cards_format_body               Formats a card's body                                                            */
 /*  cards_format_cost               Formats a card's cost                                                            */
 /*                                                                                                                   */
@@ -718,6 +720,9 @@ function cards_add( array $data ) : void
   // Get the newly created card's id
   $card_id = sanitize(query_id(), "int");
 
+  // Give the card a slug
+  cards_generate_slug($card_id);
+
   // Fetch a list of card tags
   $card_tags = tags_list(search: array('ftype' => 'Card'));
 
@@ -770,25 +775,29 @@ function cards_edit( int   $card_id ,
   if(!database_row_exists('cards', $card_id))
     return;
 
-  // Edit the card
+  // Edit the card and reset its slug
   query(" UPDATE  cards
-          SET     cards.name_en           = '$card_name_en'  ,
-                  cards.name_fr           = '$card_name_fr'  ,
-                  cards.fk_images_en      = '$card_image_en' ,
-                  cards.fk_images_fr      = '$card_image_fr' ,
-                  cards.fk_card_types     = '$card_type'     ,
-                  cards.fk_factions       = '$card_faction'  ,
-                  cards.fk_card_rarities  = '$card_rarity' ,
-                  cards.fk_releases       = '$card_release',
-                  cards.is_hidden         = '$card_hidden'   ,
-                  cards.is_extra_card     = '$card_extra'    ,
-                  cards.weapons           = '$card_weapons'  ,
-                  cards.cost              = '$card_cost'     ,
-                  cards.durability        = '$card_durability',
-                  cards.income            = '$card_income'   ,
-                  cards.body_en           = '$card_body_en'  ,
+          SET     cards.slug              = ''                  ,
+                  cards.name_en           = '$card_name_en'     ,
+                  cards.name_fr           = '$card_name_fr'     ,
+                  cards.fk_images_en      = '$card_image_en'    ,
+                  cards.fk_images_fr      = '$card_image_fr'    ,
+                  cards.fk_card_types     = '$card_type'        ,
+                  cards.fk_factions       = '$card_faction'     ,
+                  cards.fk_card_rarities  = '$card_rarity'      ,
+                  cards.fk_releases       = '$card_release'     ,
+                  cards.is_hidden         = '$card_hidden'      ,
+                  cards.is_extra_card     = '$card_extra'       ,
+                  cards.weapons           = '$card_weapons'     ,
+                  cards.cost              = '$card_cost'        ,
+                  cards.durability        = '$card_durability'  ,
+                  cards.income            = '$card_income'      ,
+                  cards.body_en           = '$card_body_en'     ,
                   cards.body_fr           = '$card_body_fr'
           WHERE   cards.id                = '$card_id' ");
+
+  // Regenerate the card's slug
+  cards_generate_slug($card_id);
 
   // Fetch a list of card tags
   $card_tags = tags_list(search: array('ftype' => 'Card'));
@@ -841,6 +850,59 @@ function cards_delete( int $card_id ) : void
   // Delete the card's tags from the database
   query(" DELETE FROM tags_cards
           WHERE       tags_cards.fk_cards = '$card_id' ");
+}
+
+
+
+
+/**
+ * Generates a unique slug identifier for a card.
+ *
+ * @param   string  $card_id  The id of the card.
+ *
+ * @return  void
+ */
+
+function cards_generate_slug( string $card_id ) : void
+{
+  // Sanitize the card's id
+  $card_id = sanitize($card_id, 'int');
+
+  // Make sure the card exists
+  if(!database_row_exists('cards', $card_id))
+    return;
+
+  // Grab the card's name and release
+  $card_data = query("  SELECT    cards.id          AS 'c_id'       ,
+                                  cards.name_en     AS 'c_name_en'  ,
+                                  releases.name_en  AS 'r_name_en'
+                        FROM      cards
+                        LEFT JOIN releases ON cards.fk_releases = releases.id
+                        WHERE     cards.id = '$card_id' ",
+                        fetch_row: true);
+
+  // Assemble a tentative slug
+  $release      = ($card_data['r_name_en'])
+                ? preg_replace("/[^a-zA-Z0-9]/", "", $card_data['r_name_en'])
+                : 'card';
+  $name         = ($card_data['c_name_en'])
+                ? preg_replace("/[^a-zA-Z0-9]/", "", $card_data['c_name_en'])
+                : $card_data['c_id'];
+  $slug_release = string_truncate(string_change_case($release, 'lowercase'), 10);
+  $slug_name    = string_truncate(string_change_case($name, 'lowercase'), 29);
+  $slug         = $slug_release.'-'.$slug_name;
+
+  // Increment the slug until it's unique
+  while(database_entry_exists('cards', 'slug', $slug))
+    $slug = string_increment($slug);
+
+  // Sanitize the slug
+  $slug = sanitize($slug, 'string');
+
+  // Update the slug in the database
+  query(" UPDATE  cards
+          SET     cards.slug = '$slug'
+          WHERE   cards.id   = '$card_id' ");
 }
 
 
