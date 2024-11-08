@@ -79,6 +79,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                                       arsenals.is_hidden                AS 'a_hidden'       ,
                                       arsenals.name_en                  AS 'a_name_en'      ,
                                       arsenals.name_fr                  AS 'a_name_fr'      ,
+                                      arsenals.slug                     AS 'a_slug'         ,
                                       arsenals.playstyle_en             AS 'a_playstyle_en' ,
                                       arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
                                       arsenals.summary_en               AS 'a_summary_en'   ,
@@ -144,6 +145,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   $qcards = query(" SELECT    cards.uuid                            AS 'c_uuid'     ,
                               cards.name_en                         AS 'c_name_en'  ,
                               cards.name_fr                         AS 'c_name_fr'  ,
+                              cards.slug                            AS 'c_slug'     ,
                               arsenals_compositions.fk_cards        AS 'c_id'       ,
                               arsenals_compositions.amount_main     AS 'c_main'     ,
                               arsenals_compositions.amount_reserves AS 'c_reserves' ,
@@ -209,6 +211,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   {
     // Sanitize the data
     $data['uuid']                     = sanitize_json($arsenal_data['a_uuid']);
+    $data['url']                      = sanitize_json($GLOBALS['website_url']
+                                                      .'pages/arsenal/'.$arsenal_data['a_slug']);
     $data['name']['en']               = sanitize_json($arsenal_data['a_name_en']);
     $data['name']['fr']               = sanitize_json($arsenal_data['a_name_fr']);
     $data['playstyle']['en']          = sanitize_json($arsenal_data['a_playstyle_en']);
@@ -267,16 +271,16 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     if($arsenal_data['a_image_id_en'])
     {
       $data['images']['en']['uuid']     = sanitize_json($arsenal_data['ai_en_uuid']);
-      $data['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$arsenal_data['ai_en_path']);
       $data['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                          .'api/image/'.$arsenal_data['ai_en_uuid']);
+                                                        .'api/image/'.$arsenal_data['ai_en_uuid']);
+      $data['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$arsenal_data['ai_en_path']);
     }
     if($arsenal_data['a_image_id_fr'])
     {
       $data['images']['fr']['uuid']     = sanitize_json($arsenal_data['ai_fr_uuid']);
-      $data['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$arsenal_data['ai_fr_path']);
       $data['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                          .'api/image/'.$arsenal_data['ai_fr_uuid']);
+                                                        .'api/image/'.$arsenal_data['ai_fr_uuid']);
+      $data['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$arsenal_data['ai_fr_path']);
     }
     if(!$arsenal_data['a_image_id_en'] && !$arsenal_data['a_image_id_fr'])
       $data['images']                   = array();
@@ -293,7 +297,9 @@ function arsenals_get(  int     $arsenal_id   = null    ,
       {
         $data['cards'][$i]['uuid']                = sanitize_json($dcards['c_uuid']);
         $data['cards'][$i]['endpoint']            = sanitize_json($GLOBALS['website_url']
-                                                    .'api/card/'.$dcards['c_uuid']);
+                                                                  .'api/card/'.$dcards['c_uuid']);
+        $data['cards'][$i]['url']                 = sanitize_json($GLOBALS['website_url']
+                                                                  .'pages/card/'.$dcards['c_slug']);
         $data['cards'][$i]['name']['en']          = sanitize_json($dcards['c_name_en']);
         $data['cards'][$i]['name']['fr']          = sanitize_json($dcards['c_name_fr']);
         $data['cards'][$i]['amount']['main']      = (int)sanitize_json($dcards['c_main']);
@@ -310,7 +316,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
       {
         $data['tags'][$i]['uuid']     = sanitize_json($dtags['t_uuid']);
         $data['tags'][$i]['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                        .'api/card/'.$dtags['t_uuid']);
+                                                      .'api/card/'.$dtags['t_uuid']);
         $data['tags'][$i]['name']     = $dtags['t_name'];
       }
       if($i === 0)
@@ -503,6 +509,7 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 arsenals.name_en                AS 'a_name_en'      ,
                                 arsenals.name_fr                AS 'a_name_fr'      ,
                                 arsenals.name_$lang             AS 'a_name'         ,
+                                arsenals.slug                   AS 'a_slug'         ,
                                 arsenals.playstyle_en           AS 'a_playstyle_en' ,
                                 arsenals.playstyle_fr           AS 'a_playstyle_fr' ,
                                 arsenals.playstyle_$lang        AS 'a_playstyle'    ,
@@ -605,6 +612,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['name']             = sanitize_output(string_truncate($row['a_name'], 20, '...'));
       $data[$i]['name_en']          = sanitize_output($row['a_name_en']);
       $data[$i]['name_fr']          = sanitize_output($row['a_name_fr']);
+      $data[$i]['slug']             = sanitize_output($row['a_slug']);
       $data[$i]['release']          = sanitize_output($row['r_name']);
       $data[$i]['release_css']      = sanitize_output($row['r_styling']);
       $data[$i]['format']           = sanitize_output($row['f_name']);
@@ -655,6 +663,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       // Sanitize the data
       $data[$i]['uuid']                     = sanitize_json($row['a_uuid']);
       $data[$i]['endpoint']                 = sanitize_json($GLOBALS['website_url'].'api/arsenal/'.$row['a_uuid']);
+      $data[$i]['url']                      = sanitize_json($GLOBALS['website_url'].'pages/arsenal/'.$row['a_slug']);
       $data[$i]['name']['en']               = sanitize_json($row['a_name_en']);
       $data[$i]['name']['fr']               = sanitize_json($row['a_name_fr']);
       $data[$i]['playstyle']['en']          = sanitize_json($row['a_playstyle_en']);

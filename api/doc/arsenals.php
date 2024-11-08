@@ -126,6 +126,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     {
       "uuid": string,
       "endpoint": string,
+      "url": string,
       "name": {
         "en": string,
         "fr": string
@@ -277,6 +278,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "arsenal": {
     "uuid": string,
+    "url": string,
     "name": {
       "en": string,
       "fr": string
@@ -336,13 +338,13 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "images" {
       "en": {
         "uuid": string,
-        "path": string,
-        "endpoint": string
+        "endpoint": string,
+        "path": string
       },
       "fr": {
         "uuid": string,
-        "path": string,
-        "endpoint": string
+        "endpoint": string,
+        "path": string
       }
     },
     "card_count": {
@@ -354,6 +356,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       {
         "uuid": string,
         "endpoint": string,
+        "url": string,
         "name": {
           "en": string,
           "fr": string

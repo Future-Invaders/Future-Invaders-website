@@ -433,7 +433,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <?php endif; ?>
 
         <td class="align_left nowrap bold tooltip_container">
-          <?=$cards_list[$i]['name']?>
+          <?=__link('pages/card/'.$cards_list[$i]['slug'], $cards_list[$i]['name_en'])?>
           <div class="tooltip bold">
             <?=$cards_list[$i]['name_en']?><br>
             <?=$cards_list[$i]['name_fr']?>

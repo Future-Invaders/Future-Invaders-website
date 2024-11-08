@@ -79,6 +79,7 @@ function tags_get(  ?int    $tag_id   = NULL    ,
   $qcards = query(" SELECT    cards.uuid          AS 'c_uuid'     ,
                               cards.name_en       AS 'c_name_en'  ,
                               cards.name_fr       AS 'c_name_fr'  ,
+                              cards.slug          AS 'c_slug'     ,
                               tags_cards.fk_cards AS 'tc_id'
                     FROM      tags_cards
                     LEFT JOIN cards ON tags_cards.fk_cards = cards.id
@@ -90,6 +91,7 @@ function tags_get(  ?int    $tag_id   = NULL    ,
   $qarsenals = query("  SELECT    arsenals.uuid             AS 'a_uuid'     ,
                                   arsenals.name_en          AS 'a_name_en'  ,
                                   arsenals.name_fr          AS 'a_name_fr'  ,
+                                  arsenals.slug             AS 'a_slug'     ,
                                   tags_arsenals.fk_arsenals AS 'ta_id'
                         FROM      tags_arsenals
                         LEFT JOIN arsenals ON tags_arsenals.fk_arsenals = arsenals.id
@@ -125,6 +127,8 @@ function tags_get(  ?int    $tag_id   = NULL    ,
         $data['tagged_cards'][$i]['name']['fr'] = sanitize_json($dcards['c_name_fr']);
         $data['tagged_cards'][$i]['endpoint']   = sanitize_json($GLOBALS['website_url']
                                                   .'api/card/'.$dcards['c_uuid']);
+        $data['tagged_cards'][$i]['url']        = sanitize_json($GLOBALS['website_url']
+                                                  .'pages/card/'.$dcards['c_slug']);
       }
       if($i === 0)
         $data['tagged_cards']                   = array();
@@ -140,6 +144,8 @@ function tags_get(  ?int    $tag_id   = NULL    ,
         $data['tagged_arsenals'][$i]['name']['fr']  = sanitize_json($darsenals['a_name_fr']);
         $data['tagged_arsenals'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url']
                                                     .'api/arsenal/'.$darsenals['a_uuid']);
+        $data['tagged_arsenals'][$i]['url']         = sanitize_json($GLOBALS['website_url']
+                                                    .'pages/arsenal/'.$darsenals['a_slug']);
       }
       if($i === 0)
         $data['tagged_arsenals']                    = array();
@@ -151,9 +157,9 @@ function tags_get(  ?int    $tag_id   = NULL    ,
       for($i = 0; $dimages = query_row($qimages); $i++)
       {
         $data['tagged_images'][$i]['uuid']      = sanitize_json($dimages['i_uuid']);
-        $data['tagged_images'][$i]['path']      = sanitize_json($GLOBALS['website_url'].$dimages['i_path']);
         $data['tagged_images'][$i]['endpoint']  = sanitize_json($GLOBALS['website_url']
                                                 .'api/image/'.$dimages['i_uuid']);
+        $data['tagged_images'][$i]['path']      = sanitize_json($GLOBALS['website_url'].$dimages['i_path']);
       }
       if($i === 0)
         $data['tagged_images']                  = array();

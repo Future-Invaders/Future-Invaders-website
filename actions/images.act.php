@@ -143,7 +143,7 @@ function images_get(  ?int    $image_id         = null    ,
       {
         $data['cards'][$i]['uuid']        = sanitize_json($dcards['c_uuid']);
         $data['cards'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url']
-                                          .'api/card/'.$dcards['c_uuid']);
+                                                          .'api/card/'.$dcards['c_uuid']);
         $data['cards'][$i]['name']['en']  = sanitize_json($dcards['c_name_en']);
         $data['cards'][$i]['name']['fr']  = sanitize_json($dcards['c_name_fr']);
       }
@@ -158,7 +158,7 @@ function images_get(  ?int    $image_id         = null    ,
       {
         $data['tags'][$i]['uuid']     = sanitize_json($dtags['t_uuid']);
         $data['tags'][$i]['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                      .'api/tag/'.$dtags['t_uuid']);
+                                                      .'api/tag/'.$dtags['t_uuid']);
         $data['tags'][$i]['name']     = sanitize_json($dtags['t_name']);
       }
       if($i === 0)

@@ -85,6 +85,7 @@ function cards_get( int     $card_id    = null    ,
                                   cards.is_hidden               AS 'c_hidden'     ,
                                   cards.name_en                 AS 'c_name_en'    ,
                                   cards.name_fr                 AS 'c_name_fr'    ,
+                                  cards.slug                    AS 'c_slug'       ,
                                   cards.cost                    AS 'c_cost'       ,
                                   cards.income                  AS 'c_income'     ,
                                   cards.weapons                 AS 'c_weapons'    ,
@@ -130,6 +131,7 @@ function cards_get( int     $card_id    = null    ,
   $qarsenals = query("  SELECT    arsenals.uuid                     AS 'a_uuid'     ,
                                   arsenals.name_en                  AS 'a_name_en'  ,
                                   arsenals.name_fr                  AS 'a_name_fr'  ,
+                                  arsenals.slug                     AS 'a_slug'     ,
                                   arsenals_compositions.fk_arsenals AS 'ac_id'
                         FROM      arsenals_compositions
                         LEFT JOIN arsenals ON arsenals_compositions.fk_arsenals = arsenals.id
@@ -171,6 +173,7 @@ function cards_get( int     $card_id    = null    ,
   {
     // Sanitize card data
     $data['uuid']         = sanitize_json($card_data['c_uuid']);
+    $data['url']          = sanitize_json($GLOBALS['website_url'].'pages/card/'.$card_data['c_slug']);
     $data['name']['en']   = sanitize_json($card_data['c_name_en']);
     $data['name']['fr']   = sanitize_json($card_data['c_name_fr']);
     $data['cost']         = sanitize_json($card_data['c_cost']);
@@ -226,16 +229,16 @@ function cards_get( int     $card_id    = null    ,
     if($card_data['c_img_en_id'])
     {
       $data['images']['en']['uuid']     = sanitize_json($card_data['i_uuid_en']);
-      $data['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$card_data['i_path_en']);
       $data['images']['en']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                          .'api/image/'.$card_data['i_uuid_en']);
+                                                        .'api/image/'.$card_data['i_uuid_en']);
+      $data['images']['en']['path']     = sanitize_json($GLOBALS['website_url'].$card_data['i_path_en']);
     }
     if($card_data['c_img_fr_id'])
     {
       $data['images']['fr']['uuid']     = sanitize_json($card_data['i_uuid_fr']);
-      $data['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$card_data['i_path_fr']);
       $data['images']['fr']['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                          .'api/image/'.$card_data['i_uuid_fr']);
+                                                        .'api/image/'.$card_data['i_uuid_fr']);
+      $data['images']['fr']['path']     = sanitize_json($GLOBALS['website_url'].$card_data['i_path_fr']);
     }
     if(!$card_data['c_img_en_id'] && !$card_data['c_img_fr_id'])
       $data['images']                   = array();
@@ -247,7 +250,9 @@ function cards_get( int     $card_id    = null    ,
       {
         $data['arsenals'][$i]['uuid']       = sanitize_json($darsenals['a_uuid']);
         $data['arsenals'][$i]['endpoint']   = sanitize_json($GLOBALS['website_url']
-                                            .'api/arsenal/'.$darsenals['a_uuid']);
+                                                            .'api/arsenal/'.$darsenals['a_uuid']);
+        $data['arsenals'][$i]['url']        = sanitize_json($GLOBALS['website_url']
+                                                            .'pages/arsenal/'.$darsenals['a_slug']);
         $data['arsenals'][$i]['name']['en'] = sanitize_json($darsenals['a_name_en']);
         $data['arsenals'][$i]['name']['fr'] = sanitize_json($darsenals['a_name_fr']);
       }
@@ -262,7 +267,7 @@ function cards_get( int     $card_id    = null    ,
       {
         $data['tags'][$i]['uuid']     = sanitize_json($dtags['t_uuid']);
         $data['tags'][$i]['endpoint'] = sanitize_json($GLOBALS['website_url']
-                                      .'api/tag/'.$dtags['t_uuid']);
+                                                      .'api/tag/'.$dtags['t_uuid']);
         $data['tags'][$i]['name']     = sanitize_json($dtags['t_name']);
       }
       if($i === 0)
@@ -432,6 +437,7 @@ function cards_list( string   $sort_by    = 'name'  ,
                               cards.name_$lang              AS 'c_name'       ,
                               cards.name_en                 AS 'c_name_en'    ,
                               cards.name_fr                 AS 'c_name_fr'    ,
+                              cards.slug                    AS 'c_slug'       ,
                               cards.cost                    AS 'c_cost'       ,
                               cards.income                  AS 'c_income'     ,
                               cards.weapons                 AS 'c_weapons'    ,
@@ -513,6 +519,7 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['name']         = sanitize_output(string_truncate($row['c_name'], 20, '...'));
       $data[$i]['name_en']      = sanitize_output($row['c_name_en']);
       $data[$i]['name_fr']      = sanitize_output($row['c_name_fr']);
+      $data[$i]['slug']         = sanitize_output($row['c_slug']);
       $data[$i]['release']      = sanitize_output(string_truncate($row['r_name'], 12, '...'));
       $data[$i]['release_en']   = sanitize_output($row['r_name_en']);
       $data[$i]['release_fr']   = sanitize_output($row['r_name_fr']);
@@ -557,7 +564,10 @@ function cards_list( string   $sort_by    = 'name'  ,
       // Sanitize card data
       $data[$i]['uuid']         = sanitize_json($row['c_uuid']);
       if($search_type === null)
+      {
+        $data[$i]['url']        = sanitize_json($GLOBALS['website_url'].'pages/card/'.$row['c_slug']);
         $data[$i]['endpoint']   = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
+      }
       $data[$i]['name']['en']   = sanitize_json($row['c_name_en']);
       $data[$i]['name']['fr']   = sanitize_json($row['c_name_fr']);
       if($search_type === null)
@@ -957,17 +967,26 @@ function cards_format_body( string $body ) : string
   $body = preg_replace('/<i>(.*?)<\/i>/is', "<span class=\"italics\">$1</span>", $body);
 
   // Add resource icons
-  $body = preg_replace('/\[T\]/is', "<img src=\"".$path."/img/gameicons/oil.png\" alt=\"[T]\" class=\"valign_middle gameicon\">", $body);
-  $body = preg_replace('/\[I\]/is', "<img src=\"".$path."/img/gameicons/tech.png\" alt=\"[I]\" class=\"valign_middle gameicon\">", $body);
-  $body = preg_replace('/\[O\]/is', "<img src=\"".$path."/img/gameicons/life.png\" alt=\"[O]\" class=\"valign_middle gameicon\">", $body);
-  $body = preg_replace('/\[P\]/is', "<img src=\"".$path."/img/gameicons/scrap.png\" alt=\"[P]\" class=\"valign_middle gameicon\">", $body);
-  $body = preg_replace('/\[X\]/is', "<img src=\"".$path."/img/gameicons/credits.png\" alt=\"[X]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[T\]/is', "<img src=\"".$path
+                      ."/img/gameicons/oil.png\" alt=\"[T]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[I\]/is', "<img src=\"".$path
+                      ."/img/gameicons/tech.png\" alt=\"[I]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[O\]/is', "<img src=\"".$path
+                      ."/img/gameicons/life.png\" alt=\"[O]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[P\]/is', "<img src=\"".$path
+                      ."/img/gameicons/scrap.png\" alt=\"[P]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[X\]/is', "<img src=\"".$path
+                      ."/img/gameicons/credits.png\" alt=\"[X]\" class=\"valign_middle gameicon\">", $body);
 
   // Add card type icons
-  $body = preg_replace('/\[S\]/is', "<img src=\"".$path."/img/gameicons/ship.png\" alt=\"[S]\" class=\"valign_middle gameicon\">", $body);
-  $body = preg_replace('/\[A\]/is', "<img src=\"".$path."/img/gameicons/action.png\" alt=\"[A]\" class=\"valign_middle gameicon\">", $body);
-  $body = preg_replace('/\[R\]/is', "<img src=\"".$path."/img/gameicons/reaction.png\" alt=\"[R]\" class=\"valign_middle gameicon\">", $body);
-  $body = preg_replace('/\[B\]/is', "<img src=\"".$path."/img/gameicons/structure.png\" alt=\"[B]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[S\]/is', "<img src=\"".$path
+                      ."/img/gameicons/ship.png\" alt=\"[S]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[A\]/is', "<img src=\"".$path
+                      ."/img/gameicons/action.png\" alt=\"[A]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[R\]/is', "<img src=\"".$path
+                      ."/img/gameicons/reaction.png\" alt=\"[R]\" class=\"valign_middle gameicon\">", $body);
+  $body = preg_replace('/\[B\]/is', "<img src=\"".$path
+                      ."/img/gameicons/structure.png\" alt=\"[B]\" class=\"valign_middle gameicon\">", $body);
 
   // Return the formatted card body
   return $body;

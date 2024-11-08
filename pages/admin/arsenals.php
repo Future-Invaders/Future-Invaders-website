@@ -457,7 +457,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
 
         <td class="align_left nowrap bold tooltip_container">
-          <?=$arsenals_list[$i]['name']?>
+          <?=__link('pages/arsenal/'.$arsenals_list[$i]['slug'], $arsenals_list[$i]['name_en'])?>
           <div class="tooltip">
             <?=$arsenals_list[$i]['name_en']?><br>
             <?=$arsenals_list[$i]['name_fr']?>
