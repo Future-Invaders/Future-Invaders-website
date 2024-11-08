@@ -154,16 +154,19 @@ function cards_get( int     $card_id    = null    ,
   $qarsenals = query("  SELECT    arsenals.uuid                     AS 'a_uuid'     ,
                                   arsenals.name_en                  AS 'a_name_en'  ,
                                   arsenals.name_fr                  AS 'a_name_fr'  ,
+                                  arsenals.name_$lang               AS 'a_name'     ,
                                   arsenals.slug                     AS 'a_slug'     ,
+                                  arsenals.summary_$lang            AS 'a_summary'  ,
                                   arsenals_compositions.fk_arsenals AS 'ac_id'
                         FROM      arsenals_compositions
                         LEFT JOIN arsenals ON arsenals_compositions.fk_arsenals = arsenals.id
                         WHERE     arsenals_compositions.fk_cards = '$card_id' ");
 
   // Fetch linked tags
-  $qtags = query("  SELECT    tags.uuid           AS 't_uuid' ,
-                              tags.name           AS 't_name' ,
-                              tags_cards.fk_tags  AS 'ct_id'
+  $qtags = query("  SELECT    tags.uuid               AS 't_uuid'         ,
+                              tags.name               AS 't_name'         ,
+                              tags.description_$lang  AS 't_description'  ,
+                              tags_cards.fk_tags      AS 'ct_id'
                     FROM      tags_cards
                     LEFT JOIN tags ON tags.id = tags_cards.fk_tags
                     WHERE     tags_cards.fk_cards = '$card_id' ");
@@ -205,6 +208,23 @@ function cards_get( int     $card_id    = null    ,
     // Page data
     $data['page_title_en']  = sanitize_meta_tags($card_data['c_name_en']);
     $data['page_title_fr']  = sanitize_meta_tags($card_data['c_name_fr']);
+
+    // Arsenals
+    for($i = 0; $darsenals = query_row($qarsenals); $i++)
+    {
+      $data['arsenals'][$i]['name']     = sanitize_json($darsenals['a_name']);
+      $data['arsenals'][$i]['summary']  = sanitize_json($darsenals['a_summary']);
+      $data['arsenals'][$i]['slug']     = sanitize_json($darsenals['a_slug']);
+    }
+    $data['arsenals']['count'] = $i;
+
+    // Tags
+    for($i = 0; $dtags = query_row($qtags); $i++)
+    {
+      $data['tags'][$i]['name']         = sanitize_json($dtags['t_name']);
+      $data['tags'][$i]['description']  = sanitize_json($dtags['t_description']);
+    }
+    $data['tags']['count'] = $i;
   }
 
   // Prepare for the API

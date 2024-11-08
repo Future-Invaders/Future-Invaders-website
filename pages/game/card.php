@@ -58,7 +58,7 @@ $page_description  = $card_data['page_title_en'].$page_description ;
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_60 smallpadding_top bigpadding_bot">
+<div class="width_60 smallpadding_top">
 
   <div class="flexcontainer card_container padding_bot">
 
@@ -83,42 +83,69 @@ $page_description  = $card_data['page_title_en'].$page_description ;
         </p>
         <?php endif; ?>
 
-        <?php if($card_data['faction'] || $card_data['type'] || $card_data['rarity']): ?>
-        <p>
-          <?php if($card_data['type']): ?>
-          <span class="bold"><?=__('card_type').__(':')?></span> <?=$card_data['type']?>
-          <?php endif; if($card_data['type'] && ($card_data['faction'] || $card_data['rarity'])): ?>
-          <br>
-          <?php endif; if($card_data['faction']): ?>
-          <span class="bold"><?=__('card_faction').__(':')?></span> <?=$card_data['faction']?>
-          <?php endif; if($card_data['faction'] && ($card_data['type'] || $card_data['rarity'])): ?>
-          <br>
-          <?php endif; if($card_data['rarity']): ?>
-          <span class="bold"><?=__('card_rarity').__(':')?></span> <?=$card_data['rarity']?>
-          <?php endif; ?>
-        </p>
-        <?php endif; ?>
-
-        <?php if($card_data['cost'] || $card_data['income']): ?>
-        <p>
-          <?php if($card_data['cost']): ?>
-          <span class="bold"><?=__('card_cost').__(':')?></span> <?=$card_data['icost']?>
-          <?php endif; if($card_data['cost'] && $card_data['income']): ?>
-          <br>
-          <?php endif; if($card_data['income']): ?>
-          <span class="bold"><?=__('card_income').__(':')?></span> <?=$card_data['iincome']?>
-          <?php endif; ?>
-        </p>
-        <?php endif; ?>
-
-        <?php if($card_data['type_en'] === 'Ship' || $card_data['type_en'] === 'Structure'): ?>
-        <p>
-          <?php if($card_data['type_en'] === 'Ship'): ?>
-          <span class="bold"><?=__('card_weapons').__(':')?></span> <?=$card_data['weapons']?>
-          <br>
-          <?php endif; ?>
-          <span class="bold"><?=__('card_durability').__(':')?></span> <?=$card_data['durability']?>
-        </p>
+        <?php if($card_data['type']): ?>
+        <div class="flexcontainer padding_top micropadding_bot">
+          <div class="align_right noflow bold" style="flex: 1">
+            <?=__('card_type').__(':')?>
+          </div>
+          <div class="align_left smallspaced_left noflow" style="flex: 3">
+            <?=$card_data['type']?>
+          </div>
+        </div>
+        <?php endif; if($card_data['faction']): ?>
+        <div class="flexcontainer micropadding_bot">
+          <div class="align_right noflow bold" style="flex: 1">
+            <?=__('card_faction').__(':')?>
+          </div>
+          <div class="align_left smallspaced_left noflow" style="flex: 3">
+            <?=$card_data['faction']?>
+          </div>
+        </div>
+        <?php endif; if($card_data['rarity']): ?>
+        <div class="flexcontainer micropadding_bot">
+          <div class="align_right noflow bold" style="flex: 1">
+            <?=__('card_rarity').__(':')?>
+          </div>
+          <div class="align_left smallspaced_left noflow" style="flex: 3">
+            <?=$card_data['rarity']?>
+          </div>
+        </div>
+        <?php endif; if($card_data['cost']): ?>
+        <div class="flexcontainer micropadding_bot">
+          <div class="align_right noflow bold" style="flex: 1">
+            <?=__('card_cost').__(':')?>
+          </div>
+          <div class="align_left smallspaced_left noflow" style="flex: 3">
+            <?=$card_data['icost']?>
+          </div>
+        </div>
+        <?php endif; if($card_data['income']): ?>
+        <div class="flexcontainer micropadding_bot">
+          <div class="align_right noflow bold" style="flex: 1">
+            <?=__('card_income').__(':')?>
+          </div>
+          <div class="align_left smallspaced_left noflow" style="flex: 3">
+            <?=$card_data['iincome']?>
+          </div>
+        </div>
+        <?php endif; if($card_data['type_en'] === 'Ship'): ?>
+        <div class="flexcontainer micropadding_bot">
+          <div class="align_right noflow bold" style="flex: 1">
+            <?=__('card_weapons').__(':')?>
+          </div>
+          <div class="align_left smallspaced_left noflow bold" style="flex: 3">
+            <?=$card_data['weapons']?>
+          </div>
+        </div>
+        <?php endif; if($card_data['type_en'] === 'Ship' || $card_data['type_en'] === 'Structure'): ?>
+        <div class="flexcontainer micropadding_bot">
+          <div class="align_right noflow bold" style="flex: 1">
+            <?=__('card_durability').__(':')?>
+          </div>
+          <div class="align_left smallspaced_left noflow bold" style="flex: 3">
+            <?=$card_data['durability']?>
+          </div>
+        </div>
         <?php endif; ?>
 
         <?php if($card_data['body']): ?>
@@ -130,6 +157,41 @@ $page_description  = $card_data['page_title_en'].$page_description ;
       </div>
     </div>
 
+  </div>
+
+  <div class="bigpadding_top">
+    <?php if($card_data['arsenals']['count']): ?>
+    <div class="black bigspaced tinypadding_top tinypadding_bot">
+      <h5>
+        <?=__('card_arsenals_title')?>
+      </h5>
+      <?php for($i = 0; $i < $card_data['arsenals']['count']; $i++): ?>
+      <p>
+        &bullet; <?=__link('pages/arsenal/'.$card_data['arsenals'][$i]['slug'], $card_data['arsenals'][$i]['name'])?><br>
+        <?=$card_data['arsenals'][$i]['summary']?>
+      </p>
+      <?php endfor; ?>
+    </div>
+    <?php endif; ?>
+  </div>
+
+  <div class="bigpadding_top">
+    <?php if($card_data['tags']['count']): ?>
+    <div class="black bigspaced tinypadding_top tinypadding_bot">
+      <h5>
+        <?=__('card_tags_title')?>
+      </h5>
+      <p class="italics tinypadding_top">
+        <?=__('card_tags_body')?>
+      </span>
+      <?php for($i = 0; $i < $card_data['tags']['count']; $i++): ?>
+      <p>
+        &bullet; <?=__link('404', $card_data['tags'][$i]['name'])?><br>
+        <?=$card_data['tags'][$i]['description']?>
+      </p>
+      <?php endfor; ?>
+    </div>
+    <?php endif; ?>
   </div>
 
 </div>
