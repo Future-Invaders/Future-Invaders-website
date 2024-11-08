@@ -42,6 +42,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  *
  * @param   int         $card_id    (OPTIONAL)  The id of the card.
  * @param   string      $card_uuid  (OPTIONAL)  The uuid of the card.
+ * @param   string      $card_slug  (OPTIONAL)  The card's slug.
  * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  * @param   bool        $no_depth   (OPTIONAL)  Whether to include elements linked to the card in the API.
  *
@@ -50,16 +51,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 function cards_get( int     $card_id    = null    ,
                     string  $card_uuid  = null    ,
+                    string  $card_slug  = null    ,
                     string  $format     = 'html'  ,
                     bool    $no_depth   = false   ) : array|null
 {
   // Return null if there are neither an id nor an uuid
-  if(!$card_id && !$card_uuid)
+  if(!$card_id && !$card_uuid && !$card_slug)
     return null;
 
   // Sanitize the card's id and uuid
   $card_id   = sanitize($card_id, 'int');
   $card_uuid = sanitize($card_uuid, 'string');
+  $card_slug = sanitize($card_slug, 'string');
 
   // Return null if the card does not have a valid ID
   if($card_id && !database_row_exists('cards', $card_id))
@@ -69,8 +72,20 @@ function cards_get( int     $card_id    = null    ,
   if($card_uuid && !database_entry_exists('cards', 'uuid', $card_uuid))
     return null;
 
+  // Return null if the card does not have a valid slug
+  if($card_slug && !database_entry_exists('cards', 'slug', $card_slug))
+    return null;
+
   // Prepare the condition for retrieving the card
-  $query_where = ($card_id) ? " WHERE cards.id = '$card_id' " : " WHERE cards.uuid = '$card_uuid' ";
+  if($card_id)
+    $query_where = " WHERE cards.id = '$card_id' ";
+  elseif($card_uuid)
+    $query_where = " WHERE cards.uuid = '$card_uuid' ";
+  elseif($card_slug)
+    $query_where = " WHERE cards.slug = '$card_slug' ";
+
+  // Get the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the card's data
   $card_data = query("  SELECT    cards.id                      AS 'c_id'         ,
@@ -85,6 +100,7 @@ function cards_get( int     $card_id    = null    ,
                                   cards.is_hidden               AS 'c_hidden'     ,
                                   cards.name_en                 AS 'c_name_en'    ,
                                   cards.name_fr                 AS 'c_name_fr'    ,
+                                  cards.name_$lang              AS 'c_name'       ,
                                   cards.slug                    AS 'c_slug'       ,
                                   cards.cost                    AS 'c_cost'       ,
                                   cards.income                  AS 'c_income'     ,
@@ -92,24 +108,31 @@ function cards_get( int     $card_id    = null    ,
                                   cards.durability              AS 'c_durability' ,
                                   cards.body_en                 AS 'c_body_en'    ,
                                   cards.body_fr                 AS 'c_body_fr'    ,
+                                  cards.body_$lang              AS 'c_body'       ,
                                   releases.uuid                 AS 'r_uuid'       ,
                                   releases.name_en              AS 'r_name_en'    ,
                                   releases.name_fr              AS 'r_name_fr'    ,
+                                  releases.name_$lang           AS 'r_name'       ,
                                   releases.release_date         AS 'r_date'       ,
                                   factions.uuid                 AS 'f_uuid'       ,
                                   factions.name_en              AS 'f_name_en'    ,
                                   factions.name_fr              AS 'f_name_fr'    ,
+                                  factions.name_$lang           AS 'f_name'       ,
                                   card_types.uuid               AS 'ct_uuid'      ,
                                   card_types.name_en            AS 'ct_name_en'   ,
                                   card_types.name_fr            AS 'ct_name_fr'   ,
+                                  card_types.name_$lang         AS 'ct_name'      ,
                                   card_rarities.uuid            AS 'cr_uuid'      ,
                                   card_rarities.name_en         AS 'cr_name_en'   ,
                                   card_rarities.name_fr         AS 'cr_name_fr'   ,
+                                  card_rarities.name_$lang      AS 'cr_name'      ,
                                   card_rarities.max_card_count  AS 'cr_max_count' ,
                                   images_en.uuid                AS 'i_uuid_en'    ,
                                   images_en.path                AS 'i_path_en'    ,
                                   images_fr.uuid                AS 'i_uuid_fr'    ,
-                                  images_fr.path                AS 'i_path_fr'
+                                  images_fr.path                AS 'i_path_fr'    ,
+                                  images_$lang.path             AS 'i_path'       ,
+                                  images_$lang.name             AS 'i_name'
                         FROM      cards
                         LEFT JOIN releases            ON releases.id      = cards.fk_releases
                         LEFT JOIN factions            ON factions.id      = cards.fk_factions
@@ -148,24 +171,40 @@ function cards_get( int     $card_id    = null    ,
   // Prepare the data for display
   if($format === 'html')
   {
+    // Sanitize card data
     $data['name_en']      = sanitize_output($card_data['c_name_en']);
     $data['name_fr']      = sanitize_output($card_data['c_name_fr']);
+    $data['name']         = sanitize_output($card_data['c_name']);
     $data['image_id_en']  = sanitize_output($card_data['c_img_en_id']);
     $data['image_en']     = sanitize_output($card_data['i_path_en']);
     $data['image_id_fr']  = sanitize_output($card_data['c_img_fr_id']);
     $data['image_fr']     = sanitize_output($card_data['i_path_fr']);
+    $data['image_path']   = sanitize_output($card_data['i_path']);
+    $data['image_name']   = sanitize_output($card_data['i_name']);
     $data['type_id']      = sanitize_output($card_data['c_type_id']);
+    $data['type']         = sanitize_output($card_data['ct_name']);
+    $data['type_en']      = sanitize_output($card_data['ct_name_en']);
     $data['faction_id']   = sanitize_output($card_data['c_faction_id']);
+    $data['faction']      = sanitize_output($card_data['f_name']);
     $data['rarity_id']    = sanitize_output($card_data['c_rarity_id']);
+    $data['rarity']       = sanitize_output($card_data['cr_name']);
     $data['release_id']   = sanitize_output($card_data['c_release_id']);
+    $data['release']      = sanitize_output($card_data['r_name']);
     $data['hidden']       = sanitize_output($card_data['c_hidden']);
     $data['extra']        = sanitize_output($card_data['c_extra']);
     $data['weapons']      = sanitize_output($card_data['c_weapons']);
     $data['durability']   = sanitize_output($card_data['c_durability']);
     $data['cost']         = sanitize_output($card_data['c_cost']);
+    $data['icost']        = cards_format_cost($card_data['c_cost']);
     $data['income']       = sanitize_output($card_data['c_income']);
+    $data['iincome']      = cards_format_cost($card_data['c_income']);
     $data['body_en']      = sanitize_output($card_data['c_body_en']);
     $data['body_fr']      = sanitize_output($card_data['c_body_fr']);
+    $data['body']         = cards_format_body($card_data['c_body']);
+
+    // Page data
+    $data['page_title_en']  = sanitize_meta_tags($card_data['c_name_en']);
+    $data['page_title_fr']  = sanitize_meta_tags($card_data['c_name_fr']);
   }
 
   // Prepare for the API

@@ -8,6 +8,33 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       CARDS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Individual card
+___('card_release',     'EN', "{{1}} release");
+___('card_release',     'FR', "Version {{1}}");
+___('card_type',        'EN', "Type");
+___('card_type',        'FR', "Type");
+___('card_faction',     'EN', "Faction");
+___('card_faction',     'FR', "Faction");
+___('card_rarity',      'EN', "Rarity");
+___('card_rarity',      'FR', "Rareté");
+___('card_cost',        'EN', "Cost");
+___('card_cost',        'FR', "Coût");
+___('card_income',      'EN', "Income");
+___('card_income',      'FR', "Revenus");
+___('card_weapons',     'EN', "Weapons");
+___('card_weapons',     'FR', "Armes");
+___('card_durability',  'EN', "Durability");
+___('card_durability',  'FR', "Durabilité");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       RULES                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
