@@ -38,6 +38,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  * @param   string      $arsenal_slug (OPTIONAL)  The arsenal's slug.
  * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  * @param   bool        $no_depth     (OPTIONAL)  Whether to include elements linked to the arsenal in the API.
+ * @param   bool        $card_list    (OPTIONAL)  Sort the cards in the arsenal for public card list display.
  *
  * @return  array|null                            An array containing the arsenal's data, or null if it doesn't exist.
  */
@@ -46,7 +47,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                         string  $arsenal_uuid = null    ,
                         string  $arsenal_slug = null    ,
                         string  $format       = 'html'  ,
-                        bool    $no_depth     = false   ) : array|null
+                        bool    $no_depth     = false   ,
+                        bool    $card_list    = false   ) : array|null
 {
   // Return null if there are neither an id, an uuid, or a slug
   if(!$arsenal_id && !$arsenal_uuid && !$arsenal_slug)
@@ -170,27 +172,40 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                         LEFT JOIN factions ON arsenals_factions.fk_factions = factions.id
                         WHERE     arsenals_factions.fk_arsenals = '$arsenal_id' ");
 
-  // Don't show hidden or extra cards in the API
-  $query_api = ($format === 'api') ? '  AND cards.is_hidden     = 0
-                                        AND cards.is_extra_card = 0 ' : "";
+  // Don't show hidden or extra cards in the API or in the public card list
+  $query_where = ($format === 'api' || $card_list) ? '  AND cards.is_hidden     = 0
+                                                        AND cards.is_extra_card = 0 ' : "";
+
+  // Prepare the sorting order for linked cards
+  if($card_list)
+    $query_sort_cards = " ORDER BY  LENGTH(cards.cost)        ASC ,
+                                    card_types.sorting_order  ASC ,
+                                    cards.name_$lang          ASC ";
+  else
+    $query_sort_cards = " ORDER BY  arsenals_compositions.amount_main   = 0   ,
+                                    arsenals_compositions.sorting_order ASC   ,
+                                    cards.name_en                       ASC   ";
 
   // Fetch linked cards
   $qcards = query(" SELECT    cards.uuid                            AS 'c_uuid'     ,
                               cards.name_en                         AS 'c_name_en'  ,
                               cards.name_fr                         AS 'c_name_fr'  ,
+                              cards.name_$lang                      AS 'c_name'     ,
                               cards.slug                            AS 'c_slug'     ,
+                              images_$lang.path                     AS 'i_path'     ,
                               arsenals_compositions.fk_cards        AS 'c_id'       ,
                               arsenals_compositions.amount_main     AS 'c_main'     ,
                               arsenals_compositions.amount_reserves AS 'c_reserves' ,
                               arsenals_compositions.is_extra        AS 'c_extra'    ,
                               arsenals_compositions.sorting_order   AS 'c_order'
                     FROM      arsenals_compositions
-                    LEFT JOIN cards ON arsenals_compositions.fk_cards = cards.id
+                    LEFT JOIN cards               ON arsenals_compositions.fk_cards = cards.id
+                    LEFT JOIN card_types          ON cards.fk_card_types            = card_types.id
+                    LEFT JOIN images AS images_en ON images_en.id                   = cards.fk_images_en
+                    LEFT JOIN images AS images_fr ON images_fr.id                   = cards.fk_images_fr
                     WHERE     arsenals_compositions.fk_arsenals = '$arsenal_id'
-                    $query_api
-                    ORDER BY  arsenals_compositions.amount_main     = 0   ,
-                              arsenals_compositions.sorting_order   ASC   ,
-                              cards.name_en                         ASC   ");
+                    $query_where
+                    $query_sort_cards ");
 
   // Fetch linked tags
   $qtags = query("  SELECT    tags.uuid               AS 't_uuid' ,
@@ -256,6 +271,12 @@ function arsenals_get(  int     $arsenal_id   = null    ,
       $data['cards']['main'][$i]      = $dcards['c_main'];
       $data['cards']['reserves'][$i]  = $dcards['c_reserves'];
       $data['cards']['order'][$i]     = $dcards['c_order'];
+      $data['cards']['name'][$i]      = $dcards['c_name'];
+      $data['cards']['slug'][$i]      = $dcards['c_slug'];
+      $temp_thumb_path                = (isset($dcards['i_path']))
+                                      ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $dcards['i_path'])
+                                      : '';
+      $data['cards']['thumb'][$i]     = sanitize_output($temp_thumb_path);
     }
     $data['cards']['rows'] = $i;
 

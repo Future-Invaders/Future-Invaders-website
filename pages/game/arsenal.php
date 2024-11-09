@@ -38,7 +38,8 @@ if(!$arsenal_slug)
   exit(header("Location: .."));
 
 // Find the corresponding card
-$arsenal_data = arsenals_get( arsenal_slug: $arsenal_slug );
+$arsenal_data = arsenals_get( arsenal_slug: $arsenal_slug  ,
+                              card_list:    true           );
 
 // Stop here if the arsenal wasn't found or is hidden
 if(is_null($arsenal_data) || !$arsenal_data || $arsenal_data['hidden'])
@@ -55,12 +56,6 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
                                     search:   array(  'arsenal_id' => $arsenal_data['id'] ,
                                                       'public'     => true                ,
                                                       'is_extra'   => true                ) );
-
-// Fetch the main cards
-$arsenal_cards = cards_list(  sort_by:  'list'                                          ,
-                              search:   array(  'arsenal_id'    => $arsenal_data['id']  ,
-                                                'public'        => true                 ,
-                                                'is_not_extra'  => true                 ) );
 
 
 
@@ -171,13 +166,13 @@ $arsenal_cards = cards_list(  sort_by:  'list'                                  
         <span class="bold"><?=__('arsenal_gameplan').__(':')?></span><br>
         <?=$arsenal_data['gameplan']?>
       </p>
-      <?php endif; if($arsenal_cards['rows']): ?>
+      <?php endif; if($arsenal_data['cards']['rows']): ?>
       <div class="padding_top padding_bot card_gallery">
-        <?php for($i = 0; $i < $arsenal_cards['rows']; $i++): ?>
-        <?php for($j = 0; $j < $arsenal_cards[$i]['count_main']; $j++): ?>
+        <?php for($i = 0; $i < $arsenal_data['cards']['rows']; $i++): ?>
+        <?php for($j = 0; $j < $arsenal_data['cards']['main'][$i]; $j++): ?>
         <div class="card_gallery_cell">
-          <a href="./../../pages/card/<?=$arsenal_cards[$i]['slug']?>" class="noglow">
-            <img class="tinypadding_top" src="<?=$arsenal_cards[$i]['thumb']?>" alt="<?=$arsenal_cards[$i]['image_name']?>" loading="lazy">
+          <a href="./../../pages/card/<?=$arsenal_data['cards']['slug'][$i]?>" class="noglow">
+            <img class="tinypadding_top" src="<?=$arsenal_data['cards']['thumb'][$i]?>" alt="<?=$arsenal_data['cards']['name'][$i]?>" loading="lazy">
           </a>
         </div>
         <?php endfor; ?>
@@ -199,13 +194,13 @@ $arsenal_cards = cards_list(  sort_by:  'list'                                  
         <span class="bold"><?=__('arsenal_reserves_strat').__(':')?></span><br>
         <?=$arsenal_data['reserves']?>
       </p>
-      <?php endif; if($arsenal_cards['rows']): ?>
+      <?php endif; if($arsenal_data['cards']['rows']): ?>
       <div class="padding_top padding_bot card_gallery">
-        <?php for($i = 0; $i < $arsenal_cards['rows']; $i++): ?>
-        <?php for($j = 0; $j < $arsenal_cards[$i]['count_res']; $j++): ?>
+        <?php for($i = 0; $i < $arsenal_data['cards']['rows']; $i++): ?>
+        <?php for($j = 0; $j < $arsenal_data['cards']['reserves'][$i]; $j++): ?>
         <div class="card_gallery_cell">
-          <a href="./../../pages/card/<?=$arsenal_cards[$i]['slug']?>" class="noglow">
-            <img class="tinypadding_top" src="<?=$arsenal_cards[$i]['thumb']?>" alt="<?=$arsenal_cards[$i]['image_name']?>" loading="lazy">
+          <a href="./../../pages/card/<?=$arsenal_data['cards']['slug'][$i]?>" class="noglow">
+            <img class="tinypadding_top" src="<?=$arsenal_data['cards']['thumb'][$i]?>" alt="<?=$arsenal_data['cards']['name'][$i]?>" loading="lazy">
           </a>
         </div>
         <?php endfor; ?>
