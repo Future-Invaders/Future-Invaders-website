@@ -76,7 +76,6 @@ $page_description  = $card_data['page_title_en'].$page_description ;
         <h4 class="uppercase">
           <?=$card_data['name']?>
         </h4>
-
         <?php if($card_data['release']): ?>
         <p class="nopadding_top italics">
           <?=__('card_release', preset_values: array($card_data['release']))?>

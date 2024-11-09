@@ -552,6 +552,11 @@ tr.row_separator_dark_thin                  { border-bottom: 0.6rem solid var(--
 @media (max-width: 992px)                                             {
 .gallery_cell { flex: 0 0 48%; margin: 0.2rem;                      } }
 
+.card_gallery      { display: flex; flex-wrap: wrap;                       }
+.card_gallery_cell { border-radius: 0.2rem; margin: 0.2rem 0.5rem; flex: 0 0 23%; }
+@media (max-width: 992px)                                                  {
+.card_gallery_cell { flex: 0 0 31%; margin: 0rem 0.4rem;                      } }
+
 /****************************************************** POPINS *******************************************************/
 
 div.popin_background        { position: fixed; top: 0; bottom: 0; left: 0; right: 0                       ;

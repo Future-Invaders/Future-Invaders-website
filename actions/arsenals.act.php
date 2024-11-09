@@ -35,6 +35,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  *
  * @param   int         $arsenal_id   (OPTIONAL)  The arsenal's id.
  * @param   string      $arsenal_uuid (OPTIONAL)  The arsenal's uuid.
+ * @param   string      $arsenal_slug (OPTIONAL)  The arsenal's slug.
  * @param   string      $format       (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  * @param   bool        $no_depth     (OPTIONAL)  Whether to include elements linked to the arsenal in the API.
  *
@@ -43,16 +44,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 function arsenals_get(  int     $arsenal_id   = null    ,
                         string  $arsenal_uuid = null    ,
+                        string  $arsenal_slug = null    ,
                         string  $format       = 'html'  ,
                         bool    $no_depth     = false   ) : array|null
 {
-  // Return null if there are neither an id nor an uuid
-  if(!$arsenal_id && !$arsenal_uuid)
+  // Return null if there are neither an id, an uuid, or a slug
+  if(!$arsenal_id && !$arsenal_uuid && !$arsenal_slug)
     return null;
 
-  // Sanitize the arsenal's id and uuid
+  // Sanitize the arsenal's id, uuid, and slug
   $arsenal_id   = sanitize($arsenal_id, 'int');
   $arsenal_uuid = sanitize($arsenal_uuid, 'string');
+  $arsenal_slug = sanitize($arsenal_slug, 'string');
 
   // Return null if the arsenal does not have a valid ID
   if($arsenal_id && !database_row_exists('arsenals', $arsenal_id))
@@ -62,8 +65,20 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   if($arsenal_uuid && !database_entry_exists('arsenals', 'uuid', $arsenal_uuid))
     return null;
 
+  // Return null if the arsenal does not have a valid slug
+  if($arsenal_slug && !database_entry_exists('arsenals', 'slug', $arsenal_slug))
+    return null;
+
   // Prepare the condition for retrieving the arsenal
-  $query_where = ($arsenal_id) ? " WHERE arsenals.id = '$arsenal_id' " : " WHERE arsenals.uuid = '$arsenal_uuid' ";
+  if($arsenal_id)
+    $query_where = " WHERE arsenals.id = '$arsenal_id' ";
+  else if($arsenal_uuid)
+    $query_where = " WHERE arsenals.uuid = '$arsenal_uuid' ";
+  else if($arsenal_slug)
+    $query_where = " WHERE arsenals.slug = '$arsenal_slug' ";
+
+  // Get the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the arsenal's data
   $arsenal_data = query(" SELECT      arsenals.id                       AS 'a_id'           ,
@@ -79,31 +94,46 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                                       arsenals.is_hidden                AS 'a_hidden'       ,
                                       arsenals.name_en                  AS 'a_name_en'      ,
                                       arsenals.name_fr                  AS 'a_name_fr'      ,
+                                      arsenals.name_$lang               AS 'a_name'         ,
                                       arsenals.slug                     AS 'a_slug'         ,
                                       arsenals.playstyle_en             AS 'a_playstyle_en' ,
                                       arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
+                                      arsenals.playstyle_$lang          AS 'a_playstyle'    ,
                                       arsenals.summary_en               AS 'a_summary_en'   ,
                                       arsenals.summary_fr               AS 'a_summary_fr'   ,
+                                      arsenals.summary_$lang            AS 'a_summary'      ,
                                       arsenals.gameplan_en              AS 'a_gameplan_en'  ,
                                       arsenals.gameplan_fr              AS 'a_gameplan_fr'  ,
+                                      arsenals.gameplan_$lang           AS 'a_gameplan'     ,
                                       arsenals.reserves_en              AS 'a_reserves_en'  ,
                                       arsenals.reserves_fr              AS 'a_reserves_fr'  ,
+                                      arsenals.reserves_$lang           AS 'a_reserves'     ,
                                       arsenals.extra_en                 AS 'a_extra_en'     ,
                                       arsenals.extra_fr                 AS 'a_extra_fr'     ,
+                                      arsenals.extra_$lang              AS 'a_extra'        ,
                                       releases.uuid                     AS 'r_uuid'         ,
                                       releases.name_en                  AS 'r_name_en'      ,
                                       releases.name_fr                  AS 'r_name_fr'      ,
+                                      releases.name_$lang               AS 'r_name'         ,
                                       releases.release_date             AS 'r_date'         ,
                                       formats.uuid                      AS 'f_uuid'         ,
                                       formats.name_en                   AS 'f_name_en'      ,
                                       formats.name_fr                   AS 'f_name_fr'      ,
+                                      formats.name_$lang                AS 'f_name'         ,
                                       arsenal_difficulties.uuid         AS 'ad_uuid'        ,
                                       arsenal_difficulties.name_en      AS 'ad_name_en'     ,
                                       arsenal_difficulties.name_fr      AS 'ad_name_fr'     ,
+                                      arsenal_difficulties.name_$lang   AS 'ad_name'        ,
                                       images_en.uuid                    AS 'ai_en_uuid'     ,
                                       images_en.path                    AS 'ai_en_path'     ,
                                       images_fr.uuid                    AS 'ai_fr_uuid'     ,
-                                      images_fr.path                    AS 'ai_fr_path'
+                                      images_fr.path                    AS 'ai_fr_path'     ,
+                                      images_$lang.path                 AS 'ai_path'        ,
+                                      images_$lang.name                 AS 'ai_name'        ,
+                                      COUNT(DISTINCT factions.id)       AS 'af_count'       ,
+                                      GROUP_CONCAT( DISTINCT factions.name_$lang
+                                                    ORDER BY factions.sorting_order ASC
+                                                    SEPARATOR ', ')     AS 'af_names'
                             FROM      arsenals
                             LEFT JOIN releases  ON arsenals.fk_releases = releases.id
                             LEFT JOIN formats   ON arsenals.fk_formats  = formats.id
@@ -113,7 +143,10 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                                    ON arsenals.fk_images_en = images_en.id
                             LEFT JOIN images AS images_fr
                                    ON arsenals.fk_images_fr = images_fr.id
-                            $query_where ",
+                            LEFT JOIN arsenals_factions ON arsenals.id = arsenals_factions.fk_arsenals
+                            LEFT JOIN factions          ON arsenals_factions.fk_factions = factions.id
+                            $query_where
+                            GROUP BY  arsenals.id ",
                             fetch_row: true);
 
   // Don't retrieve hidden cards through the API
@@ -171,24 +204,44 @@ function arsenals_get(  int     $arsenal_id   = null    ,
   if($format === 'html')
   {
     // Arsenal data
+    $data['id']           = sanitize_output($arsenal_data['a_id']);
     $data['release']      = sanitize_output($arsenal_data['a_release_id']);
+    $data['release_name'] = sanitize_output($arsenal_data['r_name']);
     $data['format']       = sanitize_output($arsenal_data['a_format_id']);
+    $data['format_name']  = sanitize_output($arsenal_data['f_name']);
     $data['difficulty']   = sanitize_output($arsenal_data['a_level_id']);
+    $data['diff_name']    = sanitize_output($arsenal_data['ad_name']);
+    $data['faction_list'] = sanitize_output($arsenal_data['af_names']);
+    $data['nfactions']    = sanitize_output($arsenal_data['af_count']);
     $data['image_id_en']  = sanitize_output($arsenal_data['a_image_id_en']);
     $data['image_id_fr']  = sanitize_output($arsenal_data['a_image_id_fr']);
+    $data['image_path']   = sanitize_output($arsenal_data['ai_path']);
+    $data['image_name']   = sanitize_output($arsenal_data['ai_name']);
     $data['hidden']       = sanitize_output($arsenal_data['a_hidden']);
     $data['name_en']      = sanitize_output($arsenal_data['a_name_en']);
     $data['name_fr']      = sanitize_output($arsenal_data['a_name_fr']);
+    $data['name']         = sanitize_output($arsenal_data['a_name']);
     $data['playstyle_en'] = sanitize_output($arsenal_data['a_playstyle_en']);
     $data['playstyle_fr'] = sanitize_output($arsenal_data['a_playstyle_fr']);
+    $data['playstyle']    = sanitize_output($arsenal_data['a_playstyle']);
     $data['summary_en']   = sanitize_output($arsenal_data['a_summary_en']);
     $data['summary_fr']   = sanitize_output($arsenal_data['a_summary_fr']);
+    $data['summary']      = sanitize_output($arsenal_data['a_summary']);
     $data['gameplan_en']  = sanitize_output($arsenal_data['a_gameplan_en']);
     $data['gameplan_fr']  = sanitize_output($arsenal_data['a_gameplan_fr']);
+    $data['gameplan']     = nl2br($arsenal_data['a_gameplan']);
     $data['reserves_en']  = sanitize_output($arsenal_data['a_reserves_en']);
     $data['reserves_fr']  = sanitize_output($arsenal_data['a_reserves_fr']);
+    $data['reserves']     = nl2br($arsenal_data['a_reserves']);
     $data['extra_en']     = sanitize_output($arsenal_data['a_extra_en']);
     $data['extra_fr']     = sanitize_output($arsenal_data['a_extra_fr']);
+    $data['extra']        = nl2br($arsenal_data['a_extra']);
+    $data['ncards']       = sanitize_output($arsenal_data['a_count']);
+    $data['nreserves']    = sanitize_output($arsenal_data['a_rcount']);
+
+    // Page data
+    $data['page_title_en']  = sanitize_meta_tags($arsenal_data['a_name_en']);
+    $data['page_title_fr']  = sanitize_meta_tags($arsenal_data['a_name_fr']);
 
     // Faction data
     for($i = 0; $dfactions = query_row($qfactions); $i++)
@@ -928,7 +981,8 @@ function arsenals_edit( int   $arsenal_id  ,
                   arsenals.reserves_en              = '$arsenal_reserves_en'  ,
                   arsenals.reserves_fr              = '$arsenal_reserves_fr'  ,
                   arsenals.extra_en                 = '$arsenal_extra_en'     ,
-                  arsenals.extra_fr                 = '$arsenal_extra_fr'
+                  arsenals.extra_fr                 = '$arsenal_extra_fr'     ,
+                  arsenals.slug                     = ''
           WHERE   arsenals.id                       = '$arsenal_id' ");
 
   // Regenerate the arsenal's slug

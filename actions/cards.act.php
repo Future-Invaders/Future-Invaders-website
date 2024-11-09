@@ -383,6 +383,8 @@ function cards_list( string   $sort_by    = 'name'  ,
   $search_tag_id        = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag           = sanitize_array_element($search, 'tag', 'string');
   $search_public        = sanitize_array_element($search, 'public', 'bool');
+  $search_is_extra      = sanitize_array_element($search, 'is_extra', 'bool');
+  $search_is_not_extra  = sanitize_array_element($search, 'is_not_extra', 'bool');
   $search_game_cards    = sanitize_array_element($search, 'game_card', 'bool');
 
   // Search through the data
@@ -431,6 +433,8 @@ function cards_list( string   $sort_by    = 'name'  ,
   $query_search .= ($search_arsenal_id === -1)
                                             ? " AND   arsenals.id         IS NULL "                   : "";
   $query_search .= ($search_public)         ? " AND   cards.is_hidden     = '0' "                     : "";
+  $query_search .= ($search_is_extra)       ? " AND   cards.is_extra_card = '1' "                     : "";
+  $query_search .= ($search_is_not_extra)   ? " AND   cards.is_extra_card = '0' "                     : "";
   $query_search .= ($search_game_cards)     ? " AND   cards.is_extra_card = '0' "                     : "";
 
   // Use a different search technique for tags
@@ -477,6 +481,11 @@ function cards_list( string   $sort_by    = 'name'  ,
     'body'        => " ORDER BY LENGTH(cards.body_en)
                               + LENGTH(cards.body_fr)       DESC    ,
                                 cards.name_$lang            ASC     ",
+    'list'        => " ORDER BY LENGTH(cards.cost)          ASC     ,
+                                card_types.sorting_order    ASC     ,
+                                cards.name_en               ASC     ",
+    'extra'       => " ORDER BY arsenals_compositions.sorting_order
+                                                            ASC ",
     default       => " ORDER BY releases.release_date       IS NULL ,
                                 releases.release_date       DESC    ,
                                 factions.sorting_order      IS NULL ,
@@ -539,6 +548,12 @@ function cards_list( string   $sort_by    = 'name'  ,
                               images_fr.id                  AS 'i_id_fr'      ,
                               images_fr.uuid                AS 'i_uuid_fr'    ,
                               images_fr.path                AS 'i_path_fr'    ,
+                              images_$lang.path             AS 'i_path'       ,
+                              images_$lang.name             AS 'i_name'       ,
+                              arsenals_compositions.amount_main
+                                                            AS 'ac_main'      ,
+                              arsenals_compositions.amount_reserves
+                                                            AS 'ac_reserves'  ,
                               COUNT(DISTINCT tags.id)       AS 'ct_count'     ,
                               COUNT(DISTINCT arsenals.id)   AS 'ar_count'     ,
                               GROUP_CONCAT(DISTINCT tags.uuid ORDER BY tags.name ASC SEPARATOR ', ')
@@ -601,16 +616,24 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['body_fr_raw']  = cards_format_body($row['c_body_fr']);
       $data[$i]['image_en']     = sanitize_output($row['i_path_en']);
       $data[$i]['image_fr']     = sanitize_output($row['i_path_fr']);
+      $data[$i]['image_path']   = sanitize_output($row['i_path']);
+      $data[$i]['image_name']   = sanitize_output($row['i_name']);
       $temp_thumb_path_en       = (isset($row['i_path_en']))
                                 ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
                                 : '';
       $temp_thumb_path_fr       = (isset($row['i_path_fr']))
                                 ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
                                 : '';
+      $temp_thumb_path          = (isset($row['i_path']))
+                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path'])
+                                : '';
       $data[$i]['thumb_en']     = sanitize_output($temp_thumb_path_en);
       $data[$i]['thumb_fr']     = sanitize_output($temp_thumb_path_fr);
+      $data[$i]['thumb']        = sanitize_output($temp_thumb_path);
       $data[$i]['extra']        = sanitize_output($row['c_extra']);
       $data[$i]['hidden']       = sanitize_output($row['c_hidden']);
+      $data[$i]['count_main']   = sanitize_output($row['ac_main']);
+      $data[$i]['count_res']    = sanitize_output($row['ac_reserves']);
       $data[$i]['narsenals']    = sanitize_output($row['ar_count']);
       $data[$i]['arsenals']     = sanitize_output($row['ar_names_en']);
       $data[$i]['ntags']        = sanitize_output($row['ct_count']);
