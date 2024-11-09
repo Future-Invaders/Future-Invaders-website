@@ -245,6 +245,14 @@ if(isset($_POST['admin_arsenals_delete']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Regenerate all arsenal slugs
+
+if(isset($_POST['admin_arsenals_regenerate_slugs']))
+  arsenals_regenerate_all_slugs();
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch a list of arsenals
 
 // Fetch the search data
@@ -420,6 +428,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </th>
         <th>
           <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/arsenals_add')?>
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer smallspaced_left', alt: 'R', title: __('admin_arsenals_list_regenslugs'), onclick: "admin_arsenals_regenerate_all_slugs('".__('admin_arsenals_list_regen_go')."')")?>
         </th>
       </tr>
 
@@ -448,7 +457,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
 
         <td class="align_left nowrap bold tooltip_container">
-          <?=$arsenals_list[$i]['name']?>
+          <?=__link('pages/arsenal/'.$arsenals_list[$i]['slug'], $arsenals_list[$i]['name_en'])?>
           <div class="tooltip">
             <?=$arsenals_list[$i]['name_en']?><br>
             <?=$arsenals_list[$i]['name_fr']?>

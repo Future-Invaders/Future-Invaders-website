@@ -163,7 +163,8 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
           "en": string,
           "fr": string
         },
-        "endpoint": string
+        "endpoint": string,
+        "url": string
       },
       ...
     ],
@@ -174,15 +175,16 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
           "en": string,
           "fr": string
         },
-        "endpoint": string
+        "endpoint": string,
+        "url": string
       },
       ...
     ],
     "tagged_images": [
       {
         "uuid": string,
-        "path": string,
-        "endpoint": string
+        "endpoint": string,
+        "path": string
       },
       ...
     ]

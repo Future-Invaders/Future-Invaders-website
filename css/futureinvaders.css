@@ -299,6 +299,8 @@ hr   { height: 3px;                                                 } }
 .nospaced           { padding-left: 0; padding-right: 0;            }
 .spaced             { padding-left: 0.5rem; padding-right: 0.5rem;  }
 .bigspaced          { padding-left: 1.0rem; padding-right: 1.0rem;  }
+.tinyspaced_left    { padding-left: 0.2rem;                         }
+.smallspaced_left   { padding-left: 0.3rem;                         }
 .spaced_left        { padding-left: 0.5rem;                         }
 .bigspaced_left     { padding-left: 1.5rem;                         }
 .tinyspaced_right   { padding-right: 0.2rem;                        }
@@ -315,6 +317,7 @@ hr   { height: 3px;                                                 } }
 .megapadding_top    { padding-top: 7.0rem;                          }
 .gigapadding_top    { padding-top: 10.0rem;                         }
 .nopadding_bot      { padding-bottom: 0;                            }
+.micropadding_bot   { padding-bottom: 0.2rem;                       }
 .tinypadding_bot    { padding-bottom: 0.5rem;                       }
 .smallpadding_bot   { padding-bottom: 1.0rem;                       }
 .padding_bot        { padding-bottom: 2.0rem;                       }
@@ -329,6 +332,7 @@ hr   { height: 3px;                                                 } }
 .indented         { padding-left: 4.0rem;                         }
 .spaced           { padding-left: 1.0rem; padding-right: 1.0rem;  }
 .spaced_left      { padding-left: 1.0rem;                         }
+.smallspaced_left { padding-left: 0.75rem;                        }
 .bigspaced_left   { padding-left: 2.5rem;                         }
 .spaced_right     { padding-right: 1.0rem;                        }
 .bigspaced_right  { padding-right: 2.5rem;                        }
@@ -548,6 +552,11 @@ tr.row_separator_dark_thin                  { border-bottom: 0.6rem solid var(--
 @media (max-width: 992px)                                             {
 .gallery_cell { flex: 0 0 48%; margin: 0.2rem;                      } }
 
+.card_gallery      { display: flex; flex-wrap: wrap;                       }
+.card_gallery_cell { border-radius: 0.2rem; margin: 0.2rem 0.5rem; flex: 0 0 23%; }
+@media (max-width: 992px)                                                  {
+.card_gallery_cell { flex: 0 0 31%; margin: 0rem 0.4rem;                      } }
+
 /****************************************************** POPINS *******************************************************/
 
 div.popin_background        { position: fixed; top: 0; bottom: 0; left: 0; right: 0                       ;
@@ -744,4 +753,6 @@ footer { font-size: 70%; margin-top: 10.0rem; margin-bottom: 5.0rem;  } }
 
 /**************************************************** GAME ICONS *****************************************************/
 
-.gameicon { max-height: 20px; }
+.gameicon { max-height: 1.3rem; padding-left: 0.06rem; padding-right: 0.06rem; }
+@media (max-width: 992px) {
+.gameicon { max-height: 2.5rem; padding-left: 0.15rem; padding-right: 0.15rem; } }
