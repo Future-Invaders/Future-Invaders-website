@@ -196,7 +196,7 @@ $arsenal_cards = cards_list(  sort_by:  'list'                                  
       </h5>
       <?php if($arsenal_data['reserves']): ?>
       <p>
-        <span class="bold"><?=__('arsenals_reserves_strat').__(':')?></span><br>
+        <span class="bold"><?=__('arsenal_reserves_strat').__(':')?></span><br>
         <?=$arsenal_data['reserves']?>
       </p>
       <?php endif; if($arsenal_cards['rows']): ?>
@@ -218,7 +218,7 @@ $arsenal_cards = cards_list(  sort_by:  'list'                                  
 
   <?php if($arsenal_cards_extra['rows']): ?>
   <div class="padding_top padding_bot">
-    <div class="black bigspaced tinypadding_top tinypadding_bot">
+    <div class="black bigspaced tinypadding_top smallpadding_bot">
       <h5>
         <?=__('arsenal_extra')?>
       </h5>
@@ -231,6 +231,25 @@ $arsenal_cards = cards_list(  sort_by:  'list'                                  
         </div>
         <?php endfor; ?>
       </div>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php if($arsenal_data['tags']['count']): ?>
+  <div class="padding_top">
+    <div class="black bigspaced tinypadding_top smallpadding_bot">
+      <h5>
+        <?=__('arsenal_tags_title')?>
+      </h5>
+      <p class="italics tinypadding_top">
+        <?=__('arsenal_tags_body')?>
+      </span>
+      <?php for($i = 0; $i < $arsenal_data['tags']['count']; $i++): ?>
+      <p>
+        &bullet; <?=__link('404', $arsenal_data['tags'][$i]['name'])?><br>
+        <?=$arsenal_data['tags'][$i]['description']?>
+      </p>
+      <?php endfor; ?>
     </div>
   </div>
   <?php endif; ?>

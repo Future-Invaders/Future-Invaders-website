@@ -56,32 +56,46 @@ EOD
 /*********************************************************************************************************************/
 
 // Individual arsenals
-___('arsenal_release',          'EN', "{{1}} release");
-___('arsenal_release',          'FR', "Version {{1}}");
-___('arsenal_format',           'EN', "Format");
-___('arsenal_format',           'FR', "Format");
-___('arsenal_factions',         'EN', "Faction");
-___('arsenal_factions',         'FR', "Faction");
-___('arsenal_factions+',        'EN', "Factions");
-___('arsenal_factions+',        'FR', "Factions");
-___('arsenal_difficulty',       'EN', "Difficulty");
-___('arsenal_difficulty',       'FR', "Difficulté");
-___('arsenal_playstyle',        'EN', "Playstyle");
-___('arsenal_playstyle',        'FR', "Résumé");
-___('arsenal_card_count',       'EN', "Cards");
-___('arsenal_card_count',       'FR', "Cartes");
-___('arsenal_reserves_count',   'EN', "Reserves");
-___('arsenal_reserves_count',   'FR', "Réserves");
-___('arsenal_extra',            'EN', "Bonus cards");
-___('arsenal_extra',            'FR', "Cartes supplémentaires");
-___('arsenal_cards',            'EN', "Arsenal composition");
-___('arsenal_cards',            'FR', "Composition de l'arsenal");
-___('arsenal_gameplan',         'EN', "Gameplan");
-___('arsenal_gameplan',         'FR', "Plan de jeu");
-___('arsenal_reserves',         'EN', "Reserves cards");
-___('arsenal_reserves',         'FR', "Cartes en réserve");
-___('arsenals_reserves_strat',  'EN', "Reserves strategy");
-___('arsenals_reserves_strat',  'FR', "Stratégie des réserves");
+___('arsenal_release',        'EN', "{{1}} release");
+___('arsenal_release',        'FR', "Version {{1}}");
+___('arsenal_format',         'EN', "Format");
+___('arsenal_format',         'FR', "Format");
+___('arsenal_factions',       'EN', "Faction");
+___('arsenal_factions',       'FR', "Faction");
+___('arsenal_factions+',      'EN', "Factions");
+___('arsenal_factions+',      'FR', "Factions");
+___('arsenal_difficulty',     'EN', "Difficulty");
+___('arsenal_difficulty',     'FR', "Difficulté");
+___('arsenal_playstyle',      'EN', "Playstyle");
+___('arsenal_playstyle',      'FR', "Résumé");
+___('arsenal_card_count',     'EN', "Cards");
+___('arsenal_card_count',     'FR', "Cartes");
+___('arsenal_reserves_count', 'EN', "Reserves");
+___('arsenal_reserves_count', 'FR', "Réserves");
+___('arsenal_extra',          'EN', "Bonus cards");
+___('arsenal_extra',          'FR', "Cartes supplémentaires");
+___('arsenal_cards',          'EN', "Arsenal composition");
+___('arsenal_cards',          'FR', "Composition de l'arsenal");
+___('arsenal_gameplan',       'EN', "Gameplan");
+___('arsenal_gameplan',       'FR', "Plan de jeu");
+___('arsenal_reserves',       'EN', "Reserves cards");
+___('arsenal_reserves',       'FR', "Cartes en réserve");
+___('arsenal_reserves_strat', 'EN', "Reserves strategy");
+___('arsenal_reserves_strat', 'FR', "Stratégie des réserves");
+___('arsenal_tags_title',     'EN', "Arsenal tags");
+___('arsenal_tags_title',     'FR', "Tags de l'arsenal");
+___('arsenal_tags_body',      'EN', <<<EOD
+Arsenal tags are used to categorize arsenals with similar characteristics.<br>
+Their only role is to make it easier to find specific arsenals.<br>
+Tags have no impact on gameplay.
+EOD
+);
+___('arsenal_tags_body',      'FR', <<<EOD
+Les tags sont utilisés pour regrouper les arsenaux aux caractéristiques similaires.<br>
+Ils servent uniquement à faciliter la recherche d'arsenaux.<br>
+Les tags n'ont aucun impact sur le déroulement du jeu.
+EOD
+);
 
 
 

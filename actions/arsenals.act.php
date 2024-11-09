@@ -193,9 +193,10 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                               cards.name_en                         ASC   ");
 
   // Fetch linked tags
-  $qtags = query("  SELECT    tags.uuid             AS 't_uuid' ,
-                              tags.name             AS 't_name' ,
-                              tags_arsenals.fk_tags AS 'ct_id'
+  $qtags = query("  SELECT    tags.uuid               AS 't_uuid' ,
+                              tags.name               AS 't_name' ,
+                              tags.description_$lang  AS 't_desc' ,
+                              tags_arsenals.fk_tags   AS 'ct_id'
                     FROM      tags_arsenals
                     LEFT JOIN tags ON tags_arsenals.fk_tags = tags.id
                     WHERE     tags_arsenals.fk_arsenals = '$arsenal_id' ");
@@ -257,6 +258,14 @@ function arsenals_get(  int     $arsenal_id   = null    ,
       $data['cards']['order'][$i]     = $dcards['c_order'];
     }
     $data['cards']['rows'] = $i;
+
+    // Tags
+    for($i = 0; $dtags = query_row($qtags); $i++)
+    {
+      $data['tags'][$i]['name']         = sanitize_json($dtags['t_name']);
+      $data['tags'][$i]['description']  = sanitize_json($dtags['t_desc']);
+    }
+    $data['tags']['count'] = $i;
   }
 
   // Prepare the data for the API
