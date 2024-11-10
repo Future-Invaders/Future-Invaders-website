@@ -6,6 +6,7 @@
 include_once './../../inc/includes.inc.php';      # Core
 include_once './../../actions/cards.act.php';     # Card management
 include_once './../../actions/factions.act.php';  # Faction management
+include_once './../../actions/tags.act.php';      # Tag management
 include_once './../../lang/game.lang.php';        # Translations
 
 // Page summary
@@ -36,6 +37,8 @@ $cards_search_name      = form_fetch_element('cards_search_name');
 $cards_search_type      = form_fetch_element('cards_search_type');
 $cards_search_faction   = form_fetch_element('cards_search_faction');
 $cards_search_rarity    = form_fetch_element('cards_search_rarity');
+$cards_search_tags      = form_fetch_element('cards_search_tags');
+$cards_search_tag       = form_fetch_element('tag', request_type: 'GET');
 
 // Assemble the search data
 $cards_sort   = form_fetch_element('cards_sort', default_value: 'default');
@@ -43,6 +46,8 @@ $cards_search = array(  $cards_search_language  => $cards_search_name     ,
                         'type_id'               => $cards_search_type     ,
                         'faction_id'            => $cards_search_faction  ,
                         'rarity_id'             => $cards_search_rarity   ,
+                        'tag_id'                => $cards_search_tags     ,
+                        'tag'                   => $cards_search_tag      ,
                         'public'                => true                   ,
                         'is_not_extra'          => true                   );
 
@@ -50,6 +55,9 @@ $cards_search = array(  $cards_search_language  => $cards_search_name     ,
 $card_list = cards_list(  sort_by:  $cards_sort   ,
                           search:   $cards_search );
 
+// Fetch the tag description if necessary
+if($cards_search_tag)
+  $tag_details = tags_get( tag_name: $cards_search_tag );
 
 
 
@@ -81,6 +89,15 @@ for($i = 0; $i < $card_rarities['rows']; $i++)
   $card_rarity_selected[$i] = '';
   if($card_rarities[$i]['id'] === $cards_search_rarity)
     $card_rarity_selected[$i] = ' selected';
+}
+
+// Card tags
+$card_tags = tags_list(search: array('ftype' => 'Card'));
+for($i = 0; $i < $card_tags['rows']; $i++)
+{
+  $card_tag_selected[$i] = '';
+  if($card_tags[$i]['id'] === $cards_search_tags)
+    $card_tag_selected[$i] = ' selected';
 }
 
 // Sorting order
@@ -151,6 +168,15 @@ foreach($cards_sort_options as $cards_sort_option)
           <?php endfor; ?>
         </select>
       </div>
+      <div class="smallpadding_bot">
+        <label for="cards_search_tags"><?=__('cards_search_tags')?></label>
+        <select id="cards_search_tags" name="cards_search_tags" class="indiv align_left">
+          <option value="">&nbsp;</option>
+          <?php for($i = 0; $i < $card_tags['rows']; $i++): ?>
+          <option value="<?=$card_tags[$i]['id']?>"<?=$card_tag_selected[$i]?>><?=$card_tags[$i]['fdesc']?></option>
+          <?php endfor; ?>
+        </select>
+      </div>
       <div class="padding_bot">
         <label for="cards_sort"><?=__('cards_sort')?></label>
         <select id="cards_sort" name="cards_sort" class="indiv align_left">
@@ -170,9 +196,20 @@ foreach($cards_sort_options as $cards_sort_option)
 
   <div class="padding_top padding_bot" id="cards">
     <div class="black bigspaced tinypadding_top smallpadding_bot">
+      <?php if(!isset($_GET['tag'])): ?>
       <h5>
         <?=__('card_list_count', preset_values: array($card_list['rows']), amount: $card_list['rows'])?>
       </h5>
+      <?php else: ?>
+      <h5>
+        <?=__('card_list_count', preset_values: array($card_list['rows']), amount: $card_list['rows']).__('card_list_count_tags', preset_values: array($cards_search_tag))?>
+      </h5>
+      <?php if($tag_details): ?>
+      <p class="nopadding_top italics">
+        <?=$tag_details['desc']?>
+      </p>
+      <?php endif; ?>
+      <?php endif; ?>
       <div class="card_gallery">
         <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
         <div class="card_gallery_cell">

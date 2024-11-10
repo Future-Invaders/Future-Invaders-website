@@ -22,6 +22,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  *
  * @param   int         $tag_id   (OPTIONAL)  The id of the tag.
  * @param   string      $tag_uuid (OPTIONAL)  The uuid of the tag.
+ * @param   string      $tag_name (OPTIONAL)  The name of the tag.
  * @param   string      $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  * @param   bool        $no_depth (OPTIONAL)  Whether to include elements linked to the tag.
  *
@@ -30,16 +31,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 function tags_get(  ?int    $tag_id   = NULL    ,
                     ?string $tag_uuid = NULL    ,
+                    ?string $tag_name = NULL    ,
                     string  $format   = 'html'  ,
                     bool    $no_depth = false   ) : array|null
 {
-  // Return null if there are neither an id nor an uuid
-  if(!$tag_id && !$tag_uuid)
+  // Return null if there are neither an id, an uuid, nor a name
+  if(!$tag_id && !$tag_uuid && !$tag_name)
     return null;
 
-  // Sanitize the tag's id and uuid
+  // Sanitize the tag's id, uuid, and name
   $tag_id   = sanitize($tag_id, 'int');
   $tag_uuid = sanitize($tag_uuid, 'string');
+  $tag_name = sanitize($tag_name, 'string');
 
   // Return null if the tag does not have a valid ID
   if($tag_id && !database_row_exists('tags', $tag_id))
@@ -49,16 +52,29 @@ function tags_get(  ?int    $tag_id   = NULL    ,
   if($tag_uuid && !database_entry_exists('tags', 'uuid', $tag_uuid))
     return null;
 
+  // Return null if the tag does not have a valid name
+  if($tag_name && !database_entry_exists('tags', 'name', $tag_name))
+    return null;
+
   // Prepare the condition for retrieving the tag
-  $query_where = ($tag_id) ? " WHERE tags.id = '$tag_id' " : " WHERE tags.uuid = '$tag_uuid' ";
+  if($tag_id)
+    $query_where = " WHERE tags.id = '$tag_id' ";
+  else if($tag_uuid)
+    $query_where = " WHERE tags.uuid = '$tag_uuid' ";
+  else if($tag_name)
+    $query_where = " WHERE tags.name = '$tag_name' ";
+
+  // Get the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the tag's data
-  $tag_data = query(" SELECT    tags.id             AS 't_id'       ,
-                                tags.uuid           AS 't_uuid'     ,
-                                tags.name           AS 't_name'     ,
-                                tags.description_en AS 't_desc_en'  ,
-                                tags.description_fr AS 't_desc_fr'  ,
-                                tag_types.name      AS 'tt_name'
+  $tag_data = query(" SELECT    tags.id                 AS 't_id'       ,
+                                tags.uuid               AS 't_uuid'     ,
+                                tags.name               AS 't_name'     ,
+                                tags.description_en     AS 't_desc_en'  ,
+                                tags.description_fr     AS 't_desc_fr'  ,
+                                tags.description_$lang  AS 't_desc'     ,
+                                tag_types.name          AS 'tt_name'
                       FROM      tags
                       LEFT JOIN tag_types ON tags.fk_tag_types = tag_types.id
                       $query_where ",
@@ -105,6 +121,7 @@ function tags_get(  ?int    $tag_id   = NULL    ,
     $data['name']     = sanitize_output($tag_data['t_name']);
     $data['desc_en']  = sanitize_output($tag_data['t_desc_en']);
     $data['desc_fr']  = sanitize_output($tag_data['t_desc_fr']);
+    $data['desc']     = sanitize_output($tag_data['t_desc']);
   }
 
   // Prepare the data for the API

@@ -74,6 +74,8 @@ ___('cards_search_faction',     'EN', "Faction");
 ___('cards_search_faction',     'FR', "Faction");
 ___('cards_search_rarity',      'EN', "Card rarity");
 ___('cards_search_rarity',      'FR', "Rareté de la carte");
+___('cards_search_tags',        'EN', "Card tags");
+___('cards_search_tags',        'FR', "Tags de la carte");
 ___('cards_sort',               'EN', "Sort the cards by");
 ___('cards_sort',               'FR', "Trier les cartes par");
 ___('cards_sort_name',          'EN', "Name");
@@ -90,6 +92,8 @@ ___('card_list_count',          'EN', "{{1}} card");
 ___('card_list_count',          'FR', "{{1}} carte");
 ___('card_list_count+',         'EN', "{{1}} cards");
 ___('card_list_count+',         'FR', "{{1}} cartes");
+___('card_list_count_tags',     'EN', " tagged as <span class=\"italics\">{{1}}</span>");
+___('card_list_count_tags',     'FR', " ayant le tag <span class=\"italics\">{{1}}</span>");
 
 
 
