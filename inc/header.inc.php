@@ -285,7 +285,7 @@ $javascripts .= '
             <?=__link('pages/game/cards', __('submenu_guides_cardlist'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_guides_arsenals'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/game/arsenals', __('submenu_guides_arsenals'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 

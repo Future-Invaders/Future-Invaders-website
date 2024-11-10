@@ -454,6 +454,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_data            = sanitize_array_element($search, 'data', 'int');
   $search_tag_id          = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag             = sanitize_array_element($search, 'tag', 'string');
+  $search_public          = sanitize_array_element($search, 'public', 'bool');
 
   // Search through the data
   $query_search  = ($search_release && $search_release !== -1)
@@ -501,6 +502,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $query_search .= ($search_tag_id === -1)
                                       ? " AND   tags.id                   IS NULL "                       : "";
   $query_search .= ($search_tag)      ? " AND   tags.name                 LIKE '$search_tag' "            : "";
+  $query_search .= ($search_public)   ? " AND   arsenals.is_hidden        = '0' "                         : "";
   $query_search .= ($search_faction_id === -1)
                                       ? " AND   arsenals_factions.fk_factions   IS NULL "                 : "";
   $query_search .= ($search_card_id === -1)
@@ -606,6 +608,7 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 + LENGTH(arsenals.extra_fr)     AS 'a_length_fr'    ,
                                 arsenals.summary_en             AS 'a_summary_en'   ,
                                 arsenals.summary_fr             AS 'a_summary_fr'   ,
+                                arsenals.summary_$lang          AS 'a_summary'      ,
                                 arsenals.gameplan_en            AS 'a_gameplan_en'  ,
                                 arsenals.gameplan_fr            AS 'a_gameplan_fr'  ,
                                 arsenals.reserves_en            AS 'a_reserves_en'  ,
@@ -641,6 +644,9 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 images_fr.id                    AS 'i_id_fr'        ,
                                 images_fr.uuid                  AS 'i_uuid_fr'      ,
                                 images_fr.path                  AS 'i_path_fr'      ,
+                                images_$lang.path               AS 'i_path'         ,
+                                images_$lang.name               AS 'i_name'         ,
+                                COUNT(DISTINCT factions.id)     AS 'af_count'       ,
                                 COUNT(DISTINCT tags.id)         AS 'at_count'       ,
                                 COUNT(DISTINCT cards.id)        AS 'ac_count'       ,
                                 GROUP_CONCAT( DISTINCT  tags.name
@@ -655,6 +661,9 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 GROUP_CONCAT( DISTINCT  factions.name_fr
                                               ORDER BY  factions.sorting_order ASC
                                               SEPARATOR ',')    AS 'af_names_fr'    ,
+                                GROUP_CONCAT( DISTINCT  factions.name_$lang
+                                              ORDER BY  factions.sorting_order ASC
+                                              SEPARATOR ', ')   AS 'af_names'      ,
                                 GROUP_CONCAT( DISTINCT  factions.uuid
                                               ORDER BY  factions.sorting_order ASC
                                               SEPARATOR ',')    AS 'af_uuids'       ,
@@ -693,6 +702,7 @@ function arsenals_list( string  $sort_by  = ''      ,
     {
       $data[$i]['id']               = sanitize_output($row['a_id']);
       $data[$i]['name']             = sanitize_output(string_truncate($row['a_name'], 20, '...'));
+      $data[$i]['fname']            = sanitize_output($row['a_name']);
       $data[$i]['name_en']          = sanitize_output($row['a_name_en']);
       $data[$i]['name_fr']          = sanitize_output($row['a_name_fr']);
       $data[$i]['slug']             = sanitize_output($row['a_slug']);
@@ -703,12 +713,14 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['difficulty']       = sanitize_output($row['ad_name']);
       $data[$i]['difficulty_css']   = sanitize_output($row['ad_style']);
       $data[$i]['playstyle']        = sanitize_output(string_truncate($row['a_playstyle'], 20, '...'));
+      $data[$i]['fplaystyle']       = sanitize_output($row['a_playstyle']);
       $data[$i]['playstyle_en']     = sanitize_output($row['a_playstyle_en']);
       $data[$i]['playstyle_fr']     = sanitize_output($row['a_playstyle_fr']);
       $data[$i]['length_en']        = sanitize_output($row['a_length_en']);
       $data[$i]['length_fr']        = sanitize_output($row['a_length_fr']);
       $data[$i]['summary_en']       = sanitize_output($row['a_summary_en']);
       $data[$i]['summary_fr']       = sanitize_output($row['a_summary_fr']);
+      $data[$i]['fsummary']         = sanitize_output($row['a_summary']);
       $data[$i]['gameplan_en']      = nl2br($row['a_gameplan_en']);
       $data[$i]['gameplan_fr']      = nl2br($row['a_gameplan_fr']);
       $data[$i]['reserves_en']      = nl2br($row['a_reserves_en']);
@@ -718,19 +730,26 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['hidden']           = sanitize_output($row['a_hidden']);
       $data[$i]['image_en']         = sanitize_output($row['i_path_en']);
       $data[$i]['image_fr']         = sanitize_output($row['i_path_fr']);
+      $data[$i]['image_name']       = sanitize_output($row['i_name']);
       $temp_thumb_path_en           = (isset($row['i_path_en']))
                                     ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
                                     : '';
       $temp_thumb_path_fr           = (isset($row['i_path_fr']))
                                     ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
                                     : '';
+      $temp_thumb_path              = (isset($row['i_path']))
+                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path'])
+                                    : '';
       $data[$i]['thumb_en']         = sanitize_output($temp_thumb_path_en);
       $data[$i]['thumb_fr']         = sanitize_output($temp_thumb_path_fr);
+      $data[$i]['thumb']            = sanitize_output($temp_thumb_path);
       $data[$i]['ntags']            = sanitize_output($row['at_count']);
       $data[$i]['tags']             = sanitize_output($row['at_names']);
+      $data[$i]['nfactions']        = sanitize_output($row['af_count']);
       $data[$i]['factions']         = $row['af_names_en']
                                     ? factions_abbreviate(sanitize_output($row['af_names_en']), style: true)
                                     : '';
+      $data[$i]['faction_names']    = sanitize_output($row['af_names']);
       $data[$i]['cards_main']       = sanitize_output($row['a_count']);
       $data[$i]['cards_reserves']   = sanitize_output($row['a_rcount']);
       $data[$i]['cards_extra']      = sanitize_output($row['a_ecount']);

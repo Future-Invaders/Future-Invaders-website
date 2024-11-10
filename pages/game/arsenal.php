@@ -82,7 +82,7 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
       <div class="black bigspaced tinypadding_top tinypadding_bot">
 
         <h4 class="uppercase">
-          <?=$arsenal_data['name']?>
+          <?=__link('pages/game/arsenals', $arsenal_data['name'])?>
         </h4>
         <?php if($arsenal_data['release_name']): ?>
         <p class="nopadding_top italics">
@@ -241,7 +241,7 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
       </span>
       <?php for($i = 0; $i < $arsenal_data['tags']['count']; $i++): ?>
       <p>
-        &bullet; <?=__link('404', $arsenal_data['tags'][$i]['name'])?><br>
+        &bullet; <?=__link('pages/game/arsenals?tag='.$arsenal_data['tags'][$i]['name'], $arsenal_data['tags'][$i]['name'])?><br>
         <?=$arsenal_data['tags'][$i]['description']?>
       </p>
       <?php endfor; ?>
