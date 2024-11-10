@@ -3,9 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/cards.act.php'; # Card management
-include_once './../../lang/game.lang.php';    # Translations
+include_once './../../inc/includes.inc.php';      # Core
+include_once './../../actions/cards.act.php';     # Card management
+include_once './../../actions/factions.act.php';  # Faction management
+include_once './../../lang/game.lang.php';        # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -29,14 +30,63 @@ $css = array('game');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of cards
 
+// Fetch the search data
+$cards_search_language  = 'name_'.string_change_case($lang, 'lowercase');
+$cards_search_name      = form_fetch_element('cards_search_name');
+$cards_search_type      = form_fetch_element('cards_search_type');
+$cards_search_faction   = form_fetch_element('cards_search_faction');
+$cards_search_rarity    = form_fetch_element('cards_search_rarity');
+
 // Assemble the search data
-$cards_sort   = 'default';
-$cards_search = array(  'public'        => true ,
-                        'is_not_extra'  => true );
+$cards_sort   = form_fetch_element('cards_sort', default_value: 'default');
+$cards_search = array(  $cards_search_language  => $cards_search_name     ,
+                        'type_id'               => $cards_search_type     ,
+                        'faction_id'            => $cards_search_faction  ,
+                        'rarity_id'             => $cards_search_rarity   ,
+                        'public'                => true                   ,
+                        'is_not_extra'          => true                   );
 
 // Look up the cards
 $card_list = cards_list(  sort_by:  $cards_sort   ,
                           search:   $cards_search );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Prepare dropdown menus
+
+// Card types
+$card_types = card_types_list();
+for($i = 0; $i < $card_types['rows']; $i++)
+{
+  $card_type_selected[$i] = '';
+  if($card_types[$i]['id'] === $cards_search_type)
+    $card_type_selected[$i] = ' selected';
+}
+
+// Factions
+$factions = factions_list();
+for($i = 0; $i < $factions['rows']; $i++)
+{
+  $faction_selected[$i] = '';
+  if($factions[$i]['id'] === $cards_search_faction)
+    $faction_selected[$i] = ' selected';
+}
+
+// Card rarity
+$card_rarities = card_rarities_list();
+for($i = 0; $i < $card_rarities['rows']; $i++)
+{
+  $card_rarity_selected[$i] = '';
+  if($card_rarities[$i]['id'] === $cards_search_rarity)
+    $card_rarity_selected[$i] = ' selected';
+}
+
+// Sorting order
+$cards_sort_options = array('default', 'name', 'cost', 'income', 'weapons', 'durability');
+foreach($cards_sort_options as $cards_sort_option)
+  $cards_sort_selected[$cards_sort_option] = ($cards_sort === $cards_sort_option) ? ' selected' : '';
 
 
 
@@ -57,7 +107,68 @@ $card_list = cards_list(  sort_by:  $cards_sort   ,
     <?=__('card_list_body')?>
   </p>
 
-  <div class="bigpadding_top padding_bot">
+  <?php if(!isset($_GET['search'])): ?>
+  <p class="padding_top">
+    <?=__icon('maximize', is_small: true, alt: 'M', title: __('cards_list_search_open'), title_case: 'initials', href: 'pages/game/cards?search')?>
+    &nbsp;<?=__link('pages/game/cards?search', __('cards_list_search_open'))?>
+  </p>
+  <?php else: ?>
+  <p class="padding_top">
+    <?=__icon('minimize', is_small: true, alt: 'M', title: __('cards_list_search_close'), title_case: 'initials', href: 'pages/game/cards')?>
+    &nbsp;<?=__link('pages/game/cards', __('cards_list_search_close'))?>
+  </p>
+
+  <form method="POST" action="cards?search#cards">
+    <fieldset>
+      <div class="padding_top smallpadding_bot">
+        <label for="cards_search_name"><?=__('cards_search_name')?></label>
+        <input class="indiv" type="text" id="cards_search_name" name="cards_search_name" value="<?=$cards_search_name?>">
+      </div>
+      <div class="smallpadding_bot">
+        <label for="cards_search_type"><?=__('cards_search_type')?></label>
+        <select id="cards_search_type" name="cards_search_type" class="indiv align_left">
+          <option value="">&nbsp;</option>
+          <?php for($i = 0; $i < 4; $i++): ?>
+          <option value="<?=$card_types[$i]['id']?>"<?=$card_type_selected[$i]?>><?=$card_types[$i]['name']?></option>
+          <?php endfor; ?>
+        </select>
+      </div>
+      <div class="smallpadding_bot">
+        <label for="cards_search_faction"><?=__('cards_search_faction')?></label>
+        <select id="cards_search_faction" name="cards_search_faction" class="indiv align_left">
+          <option value="">&nbsp;</option>
+          <?php for($i = 0; $i < $factions['rows']; $i++): ?>
+          <option value="<?=$factions[$i]['id']?>"<?=$faction_selected[$i]?>><?=$factions[$i]['name']?></option>
+          <?php endfor; ?>
+        </select>
+      </div>
+      <div class="smallpadding_bot">
+        <label for="cards_search_rarity"><?=__('cards_search_rarity')?></label>
+        <select id="cards_search_rarity" name="cards_search_rarity" class="indiv align_left">
+          <option value="">&nbsp;</option>
+          <?php for($i = 0; $i < $card_rarities['rows']; $i++): ?>
+          <option value="<?=$card_rarities[$i]['id']?>"<?=$card_rarity_selected[$i]?>><?=$card_rarities[$i]['name']?></option>
+          <?php endfor; ?>
+        </select>
+      </div>
+      <div class="padding_bot">
+        <label for="cards_sort"><?=__('cards_sort')?></label>
+        <select id="cards_sort" name="cards_sort" class="indiv align_left">
+          <option value="default"<?=$cards_sort_selected['default']?>>&nbsp;</option>
+          <option value="name"<?=$cards_sort_selected['name']?>><?=__('cards_sort_name')?></option>
+          <option value="cost"<?=$cards_sort_selected['cost']?>><?=__('cards_sort_cost')?></option>
+          <option value="income"<?=$cards_sort_selected['income']?>><?=__('cards_sort_income')?></option>
+          <option value="weapons"<?=$cards_sort_selected['weapons']?>><?=__('cards_sort_weapons')?></option>
+          <option value="durability"<?=$cards_sort_selected['durability']?>><?=__('cards_sort_durability')?></option>
+        </select>
+      </div>
+      <input type="submit" name="cards_search_submit" value="<?=__('cards_search_submit')?>">
+    </fieldset>
+  </form>
+
+  <?php endif; ?>
+
+  <div class="padding_top padding_bot" id="cards">
     <div class="black bigspaced tinypadding_top smallpadding_bot">
       <h5>
         <?=__('card_list_count', preset_values: array($card_list['rows']), amount: $card_list['rows'])?>

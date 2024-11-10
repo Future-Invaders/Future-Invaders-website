@@ -48,20 +48,48 @@ EOD
 
 
 // Card list
-___('card_list_title', 'EN', "Card list");
-___('card_list_title', 'FR', "Liste des cartes");
-___('card_list_body',  'EN', <<<EOD
-Below is the full list of cards playable in a game of Future Invaders. Click on any card to see details, including full descriptions and rulings. Use the search form above the list to find specific cards.
+___('card_list_title',          'EN', "Card list");
+___('card_list_title',          'FR', "Liste des cartes");
+___('card_list_body',           'EN', <<<EOD
+Below is the full list of cards playable in a game of Future Invaders.<br>
+Click on any card to see details, including full descriptions and rulings.
 EOD
 );
-___('card_list_body',  'FR', <<<EOD
-Ci-dessous se trouvent toutes les cartes jouables dans une partie de Future Invaders. Cliquez sur une carte pour voir plus de détails à son sujet, incluant sa description complète et les jugements la concernant. Si vous êtes à la recherche de cartes spécifiques, utilisez le formulaire de recherche au-dessus de la liste.
+___('card_list_body',           'FR', <<<EOD
+Ci-dessous se trouvent toutes les cartes jouables dans une partie de Future Invaders.<br>
+Cliquez sur une carte pour voir plus de détails à son sujet, incluant sa description complète et les jugements la concernant.
 EOD
 );
-___('card_list_count',  'EN', "{{1}} card");
-___('card_list_count',  'FR', "{{1}} carte");
-___('card_list_count+', 'EN', "{{1}} cards");
-___('card_list_count+', 'FR', "{{1}} cartes");
+___('cards_list_search_open',   'EN', "Click here to search for specific cards");
+___('cards_list_search_open',   'FR', "Cliquez ici si vous êtes à la recherche de cartes spécifiques");
+___('cards_list_search_close',  'EN', "Click here to close the search form");
+___('cards_list_search_close',  'FR', "Cliquez ici pour fermer le formulaire de recherche");
+___('cards_search_name',        'EN', "Card name (part of the name is enough)");
+___('cards_search_name',        'FR', "Nom de la carte (une partie du nom suffit)");
+___('cards_search_submit',      'EN', "Search the cards");
+___('cards_search_submit',      'FR', "Chercher parmi les cartes");
+___('cards_search_type',        'EN', "Card type");
+___('cards_search_type',        'FR', "Type de carte");
+___('cards_search_faction',     'EN', "Faction");
+___('cards_search_faction',     'FR', "Faction");
+___('cards_search_rarity',      'EN', "Card rarity");
+___('cards_search_rarity',      'FR', "Rareté de la carte");
+___('cards_sort',               'EN', "Sort the cards by");
+___('cards_sort',               'FR', "Trier les cartes par");
+___('cards_sort_name',          'EN', "Name");
+___('cards_sort_name',          'FR', "Nom");
+___('cards_sort_cost',          'EN', "Cost");
+___('cards_sort_cost',          'FR', "Coût");
+___('cards_sort_income',        'EN', "Income");
+___('cards_sort_income',        'FR', "Revenus");
+___('cards_sort_weapons',       'EN', "Weapons");
+___('cards_sort_weapons',       'FR', "Armes");
+___('cards_sort_durability',    'EN', "Durability");
+___('cards_sort_durability',    'FR', "Durabilité");
+___('card_list_count',          'EN', "{{1}} card");
+___('card_list_count',          'FR', "{{1}} carte");
+___('card_list_count+',         'EN', "{{1}} cards");
+___('card_list_count+',         'FR', "{{1}} cartes");
 
 
 
