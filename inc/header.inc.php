@@ -258,10 +258,10 @@ $javascripts .= '
 
         <div class="header_submenu_column">
           <div class="header_submenu_title">
-            <?=__('submenu_guides_rules')?>
+            <?=__('submenu_guides_game')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/game/rules', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/game/rules', __('submenu_guides_rules'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/game/vocabulary', __('submenu_guides_vocab'), 'header_submenu_link', 1, $path);?>
@@ -282,7 +282,7 @@ $javascripts .= '
             <?=__('submenu_guides_cards')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_guides_cardlist'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/game/cards', __('submenu_guides_cardlist'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_guides_arsenals'), 'header_submenu_wip', 1, $path);?>
