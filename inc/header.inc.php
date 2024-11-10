@@ -258,10 +258,10 @@ $javascripts .= '
 
         <div class="header_submenu_column">
           <div class="header_submenu_title">
-            <?=__('submenu_guides_rules')?>
+            <?=__('submenu_guides_game')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/game/rules', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/game/rules', __('submenu_guides_rules'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/game/vocabulary', __('submenu_guides_vocab'), 'header_submenu_link', 1, $path);?>
@@ -270,7 +270,22 @@ $javascripts .= '
             <?=__link('pages/game/lore', __('submenu_guides_lore'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
+            <?=__link('404', __('submenu_guides_formats'), 'header_submenu_wip', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
             <?=__link('404', __('submenu_guides_rulings'), 'header_submenu_wip', 1, $path);?>
+          </div>
+        </div>
+
+        <div class="header_submenu_column">
+          <div class="header_submenu_title">
+            <?=__('submenu_guides_cards')?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/game/cards', __('submenu_guides_cardlist'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('404', __('submenu_guides_arsenals'), 'header_submenu_wip', 1, $path);?>
           </div>
         </div>
 
@@ -286,15 +301,6 @@ $javascripts .= '
           </div>
         </div>
 
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_guides_design')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('404', __('submenu_guides_gdd'), 'header_submenu_wip', 1, $path);?>
-          </div>
-        </div>
-
         <div class="header_submenu_column desktop_wide">
           &nbsp;
         </div>
@@ -303,25 +309,10 @@ $javascripts .= '
 
 <?php ############################################ SUBMENU: TOOLS ################################################## ?>
 
-      <div class="header_submenu header_submenu_6" id="header_submenu_tools">
+      <div class="header_submenu header_submenu_5" id="header_submenu_tools">
 
         <div class="header_submenu_column desktop_wide">
           &nbsp;
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_tools_cards')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_cardlist'), 'header_submenu_wip', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_arsenals'), 'header_submenu_wip', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_search'), 'header_submenu_wip', 1, $path);?>
-          </div>
         </div>
 
         <div class="header_submenu_column">
@@ -357,6 +348,9 @@ $javascripts .= '
         <div class="header_submenu_column">
           <div class="header_submenu_title">
             <?=__('submenu_tools_development')?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('404', __('submenu_tools_design_doc'), 'header_submenu_wip', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/tools/source', __('submenu_tools_source'), 'header_submenu_link', 1, $path);?>

@@ -47,6 +47,23 @@ EOD
 );
 
 
+// Card list
+___('card_list_title', 'EN', "Card list");
+___('card_list_title', 'FR', "Liste des cartes");
+___('card_list_body',  'EN', <<<EOD
+Below is the full list of cards playable in a game of Future Invaders. Click on any card to see details, including full descriptions and rulings. Use the search form above the list to find specific cards.
+EOD
+);
+___('card_list_body',  'FR', <<<EOD
+Ci-dessous se trouvent toutes les cartes jouables dans une partie de Future Invaders. Cliquez sur une carte pour voir plus de détails à son sujet, incluant sa description complète et les jugements la concernant. Si vous êtes à la recherche de cartes spécifiques, utilisez le formulaire de recherche au-dessus de la liste.
+EOD
+);
+___('card_list_count',  'EN', "{{1}} card");
+___('card_list_count',  'FR', "{{1}} carte");
+___('card_list_count+', 'EN', "{{1}} cards");
+___('card_list_count+', 'FR', "{{1}} cartes");
+
+
 
 
 /*********************************************************************************************************************/
