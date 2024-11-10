@@ -364,6 +364,8 @@ function cards_list( string   $sort_by    = 'name'  ,
 
   // Sanitize the search data
   $search_name          = sanitize_array_element($search, 'name', 'string');
+  $search_name_en       = sanitize_array_element($search, 'name_en', 'string');
+  $search_name_fr       = sanitize_array_element($search, 'name_fr', 'string');
   $search_release_id    = sanitize_array_element($search, 'release_id', 'int');
   $search_release_uuid  = sanitize_array_element($search, 'release_uuid', 'string');
   $search_type          = sanitize_array_element($search, 'type', 'string');
@@ -390,6 +392,8 @@ function cards_list( string   $sort_by    = 'name'  ,
   // Search through the data
   $query_search  = ($search_name)           ? " WHERE ( cards.name_en     LIKE '%$search_name%'
                                                 OR    cards.name_fr       LIKE '%$search_name%' ) "  : " WHERE 1 = 1 ";
+  $query_search .= ($search_name_en)        ? " AND   cards.name_en       LIKE '%$search_name_en%' "  : "";
+  $query_search .= ($search_name_fr)        ? " AND   cards.name_fr       LIKE '%$search_name_fr%' "  : "";
   $query_search .= ($search_release_id && $search_release_id !== -1)
                                             ? " AND   releases.id         = '$search_release_id' "    : "";
   $query_search .= ($search_release_id === -1)
@@ -485,7 +489,7 @@ function cards_list( string   $sort_by    = 'name'  ,
                                 card_types.sorting_order    ASC     ,
                                 cards.name_en               ASC     ",
     'extra'       => " ORDER BY arsenals_compositions.sorting_order
-                                                            ASC ",
+                                                            ASC     ",
     default       => " ORDER BY releases.release_date       IS NULL ,
                                 releases.release_date       DESC    ,
                                 factions.sorting_order      IS NULL ,

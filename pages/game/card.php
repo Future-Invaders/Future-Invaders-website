@@ -185,7 +185,7 @@ $page_description  = $card_data['page_title_en'].$page_description ;
       </span>
       <?php for($i = 0; $i < $card_data['tags']['count']; $i++): ?>
       <p>
-        &bullet; <?=__link('404', $card_data['tags'][$i]['name'])?><br>
+        &bullet; <?=__link('pages/game/cards?tag='.$card_data['tags'][$i]['name'], $card_data['tags'][$i]['name'])?><br>
         <?=$card_data['tags'][$i]['description']?>
       </p>
       <?php endfor; ?>
