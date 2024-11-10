@@ -82,7 +82,7 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
       <div class="black bigspaced tinypadding_top tinypadding_bot">
 
         <h4 class="uppercase">
-          <?=$arsenal_data['name']?>
+          <?=__link('pages/game/arsenals', $arsenal_data['name'])?>
         </h4>
         <?php if($arsenal_data['release_name']): ?>
         <p class="nopadding_top italics">
