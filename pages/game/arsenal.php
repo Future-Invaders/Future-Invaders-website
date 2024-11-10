@@ -241,7 +241,7 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
       </span>
       <?php for($i = 0; $i < $arsenal_data['tags']['count']; $i++): ?>
       <p>
-        &bullet; <?=__link('404', $arsenal_data['tags'][$i]['name'])?><br>
+        &bullet; <?=__link('pages/game/arsenals?tag='.$arsenal_data['tags'][$i]['name'], $arsenal_data['tags'][$i]['name'])?><br>
         <?=$arsenal_data['tags'][$i]['description']?>
       </p>
       <?php endfor; ?>

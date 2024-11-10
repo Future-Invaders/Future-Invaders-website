@@ -7,6 +7,7 @@ include_once './../../inc/includes.inc.php';      # Core
 include_once './../../actions/arsenals.act.php';  # Arsenal management
 include_once './../../actions/cards.act.php';     # Card management
 include_once './../../actions/factions.act.php';  # Faction management
+include_once './../../actions/tags.act.php';      # Tag management
 include_once './../../lang/game.lang.php';        # Translations
 
 // Page summary
@@ -31,8 +32,17 @@ $css = array('game');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the list of arsenals
 
-$arsenals_list = arsenals_list( sort_by: 'default'                        ,
-                                search:   array(  'public'    => true   ) );
+// Fetch the search data
+$cards_search_tag = form_fetch_element('tag', request_type: 'GET');
+
+// Fetch the arsenals
+$arsenals_list = arsenals_list( sort_by: 'default'                                 ,
+                                search:   array(  'public'  => true                ,
+                                                  'tag'     => $cards_search_tag ) );
+
+// Fetch the tag description if necessary
+if($cards_search_tag)
+  $tag_details = tags_get( tag_name: $cards_search_tag );
 
 
 
@@ -49,11 +59,24 @@ $arsenals_list = arsenals_list( sort_by: 'default'                        ,
     <?=__('arsenal_list_title')?>
   </h2>
 
-  <p>
+  <p class="padding_bot">
     <?=__('arsenal_list_body')?>
   </p>
 
-  <div class="bigpadding_top">
+  <?php if($cards_search_tag): ?>
+  <div class="smallpadding_top">
+    <h5>
+      <?=__('arsenal_list_count', preset_values: array($arsenals_list['rows']), amount: $arsenals_list['rows']).__('arsenal_list_count_tags', preset_values: array($cards_search_tag))?>
+    </h5>
+    <?php if($tag_details): ?>
+    <p class="tinypadding_top italics">
+      <?=$tag_details['desc']?>
+    </p>
+    <?php endif; ?>
+  </div>
+  <?php endif; ?>
+
+  <div class="padding_top">
     <?php for($i = 0; $i < $arsenals_list['rows']; $i++): ?>
     <div class="flexcontainer card_container padding_bot padding_top">
 
