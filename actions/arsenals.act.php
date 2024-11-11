@@ -241,6 +241,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['name']         = sanitize_output($arsenal_data['a_name']);
     $data['print_en']     = sanitize_output($arsenal_data['a_print_en']);
     $data['print_fr']     = sanitize_output($arsenal_data['a_print_fr']);
+    $data['printex_en']   = str_replace(".pdf", "_extras.pdf", $arsenal_data['a_print_en']);
+    $data['printex_fr']   = str_replace(".pdf", "_extras.pdf", $arsenal_data['a_print_fr']);
     $data['playstyle_en'] = sanitize_output($arsenal_data['a_playstyle_en']);
     $data['playstyle_fr'] = sanitize_output($arsenal_data['a_playstyle_fr']);
     $data['playstyle']    = sanitize_output($arsenal_data['a_playstyle']);
@@ -582,6 +584,12 @@ function arsenals_list( string  $sort_by  = ''      ,
                                   formats.sorting_order               ASC     ,
                                   arsenal_difficulties.sorting_order  IS NULL ,
                                   arsenal_difficulties.sorting_order  ASC     ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
+    'print'       => "  ORDER BY  releases.release_date               IS NULL ,
+                                  releases.release_date               DESC    ,
+                                  formats.sorting_order               IS NULL ,
+                                  formats.sorting_order               ASC     ,
                                   arsenals.name_$lang                 = ''    ,
                                   arsenals.name_$lang                 ASC     ",
     default       => "  ORDER BY  releases.release_date               IS NULL ,

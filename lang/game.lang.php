@@ -145,6 +145,20 @@ Ils servent uniquement à faciliter la recherche d'arsenaux.<br>
 Les tags n'ont aucun impact sur le déroulement du jeu.
 EOD
 );
+___('arsenal_print_title',    'EN', "Print this arsenal");
+___('arsenal_print_title',    'FR', "Imprimer cet arsenal");
+___('arsenal_print_body_1',   'EN', <<<EOD
+Once you have read {{link|pages/tools/print|how to print cards at home}}, you may download and print this arsenal at home:
+EOD
+);
+___('arsenal_print_body_1',   'FR', <<<EOD
+Une fois que vous avez pris connaissance du {{link|pages/tools/print|processus d'impression maison}}, vous pouvez télécharger puis imprimer cet arsenal chez vous :
+EOD
+);
+___('arsenal_print_cards',    'EN', "Main & reserves cards");
+___('arsenal_print_cards',    'FR', "Cartes et réserves de l'arsenal");
+___('arsenal_print_extra',    'EN', "Extra arsenal cards");
+___('arsenal_print_extra',    'FR', "Cartes additionnelles");
 
 
 // Arsenal list

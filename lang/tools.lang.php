@@ -156,6 +156,35 @@ ___('print_allcards_max',     'EN', "Maximum legal copies of each card");
 ___('print_allcards_max',     'FR', "Nombre maximum de copies autorisé de chaque carte");
 
 
+// Print arsenals
+___('print_arsenals_title',   'EN', "Print arsenals");
+___('print_arsenals_title',   'FR', "Imprimer des arsenaux");
+___('print_arsenals_body_1',  'EN', <<<EOD
+Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested prebuilt arsenals, to give you ideas on how to build your own. From this page, you can print these arsenals at home. You can have a better look at individual arsenals in the {{link|pages/game/arsenals|arsenal list}}.
+EOD
+);
+___('print_arsenals_body_1',  'FR', <<<EOD
+Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux déjà assemblés, pour vous donner des idées sur la façon de construire vos propres arsenaux. Depuis cette page, vous pouvez imprimer ces arsenaux chez vous. Pour en savoir plus sur les arsenaux, utilisez la {{link|pages/game/arsenals|liste des arsenaux}}.
+EOD
+);
+___('print_arsenals_body_2',  'EN', <<<EOD
+Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}.
+EOD
+);
+___('print_arsenals_body_2',  'FR', <<<EOD
+Avant d'imprimer, assurez-vous de comprendre {{link|pages/tools/print|le processus d'impression maison}}.
+EOD
+);
+___('print_arsenals_choose',  'EN', "Choose the arsenals you want to print");
+___('print_arsenals_choose',  'FR', "Choisissez les arsenaux à imprimer");
+___('print_arsenals_desc',    'EN', "Arsenal description");
+___('print_arsenals_desc',    'FR', "Description de l'arsenal");
+___('print_aresnals_cards',   'EN', "Main & reserves cards");
+___('print_aresnals_cards',   'FR', "Cartes et réserves de l'arsenal");
+___('print_arsenals_extra',   'EN', "Extra arsenal cards");
+___('print_arsenals_extra',   'FR', "Cartes additionnelles de l'arsenal");
+
+
 // Print extra cards
 ___('print_extra_title',      'EN', "Print extra cards");
 ___('print_extra_title',      'FR', "Imprimer les accessoires");
@@ -168,7 +197,7 @@ Depuis cette page, vous pouvez imprimer des cartes accessoires pour Future Invad
 EOD
 );
 ___('print_extra_body_2',     'EN', <<<EOD
-Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}. f you're looking to print the main game cards, separate pages are available for {{link|pages/tools/print|printing all cards}} and {{link|pages/tools/print_arsenals|printing prebuilt arsenals}}.
+Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}. If you're looking to print the main game cards, separate pages are available for {{link|pages/tools/print|printing all cards}} and {{link|pages/tools/print_arsenals|printing prebuilt arsenals}}.
 EOD
 );
 ___('print_extra_body_2',     'FR', <<<EOD
