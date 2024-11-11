@@ -80,6 +80,8 @@ if(isset($_POST['arsenal_add']))
   $arsenal_add_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
   $arsenal_add_extra_en     = form_fetch_element('arsenal_extra_en');
   $arsenal_add_extra_fr     = form_fetch_element('arsenal_extra_fr');
+  $arsenal_add_print_en     = form_fetch_element('arsenal_print_en');
+  $arsenal_add_print_fr     = form_fetch_element('arsenal_print_fr');
   $arsenal_add_hidden       = form_fetch_element('arsenal_hidden');
 
   // Gather factions postdata
@@ -130,6 +132,8 @@ if(isset($_POST['arsenal_add']))
                               'reserves_fr'   => $arsenal_add_reserves_fr   ,
                               'extra_en'      => $arsenal_add_extra_en      ,
                               'extra_fr'      => $arsenal_add_extra_fr      ,
+                              'print_en'      => $arsenal_add_print_en      ,
+                              'print_fr'      => $arsenal_add_print_fr      ,
                               'hidden'        => $arsenal_add_hidden        ,
                               'factions'      => $arsenal_add_factions      ,
                               'arsenal_tags'  => $arsenal_add_tags          ,
@@ -168,6 +172,8 @@ if(isset($_POST['arsenal_edit']))
   $arsenal_edit_reserves_fr  = form_fetch_element('arsenal_reserves_fr');
   $arsenal_edit_extra_en     = form_fetch_element('arsenal_extra_en');
   $arsenal_edit_extra_fr     = form_fetch_element('arsenal_extra_fr');
+  $arsenal_edit_print_en     = form_fetch_element('arsenal_print_en');
+  $arsenal_edit_print_fr     = form_fetch_element('arsenal_print_fr');
   $arsenal_edit_hidden       = form_fetch_element('arsenal_hidden');
 
   // Gather factions postdata
@@ -222,6 +228,8 @@ if(isset($_POST['arsenal_edit']))
                               'reserves_fr'   => $arsenal_edit_reserves_fr  ,
                               'extra_en'      => $arsenal_edit_extra_en     ,
                               'extra_fr'      => $arsenal_edit_extra_fr     ,
+                              'print_en'      => $arsenal_edit_print_en     ,
+                              'print_fr'      => $arsenal_edit_print_fr     ,
                               'hidden'        => $arsenal_edit_hidden       ,
                               'factions'      => $arsenal_edit_factions     ,
                               'arsenal_tags'  => $arsenal_edit_tags         ,
@@ -281,7 +289,7 @@ $arsenals_list = arsenals_list( sort_by:  $admin_arsenals_sort    ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_80 padding_top">
+<div class="width_90 padding_top">
 
   <h5>
     <?=__('admin_arsenal_management').__(':')?>
@@ -572,7 +580,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <td class="align_center nowrap">
+        <td class="align_center nowrap arsenals_data_icons">
 
           <?php if($arsenals_list[$i]['hidden']): ?>
           <?=__icon('user_delete', is_small: true, alt: __('admin_arsenal_list_hidden'), title: __('admin_arsenal_list_hidden'), class: 'valign_middle')?>
@@ -584,6 +592,22 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
           if($arsenals_list[$i]['image_fr']): ?>
           <?=__icon('image', is_small: true, alt: 'I', title: __('image'), title_case: 'initials', href: $arsenals_list[$i]['image_fr'], popup: true)?>
+          <?php endif; ?>
+
+          <?php if($arsenals_list[$i]['print_en']): ?>
+          <?=__icon('add', is_small: true, alt: 'P', title: __('admin_arsenal_list_print'), title_case: 'initials', href: $arsenals_list[$i]['print_en'], popup: true)?>
+          <?php endif; ?>
+
+          <?php if($arsenals_list[$i]['print_extra_en']): ?>
+          <?=__icon('add', is_small: true, alt: 'P', title: __('admin_arsenal_list_print'), title_case: 'initials', href: $arsenals_list[$i]['print_extra_en'], popup: true)?>
+          <?php endif; ?>
+
+          <?php if($arsenals_list[$i]['print_fr']): ?>
+          <?=__icon('add', is_small: true, alt: 'P', title: __('admin_arsenal_list_print'), title_case: 'initials', href: $arsenals_list[$i]['print_fr'], popup: true)?>
+          <?php endif; ?>
+
+          <?php if($arsenals_list[$i]['print_extra_fr']): ?>
+          <?=__icon('add', is_small: true, alt: 'P', title: __('admin_arsenal_list_print'), title_case: 'initials', href: $arsenals_list[$i]['print_extra_fr'], popup: true)?>
           <?php endif; ?>
 
         </td>
