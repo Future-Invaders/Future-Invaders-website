@@ -196,11 +196,11 @@ ___('api_rules_list_summary', 'FR', "Récupère la liste de toutes les cartes de
 
 // Header
 ___('api_arsenals_intro', 'EN', <<<EOD
-Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested preconstructed arsenals, to give you ideas on how to build your own. The API lists all such preconstructed arsenals.
+Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested prebuilt arsenals, to give you ideas on how to build your own. The API lists all such structed arsenals.
 EOD
 );
 ___('api_arsenals_intro', 'FR', <<<EOD
-Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux préconstruits, pour vous donner des idées sur la façon de construire vos propres arsenaux. L'API liste tous ces arsenaux préconstruits.
+Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux déjà assemblés, pour vous donner des idées sur la façon de construire vos propres arsenaux. L'API liste tous ces arsenaux.
 EOD
 );
 

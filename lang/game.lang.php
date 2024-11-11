@@ -151,11 +151,11 @@ EOD
 ___('arsenal_list_title',       'EN', "Arsenal list");
 ___('arsenal_list_title',       'FR', "Liste des arsenaux");
 ___('arsenal_list_body',        'EN', <<<EOD
-Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested preconstructed arsenals, to give you ideas on how to build your own. Below is a list of these arsenals. Click on an arsenal's cover image to see details, including full descriptions and card lists.
+Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested prebuilt arsenals, to give you ideas on how to build your own. Below is a list of these arsenals. Click on an arsenal's cover image to see details, including full descriptions and card lists.
 EOD
 );
 ___('arsenal_list_body',        'FR', <<<EOD
-Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux préconstruits, pour vous donner des idées sur la façon de construire vos propres arsenaux. Vous trouverez ci-dessous une liste de tous ces arsenaux. Cliquez sur l'image de couverture d'un arsenal pour voir ses détails, incluant sa description complète et une liste de ses cartes.
+Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux déjà assemblés, pour vous donner des idées sur la façon de construire vos propres arsenaux. Vous trouverez ci-dessous une liste de tous ces arsenaux. Cliquez sur l'image de couverture d'un arsenal pour voir ses détails, incluant sa description complète et une liste de ses cartes.
 EOD
 );
 ___('arsenal_list_count',       'EN', "{{1}} arsenal");
@@ -187,8 +187,8 @@ ___('formats_body',     'FR', <<<EOD
 Future Invaders peut se jouer de différentes manières. Chaque façon de jouer au jeu est appelée un format. Vous trouverez ci-dessous une liste de formats « officiels ». Ce ne sont que des suggestions : n'hésitez pas à inventer vos propres formats de jeux originaux et à les partager avec la communauté !
 EOD
 );
-___('formats_arsenals', 'EN', "{{link|pages/game/arsenals?format={{2}}|Click here}} for a list of preconstructed arsenals for {{1}} games.");
-___('formats_arsenals', 'FR', "{{link|pages/game/arsenals?format={{2}}|Cliquez ici}} pour accéder à une liste d'arsenaux préconstruits pour le format {{1}}.");
+___('formats_arsenals', 'EN', "{{link|pages/game/arsenals?format={{2}}|Click here}} for a list of prebuilt arsenals for {{1}} games.");
+___('formats_arsenals', 'FR', "{{link|pages/game/arsenals?format={{2}}|Cliquez ici}} pour accéder à une liste d'arsenaux pour le format {{1}}.");
 
 
 

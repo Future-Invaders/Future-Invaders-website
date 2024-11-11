@@ -331,11 +331,11 @@ EOD
 ___('publish_question_model',  'EN', "What is this game's business model?");
 ___('publish_question_model',  'FR', "Quel est le modèle économique du jeu ?");
 ___('publish_answer_model',    'EN', <<<EOD
-The tactical card game market is crowded with the "random booster" model, which many playtesters have criticized. Future Invaders will be sold as preconstructed decks of 45 cards. The core set includes 12 such decks, and each expansion will add 12 to 16 more. Special packages of 150 and 300 cards will also be available for "draft mode". This model has received positive feedback from playtesters, who have expressed a willingness to buy 2 to 10 items per expansion, but remains open to discussion.
+The tactical card game market is crowded with the "random booster" model, which many playtesters have criticized. Future Invaders will be sold as prebuilt decks of 45 cards. The core set includes 12 such decks, and each expansion will add 12 to 16 more. Special packages of 150 and 300 cards will also be available for "draft mode". This model has received positive feedback from playtesters, who have expressed a willingness to buy 2 to 10 items per expansion, but remains open to discussion.
 EOD
 );
 ___('publish_answer_model',    'FR', <<<EOD
-Le marché des jeux de cartes tactiques est dominé par le modèle des "boosters aléatoires", critiqué par de nombreux testeurs. Future Invaders se vendra sous forme de paquets préconstruits de 45 cartes, avec 12 paquets dans le set de base, et 12 à 16 par extension future. Des collections de 150 et 300 cartes seront également disponibles pour le mode "draft". Ce modèle a reçu des retours positifs des testeurs, qui se disent prêts à acheter 2 à 10 paquets par extension, bien que le modèle reste ouvert à discussion.
+Le marché des jeux de cartes tactiques est dominé par le modèle des "boosters aléatoires", critiqué par de nombreux testeurs. Future Invaders se vendra sous forme d'arsenaux pré-assemblés de 45 cartes, avec 12 paquets dans le set de base, et 12 à 16 par extension future. Des collections de 150 et 300 cartes seront également disponibles pour le mode "draft". Ce modèle a reçu des retours positifs des testeurs, qui se disent prêts à acheter 2 à 10 paquets par extension, bien que le modèle reste ouvert à discussion.
 EOD
 );
 
