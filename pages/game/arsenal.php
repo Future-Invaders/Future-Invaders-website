@@ -96,7 +96,7 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
             <?=__('arsenal_format').__(':')?>
           </div>
           <div class="align_left smallspaced_left noflow" style="flex: 3">
-            <?=__link('404', $arsenal_data['format_name'])?>
+            <?=__link('pages/game/formats#'.$arsenal_data['format_name'], $arsenal_data['format_name'])?>
           </div>
         </div>
         <?php endif; if($arsenal_data['faction_list']): ?>
