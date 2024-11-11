@@ -320,16 +320,16 @@ $javascripts .= '
             <?=__('submenu_tools_print')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_printhelp'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/tools/print', __('submenu_tools_printhelp'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_printcards'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/tools/print_cards', __('submenu_tools_printcards'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_printarsenals'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/tools/print_arsenals', __('submenu_tools_printarsenals'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_printextra'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/tools/print_extra', __('submenu_tools_printextra'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 

@@ -8,6 +8,123 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                    PRINT CARDS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Print at home: Intro
+___('print_title',  'EN', "Print cards at home");
+___('print_title',  'FR', "Impression à domicile");
+___('print_image',  'EN', "Cards being printed");
+___('print_image',  'FR', "Cartes en cours d'impression");
+___('print_body',   'EN', <<<EOD
+Until Future Invaders is published and available for sale, you can print the cards needed to play the game yourself, at home. This page explains the process. Once you're familiar with it, you can visit the pages listing the {{link|pages/tools/print_cards|cards}}, {{link|pages/tools/print_arsenals|arsenals}}, and {{link|pages/tools/print_extra|extra contents}} to print them.
+EOD
+);
+___('print_body',   'FR', <<<EOD
+En attendant que Future Invaders soit publié et disponible à la vente, vous pouvez imprimer chez vous les cartes nécessaires pour jouer. Cette page vous explique la procédure. Une fois que vous aurez compris comment faire, vous pourrez consulter les pages des {{link|pages/tools/print_cards|cartes}}, {{link|pages/tools/print_arsenals|arsenaux}}, et {{link|pages/tools/print_extra|contenus supplémentaires}} disponibles à l'impression.
+EOD
+);
+
+
+// Print at home: Requirements
+___('print_requirements',         'EN', "Required tools");
+___('print_requirements',         'FR', "Outils requis");
+___('print_requirements_image',   'EN', "A paper cutter in action");
+___('print_requirements_image',   'FR', "Un coupe-papier en action");
+___('print_requirements_body_1',  'EN', <<<EOD
+Unless you have access to a professional printer that can print directly on cardboard stock, four items are required to print cards at home: a printer, a paper cutter, card backs, and card sleeves.
+EOD
+);
+___('print_requirements_body_1',  'FR', <<<EOD
+À moins d'avoir accès à une imprimante professionnelle capable d'imprimer directement sur du carton, quatre éléments sont nécessaires pour imprimer des cartes à la maison : une imprimante, un coupe-papier, des soutiens de cartes, et des pochettes plastiques.
+EOD
+);
+___('print_requirements_body_2',  'EN', <<<EOD
+Any printer will do, even a low-quality color printer can produce decent-looking cards.
+EOD
+);
+___('print_requirements_body_2',  'FR', <<<EOD
+N'importe quelle imprimante peut faire l'affaire. Même une imprimante de basse qualité peut produire des cartes acceptables.
+EOD
+);
+___('print_requirements_body_3',  'EN', <<<EOD
+A proper paper cutter is highly recommended. A full-blade guillotine-style cutter is ideal, as opposed to ones with small blades that progressively cut the paper. Cutting the paper is the only tricky step, and a good paper cutter will make the process faster and easier, saving on paper and ink costs (since you'll be less likely to make mistakes).
+EOD
+);
+___('print_requirements_body_3',  'FR', <<<EOD
+Un coupe-papier de bonne qualité est fortement recommandé. Un massicot avec une lame complète servant de guillotine est préférable à ceux utilisant une petite lame de rasoir pour découper progressivement le papier. La découpe est l'étape la plus délicate de l'impression maison, et un bon coupe-papier la rendra beaucoup plus rapide et simple, tout en réduisant le gâchis de papier et d'encre (car vous serez moins susceptible de rater vos découpes).
+EOD
+);
+___('print_requirements_body_4',  'EN', <<<EOD
+Card backs are not strictly necessary, but they are highly recommended, as your printed cards will easily wear down without them. Any sturdy plastic or cardboard piece the size of a standard playing card (63x88mm) will work. If you cannot find or don't want to use proper card backs, regular playing cards can be used as substitutes.
+EOD
+);
+___('print_requirements_body_4',  'FR', <<<EOD
+Les soutiens de cartes ne sont pas indispensables, mais fortement recommandés, car sans eux, vos cartes risquent de se détériorer rapidement. Tout morceau de plastique ou de carton rigide de la taille d'une carte à jouer standard (63x88mm) fera l'affaire. Si vous ne trouvez pas ou ne souhaitez pas utiliser des soutiens de cartes de qualité, vous pouvez utiliser à des cartes à jouer classiques à la place.
+EOD
+);
+___('print_requirements_body_5',  'EN', <<<EOD
+Finally, card sleeves are essential to protect your cards, as paper is fragile. Any standard-sized sleeves (63x88mm) will work, even the cheapest ones, as long as they are not transparent on both sides (the back must be solid). Ensure all cards in your arsenals are sleeved with the same design and color to avoid accidentally cheating by making cards distinguishable from the back.
+EOD
+);
+___('print_requirements_body_5',  'FR', <<<EOD
+Enfin, des pochettes plastiques sont nécessaires pour protéger vos cartes, car le papier est fragile. N'importe quelle pochette de taille standard (63x88) conviendra, même les moins chères, tant qu'elles ne sont pas transparentes des deux côtés (l'arrière doit être opaque). Assurez-vous que toutes les cartes de votre arsenal soient protégées par des pochettes de la même couleur et du même design, afin d'éviter qu'elles ne soient reconnaissables par leur dos, ce qui constituerait une forme de triche accidentelle.
+EOD
+);
+
+
+// Print at home: Printing the cards
+___('print_cards_title',  'EN', "Printing the cards");
+___('print_cards_title',  'FR', "Impression des cartes");
+___('print_cards_image',  'EN', "Cards being sleeved");
+___('print_cards_image',  'FR', "Cartes en train d'être mises sous plastique");
+___('print_cards_body_1', 'EN', <<<EOD
+Start by choosing the cards you want to print. You can print {{link|pages/tools/print_cards|all of the game's cards}}, or begin by printing the {{link|pages/tools/print_extra|rules and extra cards}}, or just enough cards {{link|pages/tools/print_arsenals|for one arsenal}}.
+EOD
+);
+___('print_cards_body_1', 'FR', <<<EOD
+Commencez par choisir les cartes que vous souhaitez imprimer. Vous pouvez imprimer {{link|pages/tools/print_cards|toutes les cartes du jeu}} d'un coup, ou bien commencer par {{link|pages/tools/print_extra|les règles et cartes utilitaires}}, ou encore imprimer uniquement {{link|pages/tools/print_arsenals|les cartes d'un arsenal}}.
+EOD
+);
+___('print_cards_body_2', 'EN', <<<EOD
+You'll be given the cards as a .PDF file. Print it.
+EOD
+);
+___('print_cards_body_2', 'FR', <<<EOD
+Une fois vos cartes choisies, elles vous seront données sous la forme d'un fichier .PDF. Imprimez ce fichier.
+EOD
+);
+___('print_cards_body_3', 'EN', <<<EOD
+Next, cut out the printed cards. Each sheet contains up to nine cards, separated by a white border. Use your paper cutter to remove the white edges, then cut the sheet into strips of three cards, and finally separate the strips into individual cards. If you make a mistake, you can always reprint and try again. Don't worry if you mess up, this process is easy to learn and master.
+EOD
+);
+___('print_cards_body_3', 'FR', <<<EOD
+Ensuite, découpez les cartes que vous avez imprimées. Chaque feuille contient jusqu'à neuf cartes, entourées d'une bordure blanche. Avec votre coupe-papier, retirez d'abord les bordures blanches, puis découpez les trois rangées de cartes en trois bandes de trois cartes. Séparez ensuite chaque bande en cartes individuelles. Si la découpe n'est pas parfaite, réimprimez et recommencez. Pas d'inquiétude si vous faites des erreurs, ce processus est rapide à maîtriser.
+EOD
+);
+___('print_cards_body_4', 'EN', <<<EOD
+Once cutting is done, sleeve the cards. Place a card back behind a printed card and slide both at the same time into a plastic sleeve. Repeat this until all your cards are sleeved.
+EOD
+);
+___('print_cards_body_4', 'FR', <<<EOD
+Une fois la découpe finie, passez à la mise sous plastique. Placez un soutien de carte derrière chaque carte imprimée, puis insérez les deux simultanément dans une pochette plastique. Répétez jusqu'à ce que toutes vos cartes soient sous plastique.
+EOD
+);
+___('print_cards_body_5', 'EN', <<<EOD
+You're done. Now you can start playing Future Invaders. Have fun!
+EOD
+);
+___('print_cards_body_5', 'FR', <<<EOD
+Félicitations, vous pouvez maintenant jouer à Future Invaders. Amusez-vous bien !
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                    SOURCE CODE                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
