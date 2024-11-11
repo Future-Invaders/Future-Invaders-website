@@ -49,12 +49,17 @@ $formats_list = formats_list();
 
   <?php for($i = 0; $i < $formats_list['rows']; $i++): ?>
   <div class="bigpadding_top padding_bot">
-    <h4 class="uppercase underlined">
+    <h4 class="uppercase text_white">
       <?=$formats_list[$i]['name']?>
     </h4>
     <p>
       <?=$formats_list[$i]['desc_raw']?>
     </p>
+    <?php if($formats_list[$i]['name_en'] === 'Prepared' || $formats_list[$i]['name_en'] === 'Architect'): ?>
+    <p>
+      <?=__('formats_arsenals', preset_values: array($formats_list[$i]['name'], $formats_list[$i]['name_en']))?>
+    </p>
+    <?php endif; ?>
   </div>
   <?php endfor; ?>
 

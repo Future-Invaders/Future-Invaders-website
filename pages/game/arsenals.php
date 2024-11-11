@@ -33,12 +33,14 @@ $css = array('game');
 // Fetch the list of arsenals
 
 // Fetch the search data
-$cards_search_tag = form_fetch_element('tag', request_type: 'GET');
+$cards_search_tag    = form_fetch_element('tag', request_type: 'GET');
+$cards_search_format = form_fetch_element('format', request_type: 'GET');
 
 // Fetch the arsenals
-$arsenals_list = arsenals_list( sort_by: 'default'                                 ,
-                                search:   array(  'public'  => true                ,
-                                                  'tag'     => $cards_search_tag ) );
+$arsenals_list = arsenals_list( sort_by: 'default'                                      ,
+                                search:   array(  'public'    => true                   ,
+                                                  'tag'       => $cards_search_tag      ,
+                                                  'format_en' => $cards_search_format ) );
 
 // Fetch the tag description if necessary
 if($cards_search_tag)
@@ -73,6 +75,14 @@ if($cards_search_tag)
       <?=$tag_details['desc']?>
     </p>
     <?php endif; ?>
+  </div>
+  <?php endif; ?>
+
+  <?php if($cards_search_format && !$cards_search_tag): ?>
+  <div class="smallpadding_top">
+    <h5>
+      <?=__('arsenal_list_count', preset_values: array($arsenals_list['rows']), amount: $arsenals_list['rows']).__('arsenal_list_count_form', preset_values: array($cards_search_format))?>
+    </h5>
   </div>
   <?php endif; ?>
 

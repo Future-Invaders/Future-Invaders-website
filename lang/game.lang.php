@@ -164,6 +164,8 @@ ___('arsenal_list_count+',      'EN', "{{1}} arsenals");
 ___('arsenal_list_count+',      'FR', "{{1}} arsenaux");
 ___('arsenal_list_count_tags',  'EN', " are tagged as <span class=\"italics\">{{1}}</span>");
 ___('arsenal_list_count_tags',  'FR', " ont le tag <span class=\"italics\">{{1}}</span>");
+___('arsenal_list_count_form',  'EN', " are designed for the <span class=\"bold\">{{1}}</span> format");
+___('arsenal_list_count_form',  'FR', " sont conçus pour le format <span class=\"bold\">{{1}}</span>");
 
 
 
@@ -174,17 +176,19 @@ ___('arsenal_list_count_tags',  'FR', " ont le tag <span class=\"italics\">{{1}}
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Game formats
-___('formats_title',  'EN', "Game formats");
-___('formats_title',  'FR', "Formats de jeu");
-___('formats_body',   'EN', <<<EOD
-Future Invaders can be played in various different ways. Each unique way to play the game is called a format. Below is a list of "official" game formats. They are merely ideas, feel free to come up with your own original formats and share them with the community!
+// Game formats list
+___('formats_title',    'EN', "Game formats");
+___('formats_title',    'FR', "Formats de jeu");
+___('formats_body',     'EN', <<<EOD
+Future Invaders can be played in a variety of ways, each of which is known as format. Below is a list of "official" formats. They are just suggestions, feel free to create your own unique formats and share them with the community!
 EOD
 );
-___('formats_body',   'FR', <<<EOD
-Future Invaders peut être joué de différentes façons. Chaque façon de jouer au jeu est appelée un format. Vous trouverez ci-dessous une liste de formats « officiels ». Il s'agit d'idées parmi d'autres, n'hésitez pas à inventer vos propres formats de jeux originaux et à les partager avec la communauté !
+___('formats_body',     'FR', <<<EOD
+Future Invaders peut se jouer de différentes manières. Chaque façon de jouer au jeu est appelée un format. Vous trouverez ci-dessous une liste de formats « officiels ». Ce ne sont que des suggestions : n'hésitez pas à inventer vos propres formats de jeux originaux et à les partager avec la communauté !
 EOD
 );
+___('formats_arsenals', 'EN', "{{link|pages/game/arsenals?format={{2}}|Click here}} for a list of preconstructed arsenals for {{1}} games.");
+___('formats_arsenals', 'FR', "{{link|pages/game/arsenals?format={{2}}|Cliquez ici}} pour accéder à une liste d'arsenaux préconstruits pour le format {{1}}.");
 
 
 
