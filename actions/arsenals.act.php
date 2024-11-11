@@ -98,6 +98,8 @@ function arsenals_get(  int     $arsenal_id   = null    ,
                                       arsenals.name_fr                  AS 'a_name_fr'      ,
                                       arsenals.name_$lang               AS 'a_name'         ,
                                       arsenals.slug                     AS 'a_slug'         ,
+                                      arsenals.print_path_en            AS 'a_print_en'     ,
+                                      arsenals.print_path_fr            AS 'a_print_fr'     ,
                                       arsenals.playstyle_en             AS 'a_playstyle_en' ,
                                       arsenals.playstyle_fr             AS 'a_playstyle_fr' ,
                                       arsenals.playstyle_$lang          AS 'a_playstyle'    ,
@@ -237,6 +239,10 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     $data['name_en']      = sanitize_output($arsenal_data['a_name_en']);
     $data['name_fr']      = sanitize_output($arsenal_data['a_name_fr']);
     $data['name']         = sanitize_output($arsenal_data['a_name']);
+    $data['print_en']     = sanitize_output($arsenal_data['a_print_en']);
+    $data['print_fr']     = sanitize_output($arsenal_data['a_print_fr']);
+    $data['printex_en']   = str_replace(".pdf", "_extras.pdf", $arsenal_data['a_print_en']);
+    $data['printex_fr']   = str_replace(".pdf", "_extras.pdf", $arsenal_data['a_print_fr']);
     $data['playstyle_en'] = sanitize_output($arsenal_data['a_playstyle_en']);
     $data['playstyle_fr'] = sanitize_output($arsenal_data['a_playstyle_fr']);
     $data['playstyle']    = sanitize_output($arsenal_data['a_playstyle']);
@@ -580,6 +586,12 @@ function arsenals_list( string  $sort_by  = ''      ,
                                   arsenal_difficulties.sorting_order  ASC     ,
                                   arsenals.name_$lang                 = ''    ,
                                   arsenals.name_$lang                 ASC     ",
+    'print'       => "  ORDER BY  releases.release_date               IS NULL ,
+                                  releases.release_date               DESC    ,
+                                  formats.sorting_order               IS NULL ,
+                                  formats.sorting_order               ASC     ,
+                                  arsenals.name_$lang                 = ''    ,
+                                  arsenals.name_$lang                 ASC     ",
     default       => "  ORDER BY  releases.release_date               IS NULL ,
                                   releases.release_date               DESC    ,
                                   formats.sorting_order               IS NULL ,
@@ -598,6 +610,8 @@ function arsenals_list( string  $sort_by  = ''      ,
                                 arsenals.name_fr                AS 'a_name_fr'      ,
                                 arsenals.name_$lang             AS 'a_name'         ,
                                 arsenals.slug                   AS 'a_slug'         ,
+                                arsenals.print_path_en          AS 'a_print_en'     ,
+                                arsenals.print_path_fr          AS 'a_print_fr'     ,
                                 arsenals.playstyle_en           AS 'a_playstyle_en' ,
                                 arsenals.playstyle_fr           AS 'a_playstyle_fr' ,
                                 arsenals.playstyle_$lang        AS 'a_playstyle'    ,
@@ -746,6 +760,20 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['thumb_en']         = sanitize_output($temp_thumb_path_en);
       $data[$i]['thumb_fr']         = sanitize_output($temp_thumb_path_fr);
       $data[$i]['thumb']            = sanitize_output($temp_thumb_path);
+      $data[$i]['print_en']         = (is_file('./../../img/print/arsenals/en/'.$row['a_print_en']))
+                                    ? 'img/print/arsenals/en/'.$row['a_print_en']
+                                    : NULL;
+      $data[$i]['print_fr']         = (is_file('./../../img/print/arsenals/fr/'.$row['a_print_fr']))
+                                    ? 'img/print/arsenals/fr/'.$row['a_print_fr']
+                                    : NULL;
+      $temp_print_extra_en          = str_replace(".pdf", "_extras.pdf", $row['a_print_en']);
+      $temp_print_extra_fr          = str_replace(".pdf", "_extras.pdf", $row['a_print_fr']);
+      $data[$i]['print_extra_en']   = (is_file('./../../img/print/arsenals/en/'.$temp_print_extra_en))
+                                    ? 'img/print/arsenals/en/'.$temp_print_extra_en
+                                    : NULL;
+      $data[$i]['print_extra_fr']   = (is_file('./../../img/print/arsenals/fr/'.$temp_print_extra_fr))
+                                    ? 'img/print/arsenals/fr/'.$temp_print_extra_fr
+                                    : NULL;
       $data[$i]['ntags']            = sanitize_output($row['at_count']);
       $data[$i]['tags']             = sanitize_output($row['at_names']);
       $data[$i]['nfactions']        = sanitize_output($row['af_count']);
@@ -885,6 +913,8 @@ function arsenals_add( array $data ) : void
   $arsenal_hidden       = sanitize_array_element($data, 'hidden', 'bool');
   $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
   $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
+  $arsenal_print_en     = sanitize_array_element($data, 'print_en', 'string');
+  $arsenal_print_fr     = sanitize_array_element($data, 'print_fr', 'string');
   $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
   $arsenal_playstyle_fr = sanitize_array_element($data, 'playstyle_fr', 'string');
   $arsenal_summary_en   = sanitize_array_element($data, 'summary_en', 'string');
@@ -907,6 +937,8 @@ function arsenals_add( array $data ) : void
                       arsenals.is_hidden                = '$arsenal_hidden'       ,
                       arsenals.name_en                  = '$arsenal_name_en'      ,
                       arsenals.name_fr                  = '$arsenal_name_fr'      ,
+                      arsenals.print_path_en            = '$arsenal_print_en'     ,
+                      arsenals.print_path_fr            = '$arsenal_print_fr'     ,
                       arsenals.playstyle_en             = '$arsenal_playstyle_en' ,
                       arsenals.playstyle_fr             = '$arsenal_playstyle_fr' ,
                       arsenals.summary_en               = '$arsenal_summary_en'   ,
@@ -999,6 +1031,8 @@ function arsenals_edit( int   $arsenal_id  ,
   $arsenal_hidden       = sanitize_array_element($data, 'hidden', 'bool');
   $arsenal_name_en      = sanitize_array_element($data, 'name_en', 'string');
   $arsenal_name_fr      = sanitize_array_element($data, 'name_fr', 'string');
+  $arsenal_print_en     = sanitize_array_element($data, 'print_en', 'string');
+  $arsenal_print_fr     = sanitize_array_element($data, 'print_fr', 'string');
   $arsenal_playstyle_en = sanitize_array_element($data, 'playstyle_en', 'string');
   $arsenal_playstyle_fr = sanitize_array_element($data, 'playstyle_fr', 'string');
   $arsenal_summary_en   = sanitize_array_element($data, 'summary_en', 'string');
@@ -1024,6 +1058,8 @@ function arsenals_edit( int   $arsenal_id  ,
                   arsenals.is_hidden                = '$arsenal_hidden'       ,
                   arsenals.name_en                  = '$arsenal_name_en'      ,
                   arsenals.name_fr                  = '$arsenal_name_fr'      ,
+                  arsenals.print_path_en            = '$arsenal_print_en'     ,
+                  arsenals.print_path_fr            = '$arsenal_print_fr'     ,
                   arsenals.playstyle_en             = '$arsenal_playstyle_en' ,
                   arsenals.playstyle_fr             = '$arsenal_playstyle_fr' ,
                   arsenals.summary_en               = '$arsenal_summary_en'   ,

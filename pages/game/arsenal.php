@@ -30,6 +30,9 @@ $css = array('game');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the arsenal's data
 
+// Get the user's language
+$lowerlang = string_change_case($lang ,'lowercase');
+
 // Fetch the slug
 $arsenal_slug = form_fetch_element('slug', request_type: 'GET');
 
@@ -231,7 +234,7 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
   <?php endif; ?>
 
   <?php if($arsenal_data['tags']['count']): ?>
-  <div class="padding_top">
+  <div class="padding_top padding_bot">
     <div class="black bigspaced tinypadding_top smallpadding_bot">
       <h5>
         <?=__('arsenal_tags_title')?>
@@ -245,6 +248,29 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
         <?=$arsenal_data['tags'][$i]['description']?>
       </p>
       <?php endfor; ?>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php if($arsenal_data['print_'.$lowerlang]): ?>
+  <div class="padding_top padding_bot">
+    <div class="black bigspaced tinypadding_top smallpadding_bot">
+      <h5>
+        <?=__('arsenal_print_title')?>
+      </h5>
+      <p>
+        <?=__('arsenal_print_body_1')?>
+      </p>
+      <ul class="tinypadding_top">
+        <li>
+          <?=__link('img/print/arsenals/'.$lowerlang.'/'.$arsenal_data['print_'.$lowerlang], __('arsenal_print_cards'))?>
+        </li>
+        <?php if($arsenal_data['printex_'.$lowerlang]): ?>
+        <li>
+          <?=__link('img/print/arsenals/'.$lowerlang.'/'.$arsenal_data['printex_'.$lowerlang], __('arsenal_print_extra'))?>
+        </li>
+        <?php endif; ?>
+      </ul>
     </div>
   </div>
   <?php endif; ?>

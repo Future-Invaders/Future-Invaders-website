@@ -348,6 +348,28 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
       </div>
 
+      <div class="flexcontainer padding_bot">
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_print_en"><?=__('admin_arsenal_add_print_en')?></label>
+            <input class="indiv" type="text" name="arsenal_print_en" value="<?=$admin_arsenal_data['print_en']?>">
+          </div>
+
+        </div>
+        <div style="flex: 1">
+          &nbsp;
+        </div>
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_print_fr"><?=__('admin_arsenal_add_print_fr')?></label>
+            <input class="indiv" type="text" name="arsenal_print_fr" value="<?=$admin_arsenal_data['print_fr']?>">
+          </div>
+
+        </div>
+      </div>
+
       <div class="smallpadding_bot" id="arsenal_factions_container">
 
         <label><?=__('admin_arsenal_add_factions')?></label>

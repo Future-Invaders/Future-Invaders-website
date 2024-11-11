@@ -166,7 +166,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </div>
       </div>
 
-      <div class="flexcontainer padding_bot">
+      <div class="flexcontainer smallpadding_bot">
         <div style="flex: 8">
 
           <div class="smallpadding_bot">
@@ -233,6 +233,28 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <div>
             <label for="arsenal_extra_fr"><?=__('admin_arsenal_add_extra_fr')?></label>
             <textarea class="indiv shorter" name="arsenal_extra_fr"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flexcontainer padding_bot">
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_print_en"><?=__('admin_arsenal_add_print_en')?></label>
+            <input class="indiv" type="text" name="arsenal_print_en">
+          </div>
+
+        </div>
+        <div style="flex: 1">
+          &nbsp;
+        </div>
+        <div style="flex: 8">
+
+          <div>
+            <label for="arsenal_print_fr"><?=__('admin_arsenal_add_print_fr')?></label>
+            <input class="indiv" type="text" name="arsenal_print_fr">
           </div>
 
         </div>
