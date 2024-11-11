@@ -121,6 +121,40 @@ EOD
 );
 
 
+// Print cards
+___('print_allcards_title',   'EN', "Print cards");
+___('print_allcards_title',   'FR', "Imprimer les cartes");
+___('print_allcards_body_1',  'EN', <<<EOD
+From this page, you can print every legal card in a game of Future Invaders. You have two options: print one copy of each card, or print the maximum legal copies of each card allowed in an arsenal. You can then use these to assemble your own arsenals.
+EOD
+);
+___('print_allcards_body_1',  'FR', <<<EOD
+Depuis cette page, vous pouvez imprimer toutes les cartes jouables dans une partie de Future Invaders. Deux options sont disponibles : imprimer un exemplaire de chaque carte, ou imprimer le nombre maximum autorisé de copies de chaque carte dans un arsenal. Vous pourrez ensuite utiliser ces cartes pour composer vos propres arsenaux.
+EOD
+);
+___('print_allcards_body_2',  'EN', <<<EOD
+Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}. You might also prefer to print {{link|pages/tools/print_arsenals|prebuilt arsenals}} instead of all cards.
+EOD
+);
+___('print_allcards_body_2',  'FR', <<<EOD
+Avant d'imprimer, assurez-vous de comprendre {{link|pages/tools/print|le processus d'impression maison}}, et demandez-vous si vous préférez imprimer {{link|pages/tools/print_arsenals|des arsenaux pré-assemblés}} plutôt que toutes les cartes.
+EOD
+);
+___('print_allcards_body_3',  'EN', <<<EOD
+Cards are available for printing in both English and French. To change the language, click on the flag icon in the top right corner.
+EOD
+);
+___('print_allcards_body_3',  'FR', <<<EOD
+Les cartes sont également imprimables en anglais. Pour changer la langue du site, cliquez sur le drapeau en haut à droite de la page.
+EOD
+);
+___('print_allcards_choice',  'EN', "Choose the cards you want to print");
+___('print_allcards_choice',  'FR', "Choisissez les cartes à imprimer");
+___('print_allcards_single',  'EN', "One copy of each card in the game");
+___('print_allcards_single',  'FR', "Un exemplaire de chaque carte");
+___('print_allcards_max',     'EN', "Maximum legal copies of each card");
+___('print_allcards_max',     'FR', "Nombre maximum de copies autorisé de chaque carte");
+
 
 
 /*********************************************************************************************************************/
