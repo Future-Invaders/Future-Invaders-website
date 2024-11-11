@@ -125,6 +125,7 @@ function formats_list( string $format = 'html' ) : array
       $data[$i]['desc']         = sanitize_output(string_truncate($row['f_desc'], 35, '...'));
       $data[$i]['desc_en_raw']  = nl2br($row['f_desc_en']);
       $data[$i]['desc_fr_raw']  = nl2br($row['f_desc_fr']);
+      $data[$i]['desc_raw']     = nl2br($row['f_desc']);
       $data[$i]['styling']      = sanitize_output($row['f_styling']);
     }
 

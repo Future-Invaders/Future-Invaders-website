@@ -167,6 +167,28 @@ ___('arsenal_list_count_tags',  'FR', " ont le tag <span class=\"italics\">{{1}}
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      FORMATS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Game formats
+___('formats_title',  'EN', "Game formats");
+___('formats_title',  'FR', "Formats de jeu");
+___('formats_body',   'EN', <<<EOD
+Future Invaders can be played in various different ways. Each unique way to play the game is called a format. Below is a list of "official" game formats. They are merely ideas, feel free to come up with your own original formats and share them with the community!
+EOD
+);
+___('formats_body',   'FR', <<<EOD
+Future Invaders peut être joué de différentes façons. Chaque façon de jouer au jeu est appelée un format. Vous trouverez ci-dessous une liste de formats « officiels ». Il s'agit d'idées parmi d'autres, n'hésitez pas à inventer vos propres formats de jeux originaux et à les partager avec la communauté !
+EOD
+);
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       RULES                                                       */
