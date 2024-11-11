@@ -48,7 +48,7 @@ $formats_list = formats_list();
   </p>
 
   <?php for($i = 0; $i < $formats_list['rows']; $i++): ?>
-  <div class="bigpadding_top padding_bot">
+  <div class="bigpadding_top padding_bot" id="<?=$formats_list[$i]['name']?>">
     <h4 class="uppercase text_white">
       <?=$formats_list[$i]['name']?>
     </h4>

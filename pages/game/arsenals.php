@@ -118,7 +118,7 @@ if($cards_search_tag)
               <?=__('arsenal_format').__(':')?>
             </div>
             <div class="align_left smallspaced_left noflow" style="flex: 3">
-              <?=__link('404', $arsenals_list[$i]['format'])?>
+              <?=__link('pages/game/formats#'.$arsenals_list[$i]['format'], $arsenals_list[$i]['format'])?>
             </div>
           </div>
           <?php endif; if($arsenals_list[$i]['faction_names']): ?>
