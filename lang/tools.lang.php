@@ -156,6 +156,36 @@ ___('print_allcards_max',     'EN', "Maximum legal copies of each card");
 ___('print_allcards_max',     'FR', "Nombre maximum de copies autorisé de chaque carte");
 
 
+// Print extra cards
+___('print_extra_title',      'EN', "Print extra cards");
+___('print_extra_title',      'FR', "Imprimer les accessoires");
+___('print_extra_body_1',     'EN', <<<EOD
+From this page, you can print additional cards for Future Invaders. These cards are optional, but they can enhance your gameplay experience.
+EOD
+);
+___('print_extra_body_1',     'FR', <<<EOD
+Depuis cette page, vous pouvez imprimer des cartes accessoires pour Future Invaders. Bien qu'elles ne soient pas nécessaires, elles peuvent enrichir votre expérience de jeu.
+EOD
+);
+___('print_extra_body_2',     'EN', <<<EOD
+Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}. f you're looking to print the main game cards, separate pages are available for {{link|pages/tools/print|printing all cards}} and {{link|pages/tools/print_arsenals|printing prebuilt arsenals}}.
+EOD
+);
+___('print_extra_body_2',     'FR', <<<EOD
+Avant d'imprimer, assurez-vous de comprendre {{link|pages/tools/print|le processus d'impression maison}}. Si vous souhaitez imprimer les cartes de jeu, rendez-vous sur les pages dédiées à {{link|pages/tools/print|imprimer toutes les cartes}} et à {{link|pages/tools/print_arsenals|imprimer des arsenaux pré-assemblés}}.
+EOD
+);
+___('print_extra_trackers',   'EN', "Resource and base durability trackers");
+___('print_extra_trackers',   'FR', "Compteurs de ressources et de durabilité");
+___('print_extra_rules',      'EN', "Rules of the game");
+___('print_extra_rules',      'FR', "Règles du jeu");
+___('print_extra_reminders',  'EN', "Abridged rule summaries");
+___('print_extra_reminders',  'FR', "Rappels des règles");
+___('print_extra_lore',       'EN', "Game backstory");
+___('print_extra_lore',       'FR', "Histoire du jeu");
+
+
+
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */

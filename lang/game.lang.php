@@ -205,11 +205,11 @@ ___('rules_title',  'FR', "Comment jouer à Future Invaders");
 ___('rules_toc',    'EN', "Table of contents");
 ___('rules_toc',    'FR', "Sommaire");
 ___('rules_body_1', 'EN', <<<EOD
-First, you'll need to get a copy of the game. Since Future Invaders isn't published yet, the only way to get it is by {{link|404|downloading the cards}} from this website and {{link|404|printing them yourself}}.
+First, you'll need to get a copy of the game. Since Future Invaders isn't published yet, the only way to get it is by {{link|pages/tools/print_cards|downloading the cards}} from this website and {{link|pages/tools/print|printing them yourself}}.
 EOD
 );
 ___('rules_body_1', 'FR', <<<EOD
-Tout d'abord, vous devez obtenir une copie du jeu. Pour l'instant, Future Invaders n'a pas encore d'éditeur, la seule façon d'en avoir une copie est de {{link|404|télécharger les cartes}} depuis ce site et de les {{link|404|imprimer vous-même}}.
+Tout d'abord, vous devez obtenir une copie du jeu. Pour l'instant, Future Invaders n'a pas encore d'éditeur, la seule façon d'en avoir une copie est de {{link|pages/tools/print_cards|télécharger les cartes}} depuis ce site et de les {{link|pages/tools/print|imprimer vous-même}}.
 EOD
 );
 ___('rules_body_2', 'EN', <<<EOD
@@ -229,11 +229,11 @@ En bas de la page, après les règles, des {{link|pages/game/rules#reminders|car
 EOD
 );
 ___('rules_body_4', 'EN', <<<EOD
-Rules and reminders are on cards, allowing you to {{link|404|print them at home}}.
+Rules and reminders are on cards, allowing you to {{link|pages/tools/print_extra|print them at home}}.
 EOD
 );
 ___('rules_body_4', 'FR', <<<EOD
-Les règles et rappels sont présentés sous forme de cartes, ce qui vous permet de les {{link|404|imprimer chez vous}}.
+Les règles et rappels sont présentés sous forme de cartes, ce qui vous permet de les {{link|pages/tools/print_extra|imprimer chez vous}}.
 EOD
 );
 
@@ -1312,10 +1312,10 @@ L'univers du jeu s'explore en jouant des cartes, qui offrent un aperçu des vais
 EOD
 );
 ___('lore_body_3', 'EN', <<<EOD
-The game's background story is presented through lore cards. These cards can be {{link|404|printed at home}}.
+The game's background story is presented through lore cards. These cards can be {{link|pages/tools/print_extra|printed at home}}.
 EOD
 );
 ___('lore_body_3', 'FR', <<<EOD
-L'histoire du jeu est introduite par des cartes de lore. Vous pouvez les {{link|404|imprimer chez vous}}.
+L'histoire du jeu est introduite par des cartes de lore. Vous pouvez les {{link|pages/tools/print_extra|imprimer chez vous}}.
 EOD
 );
