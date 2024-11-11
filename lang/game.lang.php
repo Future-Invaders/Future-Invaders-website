@@ -180,7 +180,7 @@ ___('arsenal_list_count_form',  'FR', " sont conçus pour le format <span class=
 ___('formats_title',    'EN', "Game formats");
 ___('formats_title',    'FR', "Formats de jeu");
 ___('formats_body',     'EN', <<<EOD
-Future Invaders can be played in a variety of ways, each of which is known as format. Below is a list of "official" formats. They are just suggestions, feel free to create your own unique formats and share them with the community!
+Future Invaders can be played in a variety of ways, each of which is known as a format. Below is a list of "official" formats. They are just suggestions, feel free to create your own unique formats and share them with the community!
 EOD
 );
 ___('formats_body',     'FR', <<<EOD
