@@ -443,6 +443,7 @@ function arsenals_list( string  $sort_by  = ''      ,
   $search_release         = sanitize_array_element($search, 'release', 'int');
   $search_release_uuid    = sanitize_array_element($search, 'release_uuid', 'string');
   $search_format          = sanitize_array_element($search, 'format', 'int');
+  $search_format_en       = sanitize_array_element($search, 'format_en', 'string');
   $search_format_uuid     = sanitize_array_element($search, 'format_uuid', 'string');
   $search_name            = sanitize_array_element($search, 'name', 'string');
   $search_faction_id      = sanitize_array_element($search, 'faction', 'int');
@@ -469,6 +470,8 @@ function arsenals_list( string  $sort_by  = ''      ,
                                       ? " AND   formats.id                IS NULL "                       : "";
   $query_search .= ($search_format_uuid)
                                       ? " AND   formats.uuid              = '$search_format_uuid' "       : "";
+  $query_search .= ($search_format_en)
+                                      ? " AND   formats.name_en           LIKE '$search_format_en' "      : "";
   $query_search .= ($search_name)     ? " AND ( arsenals.name_en          LIKE '%$search_name%'
                                           OR    arsenals.name_fr          LIKE '%$search_name%' ) "       : "";
   $query_search .= ($search_difficulty && $search_difficulty !== -1)
