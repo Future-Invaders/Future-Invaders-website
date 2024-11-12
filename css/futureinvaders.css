@@ -548,7 +548,7 @@ tr.row_separator_dark_thin                  { border-bottom: 0.6rem solid var(--
 /****************************************************** GALLERY ******************************************************/
 
 .gallery      { display: flex; flex-wrap: wrap;                       }
-.gallery_cell { border-radius: 0.2rem; margin: 0.4rem; flex: 0 0 32%; }
+.gallery_cell { border-radius: 0.2rem; margin: 0.4rem; flex: 0 0 31%; }
 @media (max-width: 992px)                                             {
 .gallery_cell { flex: 0 0 48%; margin: 0.2rem;                      } }
 
