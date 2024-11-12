@@ -202,7 +202,7 @@ $javascripts .= '
 
 <?php ############################################# SUBMENU: GAME ################################################## ?>
 
-      <div class="header_submenu header_submenu_4" id="header_submenu_game">
+      <div class="header_submenu header_submenu_5" id="header_submenu_game">
 
         <div class="header_submenu_column desktop_wide">
           &nbsp;
@@ -224,6 +224,18 @@ $javascripts .= '
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_social_discord'), 'header_submenu_wip', 1, $path);?>
           </div>
+        </div>
+
+        <div class="header_submenu_column">
+          <div class="header_submenu_title">
+            <?=__('submenu_game_media')?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('404', __('submenu_game_pictures'), 'header_submenu_wip', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/social/contact', __('submenu_social_contactme'), 'header_submenu_link', 1, $path);?>
+          </div>
           <div class="header_submenu_item">
             <?=__link('pages/social/publish', __('submenu_social_publish'), 'header_submenu_link', 1, $path);?>
           </div>
@@ -235,9 +247,6 @@ $javascripts .= '
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_game_news'), 'header_submenu_wip', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('404', __('submenu_game_blog'), 'header_submenu_wip', 1, $path);?>
           </div>
         </div>
 
@@ -295,9 +304,6 @@ $javascripts .= '
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_guides_strats'), 'header_submenu_wip', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('404', __('submenu_guides_video'), 'header_submenu_wip', 1, $path);?>
           </div>
         </div>
 
