@@ -77,14 +77,14 @@ $arsenals_list = arsenals_list( sort_by: 'name'                   ,
   </p>
   <ul class="tinypadding_bot">
     <li>
-      <?=__link('pages/arsenal/'.$arsenals_list[$i]['slug'], __('print_arsenals_desc'))?>
+      <?=__link('pages/arsenal/'.$arsenals_list[$i]['slug'], __('print_arsenals_desc'), popup: true)?>
     </li>
     <li>
-      <?=__link($arsenals_list[$i]['print_'.$imglang], __('print_aresnals_cards'))?>
+      <?=__link($arsenals_list[$i]['print_'.$imglang], __('print_aresnals_cards'), popup: true)?>
     </li>
     <?php if($arsenals_list[$i]['print_extra_'.$imglang]): ?>
     <li>
-      <?=__link($arsenals_list[$i]['print_extra_'.$imglang], __('print_arsenals_extra'))?>
+      <?=__link($arsenals_list[$i]['print_extra_'.$imglang], __('print_arsenals_extra'), popup: true)?>
     </li>
     <?php endif; ?>
   </ul>

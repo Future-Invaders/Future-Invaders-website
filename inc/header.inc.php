@@ -219,13 +219,13 @@ $javascripts .= '
             <?=__link('pages/game/rules', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_printhelp'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/tools/print', __('submenu_tools_printhelp'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_social_discord'), 'header_submenu_wip', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_publish'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/publish', __('submenu_social_publish'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 
@@ -350,7 +350,7 @@ $javascripts .= '
             <?=__('submenu_tools_development')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_tools_design_doc'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/tools/design_doc', __('submenu_tools_design_doc'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/tools/source', __('submenu_tools_source'), 'header_submenu_link', 1, $path);?>
