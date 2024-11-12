@@ -996,8 +996,8 @@ ___('submenu_tools_gametools',      'EN', "Game tools");
 ___('submenu_tools_gametools',      'FR', "Outils de jeu");
 ___('submenu_tools_deck',           'EN', "Arsenal builder");
 ___('submenu_tools_deck',           'FR', "Construction d'arsenal");
-___('submenu_tools_board',          'EN', "Board simulator");
-___('submenu_tools_board',          'FR', "Simulateur de jeu");
+___('submenu_tools_board',          'EN', "Grid simulator");
+___('submenu_tools_board',          'FR', "Simulateur de grille");
 
 ___('submenu_tools_development',    'EN', "Development");
 ___('submenu_tools_development',    'FR', "Développement");

@@ -329,3 +329,61 @@ ___('source_code_stack_list_4', 'EN', "Database: {{external|https://en.wikipedia
 ___('source_code_stack_list_4', 'FR', "Base de données : {{external|https://fr.wikipedia.org/wiki/MySQL|MySQL}}");
 ___('source_code_stack_list_5', 'EN', "Versioning: {{external|https://en.wikipedia.org/wiki/Git|Git}}");
 ___('source_code_stack_list_5', 'FR', "Versionnage : {{external|https://fr.wikipedia.org/wiki/Git|Git}}");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  ARSENAL BUILDER                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// WIP
+___('arsenal_builder_title',  'EN', "Work in progress");
+___('arsenal_builder_title',  'FR', "En construction");
+___('arsenal_builder_body_1', 'EN', <<<EOD
+This page is a work in progress. It will be completed in the future.
+EOD
+);
+___('arsenal_builder_body_1', 'FR', <<<EOD
+Cette page est en construction. Elle sera complétée dans le futur.
+EOD
+);
+___('arsenal_builder_body_2', 'EN', <<<EOD
+An arsenal building tool will allow you to come up with your own custom {{link|pages/game/arsenals|arsenals}}, in a format that makes them easy to share with other players.
+EOD
+);
+___('arsenal_builder_body_2', 'FR', <<<EOD
+Un outil de construction d'arsenal vous permettra de créer vos propres {{link|pages/game/arsenals|arsenaux}}, dans un format facile à partager avec les autres joueurs.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  GRID SIMULATOR                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// WIP
+___('grid_simulator_title',  'EN', "Work in progress");
+___('grid_simulator_title',  'FR', "En construction");
+___('grid_simulator_body_1', 'EN', <<<EOD
+This page is a work in progress. It will be completed in the future.
+EOD
+);
+___('grid_simulator_body_1', 'FR', <<<EOD
+Cette page est en construction. Elle sera complétée dans le futur.
+EOD
+);
+___('grid_simulator_body_2', 'EN', <<<EOD
+A grid simulator will act as a companion tool, allowing you to keep track of the state of the board during a two player game of Future Invaders from your mobile device.
+EOD
+);
+___('grid_simulator_body_2', 'FR', <<<EOD
+Un simulateur de grille de jeu vous accompagnera dans vos parties, vous permettant de suivre l'état d'une partie à deux joueurs de Future Invaders depuis votre appareil mobile.
+EOD
+);
