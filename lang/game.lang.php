@@ -758,7 +758,7 @@ Cachez votre main autant que possible des adversaires.
 EOD
 );
 ___('vocabulary_hand_body_4', 'FR', <<<EOD
-Il n’y a pas de taille maximale pour la main.
+Il n'y a pas de taille maximale pour la main.
 EOD
 );
 
@@ -1331,5 +1331,496 @@ EOD
 );
 ___('lore_body_3', 'FR', <<<EOD
 L'histoire du jeu est introduite par des cartes de lore. Vous pouvez les {{link|pages/tools/print_extra|imprimer chez vous}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    STRATEGIES                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Intro
+___('strategy_title',  'EN', "Strategies");
+___('strategy_title',  'FR', "Stratégies");
+___('strategy_body_1', 'EN', <<<EOD
+When playing a game of Future Invaders, the winner is decided by a combination of three factors: arsenal building, arsenal piloting, and luck.
+EOD
+);
+___('strategy_body_1', 'FR', <<<EOD
+Lorsque vous jouez à Future Invaders, le gagnant d'une partie est déterminé par une combinaison de trois facteurs : la construction des arsenaux, le pilotage des arsenaux, et la chance.
+EOD
+);
+___('strategy_body_2', 'EN', <<<EOD
+While luck can't be improved, your skills in building and piloting your arsenal can be developed through practice, strategic thinking, and learning from your mistakes.
+EOD
+);
+___('strategy_body_2', 'FR', <<<EOD
+La chance ne peut être améliorée, mais vos compétences en construction et en pilotage d'arsenaux peuvent l'être. Pour cela, il faut jouer au jeu, réfléchir aux stratégies, et apprendre de vos erreurs.
+EOD
+);
+___('strategy_body_3', 'EN', <<<EOD
+This page outlines a few concepts which should help you think about the game in a more strategic way. For deeper strategic discussions, you will have to interact with the community on {{link|404|Discord}} or {{link|404|IRC}}.
+EOD
+);
+___('strategy_body_3', 'FR', <<<EOD
+Cette page présente des concepts de base qui devraient vous aider à développer une approche plus stratégique du jeu. Si vous souhaitez approfondir votre compréhension stratégique, vous devrez le faire en intéragissant avec la communauté du jeu sur {{link|404|Discord}} ou {{link|404|IRC}}.
+EOD
+);
+
+
+// Speed (aggro, midrange, control)
+___('strategy_speed_title',  'EN', "Speed");
+___('strategy_speed_title',  'FR', "Vitesse");
+___('strategy_speed_body_1', 'EN', <<<EOD
+Speed is a defining element of an arsenal. There are three different speeds. You might consider building your entire arsenal around one for optimal results. Each speed comes with unique strategies, strengths, and weaknesses.
+EOD
+);
+___('strategy_speed_body_1', 'FR', <<<EOD
+La vitesse d'un arsenal est un élément clé de son efficacité. Il existe trois vitesses distinctes, et il est conseillé de construire votre arsenal autour de l'une d'elles pour obtenir des résultats optimaux. Chaque vitesse a ses propres stratégies, avantages et inconvénients.
+EOD
+);
+___('strategy_speed_body_2', 'EN', <<<EOD
+<span class="bold">Aggro</span> arsenals are the fastest. Their goal is to win quickly, often by opening with strong threats to pressure the opponent. Even if they don't achieve an outright win, they aim to disrupt opponents by forcing them into a defensive playstyle.
+EOD
+);
+___('strategy_speed_body_2', 'FR', <<<EOD
+<span class="bold">Aggro</span> est le type d'arsenal le plus rapide. Son but est de gagner dès que possible, en ouvrant les parties avec des menaces capables de les finir rapidement. L'objectif n'est pas forcément une victoire immédiate, mais au minimum de perturber les plans des adversaires en les obligeant à jouer défensivement.
+EOD
+);
+___('strategy_speed_body_3', 'EN', <<<EOD
+<span class="bold">Control</span> arsenals are the slowest, preferring slow, deliberate games where every move is carefully planned. Rather than being aggressive, control arsenals focus on neutralizing threats and patiently developing their own win conditions over time.
+EOD
+);
+___('strategy_speed_body_3', 'FR', <<<EOD
+<span class="bold">Contrôle</span> est le type d'arsenal le plus lent. Ce type de jeu repose sur une progression lente et réfléchie, où chaque carte a son importance. Il manque d'agressivité, mais compense par sa capacité à neutraliser les attaques ennemies, avant de développer progressivement sa propre condition de victoire.
+EOD
+);
+___('strategy_speed_body_4', 'EN', <<<EOD
+<span class="bold">Midrange</span> arsenals bridge the gap between aggro and control, blending steady aggression with flexibility. They aim to deploy big threats gradually while maintaining enough control to defend against early aggression.
+EOD
+);
+___('strategy_speed_body_4', 'FR', <<<EOD
+<span class="bold">Midrange</span> est un type d'arsenal qui combine des éléments d'agression et de défense. Il construit sa puissance de manière progressive, en déployant des menaces puissantes tout en disposant de moyens de se défendre contre les attaques ennemies.
+EOD
+);
+___('strategy_speed_body_5', 'EN', <<<EOD
+These speeds create a strategic triangle: aggro usually outpaces control, control typically outlasts midrange, and midrange often holds its ground against aggro. When building your arsenal, consider which speed it are optimized for, but also whether your reserves cards allows you to switch from one speed to another between games.
+EOD
+);
+___('strategy_speed_body_5', 'FR', <<<EOD
+Ces vitesses interagissent selon un triangle stratégique : aggro prend contrôle de court, contrôle est plus durable que midrange, et midrange se défend contre aggro. Lors de la construction de votre arsenal, veillez à l'optimiser pour une vitesse spécifique, tout en vous assurant que vos cartes de réserve permettent un passage fluide d'une vitesse à l'autre entre les parties.
+EOD
+);
+
+
+// Pacing (base durability as a resource)
+___('strategy_pacing_title',  'EN', "Early game pacing");
+___('strategy_pacing_title',  'FR', "Rythme de début de jeu");
+___('strategy_pacing_body_1', 'EN', <<<EOD
+A key concept in Future Invaders is that your base's durability is a resource.
+EOD
+);
+___('strategy_pacing_body_1', 'FR', <<<EOD
+Un concept crucial dont vous devez prendre conscience est que la durabilité de votre base est une ressource.
+EOD
+);
+___('strategy_pacing_body_2', 'EN', <<<EOD
+You only lose when your base's durability hits zero or below. Letting it drop to 20, 10, or even just 1 is not a loss, as long as you can still protect it. Sometimes, it might be worth sacrificing a bit of durability early on to gain a greater advantage later in the game.
+EOD
+);
+___('strategy_pacing_body_2', 'FR', <<<EOD
+Vous ne perdez que lorsque la durabilité de votre base atteint zéro ou moins. Si vous la laissez volontairement tomber à 20, à 10, ou même à 1, tant que vous pouvez la protéger, vous n'avez pas perdu. En début de partie, il peut être avantageux de sacrifier une partie de la durabilité de votre base pour gagner du temps et obtenir un avantage plus tard.
+EOD
+);
+___('strategy_pacing_body_3', 'EN', <<<EOD
+For example, imagine an opponent deploys two weak ships facing you on their first turn. You could block them to protect your base's durability, or you could skip deployments, draw an extra card, and prepare for a stronger response on your next turn. In some situations, learning to accept small durability losses rather than seeing them as setbacks can be a valuable strategy.
+EOD
+);
+___('strategy_pacing_body_3', 'FR', <<<EOD
+Par exemple, si un adversaire déploie deux vaisseaux faibles au premier tour, vous pouvez choisir de protéger votre base en les bloquant, ou préférer sauter la phase de déploiement, piocher une carte supplémentaire, et disposer ainsi d'une option supplémentaire au tour suivant. En fonction de la situation, vous devrez apprendre à accepter que perdre un peu de durabilité n'est pas forcément une mauvaise chose, et qu'encaisser des dégâts peut parfois être une stratégie viable.
+EOD
+);
+___('strategy_pacing_body_4', 'EN', <<<EOD
+In the early game, your goal is to balance drawing cards and protecting your base. Try to draw as many cards as you can early, but only if it doesn't allow your opponent's threats to spiral out of control.
+EOD
+);
+___('strategy_pacing_body_4', 'FR', <<<EOD
+Ainsi, au début de chaque partie, le but est de trouver l'équilibre entre piocher des cartes et protéger votre base. L'idéal est de piocher autant de cartes que possible, mais seulement si cela ne compromet pas votre capacité à vous protéger des menaces adverses.
+EOD
+);
+
+
+// Curve
+___('strategy_curve_title',  'EN', "Resource curve");
+___('strategy_curve_title',  'FR', "Courbe de ressources");
+___('strategy_curve_body_1', 'EN', <<<EOD
+When building your arsenals, be mindful of their resource curve.
+EOD
+);
+___('strategy_curve_body_1', 'FR', <<<EOD
+Lorsque vous construisez vos arsenaux, vous devez être conscient de leur courbe de ressources.
+EOD
+);
+___('strategy_curve_body_2', 'EN', <<<EOD
+A well-balanced resource curve ensures you have impactful options at every stage of the game. If you have too few cheap cards, you will have issues getting enough resources to play your more expensive cards. Don't underestimate the value of including cheaper cards in your arsenal.
+EOD
+);
+___('strategy_curve_body_2', 'FR', <<<EOD
+Vous devez avoir des options pertinentes à tous les coûts de ressources. Si vous avez trop peu de cartes au coût faible, vous aurez du mal à accumuler assez de ressources pour pouvoir jouer vos cartes plus chères. Ne sous-estimez pas l'importance des cartes moins chères dans votre arsenal.
+EOD
+);
+___('strategy_curve_body_3', 'EN', <<<EOD
+Each arsenal type has a unique resource curve, depending on their {{link|pages/game/strategies#speed|speed}}. Aggro arsenals favor a low-cost curve, packed with free or cheap cards to ensure they can play every card they draw. Control arsenals have a higher curve, with the minimum amount of free and low-cost cards to reliably reach the late game. Midrange arsenals balance their curve to achieve a smooth progression, with a mix of low, mid, and high-cost cards.
+EOD
+);
+___('strategy_curve_body_3', 'FR', <<<EOD
+Selon la {{link|pages/game/strategies#speed|vitesse}} de votre arsenal, sa courbe de ressources sera différente. Les arsenaux aggro ont une courbe faible, avec beaucoup de cartes gratuites ou peu chères, garantissant qu'ils peuvent jouer chaque carte qu'ils piochent. Les arsenaux contrôle ont une courbe élevée, utilisant le minimum nécessaire de cartes à bas coût pour atteindre les phases avancées du jeu. Les arsenaux midrange ont une courbe équilibrée, visant à avoir une progression fluide, avec un nombre équivalent de cartes gratuites, peu chères et coûteuses.
+EOD
+);
+___('strategy_curve_body_4', 'EN', <<<EOD
+To refine your arsenal's resource curve, shuffle and draw the top 8 cards. Ask yourself: do these cards support your game plan? If you often find yourself without resources or impactful plays, consider adjusting your arsenal's composition to better match its speed and respect its resource curve.
+EOD
+);
+___('strategy_curve_body_4', 'FR', <<<EOD
+La meilleure façon d'équilibrer la courbe de ressources de votre arsenal est de le mélanger et de piocher les 8 premières cartes. Demandez-vous si ces cartes vous permettent d'accomplir votre stratégie, et recommencez. Si vous vous trouvez souvent en manque de ressources ou sans options efficaces, vous devrez ajuster la composition de votre arsenal pour mieux correspondre à sa vitesse et à la courbe de ressource qui va avec.
+EOD
+);
+
+
+// Tempo (vs value tradeoffs)
+___('strategy_tempo_title',  'EN', "Tempo");
+___('strategy_tempo_title',  'FR', "Tempo");
+___('strategy_tempo_body_1', 'EN', <<<EOD
+Games of Future Invaders often develop a tempo: one player may start advancing their game plan faster, creating a strong threat that others must respond to. This player controls the game's tempo, forcing opponents into a reactive, defensive position.
+EOD
+);
+___('strategy_tempo_body_1', 'FR', <<<EOD
+Les parties de Future Invaders suivent un tempo : un joueur va généralement déployer son plan de jeu plus rapidement que les autres, créant une menace qui doit être gérée. Ce joueur contrôle le tempo, obligeant les autres à jouer de manière réactive et défensive.
+EOD
+);
+___('strategy_tempo_body_2', 'EN', <<<EOD
+Your approach should shift depending on whether you control the tempo. When you're in control, focus on deploying ships and playing actions to keep opponents on the backfoot. Forcing them to play reactively limits their ability to execute their own strategies, which increases your chances of winning.
+EOD
+);
+___('strategy_tempo_body_2', 'FR', <<<EOD
+Vous devez adapter votre jeu en fonction du tempo. Si vous contrôlez le tempo, continuez à déployer des vaisseaux et à jouer des actions pour maintenir vos adversaires sur la défensive. Lorsqu'ils jouent de manière réactive, il leur est plus difficile d'assembler leur propre plan de jeu, ce qui augmente vos chances de gagner.
+EOD
+);
+___('strategy_tempo_body_3', 'EN', <<<EOD
+Learn to recognize when you're losing tempo. If your opponents' defenses become too strong to break through, it may be wise to shift tactics. Use your tempo advantage to buy time, draw more cards, and prepare a defensive strategy of your own. Strengthening your position can allow you to regain control of the tempo later in the game.
+EOD
+);
+___('strategy_tempo_body_3', 'FR', <<<EOD
+Vous devez aussi apprendre à anticiper les pertes de tempo. Si les défenses de vos adversaires deviennent trop solides pour que vous puissiez les briser, il peut être judicieux de sacrifier votre tempo en échange d'un avantage. Profitez du temps gagné grâce à votre forte présence sur la grille, piochez des cartes supplémentaires, préparez-vous à jouer défensivement à votre tour, et assemblez une main qui vous permettra de regagner le tempo plus tard dans la partie.
+EOD
+);
+
+
+// Card avantage (and snowballing)
+___('strategy_advantage_title',  'EN', "Card advantage");
+___('strategy_advantage_title',  'FR', "Avantage en cartes");
+___('strategy_advantage_body_1', 'EN', <<<EOD
+The more cards you have in your hand and on the game grid, the more options you have. Aim to keep your hand and grid as full as possible by drawing and deploying cards whenever you can.
+EOD
+);
+___('strategy_advantage_body_1', 'FR', <<<EOD
+Plus vous avez de cartes en main et sur la grille, plus vous avez d'options. Par conséquent, vous devez chercher à garder votre main et votre grille aussi remplies que possible en piochant et en déployant autant de cartes que vous le pouvez.
+EOD
+);
+___('strategy_advantage_body_2', 'EN', <<<EOD
+Having more options than your opponent creates more pathways to victory. For this reason, the player with more cards in hand and on the grid holds a "card advantage". Always pay attention to how many cards your opponents keep in hand, they are as much a part of the game as their deployed ships and structures.
+EOD
+);
+___('strategy_advantage_body_2', 'FR', <<<EOD
+Lorsqu'un joueur a plus d'options que ses adversaires, il dispose potentiellement de plus de chemins vers la victoire. Par conséquent, celui qui a le plus de cartes en main et sur la grille est considéré comme ayant un avantage en cartes. Faites attention au nombre de cartes que vos adversaires conservent en main, elles font autant partie du jeu que leurs structures et vaisseaux déployés.
+EOD
+);
+___('strategy_advantage_body_3', 'EN', <<<EOD
+When you play an action or reaction card, consider that it has two costs: the resource cost, and the cost of having one fewer card in your hand. This means that even "free" actions and reactions carry a subtle hidden cost.
+EOD
+);
+___('strategy_advantage_body_3', 'FR', <<<EOD
+Lorsque vous jouez une action ou une réaction, vous devez être conscient que chaque carte a deux coûts : le coût en ressources de la carte, et le coût d'avoir une carte en moins dans votre main. Selon cette logique, les actions et réactions gratuites ne sont pas réellement gratuites, elles ont un coût caché subtil.
+EOD
+);
+
+
+// Overextending
+___('strategy_overextending_title',  'EN', "Overextending");
+___('strategy_overextending_title',  'FR', "Surengagement");
+___('strategy_overextending_body_1', 'EN', <<<EOD
+When playing on the offensive, a common pitfall is losing due to overextending.
+EOD
+);
+___('strategy_overextending_body_1', 'FR', <<<EOD
+Lorsque vous jouez de manière agressive, un piège courant est de perdre à cause d'un surengagement.
+EOD
+);
+___('strategy_overextending_body_2', 'EN', <<<EOD
+If you immediately commit all your cards and resources to a play without considering how it could backfire, you risk being left with nothing if your opponents have a way to counter it. Only use all your resources when you have a clear plan in mind.
+EOD
+);
+___('strategy_overextending_body_2', 'FR', <<<EOD
+Si vous engagez immédiatement toutes vos cartes et ressources sans considérer comment votre plan pourrait échouer, vous risquez de vous retrouver sans rien si vos adversaires ont un moyen de le contrer. N'engagez toutes vos cartes et ressources que lorsque vous avez un plan d'action clair.
+EOD
+);
+___('strategy_overextending_body_3', 'EN', <<<EOD
+For instance, if you hold a direct-damage action against an opponent's base, you have three main choices. One, play it immediately to apply pressure and perhaps force a reaction. Two, wait until your opponent's turn, when their resources are spent, so they can't counter it. Three, hold it in your hand to surprise your opponent and finish the game.
+EOD
+);
+___('strategy_overextending_body_3', 'FR', <<<EOD
+Par exemple, si vous avez une action en main qui inflige des dégâts directs à la base d'un adversaire, vous pouvez l'utiliser de trois façons différentes. Vous pouvez la jouer immédiatement, ce qui mettra votre adversaire sous pression et pourrait le forcer à utiliser une réaction pour la contrer. Vous pouvez attendre le tour de votre adversaire, une fois qu'il a dépensé ses ressources, pour la jouer lorsqu'il n'aura pas de ressources disponibles pour la contrer. Ou vous pouvez la garder en main, prête à être jouée au moment opportun pour surprendre votre adversaire et gagner la partie.
+EOD
+);
+___('strategy_overextending_body_4', 'EN', <<<EOD
+Each approach is valid depending on the situation. If you act too quickly, you might overextend and lose momentum. If you wait too long, you might miss your chance to win. Weigh the consequences of each move, and adapt your strategy to the situation.
+EOD
+);
+___('strategy_overextending_body_4', 'FR', <<<EOD
+Ces trois stratégies sont valides, et vous devez savoir choisir celle qui convient le mieux à chaque situation. Si vous êtes trop pressé, vous risquez de vous retrouver coincé dans un surengagement, sans moyen de revenir dans la partie. Si vous attendez trop longtemps, vous pourriez perdre la partie. Réfléchissez aux conséquences de chaque action et choisissez la stratégie appropriée.
+EOD
+);
+
+
+// Synergy
+___('strategy_synergy_title',  'EN', "Synergy");
+___('strategy_synergy_title',  'FR', "Synergie");
+___('strategy_synergy_body_1', 'EN', <<<EOD
+Two cards have synergy if they're more powerful together than they are separately.
+EOD
+);
+___('strategy_synergy_body_1', 'FR', <<<EOD
+Deux cartes ont une synergie si elles sont plus fortes que la somme de leurs puissances individuelles.
+EOD
+);
+___('strategy_synergy_body_2', 'EN', <<<EOD
+When building an arsenal, consider how well your cards work together. Strong synergies across your arsenal will raise its overall power level. Conversely, some cards have anti-synergies: they weaken each other's effectiveness. Be mindful to avoid pairing these together.
+EOD
+);
+___('strategy_synergy_body_2', 'FR', <<<EOD
+Lorsque vous construisez un arsenal, vous devez prendre en compte la synergie entre vos cartes. Si toutes vos cartes présentent une forte synergie, votre arsenal sera plus puissant. À l'inverse, certaines cartes peuvent avoir une anti-synergie, et il est préférable d'éviter de les inclure ensemble dans un même arsenal.
+EOD
+);
+___('strategy_synergy_body_3', 'EN', <<<EOD
+Not all synergies are obvious. For instance, a {{link|pages/card/beta-ringstation|Ring Station}} and a {{link|pages/card/beta-tradingstation|Trading Station}} might seem underwhelming on their own, but together they guarantee you two cards per turn. Detecting these synergies and leveraging them is key to mastering arsenal building.
+EOD
+);
+___('strategy_synergy_body_3', 'FR', <<<EOD
+Certaines synergies ne sont pas évidentes à voir. Par exemple, une {{link|pages/card/beta-ringstation|Station en anneau}} et un {{link|pages/card/beta-tradingstation|Comptoir commercial}} ne sont pas particulièrement puissants individuellement, mais leur combinaison vous garantit la possibilité de piocher deux cartes par tour. Identifier et comprendre ces synergies est votre responsabilité en tant que constructeur d'arsenaux.
+EOD
+);
+
+
+// Archetypes
+___('strategy_archetypes_title',  'EN', "Archetypes");
+___('strategy_archetypes_title',  'FR', "Archétypes");
+___('strategy_archetypes_body_1', 'EN', <<<EOD
+Beyond the {{link|pages/game/strategies#speed|speeds}} of aggro, midrange, and control, arsenals are also classified by archetype.
+EOD
+);
+___('strategy_archetypes_body_1', 'FR', <<<EOD
+Les arsenaux ne sont pas seulement divisés en trois catégories selon leurs {{link|pages/game/strategies#speed|vitesses}} (aggro, midrange, contrôle). Ils sont également catégorisés par archétypes.
+EOD
+);
+___('strategy_archetypes_body_2', 'EN', <<<EOD
+An arsenal's archetype represents its general gameplan or goal. Unlike a specific strategy or speed, an archetype is a guiding approach for how the arsenal plays. For instance, a Combo arsenal relies on powerful card synergies to achieve victory, while a Ping arsenal uses small sources of direct damage to gradually weaken opponents' bases.
+EOD
+);
+___('strategy_archetypes_body_2', 'FR', <<<EOD
+L'archétype d'un arsenal représente le plan de jeu qu'il cherche à mettre en place. Ce n'est ni une stratégie spécifique ni une vitesse de jeu, mais plutôt un objectif général pour la partie. Par exemple, un arsenal Combo cherchera à jouer des cartes avec des synergies particulièrement fortes, tandis qu'un arsenal Ping se concentrera sur des sources individuelles de dégâts directs pour endommager progressivement les bases des adversaires.
+EOD
+);
+___('strategy_archetypes_body_3', 'EN', <<<EOD
+When building an arsenal, define its archetype and make sure each card supports your approach. There's no fixed list of archetypes, and new ones will continue to emerge as the game evolves.
+EOD
+);
+___('strategy_archetypes_body_3', 'FR', <<<EOD
+Lorsque vous construisez un arsenal, vous devez définir son archétype et vous assurer que chaque carte que vous y ajoutez soutient ce plan de jeu. Il n'existe pas de liste officielle d'archétypes, et de nouveaux archétypes seront constamment inventés au fil de l'existence du jeu.
+EOD
+);
+
+
+// Win condition
+___('strategy_wincon_title',  'EN', "Win condition");
+___('strategy_wincon_title',  'FR', "Condition de victoire");
+___('strategy_wincon_body_1', 'EN', <<<EOD
+Every arsenal needs a win condition: a clear goal or method for securing victory.
+EOD
+);
+___('strategy_wincon_body_1', 'FR', <<<EOD
+Chaque arsenal doit avoir une condition de victoire : un objectif ou une méthode spécifique qui vous permet de gagner la partie.
+EOD
+);
+___('strategy_wincon_body_2', 'EN', <<<EOD
+When building your arsenal, ask yourself: How do I plan to win the game? Make sure your deck includes enough cards to support this goal. Your win condition doesn't always align with your {{link|pages/game/strategies#archetypes|archetype}} or {{link|pages/game/strategies#speed|speed}}. For example, even a slow control arsenal can rely on one big, aggressive action to win in a single turn.
+EOD
+);
+___('strategy_wincon_body_2', 'FR', <<<EOD
+Lorsque vous construisez un arsenal, demandez-vous comment il parviendra à gagner la partie et si vous avez suffisamment de cartes pour soutenir ce plan. Votre condition de victoire n'a pas besoin d'être alignée avec votre {{link|pages/game/strategies#archetypes|archétype}} ou votre {{link|pages/game/strategies#speed|vitesse}}. Par exemple, un arsenal de contrôle lent peut compter sur une action agressive infligeant des dégâts massifs pour gagner la partie d'un coup.
+EOD
+);
+___('strategy_wincon_body_3', 'EN', <<<EOD
+Understanding your win condition is crucial. You must know how to protect it, as your opponents will try to counter it. Without a clear win condition, it can be difficult to close out games.
+EOD
+);
+___('strategy_wincon_body_3', 'FR', <<<EOD
+Lorsque vous jouez un arsenal, il est important de comprendre votre condition de victoire et comment la protéger, car vos adversaires tenteront de la contrer. Si vous n'avez pas de condition de victoire précise, vous pourriez avoir du mal à conclure les parties.
+EOD
+);
+
+
+// Reach
+___('strategy_reach_title',  'EN', "Reach");
+___('strategy_reach_title',  'FR', "Portée");
+___('strategy_reach_body_1', 'EN', <<<EOD
+An arsenal's reach is its ability to break through opponents' defenses and secure a victory.
+EOD
+);
+___('strategy_reach_body_1', 'FR', <<<EOD
+La portée d'un arsenal est sa capacité à passer à travers les défenses de ses adversaires pour gagner la partie.
+EOD
+);
+___('strategy_reach_body_2', 'EN', <<<EOD
+In some games, the situation may stagnate, with both players stuck in a defensive position. When this happens, the arsenal with the greatest reach will typically win. Keep this in mind when building your arsenal, and ensure you include threats that can deal direct damage to your opponents' bases.
+EOD
+);
+___('strategy_reach_body_2', 'FR', <<<EOD
+Certaines parties peuvent devenir lentes et verrouillées. Dans ce cas, l'arsenal avec la plus grande portée sera celui qui l'emportera. Gardez cela à l'esprit lors de la construction de votre arsenal, assurez-vous d'avoir suffisamment de sources de dégâts directs.
+EOD
+);
+___('strategy_reach_body_3', 'EN', <<<EOD
+On the other hand, you also need ways to defend yourself against your opponent's reach. Make sure your arsenal has enough options to remove ships, structures, and counter actions that can directly damage your base.
+EOD
+);
+___('strategy_reach_body_3', 'FR', <<<EOD
+D'un autre côté, vous devez aussi disposer de moyens pour vous défendre contre la portée de vos adversaires. Veillez à avoir des outils peremettant de détruire les vaisseaux et structures et de contrer les actions pouvant directement atteindre votre base.
+EOD
+);
+
+
+// Resiliency
+___('strategy_resiliency_title',  'EN', "Resiliency");
+___('strategy_resiliency_title',  'FR', "Résilience");
+___('strategy_resiliency_body_1', 'EN', <<<EOD
+Some games will go poorly. You may lose {{link|pages/game/strategies#tempo|tempo}}, find yourself on the backfoot, and struggle to avoid crumbling under pressure. These situations are inevitable, so your arsenals should be resilient: able to handle pressure and recover.
+EOD
+);
+___('strategy_resiliency_body_1', 'FR', <<<EOD
+Certaines parties se dérouleront mal. Vous perdrez {{link|pages/game/strategies#tempo|le tempo}}, serez sur la défensive, et tenterez d'éviter de vous effondrer complètement sous la pression. Ces situations sont inévitables, c'est pourquoi vos arsenaux doivent être résilients : prêts à gérer ces moments et capables de s'en sortir.
+EOD
+);
+___('strategy_resiliency_body_2', 'EN', <<<EOD
+Pressure can come in many forms: being overwhelmed on the grid, being resource-starved, or facing direct damage threats. Your arsenal should account for all of these scenarios, with reserve cards that can be swapped in between games to counter your opponents' methods of putting you under pressure.
+EOD
+);
+___('strategy_resiliency_body_2', 'FR', <<<EOD
+La pression peut se manifester de plusieurs façons. Vous pouvez être submergé sur la grille, privé de ressources, ou menacé par des dégâts directs. Vos arsenaux doivent anticiper ces scénarios et inclure des cartes de réserve que vous pouvez ajouter entre les parties pour contrer les méthodes de pression de vos adversaires.
+EOD
+);
+
+
+// Thinning
+___('strategy_thinning_title',  'EN', "Arsenal thinning");
+___('strategy_thinning_title',  'FR', "Affinage d'arsenal");
+___('strategy_thinning_body_1', 'EN', <<<EOD
+The fewer cards in your arsenal, the higher your chances of drawing the necessary cards to assemble your win condition. This is why it is heavily recommended to build arsenals of 30 cards, the minimum allowed.
+EOD
+);
+___('strategy_thinning_body_1', 'FR', <<<EOD
+Moins vous avez de cartes dans votre arsenal, plus vos chances de piocher votre condition de victoire augmentent. C'est pourquoi il est fortement recommandé de construire des arsenaux de 30 cartes, le nombre minimum autorisé.
+EOD
+);
+___('strategy_thinning_body_2', 'EN', <<<EOD
+You can further improve your chances of drawing your key cards by thinning your arsenal. Include cards with low utility that allow you to draw more cards, increasing your odds of finding the right ones.
+EOD
+);
+___('strategy_thinning_body_2', 'FR', <<<EOD
+Vous pouvez aller encore plus loin en affinant votre arsenal : inclure des cartes de faible utilité, mais qui vous permettent de piocher davantage, augmentant ainsi vos chances de trouver les cartes nécessaires à votre victoire.
+EOD
+);
+___('strategy_thinning_body_3', 'EN', <<<EOD
+For example, cards like {{link|pages/card/beta-accelerate|Accelerate}} or {{link|pages/card/beta-spacescanner|Space Scanner}} may not win you the game directly, but they replace themselves by drawing a card, thinning your deck and improving your chances of drawing a win condition.
+EOD
+);
+___('strategy_thinning_body_3', 'FR', <<<EOD
+Par exemple, une {{link|pages/card/beta-accelerate|Accélération}} ou un {{link|pages/card/beta-spacescanner|Scrutateur spatial}} n'auront probablement pas d'impact direct sur la partie, mais les deux se remplacent en vous permettant de piocher une carte lorsqu'ils sont joués, affinant ainsi votre arsenal.
+EOD
+);
+___('strategy_thinning_body_4', 'EN', <<<EOD
+Arsenals focused on a single win condition should aim to be as thin as possible, even if it weakens their overall power. On the other hand, versatile arsenals with multiple paths to victory should focus on strong cards to ensure flexibility, and do not need to be thinned down.
+EOD
+);
+___('strategy_thinning_body_4', 'FR', <<<EOD
+Les arsenaux construits autour d'une unique carte comme condition de victoire devraient chercher à devenir plus affinés, au détriment de leur puissance, tandis que les arsenaux plus équilibrés, avec plusieurs chemins vers la victoire, préféreront ne contenir que des cartes puissantes.
+EOD
+);
+
+
+// Mind games
+___('strategy_mindgames_title',  'EN', "Mind games");
+___('strategy_mindgames_title',  'FR', "Tactiques psychologiques");
+___('strategy_mindgames_body_1', 'EN', <<<EOD
+A card's power goes beyond its text. With the right mind games, you can make a card seem much more powerful than it really is, using bluffing, misdirection, and other tactics to influence your opponents' choices.
+EOD
+);
+___('strategy_mindgames_body_1', 'FR', <<<EOD
+La puissance d'une carte dépasse le texte qui est écrit dessus. En utilisant des tactiques psychologiques, vous pouvez rendre une carte plus forte qu'elle ne l'est réellement en bluffant, détournant l'attention, trompant vos adversaires, ce qui peut influencer leurs choix stratégiques.
+EOD
+);
+___('strategy_mindgames_body_2', 'EN', <<<EOD
+Any card in your hand is unknown to your opponents, giving it potentially infinite power in their minds. As long as you keep an air of mystery around your cards, they might think you have stronger options than you do. At the same time, you must anticipate the cards your opponents hold and keep counters ready for any of their potential win condition.
+EOD
+);
+___('strategy_mindgames_body_2', 'FR', <<<EOD
+Chaque carte dans votre main possède un potentiel de puissance infini dans l'esprit de vos adversaires, car ils ne peuvent pas la voir. Tant que vous maintenez une aura de mystère autour des cartes que vous tenez, ils peuvent croire que vous avez des options plus puissantes que celles dont vous disposez réellement. À l'inverse, vous devez anticiper les cartes que vos adversaires ont en main et garder des moyens de les contrer s'il s'agit de leurs conditions de victoire.
+EOD
+);
+___('strategy_mindgames_body_3', 'EN', <<<EOD
+The only time there is no mind game is when your hand is empty. When it happens, your opponents can see everything you own and know they won't be countered. That's why it's wise to always keep at least one card in hand, to keep them guessing.
+EOD
+);
+___('strategy_mindgames_body_3', 'FR', <<<EOD
+La seule situation où il n'y a pas de tactique psychologique possible est lorsque votre main est vide : vos adversaires voient tout ce que vous possédez et savent qu'ils ne seront pas contrecarrés. Il est donc recommandé de toujours garder au moins une carte en main à tout moment, pour que vos adversaires restent dans l'incertitude.
+EOD
+);
+___('strategy_mindgames_body_4', 'EN', <<<EOD
+Becoming a better player involves more than just understanding the game mechanics, it's also about learning how to anticipate your opponents' moves while making them doubt yours.
+EOD
+);
+___('strategy_mindgames_body_4', 'FR', <<<EOD
+Dans votre quête pour devenir un meilleur joueur, réussir à deviner les actions de vos adversaires tout en les faisant douter des vôtres est aussi important que de maîtriser les mécaniques du jeu.
+EOD
+);
+
+
+// Risk assessment
+___('strategy_riskassess_title',  'EN', "Risk assessment");
+___('strategy_riskassess_title',  'FR', "Évaluation des risques");
+___('strategy_riskassess_body_1', 'EN', <<<EOD
+Before making a decision, always assess the risks involved. For example, when playing a key card, how likely is it to be countered or removed? When an opponent plays a key card, is it worth countering or removing, and are they likely to play a stronger card right afterward? When leaving a lane empty to draw an extra card, what are the chances an opponent will deploy a strong ship in that lane and cause your base a significant durability loss?
+EOD
+);
+___('strategy_riskassess_body_1', 'FR', <<<EOD
+Avant de prendre une décision, vous devez toujours analyser les risques. Par exemple, lorsque vous jouez une carte clé, quelles sont les chances qu'elle soit contrée ou détruite ? Lorsque votre adversaire joue une carte clé, devez-vous la contrecarrer ou la détruire, ou risque-t-il de jouer une carte encore plus puissante juste après ? Lorsque vous laissez délibérément une ligne vide sur la grille pour piocher une carte supplémentaire, quelles sont les chances qu'un adversaire y déploie un vaisseau puissant et vous inflige une perte de durabilité massive ?
+EOD
+);
+___('strategy_riskassess_body_2', 'EN', <<<EOD
+Risk assessment is only possible if you know all the cards in the game and understand the composition of your opponents' arsenals. This knowledge is gained through experience, by building arsenals, playing games, and paying attention to the key cards that influenced your victories or defeats.
+EOD
+);
+___('strategy_riskassess_body_2', 'FR', <<<EOD
+L'évaluation des risques n'est possible que si vous connaissez toutes les cartes du jeu et comprenez la composition des arsenaux de vos adversaires. Cela ne peut s'apprendre qu'à l'expérience, en jouant beaucoup de parties et en prenant note des cartes clés qui vous font gagner ou perdre.
+EOD
+);
+___('strategy_riskassess_body_3', 'EN', <<<EOD
+This ability can make a huge difference between two equally strong arsenals. The player with a better understanding of their opponent's arsenal will play more confidently, make better decisions, and be able to act more aggressively when the time is right.
+EOD
+);
+___('strategy_riskassess_body_3', 'FR', <<<EOD
+Cette compétence peut faire une grande différence entre deux arsenaux de même puissance, car le joueur ayant une meilleure compréhension de l'arsenal adverse pourra jouer plus agressivement, avec plus de confiance, en prenant des décisions plus informées.
 EOD
 );
