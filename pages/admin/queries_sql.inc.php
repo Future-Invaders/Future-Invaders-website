@@ -979,67 +979,45 @@ if($last_query < 15)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Rulings tags
-
-/*
-if($last_query < X)
-{
-  sql_create_table('tags_rulings');
-  sql_create_field('tags_rulings', 'fk_rulings', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('tags_rulings', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_rulings');
-
-  sql_create_index('tags_rulings', 'tags_rulings_ruling', 'fk_rulings');
-  sql_create_index('tags_rulings', 'tags_rulings_tag', 'fk_tags');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Rulings
 
-/*
-if($last_query < X)
+if($last_query < 16)
 {
+  query(" DELETE FROM tag_types WHERE tag_types.name = 'Ruling' ");
+
   sql_create_table('rulings');
   sql_create_field('rulings', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('rulings', 'name_en', 'TEXT NOT NULL', 'uuid');
-  sql_create_field('rulings', 'name_fr', 'TEXT NOT NULL', 'name_en');
-  sql_create_field('rulings', 'ruling_en', 'LONGTEXT', 'name_fr');
-  sql_create_field('rulings', 'ruling_fr', 'LONGTEXT', 'ruling_en');
-  sql_create_field('rulings', 'date', 'DATE NOT NULL', 'ruling_fr');
+  sql_create_field('rulings', 'date_ruling', 'DATE NOT NULL', 'uuid');
+  sql_create_field('rulings', 'date_last_update', 'DATE NOT NULL', 'date_ruling');
+  sql_create_field('rulings', 'name', 'TEXT NOT NULL', 'date_last_update');
+  sql_create_field('rulings', 'title_en', 'TEXT NOT NULL', 'name');
+  sql_create_field('rulings', 'title_fr', 'TEXT NOT NULL', 'title_en');
+  sql_create_field('rulings', 'situation_en', 'TEXT NOT NULL', 'title_fr');
+  sql_create_field('rulings', 'situation_fr', 'TEXT NOT NULL', 'situation_en');
+  sql_create_field('rulings', 'ruling_en', 'TEXT NOT NULL', 'situation_fr');
+  sql_create_field('rulings', 'ruling_fr', 'TEXT NOT NULL', 'ruling_en');
 
   sql_create_index('rulings', 'rulings_uuid', 'uuid');
-  sql_create_index('rulings', 'rulings_name_en', 'name_en(40)');
-  sql_create_index('rulings', 'rulings_name_fr', 'name_fr(40)');
-  sql_create_index('rulings', 'rulings_date', 'date');
+  sql_create_index('rulings', 'rulings_name', 'name(40)');
+  sql_create_index('rulings', 'rulings_date', 'date_ruling');
+  sql_create_index('rulings', 'rulings_update', 'date_last_update');
 
-  sql_update_query_id(X);
+  sql_create_table('rulings_cards');
+  sql_create_field('rulings_cards', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('rulings_cards', 'fk_rulings', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
+
+  sql_create_index('rulings_cards', 'rulings_cards_card', 'fk_cards');
+  sql_create_index('rulings_cards', 'rulings_cards_ruling', 'fk_rulings');
+
+  sql_create_table('rulings_tags');
+  sql_create_field('rulings_tags', 'fk_rulings', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('rulings_tags', 'fk_tags', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_rulings');
+
+  sql_create_index('rulings_tags', 'rulings_tags_ruling', 'fk_rulings');
+  sql_create_index('rulings_tags', 'rulings_tags_tag', 'fk_tags');
+
+  sql_update_query_id(16);
 }
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Card rulings
-
-/*
-if($last_query < X)
-{
-  sql_create_table('cards_rulings');
-  sql_create_field('cards_rulings', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('cards_rulings', 'fk_rulings', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
-
-  sql_create_index('cards_rulings', 'cards_rulings_card', 'fk_cards');
-  sql_create_index('cards_rulings', 'cards_rulings_ruling', 'fk_rulings');
-
-  sql_update_query_id(X);
-}
-*/
 
 
 
@@ -1236,28 +1214,6 @@ if($last_query < X)
   sql_create_field('updates', 'description_fr', 'TEXT', 'description_en');
 
   sql_create_index('updates', 'updates_datetime', 'datetime');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Development blog
-
-/*
-if($last_query < X)
-{
-  sql_create_table('blogs');
-  sql_create_field('blogs', 'datetime', 'DATETIME NOT NULL', 'id');
-  sql_create_field('blogs', 'name_en', 'TINYTEXT NOT NULL', 'datetime');
-  sql_create_field('blogs', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('blogs', 'description_en', 'TEXT', 'name_fr');
-  sql_create_field('blogs', 'description_fr', 'TEXT', 'description_en');
-
-  sql_create_index('blogs', 'blogs_datetime', 'datetime');
 
   sql_update_query_id(X);
 }
