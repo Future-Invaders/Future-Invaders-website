@@ -59,10 +59,10 @@ $imglang = string_change_case($lang, 'lowercase');
   </p>
   <ul class="tinypadding_top">
     <li>
-      <?=__link('img/print/cards/'.$imglang.'/all_cards.pdf', __('print_allcards_single'))?>
+      <?=__link('img/print/cards/'.$imglang.'/all_cards.pdf', __('print_allcards_single'), popup: true)?>
     </li>
     <li>
-      <?=__link('img/print/cards/'.$imglang.'/max_cards.pdf', __('print_allcards_max'))?>
+      <?=__link('img/print/cards/'.$imglang.'/max_cards.pdf', __('print_allcards_max'), popup: true)?>
     </li>
   </ul>
 

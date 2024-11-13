@@ -8,6 +8,39 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                 PICTURES & VIDEOS                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Gameplay showcase
+___('gameplay_pictures_title',  'EN', "Gameplay pictures");
+___('gameplay_pictures_title',  'FR', "Images du jeu");
+___('gameplay_cards_title',     'EN', "Sample cards");
+___('gameplay_cards_title',     'FR', "Exemples de cartes");
+___('gameplay_videos_title',    'EN', "Gameplay videos");
+___('gameplay_videos_title',    'FR', "Vidéos du jeu");
+___('gameplay_videos_body_1',   'EN', <<<EOD
+These videos were filmed during the early stages of the game's development, showcasing "alpha" gameplay with English commentary. They are not representative of the current game's balance.
+EOD
+);
+___('gameplay_videos_body_1',   'FR', <<<EOD
+Ces vidéos ont été filmées pendant les premières phases de développement du jeu, lorsqu'il était encore un prototype. Elles montrent la version "alpha" du jeu, avec des commentaires en anglais expliquant le gameplay. Elles ne reflètent pas l'état actuel de l'équilibrage actuel du jeu.
+EOD
+);
+___('gameplay_videos_body_2',   'EN', <<<EOD
+New, improved videos will be recorded in the future to replace them.
+EOD
+);
+___('gameplay_videos_body_2',   'FR', <<<EOD
+De nouvelles vidéos seront filmées dans le futur pour les remplacer.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       LEGAL                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

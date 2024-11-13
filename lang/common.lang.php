@@ -933,15 +933,20 @@ ___('menu_top_social',  'FR', "SOCIAL");
 
 
 // Submenu: Game
-___('submenu_game_home',    'EN', "Introduction");
-___('submenu_game_home',    'FR', "Présentation");
+___('submenu_game_home',      'EN', "Introduction");
+___('submenu_game_home',      'FR', "Présentation");
 
-___('submenu_game_updates', 'EN', "Updates");
-___('submenu_game_updates', 'FR', "Mises à jour");
-___('submenu_game_news',    'EN', "Game updates");
-___('submenu_game_news',    'FR', "Évolution du jeu");
-___('submenu_game_blog',    'EN', "Development blog");
-___('submenu_game_blog',    'FR', "Blog de développement");
+___('submenu_game_updates',   'EN', "Updates");
+___('submenu_game_updates',   'FR', "Mises à jour");
+___('submenu_game_news',      'EN', "Game updates");
+___('submenu_game_news',      'FR', "Évolution du jeu");
+___('submenu_game_blog',      'EN', "Development blog");
+___('submenu_game_blog',      'FR', "Blog de développement");
+
+___('submenu_game_media',     'EN', "Media");
+___('submenu_game_media',     'FR', "Média");
+___('submenu_game_pictures',  'EN', "Pictures & Videos");
+___('submenu_game_pictures',  'FR', "Photos & Vidéos");
 
 
 // Submenu: Guides
@@ -991,8 +996,8 @@ ___('submenu_tools_gametools',      'EN', "Game tools");
 ___('submenu_tools_gametools',      'FR', "Outils de jeu");
 ___('submenu_tools_deck',           'EN', "Arsenal builder");
 ___('submenu_tools_deck',           'FR', "Construction d'arsenal");
-___('submenu_tools_board',          'EN', "Board simulator");
-___('submenu_tools_board',          'FR', "Simulateur de jeu");
+___('submenu_tools_board',          'EN', "Grid simulator");
+___('submenu_tools_board',          'FR', "Simulateur de grille");
 
 ___('submenu_tools_development',    'EN', "Development");
 ___('submenu_tools_development',    'FR', "Développement");

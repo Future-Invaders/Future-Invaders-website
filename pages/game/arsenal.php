@@ -263,11 +263,11 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
       </p>
       <ul class="tinypadding_top">
         <li>
-          <?=__link('img/print/arsenals/'.$lowerlang.'/'.$arsenal_data['print_'.$lowerlang], __('arsenal_print_cards'))?>
+          <?=__link('img/print/arsenals/'.$lowerlang.'/'.$arsenal_data['print_'.$lowerlang], __('arsenal_print_cards'), popup: true)?>
         </li>
         <?php if($arsenal_data['printex_'.$lowerlang]): ?>
         <li>
-          <?=__link('img/print/arsenals/'.$lowerlang.'/'.$arsenal_data['printex_'.$lowerlang], __('arsenal_print_extra'))?>
+          <?=__link('img/print/arsenals/'.$lowerlang.'/'.$arsenal_data['printex_'.$lowerlang], __('arsenal_print_extra'), popup: true)?>
         </li>
         <?php endif; ?>
       </ul>

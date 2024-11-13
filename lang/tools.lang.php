@@ -218,6 +218,51 @@ ___('print_extra_lore',       'FR', "Histoire du jeu");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  DESIGN DOCUMENT                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Design doc dev page
+___('design_doc_dev_title',   'EN', "Design document");
+___('design_doc_dev_title',   'FR', "Document de design");
+___('design_doc_dev_body_1',  'EN', <<<EOD
+Are you curious to see how a game is born? Or how it evolves over time? In the spirit of {{link|pages/tools/source|transparency}}, Future Invaders' design document is available to the public.
+EOD
+);
+___('design_doc_dev_body_1',  'FR', <<<EOD
+Êtes-vous curieux de voir comment un jeu naît ? Ou comment il évolue au fil du temps ? Dans un esprit de {{link|pages/tools/source|transparence}}, le document de design de Future Invaders est partagé publiquement sur le site.
+EOD
+);
+___('design_doc_dev_body_2',  'EN', <<<EOD
+In the coming months, a new, improved version of this document will be added, serving as a supplement to the original version. Until then, only the original document is available. Some of its contents are outdated, compared to the current state of the game.
+EOD
+);
+___('design_doc_dev_body_2',  'FR', <<<EOD
+Une version mise à jour de ce document est prévue dans les mois à venir, en complément de la version actuelle. En attendant, seul le document original est disponible, ce qui signifie que certains contenus de ce document ne sont pas à jour.
+EOD
+);
+___('design_doc_dev_english', 'EN', <<<EOD
+The design document is only available in English, it currently has no French translation.
+EOD
+);
+___('design_doc_dev_english', 'FR', <<<EOD
+Le document de design est uniquement disponible en anglais, il n'a pas de traduction française pour le moment.
+EOD
+);
+___('design_doc_dev_link',    'EN', <<<EOD
+{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Click here to read the design document}}.
+EOD
+);
+___('design_doc_dev_link',    'FR', <<<EOD
+{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Cliquez ici pour lire le document de design}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                    SOURCE CODE                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -284,3 +329,61 @@ ___('source_code_stack_list_4', 'EN', "Database: {{external|https://en.wikipedia
 ___('source_code_stack_list_4', 'FR', "Base de données : {{external|https://fr.wikipedia.org/wiki/MySQL|MySQL}}");
 ___('source_code_stack_list_5', 'EN', "Versioning: {{external|https://en.wikipedia.org/wiki/Git|Git}}");
 ___('source_code_stack_list_5', 'FR', "Versionnage : {{external|https://fr.wikipedia.org/wiki/Git|Git}}");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  ARSENAL BUILDER                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// WIP
+___('arsenal_builder_title',  'EN', "Work in progress");
+___('arsenal_builder_title',  'FR', "En construction");
+___('arsenal_builder_body_1', 'EN', <<<EOD
+This page is a work in progress. It will be completed in the future.
+EOD
+);
+___('arsenal_builder_body_1', 'FR', <<<EOD
+Cette page est en construction. Elle sera complétée dans le futur.
+EOD
+);
+___('arsenal_builder_body_2', 'EN', <<<EOD
+An arsenal building tool will allow you to come up with your own custom {{link|pages/game/arsenals|arsenals}}, in a format that makes them easy to share with other players.
+EOD
+);
+___('arsenal_builder_body_2', 'FR', <<<EOD
+Un outil de construction d'arsenal vous permettra de créer vos propres {{link|pages/game/arsenals|arsenaux}}, dans un format facile à partager avec les autres joueurs.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  GRID SIMULATOR                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// WIP
+___('grid_simulator_title',  'EN', "Work in progress");
+___('grid_simulator_title',  'FR', "En construction");
+___('grid_simulator_body_1', 'EN', <<<EOD
+This page is a work in progress. It will be completed in the future.
+EOD
+);
+___('grid_simulator_body_1', 'FR', <<<EOD
+Cette page est en construction. Elle sera complétée dans le futur.
+EOD
+);
+___('grid_simulator_body_2', 'EN', <<<EOD
+A grid simulator will act as a companion tool, allowing you to keep track of the state of the board during a two player game of Future Invaders from your mobile device.
+EOD
+);
+___('grid_simulator_body_2', 'FR', <<<EOD
+Un simulateur de grille de jeu vous accompagnera dans vos parties, vous permettant de suivre l'état d'une partie à deux joueurs de Future Invaders depuis votre appareil mobile.
+EOD
+);
