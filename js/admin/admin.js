@@ -31,6 +31,8 @@
 /*  admin_rulings_delete                    Triggers the deletion of an entry in the ruling list.                    */
 /*  admin_rulings_duplicate_cards           Duplicate the cards creation form when editing a ruling.                 */
 /*  admin_rulings_unduplicate_cards         Delete the last created card creation form when editing a ruling.        */
+/*  admin_rulings_duplicate_tags            Duplicate the tags creation form when editing a ruling.                  */
+/*  admin_rulings_unduplicate_tags          Delete the last created tags creation form when editing a ruling.        */
 /*                                                                                                                   */
 /*  admin_tags_search                       Searches the tag list.                                                   */
 /*  admin_tags_delete                       Triggers the deletion of an entry in the tag list.                       */
@@ -565,6 +567,7 @@ function admin_rulings_search( sort_data = null )
   postdata += '&admin_rulings_search_title='  + document.getElementById('admin_rulings_search_title').value;
   postdata += '&admin_rulings_search_body='   + document.getElementById('admin_rulings_search_body').value;
   postdata += '&admin_rulings_search_cards='  + document.getElementById('admin_rulings_search_cards').value;
+  postdata += '&admin_rulings_search_tags='   + document.getElementById('admin_rulings_search_tags').value;
 
   // Submit the search
   fetch_page('rulings', 'admin_rulings_tbody', postdata);
@@ -646,6 +649,63 @@ function admin_rulings_unduplicate_cards()
     const inputs = cards_list_div.querySelectorAll("input");
     inputs.forEach(input => input.value = "");
     const selects = cards_list_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
+  }
+}
+
+
+
+
+/**
+ * Duplicate the tags creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_duplicate_tags()
+{
+  // Fetch the element containing the tag form and clone it
+  const tags_form_div     = document.getElementById("rulings_tags");
+  const new_tags_form_div = tags_form_div.cloneNode(true);
+
+  // Clear input and select values in the cloned div
+  const inputs = new_tags_form_div.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+  const selects = new_tags_form_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
+
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("rulings_tags_container").appendChild(new_tags_form_div);
+}
+
+
+
+
+/**
+ * Delete the last created tag creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_unduplicate_tags()
+{
+  // Fetch the element containing the tag selectors and its parent container
+  const tags_list_container = document.getElementById("rulings_tags_container");
+  const tags_list_div       = document.getElementById("rulings_tags");
+
+  // If there's more than one tag selector, delete the last one
+  if(tags_list_container.children.length > 1 && tags_list_container.lastElementChild !== tags_list_div)
+  {
+    const tags_list_last_element = tags_list_container.lastElementChild;
+    tags_list_container.removeChild(tags_list_last_element);
+  }
+
+  // If there's only one tag selector left, clear its input and select values
+  else
+  {
+    const inputs = tags_list_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = tags_list_div.querySelectorAll("select");
     selects.forEach(select => select.value = "0");
   }
 }

@@ -6,6 +6,7 @@
 include_once './../../inc/includes.inc.php';    # Core
 include_once './../../actions/rulings.act.php'; # Rulings management
 include_once './../../actions/cards.act.php';   # Card management
+include_once './../../actions/tags.act.php';    # Tag management
 include_once './../../lang/admin.lang.php';     # Admin translations
 
 // Page summary
@@ -61,6 +62,27 @@ for($i = 0; $i < $admin_ruling_data['cards']['rows']; $i++)
       $ruling_card_selected[$i][$j] = ' selected';
     else
       $ruling_card_selected[$i][$j] = '';
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch tags linked to the ruling
+
+// Fetch a list of card tags
+$tag_list = tags_list(search: array('ftype' => 'Card'));
+
+// Select the ruling's linked tags
+for($i = 0; $i < $admin_ruling_data['tags']['rows']; $i++)
+{
+  for($j = 0; $j < $tag_list['rows']; $j++)
+  {
+    if($tag_list[$j]['id'] === $admin_ruling_data['tags']['id'][$i])
+      $ruling_tag_selected[$i][$j] = ' selected';
+    else
+      $ruling_tag_selected[$i][$j] = '';
   }
 }
 
@@ -141,7 +163,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       </div>
 
       <div id="rulings_cards_container">
-
         <label><?=__('admin_ruling_add_cards')?></label>
 
         <?php if($admin_ruling_data['cards']['rows']): ?>
@@ -175,6 +196,42 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <div class="padding_bot">
         <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_rulings_duplicate_cards();')?>
         <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_rulings_unduplicate_cards();')?>
+      </div>
+
+      <div id="rulings_tags_container">
+        <label><?=__('admin_ruling_add_tags')?></label>
+
+        <?php if($admin_ruling_data['tags']['rows']): ?>
+        <?php for($i = 0; $i < $admin_ruling_data['tags']['rows']; $i++): ?>
+        <div id="rulings_tags" class="smallpadding_bot flexcontainer">
+          <div style="flex: 6">
+            <select class="indiv align_left" name="rulings_tags[]">
+              <option value="">&nbsp;</option>
+              <?php for($j = 0; $j < $tag_list['rows']; $j++): ?>
+              <option value="<?=$tag_list[$j]['id']?>"<?=$ruling_tag_selected[$i][$j]?>><?=$tag_list[$j]['name']?></option>
+              <?php endfor; ?>
+            </select>
+          </div>
+        </div>
+        <?php endfor; ?>
+
+        <?php else: ?>
+        <div id="rulings_tags" class="smallpadding_bot flexcontainer">
+          <div style="flex: 6">
+            <select class="indiv align_left" name="rulings_tags[]">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $tag_list['rows']; $i++): ?>
+              <option value="<?=$tag_list[$i]['id']?>""><?=$tag_list[$i]['name']?></option>
+              <?php endfor; ?>
+            </select>
+          </div>
+        </div>
+        <?php endif; ?>
+
+      </div>
+      <div class="padding_bot">
+        <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_rulings_duplicate_tags();')?>
+        <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_rulings_unduplicate_tags();')?>
       </div>
 
       <input type="submit" name="ruling_edit" value="<?=__('admin_ruling_edit_submit')?>">

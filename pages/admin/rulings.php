@@ -7,6 +7,7 @@ include_once './../../inc/includes.inc.php';        # Core
 include_once './../../inc/functions_time.inc.php';  # Time management
 include_once './../../actions/rulings.act.php';     # Rulings management
 include_once './../../actions/cards.act.php';       # Card management
+include_once './../../actions/tags.act.php';        # Tag management
 include_once './../../lang/admin.lang.php';         # Admin translations
 
 // Page summary
@@ -37,6 +38,9 @@ $js   = array('admin/admin');
 $card_list = cards_list(  sort_by:  'name'                            ,
                           search:   array(  'is_not_extra' => true  ) );
 
+// List of tags
+$tag_list = tags_list(search: array('ftype' => 'Card'));
+
 
 
 
@@ -64,6 +68,15 @@ if(isset($_POST['ruling_add']))
   else
     $ruling_add_cards = array();
 
+  // Gather tags postdata
+  if(isset($_POST['rulings_tags']))
+  {
+    for($i = 0; $i < count($_POST['rulings_tags']); $i++)
+      $ruling_add_tags[$i] = $_POST['rulings_tags'][$i];
+  }
+  else
+    $ruling_add_tags = array();
+
   // Assemble an array with the postdata
   $ruling_add_data = array( 'ruling_date'         => $ruling_add_date         ,
                             'ruling_name'         => $ruling_add_name         ,
@@ -73,7 +86,8 @@ if(isset($_POST['ruling_add']))
                             'ruling_situation_fr' => $ruling_add_situation_fr ,
                             'ruling_ruling_en'    => $ruling_add_ruling_en    ,
                             'ruling_ruling_fr'    => $ruling_add_ruling_fr    ,
-                            'ruling_cards'        => $ruling_add_cards         );
+                            'ruling_cards'        => $ruling_add_cards        ,
+                            'ruling_tags'         => $ruling_add_tags         );
 
   // Add the ruling to the database
   rulings_add($ruling_add_data);
@@ -110,6 +124,15 @@ if(isset($_POST['ruling_edit']))
   else
     $ruling_add_cards = array();
 
+  // Gather tags postdata
+  if(isset($_POST['rulings_tags']))
+  {
+    for($i = 0; $i < count($_POST['rulings_tags']); $i++)
+      $ruling_add_tags[$i] = $_POST['rulings_tags'][$i];
+  }
+  else
+    $ruling_add_tags = array();
+
   // Assemble an array with the ruling postdata
   $ruling_edit_data = array(  'name'          => $ruling_edit_name          ,
                               'date'          => $ruling_edit_date          ,
@@ -120,7 +143,8 @@ if(isset($_POST['ruling_edit']))
                               'situation_fr'  => $ruling_edit_situation_fr  ,
                               'ruling_en'     => $ruling_edit_ruling_en     ,
                               'ruling_fr'     => $ruling_edit_ruling_fr     ,
-                              'cards'         => $ruling_add_cards          );
+                              'cards'         => $ruling_add_cards          ,
+                              'tags'          => $ruling_add_tags           );
 
   // Edit the ruling
   rulings_edit(  $ruling_edit_id    ,
@@ -146,7 +170,8 @@ if(isset($_POST['admin_rulings_delete']))
 $admin_rulings_sort        = form_fetch_element('admin_rulings_sort', 'default');
 $admin_rulings_search_data = array( 'title'   =>  form_fetch_element('admin_rulings_search_title')  ,
                                     'body'    =>  form_fetch_element('admin_rulings_search_body')   ,
-                                    'card_id' =>  form_fetch_element('admin_rulings_search_cards')  );
+                                    'card_id' =>  form_fetch_element('admin_rulings_search_cards')  ,
+                                    'tag_id'  =>  form_fetch_element('admin_rulings_search_tags')   );
 
 // Fetch the rulings
 $rulings_list = rulings_list( $admin_rulings_sort        ,
@@ -187,6 +212,10 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__('admin_ruling_list_cards')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('cards');")?>
         </th>
+        <th class="align_center">
+          <?=__('admin_ruling_list_tags')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('tags');")?>
+        </th>
         <th>
           <?=__('act')?>
         </th>
@@ -216,6 +245,15 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </select>
         </th>
         <th>
+          <select class="table_search" name="admin_rulings_search_tags" id="admin_rulings_search_tags" onchange="admin_rulings_search();">
+            <option value="0">&nbsp;</option>
+            <option value="-1"><?=string_change_case(__('none'), 'lowercase')?></option>
+            <?php for($i = 0; $i < $tag_list['rows']; $i++): ?>
+            <option value="<?=$tag_list[$i]['id']?>"><?=$tag_list[$i]['name']?></option>
+            <?php endfor; ?>
+          </select>
+        </th>
+        <th>
           <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/rulings_add')?>
         </th>
       </tr>
@@ -226,7 +264,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="6" class="uppercase text_light dark bold align_center">
+        <td colspan="7" class="uppercase text_light dark bold align_center">
           <?=__('admin_ruling_list_count', preset_values: array($rulings_list['rows']), amount: $rulings_list['rows'])?>
         </td>
       </tr>
@@ -298,7 +336,20 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </td>
         <?php endif; ?>
 
-        <td class="align_center nowrap">
+        <?php if($rulings_list[$i]['ntags']): ?>
+        <td class="align_center tooltip_container">
+          <span class="bold"><?=$rulings_list[$i]['ntags']?></span>
+          <div class="tooltip">
+            <?=str_replace(', ', '<br>', $rulings_list[$i]['tags'])?>
+          </div>
+        </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php endif; ?>
+
+        <td class="align_center nowrap card_action_icons">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/rulings_edit?ruling='.$rulings_list[$i]['id'])?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_rulings_delete('".__('admin_ruling_delete_confirm')."','".$rulings_list[$i]['id']."')")?>
         </td>

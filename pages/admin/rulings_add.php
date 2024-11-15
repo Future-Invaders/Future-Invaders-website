@@ -6,6 +6,7 @@
 include_once './../../inc/includes.inc.php';    # Core
 include_once './../../actions/rulings.act.php'; # Rulings management
 include_once './../../actions/cards.act.php';   # Card management
+include_once './../../actions/tags.act.php';    # Tag management
 include_once './../../lang/admin.lang.php';     # Admin translations
 
 // Page summary
@@ -34,6 +35,14 @@ $js   = array('admin/admin');
 
 $card_list = cards_list(  sort_by:  'name'                            ,
                           search:   array(  'is_not_extra' => true  ) );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tag list
+
+$tag_list = tags_list(search: array('ftype' => 'Card'));
 
 
 
@@ -128,6 +137,24 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <div class="padding_bot">
         <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_rulings_duplicate_cards();')?>
         <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_rulings_unduplicate_cards();')?>
+      </div>
+
+      <div id="rulings_tags_container">
+        <label><?=__('admin_ruling_add_tags')?></label>
+        <div id="rulings_tags" class="smallpadding_bot flexcontainer">
+          <div style="flex: 6">
+            <select class="indiv align_left" name="rulings_tags[]">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $tag_list['rows']; $i++): ?>
+              <option value="<?=$tag_list[$i]['id']?>"><?=$tag_list[$i]['name']?></option>
+              <?php endfor; ?>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="padding_bot">
+        <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_rulings_duplicate_tags();')?>
+        <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_rulings_unduplicate_tags();')?>
       </div>
 
       <input type="submit" name="ruling_add" value="<?=__('admin_ruling_add_submit')?>">

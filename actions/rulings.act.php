@@ -64,6 +64,13 @@ function rulings_get( int    $ruling_id       ,
                     WHERE     rulings_cards.fk_rulings = '$ruling_id'
                     ORDER BY  cards.name_$lang ASC ");
 
+  // Fetch linked tags
+  $qtags = query("  SELECT    rulings_tags.fk_tags AS 't_id'
+                    FROM      rulings_tags
+                    LEFT JOIN tags ON rulings_tags.fk_tags = tags.id
+                    WHERE     rulings_tags.fk_rulings = '$ruling_id'
+                    ORDER BY  tags.name ASC ");
+
   // Assemble an array with the ruling's data
   if($format === 'html')
   {
@@ -87,6 +94,11 @@ function rulings_get( int    $ruling_id       ,
     for($i = 0; $dcards = query_row($qcards); $i++)
       $data['cards']['id'][$i] = $dcards['c_id'];
     $data['cards']['rows'] = $i;
+
+    // Tags data
+    for($i = 0; $dtags = query_row($qtags); $i++)
+      $data['tags']['id'][$i] = $dtags['t_id'];
+    $data['tags']['rows'] = $i;
   }
 
   // Prepare for the API
@@ -128,21 +140,29 @@ function rulings_list(  string  $sort_by  = 'date'  ,
   $search_title   = sanitize_array_element($search, 'title', 'string');
   $search_body    = sanitize_array_element($search, 'body', 'string');
   $search_card_id = sanitize_array_element($search, 'card_id', 'int');
+  $search_tag_id  = sanitize_array_element($search, 'tag_id', 'int');
 
   // Search through the data
-  $query_search  = ($search_title)  ? " WHERE ( rulings.title_en      LIKE '%$search_title%'
-                                        OR      rulings.title_fr      LIKE '%$search_title%' ) "  : " WHERE 1 = 1 ";
-  $query_search .= ($search_body)   ? " AND   ( rulings.ruling_en     LIKE '%$search_body%'
-                                        OR      rulings.ruling_fr     LIKE '%$search_body%'
-                                        OR      rulings.situation_en  LIKE '%$search_body%'
-                                        OR      rulings.situation_fr  LIKE '%$search_body%' ) "   : "";
+  $query_search  = ($search_title)  ? " WHERE ( rulings.title_en        LIKE '%$search_title%'
+                                        OR      rulings.title_fr        LIKE '%$search_title%' ) "  : " WHERE 1 = 1 ";
+  $query_search .= ($search_body)   ? " AND   ( rulings.ruling_en       LIKE '%$search_body%'
+                                        OR      rulings.ruling_fr       LIKE '%$search_body%'
+                                        OR      rulings.situation_en    LIKE '%$search_body%'
+                                        OR      rulings.situation_fr    LIKE '%$search_body%' ) "   : "";
   $query_search .= ($search_card_id === -1)
-                                    ? " AND     rulings_cards.fk_cards IS NULL "                  : "";
+                                    ? " AND     rulings_cards.fk_cards  IS NULL "                   : "";
+  $query_search .= ($search_tag_id === -1)
+                                    ? " AND     rulings_tags.fk_tags    IS NULL "                   : "";
 
   // Use a different search technique for linked cards
   $query_having = ($search_card_id && $search_card_id !== -1)
                 ? " HAVING FIND_IN_SET('$search_card_id', GROUP_CONCAT(cards.id)) > 0 "
                 : " HAVING 1 = 1 ";
+
+  // Use a different search technique for linked tags
+  $query_having .= ($search_tag_id && $search_tag_id !== -1)
+                ? " AND FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -157,6 +177,9 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                             rulings.name              = ''  ,
                             rulings.name              ASC   ",
     'cards'   => " ORDER BY COUNT(DISTINCT cards.id)  DESC  ,
+                            rulings.name              = ''  ,
+                            rulings.name              ASC   ",
+    'tags'    => " ORDER BY COUNT(DISTINCT tags.id)   DESC  ,
                             rulings.name              = ''  ,
                             rulings.name              ASC   ",
     default   => " ORDER BY GREATEST(rulings.date_last_update, rulings.date_ruling)
@@ -181,12 +204,18 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                 rulings.ruling_fr             AS 'r_ruling_fr'    ,
                                 rulings.ruling_$lang          AS 'r_ruling'       ,
                                 COUNT(DISTINCT cards.id)      AS 'rc_count'       ,
+                                COUNT(DISTINCT tags.id)       AS 'rt_count'       ,
                                 GROUP_CONCAT( DISTINCT  cards.name_$lang
                                               ORDER BY  cards.name_$lang ASC
-                                              SEPARATOR ', ') AS 'rc_names'
+                                              SEPARATOR ', ') AS 'rc_names'       ,
+                                GROUP_CONCAT( DISTINCT  tags.name
+                                              ORDER BY  tags.name ASC
+                                              SEPARATOR ', ')   AS 'rt_names'
                       FROM      rulings
                       LEFT JOIN rulings_cards ON rulings.id             = rulings_cards.fk_rulings
                       LEFT JOIN cards         ON rulings_cards.fk_cards = cards.id
+                      LEFT JOIN rulings_tags  ON rulings.id             = rulings_tags.fk_rulings
+                      LEFT JOIN tags          ON rulings_tags.fk_tags   = tags.id
                       $query_search
                       GROUP BY  rulings.id
                       $query_having
@@ -222,6 +251,8 @@ function rulings_list(  string  $sort_by  = 'date'  ,
       $data[$i]['nruling']      = mb_strlen($row['r_ruling']);
       $data[$i]['ncards']       = sanitize_output($row['rc_count']);
       $data[$i]['cards']        = sanitize_output($row['rc_names']);
+      $data[$i]['ntags']        = sanitize_output($row['rt_count']);
+      $data[$i]['tags']         = sanitize_output($row['rt_names']);
     }
 
     // Prepare for the API
@@ -300,6 +331,19 @@ function rulings_add( array $data ) : void
               SET         rulings_cards.fk_rulings  = '$ruling_id'  ,
                           rulings_cards.fk_cards    = '$card_id'    ");
   }
+
+  // Get rid of double tag links
+  $data['ruling_tags'] = array_unique($data['ruling_tags']);
+
+  // Add the arsenal's factions to the database
+  foreach($data['ruling_tags'] as $tag_id)
+  {
+    $tag_id = sanitize($tag_id, 'int');
+    if($tag_id !== 0)
+      query(" INSERT INTO rulings_tags
+              SET         rulings_tags.fk_rulings  = '$ruling_id'  ,
+                          rulings_tags.fk_tags     = '$tag_id'     ");
+  }
 }
 
 
@@ -347,9 +391,9 @@ function rulings_edit(  int   $ruling_id  ,
           WHERE   rulings.id                = '$ruling_id' ");
 
   // Fetch a list of linked cards
-  $qcards = query(" SELECT    rulings_cards.fk_cards AS 'c_id'
-                    FROM      rulings_cards
-                    WHERE     rulings_cards.fk_rulings = '$ruling_id' ");
+  $qcards = query(" SELECT  rulings_cards.fk_cards AS 'c_id'
+                    FROM    rulings_cards
+                    WHERE   rulings_cards.fk_rulings = '$ruling_id' ");
 
   // Place these cards in an array
   $ruling_cards = array();
@@ -366,7 +410,7 @@ function rulings_edit(  int   $ruling_id  ,
     $missing_card = sanitize($missing_card, 'int');
     if($missing_card !== 0)
       query(" INSERT INTO rulings_cards
-              SET         rulings_cards.fk_rulings = '$ruling_id' ,
+              SET         rulings_cards.fk_rulings  = '$ruling_id' ,
                           rulings_cards.fk_cards    = '$missing_card' ");
   }
 
@@ -376,8 +420,42 @@ function rulings_edit(  int   $ruling_id  ,
   {
     $extra_card = sanitize($extra_card, 'int');
     query(" DELETE FROM rulings_cards
-            WHERE       rulings_cards.fk_rulings = '$ruling_id'
+            WHERE       rulings_cards.fk_rulings  = '$ruling_id'
             AND         rulings_cards.fk_cards    = '$extra_card' ");
+  }
+
+  // Fetch a list of linked tags
+  $qtags = query("  SELECT  rulings_tags.fk_tags AS 't_id'
+                    FROM    rulings_tags
+                    WHERE   rulings_tags.fk_rulings = '$ruling_id' ");
+
+  // Place these tags in an array
+  $ruling_tags = array();
+  while($dtags = query_row($qtags))
+    $ruling_tags[] = $dtags['t_id'];
+
+  // Get rid of double entries in the linked tags
+  $data['tags'] = array_unique($data['tags']);
+
+  // Look for tags missing from the edited data and add them to the database
+  $missing_tags = array_diff($data['tags'], $ruling_tags);
+  foreach($missing_tags as $missing_tag)
+  {
+    $missing_tag = sanitize($missing_tag, 'int');
+    if($missing_tag !== 0)
+      query(" INSERT INTO rulings_tags
+              SET         rulings_tags.fk_rulings = '$ruling_id' ,
+                          rulings_tags.fk_tags    = '$missing_tag' ");
+  }
+
+  // Look for extra tags in the edited data and remove them from the database
+  $extra_tags = array_diff($ruling_tags, $data['tags']);
+  foreach($extra_tags as $extra_tag)
+  {
+    $extra_tag = sanitize($extra_tag, 'int');
+    query(" DELETE FROM rulings_tags
+            WHERE       rulings_tags.fk_rulings = '$ruling_id'
+            AND         rulings_tags.fk_tags    = '$extra_tag' ");
   }
 }
 
@@ -404,4 +482,8 @@ function rulings_delete( int $ruling_id ) : void
   // Delete linked cards from the database
   query(" DELETE FROM rulings_cards
           WHERE       rulings_cards.fk_rulings = '$ruling_id' ");
+
+  // Delete linked tags from the database
+  query(" DELETE FROM rulings_tags
+          WHERE       rulings_tags.fk_rulings = '$ruling_id' ");
 }

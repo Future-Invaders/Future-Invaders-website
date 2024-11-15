@@ -572,6 +572,8 @@ ___('admin_ruling_list_ruling_fr',    'EN', "Jugement");
 ___('admin_ruling_list_ruling_fr',    'FR', "Jugement");
 ___('admin_ruling_list_cards',        'EN', "Cards");
 ___('admin_ruling_list_cards',        'FR', "Cartes");
+___('admin_ruling_list_tags',         'EN', "Tags");
+___('admin_ruling_list_tags',         'FR', "Tags");
 ___('admin_ruling_list_count',        'EN', "{{1}} ruling");
 ___('admin_ruling_list_count',        'FR', "{{1}} jugement");
 ___('admin_ruling_list_count+',       'EN', "{{1}} rulings");
@@ -599,6 +601,8 @@ ___('admin_ruling_add_ruling_fr',     'EN', "Ruling (French)");
 ___('admin_ruling_add_ruling_fr',     'FR', "Jugement (Français)");
 ___('admin_ruling_add_cards',         'EN', "Linked cards");
 ___('admin_ruling_add_cards',         'FR', "Cartes liées");
+___('admin_ruling_add_tags',          'EN', "Linked tags");
+___('admin_ruling_add_tags',          'FR', "Tags liés");
 ___('admin_ruling_add_submit',        'EN', "Add ruling");
 ___('admin_ruling_add_submit',        'FR', "Ajouter le jugement");
 
