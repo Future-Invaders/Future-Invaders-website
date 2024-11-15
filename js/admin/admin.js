@@ -28,6 +28,7 @@
 /*  admin_arsenal_difficulties_delete       Triggers the deletion of an entry in the arsenal difficulty list.        */
 /*                                                                                                                   */
 /*  admin_rulings_search                    Searches the ruling list.                                                */
+/*  admin_rulings_delete                    Triggers the deletion of an entry in the ruling list.                    */
 /*                                                                                                                   */
 /*  admin_tags_search                       Searches the tag list.                                                   */
 /*  admin_tags_delete                       Triggers the deletion of an entry in the tag list.                       */
@@ -564,6 +565,29 @@ function admin_rulings_search( sort_data = null )
 
   // Submit the search
   fetch_page('rulings', 'admin_rulings_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the ruling list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     ruling    The id of the ruling to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_delete( message   ,
+                               ruling    )
+{
+  // Assemble the postdata
+  postdata = 'admin_rulings_delete=' + fetch_sanitize(ruling);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('rulings', 'admin_rulings_tbody', postdata);
 }
 
 

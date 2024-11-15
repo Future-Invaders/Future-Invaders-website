@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  rulings_list                     Lists rulings in the database                                                   */
 /*  rulings_add                      Adds a ruling to the database                                                   */
 /*  rulings_edit                     Edits a ruling in the database                                                  */
+/*  rulings_delete                   Deletes a ruling from the database                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -290,4 +291,25 @@ function rulings_edit(  int   $ruling_id  ,
                   rulings.ruling_en         = '$ruling_ruling_en'     ,
                   rulings.ruling_fr         = '$ruling_ruling_fr'
           WHERE   rulings.id                = '$ruling_id' ");
+}
+
+
+
+
+/**
+ * Deletes a ruling from the database.
+ *
+ * @param   int     $ruling_id  The id of the ruling to delete.
+ *
+ * @return  void
+ */
+
+function rulings_delete( int $ruling_id ) : void
+{
+  // Sanitize the data
+  $ruling_id = sanitize($ruling_id, 'int');
+
+  // Delete the ruling from the database
+  query(" DELETE FROM rulings
+          WHERE       rulings.id = '$ruling_id' ");
 }
