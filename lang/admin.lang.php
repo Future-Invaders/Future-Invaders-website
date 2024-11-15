@@ -29,22 +29,8 @@ ___('admin_menu_formats',         'EN', "Formats");
 ___('admin_menu_formats',         'FR', "Formats");
 ___('admin_menu_rulings',         'EN', "Rulings");
 ___('admin_menu_rulings',         'FR', "Jugements");
-___('admin_menu_bans',            'EN', "Bans");
-___('admin_menu_bans',            'FR', "Bans");
 ___('admin_menu_tags',            'EN', "Tags");
 ___('admin_menu_tags',            'FR', "Tags");
-___('admin_menu_keywords',        'EN', "Keywords");
-___('admin_menu_keywords',        'FR', "Mots clés");
-___('admin_menu_identities',      'EN', "Identities");
-___('admin_menu_identities',      'FR', "Identités");
-___('admin_menu_hybridizations',  'EN', "Hybridizations");
-___('admin_menu_hybridizations',  'FR', "Hybridations");
-___('admin_menu_updates',         'EN', "Updates");
-___('admin_menu_updates',         'FR', "Mises à jour");
-___('admin_menu_blogs',           'EN', "Blogs");
-___('admin_menu_blogs',           'FR', "Blogs");
-___('admin_menu_exports',         'EN', "Exports");
-___('admin_menu_exports',         'FR', "Exports");
 ___('admin_menu_page_stats',      'EN', "Page stats");
 ___('admin_menu_page_stats',      'FR', "Stats des pages");
 ___('admin_menu_queries',         'EN', "SQL Queries");
@@ -557,6 +543,37 @@ ___('admin_image_edit_submit',  'FR', "Modifier l'image");
 // Delete an image
 ___('admin_image_delete_confirm', 'EN', "Confirm the deletion of this image");
 ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      RULINGS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Add a ruling
+___('admin_ruling_add_title',         'EN', "New ruling");
+___('admin_ruling_add_title',         'FR', "Nouveau jugement");
+___('admin_ruling_add_date',          'EN', "Ruling date (YYYY-MM-DD)");
+___('admin_ruling_add_date',          'FR', "Date du jugement (AAAA-MM-JJ)");
+___('admin_ruling_add_name',          'EN', "Ruling name (only numbers and letters)");
+___('admin_ruling_add_name',          'FR', "Nom du jugement (chiffres et lettres uniquement)");
+___('admin_ruling_add_title_en',      'EN', "Title (English)");
+___('admin_ruling_add_title_en',      'FR', "Titre (Anglais)");
+___('admin_ruling_add_title_fr',      'EN', "Title (French)");
+___('admin_ruling_add_title_fr',      'FR', "Titre (Français)");
+___('admin_ruling_add_situation_en',  'EN', "Situation (English)");
+___('admin_ruling_add_situation_en',  'FR', "Situation (Anglais)");
+___('admin_ruling_add_situation_fr',  'EN', "Situation (French)");
+___('admin_ruling_add_situation_fr',  'FR', "Situation (Français)");
+___('admin_ruling_add_ruling_en',     'EN', "Ruling (English)");
+___('admin_ruling_add_ruling_en',     'FR', "Jugement (Anglais)");
+___('admin_ruling_add_ruling_fr',     'EN', "Ruling (French)");
+___('admin_ruling_add_ruling_fr',     'FR', "Jugement (Français)");
+___('admin_ruling_add_submit',        'EN', "Add ruling");
+___('admin_ruling_add_submit',        'FR', "Ajouter le jugement");
 
 
 
