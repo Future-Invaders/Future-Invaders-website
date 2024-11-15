@@ -981,16 +981,16 @@ if($last_query < 15)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Rulings
 
-if($last_query < 16)
+if($last_query < 17)
 {
   query(" DELETE FROM tag_types WHERE tag_types.name = 'Ruling' ");
 
   sql_create_table('rulings');
   sql_create_field('rulings', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
-  sql_create_field('rulings', 'date_ruling', 'DATE NOT NULL', 'uuid');
+  sql_create_field('rulings', 'slug', 'VARCHAR(40) NOT NULL', 'uuid');
+  sql_create_field('rulings', 'date_ruling', 'DATE NOT NULL', 'slug');
   sql_create_field('rulings', 'date_last_update', 'DATE NOT NULL', 'date_ruling');
-  sql_create_field('rulings', 'name', 'TEXT NOT NULL', 'date_last_update');
-  sql_create_field('rulings', 'title_en', 'TEXT NOT NULL', 'name');
+  sql_create_field('rulings', 'title_en', 'TEXT NOT NULL', 'date_last_update');
   sql_create_field('rulings', 'title_fr', 'TEXT NOT NULL', 'title_en');
   sql_create_field('rulings', 'situation_en', 'TEXT NOT NULL', 'title_fr');
   sql_create_field('rulings', 'situation_fr', 'TEXT NOT NULL', 'situation_en');
@@ -998,7 +998,7 @@ if($last_query < 16)
   sql_create_field('rulings', 'ruling_fr', 'TEXT NOT NULL', 'ruling_en');
 
   sql_create_index('rulings', 'rulings_uuid', 'uuid');
-  sql_create_index('rulings', 'rulings_name', 'name(40)');
+  sql_create_index('rulings', 'rulings_slug', 'slug');
   sql_create_index('rulings', 'rulings_date', 'date_ruling');
   sql_create_index('rulings', 'rulings_update', 'date_last_update');
 

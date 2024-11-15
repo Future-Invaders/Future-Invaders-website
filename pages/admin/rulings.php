@@ -51,7 +51,6 @@ if(isset($_POST['ruling_add']))
 {
   // Gather the postdata
   $ruling_add_date          = form_fetch_element('ruling_date');
-  $ruling_add_name          = form_fetch_element('ruling_name');
   $ruling_add_title_en      = form_fetch_element('ruling_title_en');
   $ruling_add_title_fr      = form_fetch_element('ruling_title_fr');
   $ruling_add_situation_en  = form_fetch_element('ruling_situation_en');
@@ -79,7 +78,6 @@ if(isset($_POST['ruling_add']))
 
   // Assemble an array with the postdata
   $ruling_add_data = array( 'ruling_date'         => $ruling_add_date         ,
-                            'ruling_name'         => $ruling_add_name         ,
                             'ruling_title_en'     => $ruling_add_title_en     ,
                             'ruling_title_fr'     => $ruling_add_title_fr     ,
                             'ruling_situation_en' => $ruling_add_situation_en ,
@@ -105,7 +103,6 @@ if(isset($_POST['ruling_edit']))
   $ruling_edit_id = form_fetch_element('ruling_id');
 
   // Gather ruling postdata
-  $ruling_edit_name         = form_fetch_element('ruling_name');
   $ruling_edit_date         = form_fetch_element('ruling_date');
   $ruling_edit_update       = form_fetch_element('ruling_update');
   $ruling_edit_title_en     = form_fetch_element('ruling_title_en');
@@ -134,8 +131,7 @@ if(isset($_POST['ruling_edit']))
     $ruling_add_tags = array();
 
   // Assemble an array with the ruling postdata
-  $ruling_edit_data = array(  'name'          => $ruling_edit_name          ,
-                              'date'          => $ruling_edit_date          ,
+  $ruling_edit_data = array(  'date'          => $ruling_edit_date          ,
                               'update'        => $ruling_edit_update        ,
                               'title_en'      => $ruling_edit_title_en      ,
                               'title_fr'      => $ruling_edit_title_fr      ,
@@ -159,6 +155,15 @@ if(isset($_POST['ruling_edit']))
 
 if(isset($_POST['admin_rulings_delete']))
   rulings_delete(form_fetch_element('admin_rulings_delete'));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Regenerate all ruling slugs
+
+if(isset($_POST['admin_rulings_regenerate_slugs']))
+  rulings_regenerate_all_slugs();
 
 
 
@@ -193,8 +198,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr class="uppercase">
         <th class="align_center">
-          <?=__('admin_ruling_list_body')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('body');")?>
+          <?=__('admin_ruling_list_title')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('title');")?>
         </th>
         <th class="align_center">
           <?=__('admin_ruling_list_date')?>
@@ -205,8 +210,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('update');")?>
         </th>
         <th class="align_center">
-          <?=__('admin_ruling_list_title')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('title');")?>
+          <?=__('admin_ruling_list_body')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('body');")?>
         </th>
         <th class="align_center">
           <?=__('admin_ruling_list_cards')?>
@@ -255,6 +260,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         </th>
         <th>
           <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/rulings_add')?>
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer smallspaced_left', alt: 'R', title: __('admin_rulings_list_regenslugs'), onclick: "admin_rulings_regenerate_all_slugs('".__('admin_rulings_list_regen_go')."')")?>
         </th>
       </tr>
 

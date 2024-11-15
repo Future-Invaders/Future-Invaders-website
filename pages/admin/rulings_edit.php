@@ -104,11 +104,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
   <form action="rulings" method="POST">
     <fieldset>
 
-      <div class="smallpadding_bot">
-        <input type="hidden" name="ruling_id" value="<?=$admin_ruling_id?>">
-        <label for="ruling_name"><?=__('admin_ruling_edit_name')?></label>
-        <input class="indiv" type="text" name="ruling_name" value="<?=$admin_ruling_data['name']?>">
-      </div>
+      <input type="hidden" name="ruling_id" value="<?=$admin_ruling_id?>">
 
       <div class="smallpadding_bot">
         <label for="ruling_date"><?=__('admin_ruling_add_date')?></label>

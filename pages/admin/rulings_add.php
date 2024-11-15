@@ -74,11 +74,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <input class="indiv" type="text" name="ruling_date" value="<?=$current_date?>">
       </div>
 
-      <div class="smallpadding_bot">
-        <label for="ruling_name"><?=__('admin_ruling_add_name')?></label>
-        <input class="indiv" type="text" name="ruling_name">
-      </div>
-
       <div class="flexcontainer padding_bot">
         <div style="flex: 8">
 

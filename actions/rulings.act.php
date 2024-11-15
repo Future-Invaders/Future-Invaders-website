@@ -14,6 +14,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  rulings_edit                     Edits a ruling in the database                                                  */
 /*  rulings_delete                   Deletes a ruling from the database                                              */
 /*                                                                                                                   */
+/*  rulings_generate_slug            Generates a unique slug identifier for a ruling                                 */
+/*  rulings_regenerate_all_slugs     Regenerates all ruling slugs                                                    */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -41,9 +44,9 @@ function rulings_get( int    $ruling_id       ,
   // Fetch the ruling's data
   $ruling_data = query("  SELECT  rulings.id                AS 'r_id'           ,
                                   rulings.uuid              AS 'r_uuid'         ,
+                                  rulings.slug              AS 'r_slug'         ,
                                   rulings.date_ruling       AS 'r_date'         ,
                                   rulings.date_last_update  AS 'r_update'       ,
-                                  rulings.name              AS 'r_name'         ,
                                   rulings.title_en          AS 'r_title_en'     ,
                                   rulings.title_fr          AS 'r_title_fr'     ,
                                   rulings.situation_en      AS 'r_situation_en' ,
@@ -82,7 +85,7 @@ function rulings_get( int    $ruling_id       ,
     $data['update']       = ($ruling_data['r_update'] !== '0000-00-00')
                           ? sanitize_output($ruling_data['r_update'])
                           : '';
-    $data['name']         = sanitize_output($ruling_data['r_name']);
+    $data['slug']         = sanitize_output($ruling_data['r_slug']);
     $data['title_en']     = sanitize_output($ruling_data['r_title_en']);
     $data['title_fr']     = sanitize_output($ruling_data['r_title_fr']);
     $data['situation_en'] = sanitize_output($ruling_data['r_situation_en']);
@@ -174,26 +177,27 @@ function rulings_list(  string  $sort_by  = 'date'  ,
     'body'    => " ORDER BY LENGTH(rulings.ruling_$lang)
                             + LENGTH(rulings.situation_$lang)
                                                       DESC  ,
-                            rulings.name              = ''  ,
-                            rulings.name              ASC   ",
+                            rulings.title_$lang       = ''  ,
+                            rulings.title_$lang       ASC   ",
     'cards'   => " ORDER BY COUNT(DISTINCT cards.id)  DESC  ,
-                            rulings.name              = ''  ,
-                            rulings.name              ASC   ",
+                            rulings.title_$lang       = ''  ,
+                            rulings.title_$lang       ASC   ",
     'tags'    => " ORDER BY COUNT(DISTINCT tags.id)   DESC  ,
-                            rulings.name              = ''  ,
-                            rulings.name              ASC   ",
+                            rulings.title_$lang       = ''  ,
+                            rulings.title_$lang       ASC   ",
     default   => " ORDER BY GREATEST(rulings.date_last_update, rulings.date_ruling)
                                                       DESC  ,
                             rulings.date_ruling       DESC  ,
-                            rulings.name              ASC   ",
+                            rulings.title_$lang       = ''  ,
+                            rulings.title_$lang       ASC   ",
   };
 
   // Fetch the rulings
   $rulings = query("  SELECT    rulings.id                    AS 'r_id'           ,
                                 rulings.uuid                  AS 'r_uuid'         ,
+                                rulings.slug                  AS 'r_slug'         ,
                                 rulings.date_ruling           AS 'r_date'         ,
                                 rulings.date_last_update      AS 'r_update'       ,
-                                rulings.name                  AS 'r_name'         ,
                                 rulings.title_en              AS 'r_title_en'     ,
                                 rulings.title_fr              AS 'r_title_fr'     ,
                                 rulings.title_$lang           AS 'r_title'        ,
@@ -229,6 +233,7 @@ function rulings_list(  string  $sort_by  = 'date'  ,
     {
       // Sanitize ruling data
       $data[$i]['id']           = sanitize_output($row['r_id']);
+      $data[$i]['slug']         = sanitize_output($row['r_slug']);
       $data[$i]['date']         = ($row['r_date'] !== '0000-00-00') ? sanitize_output($row['r_date']) : '';
       $data[$i]['date_since']   = ($row['r_date'] !== '0000-00-00')
                                 ? sanitize_output(time_since(strtotime($row['r_date']))).'<br>'
@@ -239,7 +244,6 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                 ? sanitize_output(time_since(strtotime($row['r_update']))).'<br>'
                                 .sanitize_output(date_to_text($row['r_update'], strip_day: 1))
                                 : '';
-      $data[$i]['name']         = sanitize_output($row['r_name']);
       $data[$i]['title_en']     = sanitize_output($row['r_title_en']);
       $data[$i]['title_fr']     = sanitize_output($row['r_title_fr']);
       $data[$i]['title']        = sanitize_output(string_truncate($row['r_title'], 60, '...'));
@@ -292,7 +296,6 @@ function rulings_add( array $data ) : void
 {
   // Sanitize the data
   $ruling_date          = sanitize($data['ruling_date'], 'string');
-  $ruling_name          = sanitize($data['ruling_name'], 'string');
   $ruling_title_en      = sanitize_array_element($data, 'ruling_title_en', 'string');
   $ruling_title_fr      = sanitize_array_element($data, 'ruling_title_fr', 'string');
   $ruling_situation_en  = sanitize_array_element($data, 'ruling_situation_en', 'string');
@@ -300,15 +303,10 @@ function rulings_add( array $data ) : void
   $ruling_ruling_en     = sanitize_array_element($data, 'ruling_ruling_en', 'string');
   $ruling_ruling_fr     = sanitize_array_element($data, 'ruling_ruling_fr', 'string');
 
-  // Format the name
-  $ruling_name = preg_replace('/[^a-zA-Z0-9\-]/', '-', $ruling_name);
-  $ruling_name = str_replace(' ', '-', $ruling_name);
-
   // Add the ruling to the database
   query(" INSERT INTO rulings
           SET         rulings.uuid           = UUID()                 ,
                       rulings.date_ruling    = '$ruling_date'         ,
-                      rulings.name           = '$ruling_name'         ,
                       rulings.title_en       = '$ruling_title_en'     ,
                       rulings.title_fr       = '$ruling_title_fr'     ,
                       rulings.situation_en   = '$ruling_situation_en' ,
@@ -318,6 +316,9 @@ function rulings_add( array $data ) : void
 
   // Get the newly created ruling's id
   $ruling_id = sanitize(query_id(), "int");
+
+  // Give the ruling a slug
+  rulings_generate_slug($ruling_id);
 
   // Get rid of double card links
   $data['ruling_cards'] = array_unique($data['ruling_cards']);
@@ -363,7 +364,6 @@ function rulings_edit(  int   $ruling_id  ,
 {
   // Sanitize the data
   $ruling_id            = sanitize($ruling_id, 'int');
-  $ruling_name          = sanitize_array_element($data, 'name', 'string');
   $ruling_date          = sanitize_array_element($data, 'date', 'string');
   $ruling_update        = sanitize_array_element($data, 'update', 'string');
   $ruling_title_en      = sanitize_array_element($data, 'title_en', 'string');
@@ -377,18 +377,21 @@ function rulings_edit(  int   $ruling_id  ,
   if(!database_row_exists('rulings', $ruling_id))
     return;
 
-  // Edit the ruling
+  // Edit the ruling and reset its slug
   query(" UPDATE  rulings
-          SET     rulings.name              = '$ruling_name'          ,
-                  rulings.date_ruling       = '$ruling_date'          ,
+          SET     rulings.date_ruling       = '$ruling_date'          ,
                   rulings.date_last_update  = '$ruling_update'        ,
                   rulings.title_en          = '$ruling_title_en'      ,
                   rulings.title_fr          = '$ruling_title_fr'      ,
                   rulings.situation_en      = '$ruling_situation_en'  ,
                   rulings.situation_fr      = '$ruling_situation_fr'  ,
                   rulings.ruling_en         = '$ruling_ruling_en'     ,
-                  rulings.ruling_fr         = '$ruling_ruling_fr'
+                  rulings.ruling_fr         = '$ruling_ruling_fr'     ,
+                  rulings.slug              = ''
           WHERE   rulings.id                = '$ruling_id' ");
+
+  // Regenerate the ruling's slug
+  rulings_generate_slug($ruling_id);
 
   // Fetch a list of linked cards
   $qcards = query(" SELECT  rulings_cards.fk_cards AS 'c_id'
@@ -486,4 +489,77 @@ function rulings_delete( int $ruling_id ) : void
   // Delete linked tags from the database
   query(" DELETE FROM rulings_tags
           WHERE       rulings_tags.fk_rulings = '$ruling_id' ");
+}
+
+
+
+
+/**
+ * Generates a unique slug identifier for a ruling.
+ *
+ * @param   string  $ruling_id  The id of the ruling.
+ *
+ * @return  void
+ */
+
+function rulings_generate_slug( string $ruling_id ) : void
+{
+  // Sanitize the ruling's id
+  $ruling_id = sanitize($ruling_id, 'int');
+
+  // Make sure the ruling exists
+  if(!database_row_exists('rulings', $ruling_id))
+    return;
+
+  // Grab the ruling's english title
+  $ruling_data = query("  SELECT    rulings.title_en AS 'r_title_en'
+                          FROM      rulings
+                          WHERE     rulings.id = '$ruling_id' ",
+                          fetch_row: true);
+
+  // Assemble a tentative slug
+  $title      = ($ruling_data['r_title_en'])
+              ? preg_replace("/[^a-zA-Z0-9-]/", "", str_replace(" ", "-", $ruling_data['r_title_en']))
+              : 'ruling';
+  $slug_title = string_truncate(string_change_case($title, 'lowercase'), 39);
+  $slug       = $slug_title;
+
+  // Increment the slug until it's unique
+  while(database_entry_exists('rulings', 'slug', $slug))
+    $slug = string_increment($slug);
+
+  // Sanitize the slug
+  $slug = sanitize($slug, 'string');
+
+  // Update the slug in the database
+  query(" UPDATE  rulings
+          SET     rulings.slug = '$slug'
+          WHERE   rulings.id   = '$ruling_id' ");
+}
+
+
+
+
+/**
+ * Regenerates all rulings' slugs.
+ *
+ * @return void
+ */
+
+function rulings_regenerate_all_slugs() : void
+{
+  // Delete all existing ruling slugs
+  query(" UPDATE  rulings
+          SET     rulings.slug = '' ");
+
+  // Fetch every ruling's id
+  $rulings = query("  SELECT  rulings.id AS 'a_id'
+                      FROM    rulings ");
+
+  // Loop through all rulings
+  for($i = 0; $row = query_row($rulings); $i++)
+  {
+    // Regenerate the ruling's slug
+    rulings_generate_slug($row['a_id']);
+  }
 }

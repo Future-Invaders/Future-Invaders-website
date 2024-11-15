@@ -28,6 +28,7 @@
 /*  admin_arsenal_difficulties_delete       Triggers the deletion of an entry in the arsenal difficulty list.        */
 /*                                                                                                                   */
 /*  admin_rulings_search                    Searches the ruling list.                                                */
+/*  admin_rulings_regenerate_all_slugs      Triggers the regeneration of all ruling slugs.                           */
 /*  admin_rulings_delete                    Triggers the deletion of an entry in the ruling list.                    */
 /*  admin_rulings_duplicate_cards           Duplicate the cards creation form when editing a ruling.                 */
 /*  admin_rulings_unduplicate_cards         Delete the last created card creation form when editing a ruling.        */
@@ -571,6 +572,24 @@ function admin_rulings_search( sort_data = null )
 
   // Submit the search
   fetch_page('rulings', 'admin_rulings_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the regeneration of all rulings slugs.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_regenerate_all_slugs( message )
+{
+  // Make sure the user knows what they're doing, then trigger the global slug regeneration
+  if(confirm(message))
+    fetch_page('rulings', 'admin_rulingss_tbody', 'admin_rulings_regenerate_slugs=true');
 }
 
 
