@@ -553,6 +553,29 @@ ___('admin_image_delete_confirm', 'FR', "Confirmez la suppression de cette image
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// List rulings
+___('admin_ruling_list_date',         'EN', "Date");
+___('admin_ruling_list_date',         'FR', "Date");
+___('admin_ruling_list_update',       'EN', "Update");
+___('admin_ruling_list_update',       'FR', "Révision");
+___('admin_ruling_list_title',        'EN', "Title");
+___('admin_ruling_list_title',        'FR', "Titre");
+___('admin_ruling_list_body',         'EN', "Ruling");
+___('admin_ruling_list_body',         'FR', "Jugement");
+___('admin_ruling_list_situation_en', 'EN', "Situation");
+___('admin_ruling_list_situation_en', 'FR', "Situation");
+___('admin_ruling_list_situation_fr', 'EN', "Situation");
+___('admin_ruling_list_situation_fr', 'FR', "Situation");
+___('admin_ruling_list_ruling_en',    'EN', "Ruling");
+___('admin_ruling_list_ruling_en',    'FR', "Ruling");
+___('admin_ruling_list_ruling_fr',    'EN', "Jugement");
+___('admin_ruling_list_ruling_fr',    'FR', "Jugement");
+___('admin_ruling_list_count',        'EN', "{{1}} ruling");
+___('admin_ruling_list_count',        'FR', "{{1}} jugement");
+___('admin_ruling_list_count+',       'EN', "{{1}} rulings");
+___('admin_ruling_list_count+',       'FR', "{{1}} jugements");
+
+
 // Add a ruling
 ___('admin_ruling_add_title',         'EN', "New ruling");
 ___('admin_ruling_add_title',         'FR', "Nouveau jugement");
@@ -574,6 +597,11 @@ ___('admin_ruling_add_ruling_fr',     'EN', "Ruling (French)");
 ___('admin_ruling_add_ruling_fr',     'FR', "Jugement (Français)");
 ___('admin_ruling_add_submit',        'EN', "Add ruling");
 ___('admin_ruling_add_submit',        'FR', "Ajouter le jugement");
+
+
+// Delete a ruling
+___('admin_ruling_delete_confirm', 'EN', "Confirm the deletion of this ruling");
+___('admin_ruling_delete_confirm', 'FR', "Confirmez la suppression de ce jugement");
 
 
 

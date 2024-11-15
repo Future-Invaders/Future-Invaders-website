@@ -27,6 +27,8 @@
 /*                                                                                                                   */
 /*  admin_arsenal_difficulties_delete       Triggers the deletion of an entry in the arsenal difficulty list.        */
 /*                                                                                                                   */
+/*  admin_rulings_search                    Searches the ruling list.                                                */
+/*                                                                                                                   */
 /*  admin_tags_search                       Searches the tag list.                                                   */
 /*  admin_tags_delete                       Triggers the deletion of an entry in the tag list.                       */
 /*                                                                                                                   */
@@ -536,6 +538,32 @@ function admin_arsenal_difficulties_delete( message   ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('arsenal_difficulties', 'admin_arsenal_difficulties_tbody', postdata);
+}
+
+
+
+
+/**
+ * Searches for rulings.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_search( sort_data = null )
+{
+  // Update the search input if required
+  if(sort_data)
+    document.getElementById('admin_rulings_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata =  'admin_rulings_sort='           + document.getElementById('admin_rulings_sort').value;
+  postdata += '&admin_rulings_search_title='  + document.getElementById('admin_rulings_search_title').value;
+  postdata += '&admin_rulings_search_body='   + document.getElementById('admin_rulings_search_body').value;
+
+  // Submit the search
+  fetch_page('rulings', 'admin_rulings_tbody', postdata);
 }
 
 
