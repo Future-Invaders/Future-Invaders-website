@@ -564,6 +564,7 @@ function admin_rulings_search( sort_data = null )
   postdata =  'admin_rulings_sort='           + document.getElementById('admin_rulings_sort').value;
   postdata += '&admin_rulings_search_title='  + document.getElementById('admin_rulings_search_title').value;
   postdata += '&admin_rulings_search_body='   + document.getElementById('admin_rulings_search_body').value;
+  postdata += '&admin_rulings_search_cards='  + document.getElementById('admin_rulings_search_cards').value;
 
   // Submit the search
   fetch_page('rulings', 'admin_rulings_tbody', postdata);

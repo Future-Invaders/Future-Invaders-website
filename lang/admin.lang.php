@@ -570,6 +570,8 @@ ___('admin_ruling_list_ruling_en',    'EN', "Ruling");
 ___('admin_ruling_list_ruling_en',    'FR', "Ruling");
 ___('admin_ruling_list_ruling_fr',    'EN', "Jugement");
 ___('admin_ruling_list_ruling_fr',    'FR', "Jugement");
+___('admin_ruling_list_cards',        'EN', "Cards");
+___('admin_ruling_list_cards',        'FR', "Cartes");
 ___('admin_ruling_list_count',        'EN', "{{1}} ruling");
 ___('admin_ruling_list_count',        'FR', "{{1}} jugement");
 ___('admin_ruling_list_count+',       'EN', "{{1}} rulings");

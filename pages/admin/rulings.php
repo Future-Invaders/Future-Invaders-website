@@ -144,8 +144,9 @@ if(isset($_POST['admin_rulings_delete']))
 
 // Fetch the search data
 $admin_rulings_sort        = form_fetch_element('admin_rulings_sort', 'default');
-$admin_rulings_search_data = array( 'title'  =>  form_fetch_element('admin_rulings_search_title') ,
-                                    'body'   =>  form_fetch_element('admin_rulings_search_body')  );
+$admin_rulings_search_data = array( 'title'   =>  form_fetch_element('admin_rulings_search_title')  ,
+                                    'body'    =>  form_fetch_element('admin_rulings_search_body')   ,
+                                    'card_id' =>  form_fetch_element('admin_rulings_search_cards')  );
 
 // Fetch the rulings
 $rulings_list = rulings_list( $admin_rulings_sort        ,
@@ -160,12 +161,16 @@ $rulings_list = rulings_list( $admin_rulings_sort        ,
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';  /****/ include './admin_menu.php'; ?>
 
-<div class="width_50 padding_top">
+<div class="width_60 padding_top">
 
   <table>
     <thead>
 
       <tr class="uppercase">
+        <th class="align_center">
+          <?=__('admin_ruling_list_body')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('body');")?>
+        </th>
         <th class="align_center">
           <?=__('admin_ruling_list_date')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('date');")?>
@@ -179,8 +184,8 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('title');")?>
         </th>
         <th class="align_center">
-          <?=__('admin_ruling_list_body')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('body');")?>
+          <?=__('admin_ruling_list_cards')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_rulings_search('cards');")?>
         </th>
         <th>
           <?=__('act')?>
@@ -189,6 +194,9 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
 
       <tr>
         <th>
+          <input type="text" class="table_search" name="admin_rulings_search_title" id="admin_rulings_search_title" value="" onkeyup="admin_rulings_search();">
+        </th>
+        <th>
           <input type="hidden" name="admin_rulings_sort" id="admin_rulings_sort" value="default">
           &nbsp;
         </th>
@@ -196,10 +204,16 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           &nbsp;
         </th>
         <th>
-          <input type="text" class="table_search" name="admin_rulings_search_title" id="admin_rulings_search_title" value="" onkeyup="admin_rulings_search();">
+          <input type="text" class="table_search" name="admin_rulings_search_body" id="admin_rulings_search_body" value="" onkeyup="admin_rulings_search();">
         </th>
         <th>
-          <input type="text" class="table_search" name="admin_rulings_search_body" id="admin_rulings_search_body" value="" onkeyup="admin_rulings_search();">
+          <select class="table_search" name="admin_rulings_search_cards" id="admin_rulings_search_cards" onchange="admin_rulings_search();">
+            <option value="0">&nbsp;</option>
+            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
+            <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
+            <option value="<?=$card_list[$i]['id']?>"><?=$card_list[$i]['name']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
+            <?php endfor; ?>
+          </select>
         </th>
         <th>
           <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', href: 'pages/admin/rulings_add')?>
@@ -212,13 +226,21 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <?php endif; ?>
 
       <tr>
-        <td colspan="5" class="uppercase text_light dark bold align_center">
+        <td colspan="6" class="uppercase text_light dark bold align_center">
           <?=__('admin_ruling_list_count', preset_values: array($rulings_list['rows']), amount: $rulings_list['rows'])?>
         </td>
       </tr>
 
       <?php for($i = 0; $i < $rulings_list['rows']; $i++): ?>
       <tr id="admin_rulings_row_<?=$rulings_list[$i]['id']?>">
+
+        <td class="align_left nowrap tooltip_container">
+          <?=$rulings_list[$i]['title']?>
+          <div class="tooltip">
+            <?=$rulings_list[$i]['title_en']?><br>
+            <?=$rulings_list[$i]['title_fr']?>
+          </div>
+        </td>
 
         <?php if($rulings_list[$i]['date']): ?>
         <td class="align_center nowrap tooltip_container">
@@ -247,14 +269,6 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
         <?php endif; ?>
 
         <td class="align_center nowrap tooltip_container">
-          <?=$rulings_list[$i]['title']?>
-          <div class="tooltip">
-            <?=$rulings_list[$i]['title_en']?><br>
-            <?=$rulings_list[$i]['title_fr']?>
-          </div>
-        </td>
-
-        <td class="align_center nowrap tooltip_container">
           <?=$rulings_list[$i]['nsituation']?> - <?=$rulings_list[$i]['nruling']?>
           <div class="tooltip dowrap">
             <div class="spaced smallpadding_top smallpadding_bot">
@@ -270,6 +284,19 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
             </div>
           </div>
         </td>
+
+        <?php if($rulings_list[$i]['ncards']): ?>
+        <td class="align_center bold tooltip_container">
+          <?=$rulings_list[$i]['ncards']?>
+          <div class="tooltip">
+            <?=str_replace(', ', '<br>', $rulings_list[$i]['cards'])?>
+          </div>
+        </td>
+        <?php else: ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php endif; ?>
 
         <td class="align_center nowrap">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/admin/rulings_edit?ruling='.$rulings_list[$i]['id'])?>

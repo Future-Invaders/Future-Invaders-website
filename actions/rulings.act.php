@@ -125,8 +125,9 @@ function rulings_list(  string  $sort_by  = 'date'  ,
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Sanitize the search data
-  $search_title = sanitize_array_element($search, 'title', 'string');
-  $search_body  = sanitize_array_element($search, 'body', 'string');
+  $search_title   = sanitize_array_element($search, 'title', 'string');
+  $search_body    = sanitize_array_element($search, 'body', 'string');
+  $search_card_id = sanitize_array_element($search, 'card_id', 'int');
 
   // Search through the data
   $query_search  = ($search_title)  ? " WHERE ( rulings.title_en      LIKE '%$search_title%'
@@ -135,6 +136,13 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                         OR      rulings.ruling_fr     LIKE '%$search_body%'
                                         OR      rulings.situation_en  LIKE '%$search_body%'
                                         OR      rulings.situation_fr  LIKE '%$search_body%' ) "   : "";
+  $query_search .= ($search_card_id === -1)
+                                    ? " AND     rulings_cards.fk_cards IS NULL "                  : "";
+
+  // Use a different search technique for linked cards
+  $query_having = ($search_card_id && $search_card_id !== -1)
+                ? " HAVING FIND_IN_SET('$search_card_id', GROUP_CONCAT(cards.id)) > 0 "
+                : " HAVING 1 = 1 ";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -148,6 +156,9 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                                       DESC  ,
                             rulings.name              = ''  ,
                             rulings.name              ASC   ",
+    'cards'   => " ORDER BY COUNT(DISTINCT cards.id)  DESC  ,
+                            rulings.name              = ''  ,
+                            rulings.name              ASC   ",
     default   => " ORDER BY GREATEST(rulings.date_last_update, rulings.date_ruling)
                                                       DESC  ,
                             rulings.date_ruling       DESC  ,
@@ -155,22 +166,30 @@ function rulings_list(  string  $sort_by  = 'date'  ,
   };
 
   // Fetch the rulings
-  $rulings = query("  SELECT    rulings.id                AS 'r_id'           ,
-                                rulings.uuid              AS 'r_uuid'         ,
-                                rulings.date_ruling       AS 'r_date'         ,
-                                rulings.date_last_update  AS 'r_update'       ,
-                                rulings.name              AS 'r_name'         ,
-                                rulings.title_en          AS 'r_title_en'     ,
-                                rulings.title_fr          AS 'r_title_fr'     ,
-                                rulings.title_$lang       AS 'r_title'        ,
-                                rulings.situation_en      AS 'r_situation_en' ,
-                                rulings.situation_fr      AS 'r_situation_fr' ,
-                                rulings.situation_$lang   AS 'r_situation'    ,
-                                rulings.ruling_en         AS 'r_ruling_en'    ,
-                                rulings.ruling_fr         AS 'r_ruling_fr'    ,
-                                rulings.ruling_$lang      AS 'r_ruling'
+  $rulings = query("  SELECT    rulings.id                    AS 'r_id'           ,
+                                rulings.uuid                  AS 'r_uuid'         ,
+                                rulings.date_ruling           AS 'r_date'         ,
+                                rulings.date_last_update      AS 'r_update'       ,
+                                rulings.name                  AS 'r_name'         ,
+                                rulings.title_en              AS 'r_title_en'     ,
+                                rulings.title_fr              AS 'r_title_fr'     ,
+                                rulings.title_$lang           AS 'r_title'        ,
+                                rulings.situation_en          AS 'r_situation_en' ,
+                                rulings.situation_fr          AS 'r_situation_fr' ,
+                                rulings.situation_$lang       AS 'r_situation'    ,
+                                rulings.ruling_en             AS 'r_ruling_en'    ,
+                                rulings.ruling_fr             AS 'r_ruling_fr'    ,
+                                rulings.ruling_$lang          AS 'r_ruling'       ,
+                                COUNT(DISTINCT cards.id)      AS 'rc_count'       ,
+                                GROUP_CONCAT( DISTINCT  cards.name_$lang
+                                              ORDER BY  cards.name_$lang ASC
+                                              SEPARATOR ', ') AS 'rc_names'
                       FROM      rulings
+                      LEFT JOIN rulings_cards ON rulings.id             = rulings_cards.fk_rulings
+                      LEFT JOIN cards         ON rulings_cards.fk_cards = cards.id
                       $query_search
+                      GROUP BY  rulings.id
+                      $query_having
                       $query_sort ");
 
   // Prepare the data for display
@@ -181,28 +200,28 @@ function rulings_list(  string  $sort_by  = 'date'  ,
     {
       // Sanitize ruling data
       $data[$i]['id']           = sanitize_output($row['r_id']);
-      $data[$i]['date']         = ($row['r_date'] !== '0000-00-00')
-                                ? sanitize_output(date_to_text($row['r_date'], strip_day: 1))
-                                : '';
+      $data[$i]['date']         = ($row['r_date'] !== '0000-00-00') ? sanitize_output($row['r_date']) : '';
       $data[$i]['date_since']   = ($row['r_date'] !== '0000-00-00')
-                                ? sanitize_output(time_since(strtotime($row['r_date'])))
+                                ? sanitize_output(time_since(strtotime($row['r_date']))).'<br>'
+                                  .sanitize_output(date_to_text($row['r_date'], strip_day: 1))
                                 : '';
-      $data[$i]['update']       = ($row['r_update'] !== '0000-00-00')
-                                ? sanitize_output(date_to_text($row['r_update'], strip_day: 1))
-                                : '';
+      $data[$i]['update']       = ($row['r_update'] !== '0000-00-00') ? sanitize_output($row['r_update']) : '';
       $data[$i]['update_since'] = ($row['r_update'] !== '0000-00-00')
-                                ? sanitize_output(time_since(strtotime($row['r_update'])))
+                                ? sanitize_output(time_since(strtotime($row['r_update']))).'<br>'
+                                .sanitize_output(date_to_text($row['r_update'], strip_day: 1))
                                 : '';
       $data[$i]['name']         = sanitize_output($row['r_name']);
       $data[$i]['title_en']     = sanitize_output($row['r_title_en']);
       $data[$i]['title_fr']     = sanitize_output($row['r_title_fr']);
-      $data[$i]['title']        = sanitize_output($row['r_title']);
+      $data[$i]['title']        = sanitize_output(string_truncate($row['r_title'], 60, '...'));
       $data[$i]['situation_en'] = nl2br($row['r_situation_en']);
       $data[$i]['situation_fr'] = nl2br($row['r_situation_fr']);
       $data[$i]['nsituation']   = mb_strlen($row['r_situation']);
       $data[$i]['ruling_en']    = nl2br($row['r_ruling_en']);
       $data[$i]['ruling_fr']    = nl2br($row['r_ruling_fr']);
       $data[$i]['nruling']      = mb_strlen($row['r_ruling']);
+      $data[$i]['ncards']       = sanitize_output($row['rc_count']);
+      $data[$i]['cards']        = sanitize_output($row['rc_names']);
     }
 
     // Prepare for the API
