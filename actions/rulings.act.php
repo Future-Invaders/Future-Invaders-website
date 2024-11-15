@@ -8,10 +8,84 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  rulings_get                      Returns data related to a ruling                                                */
 /*  rulings_list                     Lists rulings in the database                                                   */
 /*  rulings_add                      Adds a ruling to the database                                                   */
+/*  rulings_edit                     Edits a ruling in the database                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Returns data related to a ruling.
+ *
+ * @param   int         $ruling_id   The id of the ruling.
+ * @param   string      $format      Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array|null              An array containing the ruling's data, or null if the ruling does not exist.
+ */
+
+function rulings_get( int    $ruling_id       ,
+                      string $format = 'html' ) : array|null
+{
+  // Sanitize the ruling's id
+  $ruling_id = sanitize($ruling_id, 'int');
+
+  // Return null if the ruling does not exist
+  if(!database_row_exists('rulings', $ruling_id))
+    return null;
+
+  // Fetch the ruling's data
+  $ruling_data = query("  SELECT  rulings.id                AS 'r_id'           ,
+                                  rulings.uuid              AS 'r_uuid'         ,
+                                  rulings.date_ruling       AS 'r_date'         ,
+                                  rulings.date_last_update  AS 'r_update'       ,
+                                  rulings.name              AS 'r_name'         ,
+                                  rulings.title_en          AS 'r_title_en'     ,
+                                  rulings.title_fr          AS 'r_title_fr'     ,
+                                  rulings.situation_en      AS 'r_situation_en' ,
+                                  rulings.situation_fr      AS 'r_situation_fr' ,
+                                  rulings.ruling_en         AS 'r_ruling_en'    ,
+                                  rulings.ruling_fr         AS 'r_ruling_fr'
+                          FROM    rulings
+                          WHERE   rulings.id = '$ruling_id' ",
+                          fetch_row: true);
+
+  // Assemble an array with the ruling's data
+  if($format === 'html')
+  {
+    $data['id']           = sanitize_output($ruling_data['r_id']);
+    $data['date']         = ($ruling_data['r_date'] !== '0000-00-00')
+                          ? sanitize_output($ruling_data['r_date'])
+                          : '';
+    $data['update']       = ($ruling_data['r_update'] !== '0000-00-00')
+                          ? sanitize_output($ruling_data['r_update'])
+                          : '';
+    $data['name']         = sanitize_output($ruling_data['r_name']);
+    $data['title_en']     = sanitize_output($ruling_data['r_title_en']);
+    $data['title_fr']     = sanitize_output($ruling_data['r_title_fr']);
+    $data['situation_en'] = sanitize_output($ruling_data['r_situation_en']);
+    $data['situation_fr'] = sanitize_output($ruling_data['r_situation_fr']);
+    $data['ruling_en']    = sanitize_output($ruling_data['r_ruling_en']);
+    $data['ruling_fr']    = sanitize_output($ruling_data['r_ruling_fr']);
+  }
+
+  // Prepare for the API
+  if($format === 'api')
+  {
+    // Sanitize ruling data
+    $data['uuid'] = sanitize_json($ruling_data['r_uuid']);
+
+    // Prepare for the API
+    $data = (isset($data)) ? $data : NULL;
+    $data = array('ruling' => $data);
+  }
+
+  // Return the ruling's data
+  return $data;
+}
+
+
+
 
 /**
  * Lists rulings in the database.
@@ -171,4 +245,49 @@ function rulings_add( array $data ) : void
                       rulings.situation_fr   = '$ruling_situation_fr' ,
                       rulings.ruling_en      = '$ruling_ruling_en'    ,
                       rulings.ruling_fr      = '$ruling_ruling_fr'    ");
+}
+
+
+
+
+/**
+ * Edits a ruling in the database.
+ *
+ * @param   int         $ruling_id   The id of the ruling to edit.
+ * @param   array       $data        An array containing the ruling's data.
+ *
+ * @return  void
+ */
+
+function rulings_edit(  int   $ruling_id  ,
+                        array $data       ) : void
+{
+  // Sanitize the data
+  $ruling_id            = sanitize($ruling_id, 'int');
+  $ruling_name          = sanitize_array_element($data, 'name', 'string');
+  $ruling_date          = sanitize_array_element($data, 'date', 'string');
+  $ruling_update        = sanitize_array_element($data, 'update', 'string');
+  $ruling_title_en      = sanitize_array_element($data, 'title_en', 'string');
+  $ruling_title_fr      = sanitize_array_element($data, 'title_fr', 'string');
+  $ruling_situation_en  = sanitize_array_element($data, 'situation_en', 'string');
+  $ruling_situation_fr  = sanitize_array_element($data, 'situation_fr', 'string');
+  $ruling_ruling_en     = sanitize_array_element($data, 'ruling_en', 'string');
+  $ruling_ruling_fr     = sanitize_array_element($data, 'ruling_fr', 'string');
+
+  // Stop here if the ruling does not exist
+  if(!database_row_exists('rulings', $ruling_id))
+    return;
+
+  // Edit the ruling
+  query(" UPDATE  rulings
+          SET     rulings.name              = '$ruling_name'          ,
+                  rulings.date_ruling       = '$ruling_date'          ,
+                  rulings.date_last_update  = '$ruling_update'        ,
+                  rulings.title_en          = '$ruling_title_en'      ,
+                  rulings.title_fr          = '$ruling_title_fr'      ,
+                  rulings.situation_en      = '$ruling_situation_en'  ,
+                  rulings.situation_fr      = '$ruling_situation_fr'  ,
+                  rulings.ruling_en         = '$ruling_ruling_en'     ,
+                  rulings.ruling_fr         = '$ruling_ruling_fr'
+          WHERE   rulings.id                = '$ruling_id' ");
 }

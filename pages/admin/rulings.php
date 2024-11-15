@@ -62,6 +62,44 @@ if(isset($_POST['ruling_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a ruling
+
+if(isset($_POST['ruling_edit']))
+{
+  // Gather the ruling's id
+  $ruling_edit_id = form_fetch_element('ruling_id');
+
+  // Gather ruling postdata
+  $ruling_edit_name         = form_fetch_element('ruling_name');
+  $ruling_edit_date         = form_fetch_element('ruling_date');
+  $ruling_edit_update       = form_fetch_element('ruling_update');
+  $ruling_edit_title_en     = form_fetch_element('ruling_title_en');
+  $ruling_edit_title_fr     = form_fetch_element('ruling_title_fr');
+  $ruling_edit_situation_en = form_fetch_element('ruling_situation_en');
+  $ruling_edit_situation_fr = form_fetch_element('ruling_situation_fr');
+  $ruling_edit_ruling_en    = form_fetch_element('ruling_ruling_en');
+  $ruling_edit_ruling_fr    = form_fetch_element('ruling_ruling_fr');
+
+  // Assemble an array with the ruling postdata
+  $ruling_edit_data = array( 'name'         => $ruling_edit_name          ,
+                             'date'         => $ruling_edit_date          ,
+                             'update'       => $ruling_edit_update        ,
+                             'title_en'     => $ruling_edit_title_en      ,
+                             'title_fr'     => $ruling_edit_title_fr      ,
+                             'situation_en' => $ruling_edit_situation_en  ,
+                             'situation_fr' => $ruling_edit_situation_fr  ,
+                             'ruling_en'    => $ruling_edit_ruling_en     ,
+                             'ruling_fr'    => $ruling_edit_ruling_fr     );
+
+  // Edit the ruling
+  rulings_edit(  $ruling_edit_id    ,
+                 $ruling_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch rulings
 
 // Fetch the search data

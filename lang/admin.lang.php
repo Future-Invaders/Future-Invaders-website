@@ -599,6 +599,17 @@ ___('admin_ruling_add_submit',        'EN', "Add ruling");
 ___('admin_ruling_add_submit',        'FR', "Ajouter le jugement");
 
 
+// Edit a ruling
+___('admin_ruling_edit_title',  'EN', "Edit ruling");
+___('admin_ruling_edit_title',  'FR', "Modifier le jugement");
+___('admin_ruling_edit_name',   'EN', "Ruling name (only edit it if necessary)");
+___('admin_ruling_edit_name',   'FR', "Nom du jugement (modifier que si nécessaire)");
+___('admin_ruling_edit_update', 'EN', "Revised ruling date (YYYY-MM-DD)");
+___('admin_ruling_edit_update', 'FR', "Date de révision (AAAA-MM-JJ)");
+___('admin_ruling_edit_submit', 'EN', "Edit ruling");
+___('admin_ruling_edit_submit', 'FR', "Modifier le jugement");
+
+
 // Delete a ruling
 ___('admin_ruling_delete_confirm', 'EN', "Confirm the deletion of this ruling");
 ___('admin_ruling_delete_confirm', 'FR', "Confirmez la suppression de ce jugement");
