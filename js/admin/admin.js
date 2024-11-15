@@ -29,6 +29,8 @@
 /*                                                                                                                   */
 /*  admin_rulings_search                    Searches the ruling list.                                                */
 /*  admin_rulings_delete                    Triggers the deletion of an entry in the ruling list.                    */
+/*  admin_rulings_duplicate_cards           Duplicate the cards creation form when editing a ruling.                 */
+/*  admin_rulings_unduplicate_cards         Delete the last created card creation form when editing a ruling.        */
 /*                                                                                                                   */
 /*  admin_tags_search                       Searches the tag list.                                                   */
 /*  admin_tags_delete                       Triggers the deletion of an entry in the tag list.                       */
@@ -588,6 +590,63 @@ function admin_rulings_delete( message   ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('rulings', 'admin_rulings_tbody', postdata);
+}
+
+
+
+
+/**
+ * Duplicate the cards creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_duplicate_cards()
+{
+  // Fetch the element containing the card form and clone it
+  const cards_form_div      = document.getElementById("rulings_cards");
+  const new_cards_form_div  = cards_form_div.cloneNode(true);
+
+  // Clear input and select values in the cloned div
+  const inputs = new_cards_form_div.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+  const selects = new_cards_form_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
+
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("rulings_cards_container").appendChild(new_cards_form_div);
+}
+
+
+
+
+/**
+ * Delete the last created card creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_unduplicate_cards()
+{
+  // Fetch the element containing the card selectors and its parent container
+  const cards_list_container = document.getElementById("rulings_cards_container");
+  const cards_list_div       = document.getElementById("rulings_cards");
+
+  // If there's more than one card selector, delete the last one
+  if(cards_list_container.children.length > 1 && cards_list_container.lastElementChild !== cards_list_div)
+  {
+    const cards_list_last_element = cards_list_container.lastElementChild;
+    cards_list_container.removeChild(cards_list_last_element);
+  }
+
+  // If there's only one card selector left, clear its input and select values
+  else
+  {
+    const inputs = cards_list_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = cards_list_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
+  }
 }
 
 

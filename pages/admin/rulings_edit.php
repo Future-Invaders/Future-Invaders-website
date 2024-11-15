@@ -5,6 +5,7 @@
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';    # Core
 include_once './../../actions/rulings.act.php'; # Rulings management
+include_once './../../actions/cards.act.php';   # Card management
 include_once './../../lang/admin.lang.php';     # Admin translations
 
 // Page summary
@@ -40,6 +41,28 @@ $admin_ruling_data = rulings_get($admin_ruling_id);
 // Stop here if the ruling does not exist
 if(!$admin_ruling_data)
   exit(header("Location: ".$path."pages/admin/rulings"));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch cards linked to the ruling
+
+// Fetch a list of non-extra cards
+$card_list = cards_list(  sort_by:  'name'                            ,
+                          search:   array(  'is_not_extra' => true  ) );
+
+// Select the ruling's linked cards
+for($i = 0; $i < $admin_ruling_data['cards']['rows']; $i++)
+{
+  for($j = 0; $j < $card_list['rows']; $j++)
+  {
+    if($card_list[$j]['id'] === $admin_ruling_data['cards']['id'][$i])
+      $ruling_card_selected[$i][$j] = ' selected';
+    else
+      $ruling_card_selected[$i][$j] = '';
+  }
+}
 
 
 
@@ -115,6 +138,43 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
           </div>
 
         </div>
+      </div>
+
+      <div id="rulings_cards_container">
+
+        <label><?=__('admin_ruling_add_cards')?></label>
+
+        <?php if($admin_ruling_data['cards']['rows']): ?>
+        <?php for($i = 0; $i < $admin_ruling_data['cards']['rows']; $i++): ?>
+        <div id="rulings_cards" class="smallpadding_bot flexcontainer">
+          <div style="flex: 6">
+            <select class="indiv align_left" name="rulings_cards[]">
+              <option value="">&nbsp;</option>
+              <?php for($j = 0; $j < $card_list['rows']; $j++): ?>
+              <option value="<?=$card_list[$j]['id']?>"<?=$ruling_card_selected[$i][$j]?>><?=$card_list[$j]['name']?> [<?=$card_list[$j]['release']?>] [<?=$card_list[$j]['type']?>]</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+        </div>
+        <?php endfor; ?>
+
+        <?php else: ?>
+        <div id="rulings_cards" class="smallpadding_bot flexcontainer">
+          <div style="flex: 6">
+            <select class="indiv align_left" name="rulings_cards[]">
+              <option value="">&nbsp;</option>
+              <?php for($i = 0; $i < $card_list['rows']; $i++): ?>
+              <option value="<?=$card_list[$i]['id']?>""><?=$card_list[$i]['name']?> [<?=$card_list[$i]['release']?>] [<?=$card_list[$i]['type']?>]</option>
+              <?php endfor; ?>
+            </select>
+          </div>
+        </div>
+        <?php endif; ?>
+
+      </div>
+      <div class="padding_bot">
+        <?=__icon('duplicate', alt: 'D', title: __('duplicate'), title_case: 'initials', class: 'valign_middle pointer spaced_right', onclick: 'admin_rulings_duplicate_cards();')?>
+        <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', class: 'valign_middle pointer', onclick: 'admin_rulings_unduplicate_cards();')?>
       </div>
 
       <input type="submit" name="ruling_edit" value="<?=__('admin_ruling_edit_submit')?>">

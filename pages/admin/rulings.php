@@ -6,6 +6,7 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../inc/functions_time.inc.php';  # Time management
 include_once './../../actions/rulings.act.php';     # Rulings management
+include_once './../../actions/cards.act.php';       # Card management
 include_once './../../lang/admin.lang.php';         # Admin translations
 
 // Page summary
@@ -30,6 +31,16 @@ $js   = array('admin/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of elements needed for search menus
+
+// List of cards
+$card_list = cards_list(  sort_by:  'name'                            ,
+                          search:   array(  'is_not_extra' => true  ) );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Add a ruling
 
 if(isset($_POST['ruling_add']))
@@ -44,6 +55,15 @@ if(isset($_POST['ruling_add']))
   $ruling_add_ruling_en     = form_fetch_element('ruling_ruling_en');
   $ruling_add_ruling_fr     = form_fetch_element('ruling_ruling_fr');
 
+  // Gather cards postdata
+  if(isset($_POST['rulings_cards']))
+  {
+    for($i = 0; $i < count($_POST['rulings_cards']); $i++)
+      $ruling_add_cards[$i] = $_POST['rulings_cards'][$i];
+  }
+  else
+    $ruling_add_cards = array();
+
   // Assemble an array with the postdata
   $ruling_add_data = array( 'ruling_date'         => $ruling_add_date         ,
                             'ruling_name'         => $ruling_add_name         ,
@@ -52,7 +72,8 @@ if(isset($_POST['ruling_add']))
                             'ruling_situation_en' => $ruling_add_situation_en ,
                             'ruling_situation_fr' => $ruling_add_situation_fr ,
                             'ruling_ruling_en'    => $ruling_add_ruling_en    ,
-                            'ruling_ruling_fr'    => $ruling_add_ruling_fr    );
+                            'ruling_ruling_fr'    => $ruling_add_ruling_fr    ,
+                            'ruling_cards'        => $ruling_add_cards         );
 
   // Add the ruling to the database
   rulings_add($ruling_add_data);
@@ -80,16 +101,26 @@ if(isset($_POST['ruling_edit']))
   $ruling_edit_ruling_en    = form_fetch_element('ruling_ruling_en');
   $ruling_edit_ruling_fr    = form_fetch_element('ruling_ruling_fr');
 
+  // Gather cards postdata
+  if(isset($_POST['rulings_cards']))
+  {
+    for($i = 0; $i < count($_POST['rulings_cards']); $i++)
+      $ruling_add_cards[$i] = $_POST['rulings_cards'][$i];
+  }
+  else
+    $ruling_add_cards = array();
+
   // Assemble an array with the ruling postdata
-  $ruling_edit_data = array( 'name'         => $ruling_edit_name          ,
-                             'date'         => $ruling_edit_date          ,
-                             'update'       => $ruling_edit_update        ,
-                             'title_en'     => $ruling_edit_title_en      ,
-                             'title_fr'     => $ruling_edit_title_fr      ,
-                             'situation_en' => $ruling_edit_situation_en  ,
-                             'situation_fr' => $ruling_edit_situation_fr  ,
-                             'ruling_en'    => $ruling_edit_ruling_en     ,
-                             'ruling_fr'    => $ruling_edit_ruling_fr     );
+  $ruling_edit_data = array(  'name'          => $ruling_edit_name          ,
+                              'date'          => $ruling_edit_date          ,
+                              'update'        => $ruling_edit_update        ,
+                              'title_en'      => $ruling_edit_title_en      ,
+                              'title_fr'      => $ruling_edit_title_fr      ,
+                              'situation_en'  => $ruling_edit_situation_en  ,
+                              'situation_fr'  => $ruling_edit_situation_fr  ,
+                              'ruling_en'     => $ruling_edit_ruling_en     ,
+                              'ruling_fr'     => $ruling_edit_ruling_fr     ,
+                              'cards'         => $ruling_add_cards          );
 
   // Edit the ruling
   rulings_edit(  $ruling_edit_id    ,

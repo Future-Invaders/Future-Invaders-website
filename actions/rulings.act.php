@@ -35,6 +35,9 @@ function rulings_get( int    $ruling_id       ,
   if(!database_row_exists('rulings', $ruling_id))
     return null;
 
+  // Get the user's current language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
   // Fetch the ruling's data
   $ruling_data = query("  SELECT  rulings.id                AS 'r_id'           ,
                                   rulings.uuid              AS 'r_uuid'         ,
@@ -51,9 +54,20 @@ function rulings_get( int    $ruling_id       ,
                           WHERE   rulings.id = '$ruling_id' ",
                           fetch_row: true);
 
+  // Sanitize the ruling's id
+  $ruling_id = sanitize($ruling_data['r_id'], 'int');
+
+  // Fetch linked cards
+  $qcards = query(" SELECT    rulings_cards.fk_cards AS 'c_id'
+                    FROM      rulings_cards
+                    LEFT JOIN cards ON rulings_cards.fk_cards = cards.id
+                    WHERE     rulings_cards.fk_rulings = '$ruling_id'
+                    ORDER BY  cards.name_$lang ASC ");
+
   // Assemble an array with the ruling's data
   if($format === 'html')
   {
+    // Ruling data
     $data['id']           = sanitize_output($ruling_data['r_id']);
     $data['date']         = ($ruling_data['r_date'] !== '0000-00-00')
                           ? sanitize_output($ruling_data['r_date'])
@@ -68,6 +82,11 @@ function rulings_get( int    $ruling_id       ,
     $data['situation_fr'] = sanitize_output($ruling_data['r_situation_fr']);
     $data['ruling_en']    = sanitize_output($ruling_data['r_ruling_en']);
     $data['ruling_fr']    = sanitize_output($ruling_data['r_ruling_fr']);
+
+    // Card data
+    for($i = 0; $dcards = query_row($qcards); $i++)
+      $data['cards']['id'][$i] = $dcards['c_id'];
+    $data['cards']['rows'] = $i;
   }
 
   // Prepare for the API
@@ -246,6 +265,22 @@ function rulings_add( array $data ) : void
                       rulings.situation_fr   = '$ruling_situation_fr' ,
                       rulings.ruling_en      = '$ruling_ruling_en'    ,
                       rulings.ruling_fr      = '$ruling_ruling_fr'    ");
+
+  // Get the newly created ruling's id
+  $ruling_id = sanitize(query_id(), "int");
+
+  // Get rid of double card links
+  $data['ruling_cards'] = array_unique($data['ruling_cards']);
+
+  // Add the arsenal's factions to the database
+  foreach($data['ruling_cards'] as $card_id)
+  {
+    $card_id = sanitize($card_id, 'int');
+    if($card_id !== 0)
+      query(" INSERT INTO rulings_cards
+              SET         rulings_cards.fk_rulings  = '$ruling_id'  ,
+                          rulings_cards.fk_cards    = '$card_id'    ");
+  }
 }
 
 
@@ -291,6 +326,40 @@ function rulings_edit(  int   $ruling_id  ,
                   rulings.ruling_en         = '$ruling_ruling_en'     ,
                   rulings.ruling_fr         = '$ruling_ruling_fr'
           WHERE   rulings.id                = '$ruling_id' ");
+
+  // Fetch a list of linked cards
+  $qcards = query(" SELECT    rulings_cards.fk_cards AS 'c_id'
+                    FROM      rulings_cards
+                    WHERE     rulings_cards.fk_rulings = '$ruling_id' ");
+
+  // Place these cards in an array
+  $ruling_cards = array();
+  while($dcards = query_row($qcards))
+    $ruling_cards[] = $dcards['c_id'];
+
+  // Get rid of double entries in the linked cards
+  $data['cards'] = array_unique($data['cards']);
+
+  // Look for cards missing from the edited data and add them to the database
+  $missing_cards = array_diff($data['cards'], $ruling_cards);
+  foreach($missing_cards as $missing_card)
+  {
+    $missing_card = sanitize($missing_card, 'int');
+    if($missing_card !== 0)
+      query(" INSERT INTO rulings_cards
+              SET         rulings_cards.fk_rulings = '$ruling_id' ,
+                          rulings_cards.fk_cards    = '$missing_card' ");
+  }
+
+  // Look for extra cards in the edited data and remove them from the database
+  $extra_cards = array_diff($ruling_cards, $data['cards']);
+  foreach($extra_cards as $extra_card)
+  {
+    $extra_card = sanitize($extra_card, 'int');
+    query(" DELETE FROM rulings_cards
+            WHERE       rulings_cards.fk_rulings = '$ruling_id'
+            AND         rulings_cards.fk_cards    = '$extra_card' ");
+  }
 }
 
 
@@ -312,4 +381,8 @@ function rulings_delete( int $ruling_id ) : void
   // Delete the ruling from the database
   query(" DELETE FROM rulings
           WHERE       rulings.id = '$ruling_id' ");
+
+  // Delete linked cards from the database
+  query(" DELETE FROM rulings_cards
+          WHERE       rulings_cards.fk_rulings = '$ruling_id' ");
 }

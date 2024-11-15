@@ -595,6 +595,8 @@ ___('admin_ruling_add_ruling_en',     'EN', "Ruling (English)");
 ___('admin_ruling_add_ruling_en',     'FR', "Jugement (Anglais)");
 ___('admin_ruling_add_ruling_fr',     'EN', "Ruling (French)");
 ___('admin_ruling_add_ruling_fr',     'FR', "Jugement (Français)");
+___('admin_ruling_add_cards',         'EN', "Linked cards");
+___('admin_ruling_add_cards',         'FR', "Cartes liées");
 ___('admin_ruling_add_submit',        'EN', "Add ruling");
 ___('admin_ruling_add_submit',        'FR', "Ajouter le jugement");
 
