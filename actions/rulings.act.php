@@ -140,10 +140,12 @@ function rulings_list(  string  $sort_by  = 'date'  ,
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Sanitize the search data
-  $search_title   = sanitize_array_element($search, 'title', 'string');
-  $search_body    = sanitize_array_element($search, 'body', 'string');
-  $search_card_id = sanitize_array_element($search, 'card_id', 'int');
-  $search_tag_id  = sanitize_array_element($search, 'tag_id', 'int');
+  $search_title     = sanitize_array_element($search, 'title', 'string');
+  $search_body      = sanitize_array_element($search, 'body', 'string');
+  $search_card_id   = sanitize_array_element($search, 'card_id', 'int');
+  $search_card_uuid = sanitize_array_element($search, 'card_uuid', 'string');
+  $search_tag_id    = sanitize_array_element($search, 'tag_id', 'int');
+  $search_tag_uuid  = sanitize_array_element($search, 'tag_uuid', 'string');
 
   // Search through the data
   $query_search  = ($search_title)  ? " WHERE ( rulings.title_en        LIKE '%$search_title%'
@@ -161,10 +163,16 @@ function rulings_list(  string  $sort_by  = 'date'  ,
   $query_having = ($search_card_id && $search_card_id !== -1)
                 ? " HAVING FIND_IN_SET('$search_card_id', GROUP_CONCAT(cards.id)) > 0 "
                 : " HAVING 1 = 1 ";
+  $query_having .= ($search_card_uuid && $search_card_uuid !== -1)
+                ? " AND FIND_IN_SET('$search_card_uuid', GROUP_CONCAT(cards.uuid)) > 0 "
+                : "";
 
   // Use a different search technique for linked tags
   $query_having .= ($search_tag_id && $search_tag_id !== -1)
                 ? " AND FIND_IN_SET('$search_tag_id', GROUP_CONCAT(tags.id)) > 0 "
+                : "";
+  $query_having .= ($search_tag_uuid && $search_tag_uuid !== -1)
+                ? " AND FIND_IN_SET('$search_tag_uuid', GROUP_CONCAT(tags.uuid)) > 0 "
                 : "";
 
   // Sort the data
@@ -185,6 +193,11 @@ function rulings_list(  string  $sort_by  = 'date'  ,
     'tags'    => " ORDER BY COUNT(DISTINCT tags.id)   DESC  ,
                             rulings.title_$lang       = ''  ,
                             rulings.title_$lang       ASC   ",
+    'api'     => " ORDER BY GREATEST(rulings.date_last_update, rulings.date_ruling)
+                                                      DESC  ,
+                            rulings.date_ruling       DESC  ,
+                            rulings.title_en          = ''  ,
+                            rulings.title_en          ASC   ",
     default   => " ORDER BY GREATEST(rulings.date_last_update, rulings.date_ruling)
                                                       DESC  ,
                             rulings.date_ruling       DESC  ,
@@ -209,9 +222,21 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                 rulings.ruling_$lang          AS 'r_ruling'       ,
                                 COUNT(DISTINCT cards.id)      AS 'rc_count'       ,
                                 COUNT(DISTINCT tags.id)       AS 'rt_count'       ,
+                                GROUP_CONCAT( DISTINCT  cards.uuid
+                                              ORDER BY  cards.name_en ASC
+                                              SEPARATOR ', ') AS 'rc_uuids'       ,
                                 GROUP_CONCAT( DISTINCT  cards.name_$lang
                                               ORDER BY  cards.name_$lang ASC
                                               SEPARATOR ', ') AS 'rc_names'       ,
+                                GROUP_CONCAT( DISTINCT  cards.name_en
+                                              ORDER BY  cards.name_en ASC
+                                              SEPARATOR ', ') AS 'rc_names_en'   ,
+                                GROUP_CONCAT( DISTINCT  cards.name_fr
+                                              ORDER BY  cards.name_fr ASC
+                                              SEPARATOR ', ') AS 'rc_names_fr'   ,
+                                GROUP_CONCAT( DISTINCT  tags.uuid
+                                              ORDER BY  tags.name ASC
+                                              SEPARATOR ', ')   AS 'rt_uuids'     ,
                                 GROUP_CONCAT( DISTINCT  tags.name
                                               ORDER BY  tags.name ASC
                                               SEPARATOR ', ')   AS 'rt_names'
@@ -262,7 +287,35 @@ function rulings_list(  string  $sort_by  = 'date'  ,
     // Prepare for the API
     if($format === 'api')
     {
-      $data[$i]['uuid'] = sanitize_json($row['r_uuid']);
+      // Ruling data
+      $data[$i]['uuid']     = sanitize_json($row['r_uuid']);
+      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/ruling/'.$row['r_slug']);
+      $data[$i]['url']      = sanitize_json($GLOBALS['website_url'].'pages/ruling/'.$row['r_slug']);
+
+      // Ruling dates
+      if($row['r_date'] !== '0000-00-00')
+        $data[$i]['date']['ruling_made']  = sanitize_json($row['r_date']);
+      if($row['r_update'] !== '0000-00-00')
+        $data[$i]['date']['last_updated'] = sanitize_json($row['r_update']);
+      if($row['r_date'] === '0000-00-00' && $row['r_update'] === '0000-00-00')
+        $data[$i]['date']                 = array();
+
+      // Ruling text
+      $data[$i]['title']['en']      = sanitize_json($row['r_title_en']);
+      $data[$i]['title']['fr']      = sanitize_json($row['r_title_fr']);
+      $data[$i]['situation']['en']  = sanitize_json($row['r_situation_en']);
+      $data[$i]['situation']['fr']  = sanitize_json($row['r_situation_fr']);
+      $data[$i]['ruling']['en']     = sanitize_json($row['r_ruling_en']);
+      $data[$i]['ruling']['fr']     = sanitize_json($row['r_ruling_fr']);
+
+      // Cards
+      $data[$i]['cards']['uuids']       = ($row['rc_uuids']) ? explode(', ', $row['rc_uuids']) : array();
+      $data[$i]['cards']['names']['en'] = ($row['rc_names_en']) ? explode(', ', $row['rc_names_en']) : array();
+      $data[$i]['cards']['names']['fr'] = ($row['rc_names_fr']) ? explode(', ', $row['rc_names_fr']) : array();
+
+      // Tags
+      $data[$i]['tags']['uuids']  = ($row['rt_uuids']) ? explode(', ', $row['rt_uuids']) : array();
+      $data[$i]['tags']['names']  = ($row['rt_names']) ? explode(', ', $row['rt_names']) : array();
     }
   }
 
