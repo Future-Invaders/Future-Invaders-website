@@ -45,9 +45,9 @@ if(is_null($ruling_data) || !$ruling_data)
 
 // Update the page summary
 $page_url         .= $ruling_slug;
-$page_title_en    .= $ruling_data['title_en'];
-$page_title_fr    .= $ruling_data['title_fr'];
-$page_description .= $ruling_data['title_en'];
+$page_title_en    .= $ruling_data['pagetitle_en'];
+$page_title_fr    .= $ruling_data['pagetitle_fr'];
+$page_description .= $ruling_data['pagetitle_en'];
 
 
 

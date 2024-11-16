@@ -133,6 +133,8 @@ function rulings_get( int     $ruling_id    = null    ,
                           : '';
     $data['slug']         = sanitize_output($ruling_data['r_slug']);
     $data['title_en']     = sanitize_output($ruling_data['r_title_en']);
+    $data['pagetitle_en'] = sanitize_meta_tags($ruling_data['r_title_en']);
+    $data['pagetitle_fr'] = sanitize_meta_tags($ruling_data['r_title_fr']);
     $data['title_fr']     = sanitize_output($ruling_data['r_title_fr']);
     $data['title']        = sanitize_output($ruling_data['r_title']);
     $data['situation_en'] = sanitize_output($ruling_data['r_situation_en']);
