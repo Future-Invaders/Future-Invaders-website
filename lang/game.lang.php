@@ -31,6 +31,24 @@ ___('card_durability',      'EN', "Durability");
 ___('card_durability',      'FR', "Durabilité");
 ___('card_arsenals_title',  'EN', "Arsenals containing this card");
 ___('card_arsenals_title',  'FR', "Arsenaux contenant cette carte");
+___('card_rulings_title',   'EN', "Rulings applying to this card");
+___('card_rulings_title',   'FR', "Jugements s'appliquant à cette carte");
+___('card_rulings_body',    'EN', <<<EOD
+Rulings are official clarifications on the way ambiguous rules or card texts should be interpreted.
+EOD
+);
+___('card_rulings_body',    'FR', <<<EOD
+Les jugements sont des clarifications officielles sur la façon dont une règle ou un texte ambigu doit être interprété.
+EOD
+);
+___('card_rulings_date',    'EN', "Ruling made on {{1}}");
+___('card_rulings_date',    'FR', "Jugement fait le {{1}}");
+___('card_rulings_update',  'EN', "Ruling made on {{1}}, last updated on {{2}}");
+___('card_rulings_update',  'FR', "Jugement fait le {{1}}, dernière mise à jour le {{2}}");
+___('card_rulings_situ',    'EN', "Situation");
+___('card_rulings_situ',    'FR', "Situation");
+___('card_rulings_ruling',  'EN', "Ruling");
+___('card_rulings_ruling',  'FR', "Jugement");
 ___('card_tags_title',      'EN', "Card tags");
 ___('card_tags_title',      'FR', "Tags de la carte");
 ___('card_tags_body',       'EN', <<<EOD

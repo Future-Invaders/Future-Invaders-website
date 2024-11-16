@@ -158,9 +158,9 @@ $page_description  = $card_data['page_title_en'].$page_description ;
 
   </div>
 
+  <?php if($card_data['arsenals']['count']): ?>
   <div class="bigpadding_top">
-    <?php if($card_data['arsenals']['count']): ?>
-    <div class="black bigspaced tinypadding_top tinypadding_bot">
+    <div class="black bigspaced smallpadding_top smallpadding_bot">
       <h5>
         <?=__('card_arsenals_title')?>
       </h5>
@@ -171,12 +171,47 @@ $page_description  = $card_data['page_title_en'].$page_description ;
       </p>
       <?php endfor; ?>
     </div>
-    <?php endif; ?>
   </div>
+  <?php endif; ?>
 
+  <?php if($card_data['rulings']['count']): ?>
   <div class="bigpadding_top">
-    <?php if($card_data['tags']['count']): ?>
     <div class="black bigspaced tinypadding_top tinypadding_bot">
+      <h5>
+        <?=__('card_rulings_title')?>
+      </h5>
+      <p class="italics tinypadding_top">
+        <?=__('card_rulings_body')?>
+      </span>
+      <?php for($i = 0; $i < $card_data['rulings']['count']; $i++): ?>
+      <div class="tinypadding_top">
+        <p>
+          &bullet; <?=__link('pages/ruling/'.$card_data['rulings'][$i]['slug'], $card_data['rulings'][$i]['title'])?><br>
+          <?php if($card_data['rulings'][$i]['date'] && $card_data['rulings'][$i]['update']): ?>
+          <span class="italics"><?=__('card_rulings_date', preset_values: array($card_data['rulings'][$i]['date'], $card_data['rulings'][$i]['update']))?></span>
+          <?php elseif($card_data['rulings'][$i]['date']): ?>
+          <span class="italics"><?=__('card_rulings_date', preset_values: array($card_data['rulings'][$i]['date']))?></span>
+          <?php endif; ?>
+        </p>
+        <?php if($card_data['rulings'][$i]['situation']): ?>
+        <p>
+          <span class="bold"><?=__('card_rulings_situ').__(':')?></span><br>
+          <?=$card_data['rulings'][$i]['situation']?><br>
+        </p>
+        <?php endif; ?>
+        <p>
+          <span class="bold"><?=__('card_rulings_ruling').__(':')?></span><br>
+          <?=$card_data['rulings'][$i]['ruling']?><br>
+        </p>
+      </div>
+      <?php endfor; ?>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php if($card_data['tags']['count']): ?>
+  <div class="bigpadding_top">
+    <div class="black bigspaced smallpadding_top smallpadding_bot">
       <h5>
         <?=__('card_tags_title')?>
       </h5>
@@ -190,8 +225,8 @@ $page_description  = $card_data['page_title_en'].$page_description ;
       </p>
       <?php endfor; ?>
     </div>
-    <?php endif; ?>
   </div>
+  <?php endif; ?>
 
 </div>
 

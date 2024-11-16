@@ -163,25 +163,45 @@ function cards_get( int     $card_id    = null    ,
                         WHERE     arsenals_compositions.fk_cards = '$card_id' ");
 
   // Fetch linked rulings
-  $qrulings = query(" SELECT    rulings.uuid      AS 'r_uuid'     ,
-                                rulings.slug      AS 'r_slug'     ,
-                                rulings.title_en  AS 'r_title_en'  ,
-                                rulings.title_fr  AS 'r_title_fr'
+  $qrulings = query(" SELECT    rulings.uuid              AS 'r_uuid'         ,
+                                rulings.slug              AS 'r_slug'         ,
+                                rulings.title_en          AS 'r_title_en'     ,
+                                rulings.title_fr          AS 'r_title_fr'     ,
+                                rulings.date_ruling       AS 'r_date'         ,
+                                rulings.date_last_update  AS 'r_update'       ,
+                                GREATEST(rulings.date_last_update, rulings.date_ruling)
+                                                          AS 'r_dates'        ,
+                                rulings.situation_en      AS 'r_situation_en' ,
+                                rulings.situation_fr      AS 'r_situation_fr' ,
+                                rulings.ruling_en         AS 'r_ruling_en'    ,
+                                rulings.ruling_fr         AS 'r_ruling_fr'
                       FROM      rulings_cards
                       LEFT JOIN rulings ON rulings_cards.fk_rulings = rulings.id
                       WHERE     rulings_cards.fk_cards = '$card_id'
 
                       UNION
 
-                      SELECT    rulings.uuid      AS 'r_uuid'     ,
-                                rulings.slug      AS 'r_slug'     ,
-                                rulings.title_en  AS 'r_title_en'  ,
-                                rulings.title_fr  AS 'r_title_fr'
+                      SELECT    rulings.uuid              AS 'r_uuid'         ,
+                                rulings.slug              AS 'r_slug'         ,
+                                rulings.title_en          AS 'r_title_en'     ,
+                                rulings.title_fr          AS 'r_title_fr'     ,
+                                rulings.date_ruling       AS 'r_date'         ,
+                                rulings.date_last_update  AS 'r_update'       ,
+                                GREATEST(rulings.date_last_update, rulings.date_ruling)
+                                                          AS 'r_dates'        ,
+                                rulings.situation_en      AS 'r_situation_en' ,
+                                rulings.situation_fr      AS 'r_situation_fr' ,
+                                rulings.ruling_en         AS 'r_ruling_en'    ,
+                                rulings.ruling_fr         AS 'r_ruling_fr'
                       FROM      rulings_tags
                       LEFT JOIN rulings     ON rulings_tags.fk_rulings = rulings.id
                       LEFT JOIN tags        ON rulings_tags.fk_tags = tags.id
                       LEFT JOIN tags_cards  ON tags_cards.fk_tags = tags.id
-                      WHERE     tags_cards.fk_cards = '$card_id' ");
+                      WHERE     tags_cards.fk_cards = '$card_id'
+
+                      ORDER BY  r_dates     DESC  ,
+                                r_date      DESC  ,
+                                r_title_en  ASC   ");
 
   // Fetch linked tags
   $qtags = query("  SELECT    tags.uuid               AS 't_uuid'         ,
@@ -238,6 +258,22 @@ function cards_get( int     $card_id    = null    ,
       $data['arsenals'][$i]['slug']     = sanitize_json($darsenals['a_slug']);
     }
     $data['arsenals']['count'] = $i;
+
+    // Rulings
+    for($i = 0; $drulings = query_row($qrulings); $i++)
+    {
+      $data['rulings'][$i]['slug']      = sanitize_json($drulings['r_slug']);
+      $data['rulings'][$i]['title']     = sanitize_json($drulings['r_title_'.$lang]);
+      $data['rulings'][$i]['date']      = $drulings['r_date'] != '0000-00-00'
+                                        ? sanitize_json(date_to_text($drulings['r_date'], strip_day: 1))
+                                        : '';
+      $data['rulings'][$i]['update']    = $drulings['r_update'] != '0000-00-00'
+                                        ? sanitize_json(date_to_text($drulings['r_update'], strip_day: 1))
+                                        : '';
+      $data['rulings'][$i]['situation'] = nl2br($drulings['r_situation_'.$lang]);
+      $data['rulings'][$i]['ruling']    = nl2br($drulings['r_ruling_'.$lang]);
+    }
+    $data['rulings']['count'] = $i;
 
     // Tags
     for($i = 0; $dtags = query_row($qtags); $i++)
