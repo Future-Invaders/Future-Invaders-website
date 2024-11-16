@@ -174,6 +174,25 @@ $page_description  = $card_data['page_title_en'].$page_description ;
   </div>
   <?php endif; ?>
 
+  <?php if($card_data['tags']['count']): ?>
+  <div class="bigpadding_top">
+    <div class="black bigspaced smallpadding_top smallpadding_bot">
+      <h5>
+        <?=__('card_tags_title')?>
+      </h5>
+      <p class="italics tinypadding_top">
+        <?=__('card_tags_body')?>
+      </span>
+      <?php for($i = 0; $i < $card_data['tags']['count']; $i++): ?>
+      <p>
+        &bullet; <?=__link('pages/game/cards?tag='.$card_data['tags'][$i]['name'], $card_data['tags'][$i]['name'])?><br>
+        <?=$card_data['tags'][$i]['description']?>
+      </p>
+      <?php endfor; ?>
+    </div>
+  </div>
+  <?php endif; ?>
+
   <?php if($card_data['rulings']['count']): ?>
   <div class="bigpadding_top">
     <div class="black bigspaced tinypadding_top tinypadding_bot">
@@ -182,13 +201,13 @@ $page_description  = $card_data['page_title_en'].$page_description ;
       </h5>
       <p class="italics tinypadding_top">
         <?=__('card_rulings_body')?>
-      </span>
+      </p>
       <?php for($i = 0; $i < $card_data['rulings']['count']; $i++): ?>
       <div class="tinypadding_top">
         <p>
-          &bullet; <?=__link('pages/ruling/'.$card_data['rulings'][$i]['slug'], $card_data['rulings'][$i]['title'])?><br>
+          <?=__link('pages/ruling/'.$card_data['rulings'][$i]['slug'], $card_data['rulings'][$i]['title'])?><br>
           <?php if($card_data['rulings'][$i]['date'] && $card_data['rulings'][$i]['update']): ?>
-          <span class="italics"><?=__('card_rulings_date', preset_values: array($card_data['rulings'][$i]['date'], $card_data['rulings'][$i]['update']))?></span>
+          <span class="italics"><?=__('card_rulings_update', preset_values: array($card_data['rulings'][$i]['date'], $card_data['rulings'][$i]['update']))?></span>
           <?php elseif($card_data['rulings'][$i]['date']): ?>
           <span class="italics"><?=__('card_rulings_date', preset_values: array($card_data['rulings'][$i]['date']))?></span>
           <?php endif; ?>
@@ -204,25 +223,6 @@ $page_description  = $card_data['page_title_en'].$page_description ;
           <?=$card_data['rulings'][$i]['ruling']?><br>
         </p>
       </div>
-      <?php endfor; ?>
-    </div>
-  </div>
-  <?php endif; ?>
-
-  <?php if($card_data['tags']['count']): ?>
-  <div class="bigpadding_top">
-    <div class="black bigspaced smallpadding_top smallpadding_bot">
-      <h5>
-        <?=__('card_tags_title')?>
-      </h5>
-      <p class="italics tinypadding_top">
-        <?=__('card_tags_body')?>
-      </span>
-      <?php for($i = 0; $i < $card_data['tags']['count']; $i++): ?>
-      <p>
-        &bullet; <?=__link('pages/game/cards?tag='.$card_data['tags'][$i]['name'], $card_data['tags'][$i]['name'])?><br>
-        <?=$card_data['tags'][$i]['description']?>
-      </p>
       <?php endfor; ?>
     </div>
   </div>

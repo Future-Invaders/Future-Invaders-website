@@ -24,6 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  *
  * @param   int         $ruling_id   (OPTIONAL)  The id of the ruling.
  * @param   string      $ruling_uuid (OPTIONAL)  The ruling's uuid.
+ * @param   string      $ruling_slug (OPTIONAL)  The ruling's slug.
  * @param   string      $format      (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array|null              An array containing the ruling's data, or null if the ruling does not exist.
@@ -31,25 +32,33 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 function rulings_get( int     $ruling_id    = null    ,
                       string  $ruling_uuid  = null    ,
+                      string  $ruling_slug  = null    ,
                       string  $format       = 'html'  ) : array|null
 {
-  // Sanitize the ruling's id and uuid
-  $ruling_id = sanitize($ruling_id, 'int');
-  $ruling_uuid = sanitize($ruling_uuid, 'string');
+  // Sanitize the ruling's id, uuid, and slug
+  $ruling_id    = sanitize($ruling_id, 'int');
+  $ruling_uuid  = sanitize($ruling_uuid, 'string');
+  $ruling_slug  = sanitize($ruling_slug, 'string');
 
-  // Return null if the ruling does not exist
+  // Return null if the ruling's id does not exist
   if($ruling_id && !database_row_exists('rulings', $ruling_id))
     return null;
 
-  // Return null if the ruling does not exist
+  // Return null if the ruling's uuid does not exist
   if($ruling_uuid && !database_entry_exists('rulings', 'uuid', $ruling_uuid))
+    return null;
+
+  // Return null if the ruling's slug does not exist
+  if($ruling_slug && !database_entry_exists('rulings', 'slug', $ruling_slug))
     return null;
 
   // Prepare the condition for retrieving the ruling
   if($ruling_id)
     $query_where = " WHERE rulings.id = '$ruling_id' ";
-  else
+  else if($ruling_uuid)
     $query_where = " WHERE rulings.uuid = '$ruling_uuid' ";
+  else
+    $query_where = " WHERE rulings.slug = '$ruling_slug' ";
 
   // Get the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
@@ -62,10 +71,13 @@ function rulings_get( int     $ruling_id    = null    ,
                                   rulings.date_last_update  AS 'r_update'       ,
                                   rulings.title_en          AS 'r_title_en'     ,
                                   rulings.title_fr          AS 'r_title_fr'     ,
+                                  rulings.title_$lang       AS 'r_title'        ,
                                   rulings.situation_en      AS 'r_situation_en' ,
                                   rulings.situation_fr      AS 'r_situation_fr' ,
+                                  rulings.situation_$lang   AS 'r_situation'    ,
                                   rulings.ruling_en         AS 'r_ruling_en'    ,
-                                  rulings.ruling_fr         AS 'r_ruling_fr'
+                                  rulings.ruling_fr         AS 'r_ruling_fr'    ,
+                                  rulings.ruling_$lang      AS 'r_ruling'
                           FROM    rulings
                           $query_where ",
                           fetch_row: true);
@@ -78,16 +90,21 @@ function rulings_get( int     $ruling_id    = null    ,
                               cards.slug              AS 'c_slug'     ,
                               cards.name_en           AS 'c_name_en'  ,
                               cards.name_fr           AS 'c_name_fr'  ,
+                              cards.name_$lang        AS 'c_name'     ,
+                              cards.body_$lang        AS 'c_body'     ,
                               rulings_cards.fk_cards  AS 'c_id'
                     FROM      rulings_cards
                     LEFT JOIN cards ON rulings_cards.fk_cards = cards.id
                     WHERE     rulings_cards.fk_rulings = '$ruling_id'
-                    ORDER BY  cards.name_$lang ASC ");
+                    AND       cards.is_hidden     = '0'
+                    AND       cards.is_extra_card = '0'
+                    ORDER BY  cards.name_$lang    ASC ");
 
   // Fetch linked tags
-  $qtags = query("  SELECT    tags.uuid             AS 't_uuid' ,
-                              tags.name             AS 't_name' ,
-                              rulings_tags.fk_tags  AS 't_id'
+  $qtags = query("  SELECT    tags.uuid               AS 't_uuid' ,
+                              tags.name               AS 't_name' ,
+                              tags.description_$lang  AS 't_desc' ,
+                              rulings_tags.fk_tags    AS 't_id'
                     FROM      rulings_tags
                     LEFT JOIN tags ON rulings_tags.fk_tags = tags.id
                     WHERE     rulings_tags.fk_rulings = '$ruling_id'
@@ -101,25 +118,42 @@ function rulings_get( int     $ruling_id    = null    ,
     $data['date']         = ($ruling_data['r_date'] !== '0000-00-00')
                           ? sanitize_output($ruling_data['r_date'])
                           : '';
+    $data['fdate']        = $ruling_data['r_date'] != '0000-00-00'
+                          ? sanitize_output(date_to_text($ruling_data['r_date'], strip_day: 1))
+                          : '';
     $data['update']       = ($ruling_data['r_update'] !== '0000-00-00')
                           ? sanitize_output($ruling_data['r_update'])
+                          : '';
+    $data['fupdate']      = $ruling_data['r_update'] != '0000-00-00'
+                          ? sanitize_output(date_to_text($ruling_data['r_update'], strip_day: 1))
                           : '';
     $data['slug']         = sanitize_output($ruling_data['r_slug']);
     $data['title_en']     = sanitize_output($ruling_data['r_title_en']);
     $data['title_fr']     = sanitize_output($ruling_data['r_title_fr']);
+    $data['title']        = sanitize_output($ruling_data['r_title']);
     $data['situation_en'] = sanitize_output($ruling_data['r_situation_en']);
     $data['situation_fr'] = sanitize_output($ruling_data['r_situation_fr']);
+    $data['situation']    = nl2br($ruling_data['r_situation']);
     $data['ruling_en']    = sanitize_output($ruling_data['r_ruling_en']);
     $data['ruling_fr']    = sanitize_output($ruling_data['r_ruling_fr']);
+    $data['ruling']       = nl2br($ruling_data['r_ruling']);
 
     // Card data
     for($i = 0; $dcards = query_row($qcards); $i++)
-      $data['cards']['id'][$i] = $dcards['c_id'];
+    {
+      $data['cards']['id'][$i]      = $dcards['c_id'];
+      $data['cards']['name'][$i]    = sanitize_output($dcards['c_name']);
+      $data['cards']['slug'][$i]    = sanitize_output($dcards['c_slug']);
+    }
     $data['cards']['rows'] = $i;
 
     // Tags data
     for($i = 0; $dtags = query_row($qtags); $i++)
-      $data['tags']['id'][$i] = $dtags['t_id'];
+    {
+      $data['tags']['id'][$i]           = $dtags['t_id'];
+      $data['tags']['name'][$i]         = sanitize_output($dtags['t_name']);
+      $data['tags']['description'][$i]  = sanitize_output($dtags['t_desc']);
+    }
     $data['tags']['rows'] = $i;
   }
 
@@ -329,7 +363,7 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                 : '';
       $data[$i]['title_en']     = sanitize_output($row['r_title_en']);
       $data[$i]['title_fr']     = sanitize_output($row['r_title_fr']);
-      $data[$i]['title']        = sanitize_output(string_truncate($row['r_title'], 60, '...'));
+      $data[$i]['title']        = sanitize_output(string_truncate($row['r_title'], 50, '...'));
       $data[$i]['situation_en'] = nl2br($row['r_situation_en']);
       $data[$i]['situation_fr'] = nl2br($row['r_situation_fr']);
       $data[$i]['nsituation']   = mb_strlen($row['r_situation']);

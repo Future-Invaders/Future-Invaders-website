@@ -14,3 +14,6 @@ RewriteRule ^pages/card/(.*)$ pages/game/card.php?slug=$1 [QSA,NC]
 
 # Arsenals
 RewriteRule ^pages/arsenal/(.*)$ pages/game/arsenal.php?slug=$1 [QSA,NC]
+
+# Rulings
+RewriteRule ^pages/ruling/(.*)$ pages/game/ruling.php?slug=$1 [QSA,NC]

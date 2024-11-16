@@ -43,8 +43,8 @@ EOD
 );
 ___('card_rulings_date',    'EN', "Ruling made on {{1}}");
 ___('card_rulings_date',    'FR', "Jugement fait le {{1}}");
-___('card_rulings_update',  'EN', "Ruling made on {{1}}, last updated on {{2}}");
-___('card_rulings_update',  'FR', "Jugement fait le {{1}}, dernière mise à jour le {{2}}");
+___('card_rulings_update',  'EN', "Ruling made on {{1}}, updated on {{2}}");
+___('card_rulings_update',  'FR', "Jugement du {{1}}, mis à jour le {{2}}");
 ___('card_rulings_situ',    'EN', "Situation");
 ___('card_rulings_situ',    'FR', "Situation");
 ___('card_rulings_ruling',  'EN', "Ruling");
@@ -198,6 +198,59 @@ ___('arsenal_list_count_tags',  'EN', " are tagged as <span class=\"italics\">{{
 ___('arsenal_list_count_tags',  'FR', " ont le tag <span class=\"italics\">{{1}}</span>");
 ___('arsenal_list_count_form',  'EN', " are designed for the <span class=\"bold\">{{1}}</span> format");
 ___('arsenal_list_count_form',  'FR', " sont conçus pour le format <span class=\"bold\">{{1}}</span>");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      RULINGS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Individual ruling
+___('ruling_title',         'EN', "Ruling");
+___('ruling_title',         'FR', "Jugement");
+___('ruling_body',          'EN', <<<EOD
+A ruling is an official clarification on the way an ambiguous rule or card text should be interpreted.
+EOD
+);
+___('ruling_body',          'FR', <<<EOD
+Un jugement est une clarification officielle sur la façon dont une règle ou un texte ambigu doit être interprété.
+EOD
+);
+___('ruling_date',          'EN', "Ruling made on {{1}}");
+___('ruling_date',          'FR', "Jugement fait le {{1}}");
+___('ruling_update',        'EN', "Ruling made on {{1}}, updated on {{2}}");
+___('ruling_update',        'FR', "Jugement du {{1}}, mis à jour le {{2}}");
+___('ruling_situ',          'EN', "Situation");
+___('ruling_situ',          'FR', "Situation");
+___('ruling_ruling',        'EN', "Ruling");
+___('ruling_ruling',        'FR', "Jugement");
+___('ruling_tags',          'EN', "Linked tags");
+___('ruling_tags',          'FR', "Tags liés");
+___('ruling_tags_body',     'EN', <<<EOD
+This ruling applies to all cards with the following tags.<br>
+Tags are used to categorize cards with similar characteristics.
+EOD
+);
+___('ruling_tags_body',     'FR', <<<EOD
+Ce jugement s'applique à toutes les cartes ayant les tags suivants.<br>
+Les tags sont utilisés pour regrouper les cartes aux caractéristiques similaires.
+EOD
+);
+___('ruling_cards',         'EN', "Linked cards");
+___('ruling_cards',         'FR', "Cartes liées");
+___('ruling_cards_body',    'EN', <<<EOD
+This ruling applies to the following cards.
+EOD
+);
+___('ruling_cards_body',    'FR', <<<EOD
+Ce jugement s'applique aux cartes suivantes.
+EOD
+);
+___('ruling_cards_summary', 'EN', "{{2}} - {{1}} release");
+___('ruling_cards_summary', 'FR', "{{2}} - Version {{1}}");
 
 
 

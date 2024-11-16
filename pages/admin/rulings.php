@@ -279,7 +279,7 @@ if(!page_is_fetched_dynamically()): /****/ include './../../inc/header.inc.php';
       <tr id="admin_rulings_row_<?=$rulings_list[$i]['id']?>">
 
         <td class="align_left nowrap tooltip_container">
-          <?=$rulings_list[$i]['title']?>
+          <?=__link('pages/ruling/'.$rulings_list[$i]['slug'], $rulings_list[$i]['title'])?>
           <div class="tooltip">
             <?=$rulings_list[$i]['title_en']?><br>
             <?=$rulings_list[$i]['title_fr']?>
