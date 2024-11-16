@@ -45,13 +45,14 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <ul class="tinypadding_top">
     <li><?=__link('#list_rulings', 'GET /api/rulings', is_internal: false)?></li>
+    <li><?=__link('#get_ruling', 'GET /api/ruling/{uuid}', is_internal: false)?></li>
   </ul>
 
 </div>
 
 <hr id="list_rulings">
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top bigpadding_bot">
 
   <h4>
     GET /api/rulings
@@ -165,6 +166,81 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     },
     ...
   ],
+}</pre>
+
+</div>
+
+<hr id="get_ruling">
+
+<div class="width_50 padding_top">
+
+  <h4>
+    GET /api/ruling/{uuid}
+  </h4>
+
+  <p>
+    <?=__('api_rulings_get_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">uuid</span> - string<br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_rulings_get_uuid')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "ruling": {
+    "uuid": string,
+    "url": string,
+    "date": {
+      "ruling_made": string,
+      "last_updated": string
+    },
+    "title": {
+      "en": string,
+      "fr": string,
+    },
+    "situation": {
+      "en": string,
+      "fr": string,
+    },
+    "ruling": {
+      "en": string,
+      "fr": string,
+    },
+    "cards": [
+      {
+        "uuid": string,
+        "endpoint": string,
+        "url": string,
+        "name": {
+          "en": string,
+          "fr": string
+        }
+      },
+      ...
+    ],
+    "tags": [
+      {
+        "uuid": string,
+        "endpoint": string,
+        "name": string
+      },
+      ...
+    ]
+  }
 }</pre>
 
 </div>

@@ -266,6 +266,13 @@ ___('api_rulings_list_tag',     'EN', "Search for linked tags by UUID. Find tag 
 ___('api_rulings_list_tag',     'FR', "Recherche des tags liés par UUID. Trouvez les UUIDs des tags en utilisant {{link|api/doc/tags#list_tags|GET /api/tags}}.");
 
 
+// Get ruling
+___('api_rulings_get_summary', 'EN', "Retrieves a ruling by its UUID.");
+___('api_rulings_get_summary', 'FR', "Récupère un jugement par son UUID.");
+___('api_rulings_get_uuid',    'EN', "The UUID of the ruling to retrieve.");
+___('api_rulings_get_uuid',    'FR', "L'UUID du jugement à récupérer.");
+
+
 
 
 /*********************************************************************************************************************/

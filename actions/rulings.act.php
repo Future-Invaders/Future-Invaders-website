@@ -22,21 +22,34 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Returns data related to a ruling.
  *
- * @param   int         $ruling_id   The id of the ruling.
- * @param   string      $format      Formatting to use for the returned data ('html', 'api').
+ * @param   int         $ruling_id   (OPTIONAL)  The id of the ruling.
+ * @param   string      $ruling_uuid (OPTIONAL)  The ruling's uuid.
+ * @param   string      $format      (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array|null              An array containing the ruling's data, or null if the ruling does not exist.
  */
 
-function rulings_get( int    $ruling_id       ,
-                      string $format = 'html' ) : array|null
+function rulings_get( int     $ruling_id    = null    ,
+                      string  $ruling_uuid  = null    ,
+                      string  $format       = 'html'  ) : array|null
 {
-  // Sanitize the ruling's id
+  // Sanitize the ruling's id and uuid
   $ruling_id = sanitize($ruling_id, 'int');
+  $ruling_uuid = sanitize($ruling_uuid, 'string');
 
   // Return null if the ruling does not exist
-  if(!database_row_exists('rulings', $ruling_id))
+  if($ruling_id && !database_row_exists('rulings', $ruling_id))
     return null;
+
+  // Return null if the ruling does not exist
+  if($ruling_uuid && !database_entry_exists('rulings', 'uuid', $ruling_uuid))
+    return null;
+
+  // Prepare the condition for retrieving the ruling
+  if($ruling_id)
+    $query_where = " WHERE rulings.id = '$ruling_id' ";
+  else
+    $query_where = " WHERE rulings.uuid = '$ruling_uuid' ";
 
   // Get the user's current language
   $lang = string_change_case(user_get_language(), 'lowercase');
@@ -54,21 +67,27 @@ function rulings_get( int    $ruling_id       ,
                                   rulings.ruling_en         AS 'r_ruling_en'    ,
                                   rulings.ruling_fr         AS 'r_ruling_fr'
                           FROM    rulings
-                          WHERE   rulings.id = '$ruling_id' ",
+                          $query_where ",
                           fetch_row: true);
 
   // Sanitize the ruling's id
   $ruling_id = sanitize($ruling_data['r_id'], 'int');
 
   // Fetch linked cards
-  $qcards = query(" SELECT    rulings_cards.fk_cards AS 'c_id'
+  $qcards = query(" SELECT    cards.uuid              AS 'c_uuid'     ,
+                              cards.slug              AS 'c_slug'     ,
+                              cards.name_en           AS 'c_name_en'  ,
+                              cards.name_fr           AS 'c_name_fr'  ,
+                              rulings_cards.fk_cards  AS 'c_id'
                     FROM      rulings_cards
                     LEFT JOIN cards ON rulings_cards.fk_cards = cards.id
                     WHERE     rulings_cards.fk_rulings = '$ruling_id'
                     ORDER BY  cards.name_$lang ASC ");
 
   // Fetch linked tags
-  $qtags = query("  SELECT    rulings_tags.fk_tags AS 't_id'
+  $qtags = query("  SELECT    tags.uuid             AS 't_uuid' ,
+                              tags.name             AS 't_name' ,
+                              rulings_tags.fk_tags  AS 't_id'
                     FROM      rulings_tags
                     LEFT JOIN tags ON rulings_tags.fk_tags = tags.id
                     WHERE     rulings_tags.fk_rulings = '$ruling_id'
@@ -109,6 +128,45 @@ function rulings_get( int    $ruling_id       ,
   {
     // Sanitize ruling data
     $data['uuid'] = sanitize_json($ruling_data['r_uuid']);
+    $data['url']  = sanitize_json($GLOBALS['website_url'].'pages/ruling/'.$ruling_data['r_slug']);
+
+    // Ruling dates
+    if($ruling_data['r_date'] !== '0000-00-00')
+      $data['date']['ruling_made']  = sanitize_json($ruling_data['r_date']);
+    if($ruling_data['r_update'] !== '0000-00-00')
+      $data['date']['last_updated'] = sanitize_json($ruling_data['r_update']);
+    if($ruling_data['r_date'] === '0000-00-00' && $ruling_data['r_update'] === '0000-00-00')
+      $data['date']                 = array();
+
+    // Ruling text
+    $data['title']['en']      = sanitize_json($ruling_data['r_title_en']);
+    $data['title']['fr']      = sanitize_json($ruling_data['r_title_fr']);
+    $data['situation']['en']  = sanitize_json($ruling_data['r_situation_en']);
+    $data['situation']['fr']  = sanitize_json($ruling_data['r_situation_fr']);
+    $data['ruling']['en']     = sanitize_json($ruling_data['r_ruling_en']);
+    $data['ruling']['fr']     = sanitize_json($ruling_data['r_ruling_fr']);
+
+    // Cards
+    for($i = 0; $dcards = query_row($qcards); $i++)
+    {
+      $data['cards'][$i]['uuid']        = sanitize_json($dcards['c_uuid']);
+      $data['cards'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url'].'api/card/'.$dcards['c_uuid']);
+      $data['cards'][$i]['url']         = sanitize_json($GLOBALS['website_url'].'pages/card/'.$dcards['c_slug']);
+      $data['cards'][$i]['name']['en']  = sanitize_json($dcards['c_name_en']);
+      $data['cards'][$i]['name']['fr']  = sanitize_json($dcards['c_name_fr']);
+    }
+    if($i === 0)
+      $data['cards']                    = array();
+
+    // Tags
+    for($i = 0; $dtags = query_row($qtags); $i++)
+    {
+      $data['tags'][$i]['uuid']     = sanitize_json($dtags['t_uuid']);
+      $data['tags'][$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/tag/'.$dtags['t_uuid']);
+      $data['tags'][$i]['name']     = sanitize_json($dtags['t_name']);
+    }
+    if($i === 0)
+      $data['tags']                 = array();
 
     // Prepare for the API
     $data = (isset($data)) ? $data : NULL;
@@ -289,7 +347,7 @@ function rulings_list(  string  $sort_by  = 'date'  ,
     {
       // Ruling data
       $data[$i]['uuid']     = sanitize_json($row['r_uuid']);
-      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/ruling/'.$row['r_slug']);
+      $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/ruling/'.$row['r_uuid']);
       $data[$i]['url']      = sanitize_json($GLOBALS['website_url'].'pages/ruling/'.$row['r_slug']);
 
       // Ruling dates
