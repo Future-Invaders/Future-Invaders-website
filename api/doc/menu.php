@@ -14,9 +14,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 // Assemble an array of menu entries depending on the user's language
 if(user_get_language() === 'EN')
-  $api_menu_entries = array('intro', 'arsenals', 'cards', 'factions', 'formats', 'releases', 'images', 'tags');
+  $api_menu_entries = array('intro', 'arsenals', 'cards', 'factions', 'formats', 'releases', 'rulings', 'images', 'tags');
 else
-  $api_menu_entries = array('intro', 'arsenals', 'cards', 'factions', 'formats', 'images', 'tags', 'releases');
+  $api_menu_entries = array('intro', 'arsenals', 'cards', 'factions', 'formats', 'images', 'rulings', 'tags', 'releases');
 
 // Select the correct menu entry
 foreach($api_menu_entries as $api_menu_entry)

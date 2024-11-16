@@ -33,6 +33,8 @@ ___('api_menu_images',    'EN', "Images");
 ___('api_menu_images',    'FR', "Images");
 ___('api_menu_tags',      'EN', "Tags");
 ___('api_menu_tags',      'FR', "Tags");
+___('api_menu_rulings',   'EN', "Rulings");
+___('api_menu_rulings',   'FR', "Jugements");
 
 
 // Technical terms
@@ -230,6 +232,45 @@ ___('api_arsenals_get_uuid',    'FR', "L'UUID de l'arsenal à récupérer.");
 // Arsenal difficulties
 ___('api_arsenal_difficulties_list_summary', 'EN', "Retrieves a list of difficulty levels used to classify arsenals.");
 ___('api_arsenal_difficulties_list_summary', 'FR', "Récupère la liste des niveaux de difficultés utilisés pour classer les arsenaux.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      RULINGS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('api_rulings_intro', 'EN', <<<EOD
+Rulings are official clarifications on the way ambiguous rules should be interpreted.
+EOD
+);
+___('api_rulings_intro', 'FR', <<<EOD
+Les jugements sont des clarifications officielles sur la façon dont les aspects ambigus des règles doivent être interprétés.
+EOD
+);
+
+
+// List rulings
+___('api_rulings_list_summary', 'EN', "Retrieves a list of all rulings.");
+___('api_rulings_list_summary', 'FR', "Récupère la liste de tous les jugements.");
+___('api_rulings_list_title',   'EN', "Search for rulings by title. Searches in all languages at once.");
+___('api_rulings_list_title',   'FR', "Recherche des jugements par titre. Cherche dans toutes les langues à la fois.");
+___('api_rulings_list_body',    'EN', "Search in the body text of rulings. Searches in all languages at once.");
+___('api_rulings_list_body',    'FR', "Recherche dans le texte du corps des jugements. Cherche dans toutes les langues à la fois.");
+___('api_rulings_list_card',    'EN', "Search for linked cards by UUID. Find card UUIDs using {{link|api/doc/cards#list_cards|GET /api/cards}}.");
+___('api_rulings_list_card',    'FR', "Recherche des cartes liées par UUID. Trouvez les UUIDs des cartes en utilisant {{link|api/doc/cards#list_cards|GET /api/cards}}.");
+___('api_rulings_list_tag',     'EN', "Search for linked tags by UUID. Find tag UUIDs using {{link|api/doc/tags#list_tags|GET /api/tags}}.");
+___('api_rulings_list_tag',     'FR', "Recherche des tags liés par UUID. Trouvez les UUIDs des tags en utilisant {{link|api/doc/tags#list_tags|GET /api/tags}}.");
+
+
+// Get ruling
+___('api_rulings_get_summary', 'EN', "Retrieves a ruling by its UUID.");
+___('api_rulings_get_summary', 'FR', "Récupère un jugement par son UUID.");
+___('api_rulings_get_uuid',    'EN', "The UUID of the ruling to retrieve.");
+___('api_rulings_get_uuid',    'FR', "L'UUID du jugement à récupérer.");
 
 
 

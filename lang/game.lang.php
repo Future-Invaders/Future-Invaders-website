@@ -31,6 +31,24 @@ ___('card_durability',      'EN', "Durability");
 ___('card_durability',      'FR', "Durabilité");
 ___('card_arsenals_title',  'EN', "Arsenals containing this card");
 ___('card_arsenals_title',  'FR', "Arsenaux contenant cette carte");
+___('card_rulings_title',   'EN', "Rulings applying to this card");
+___('card_rulings_title',   'FR', "Jugements s'appliquant à cette carte");
+___('card_rulings_body',    'EN', <<<EOD
+Rulings are official clarifications on the way ambiguous rules or card texts should be interpreted.
+EOD
+);
+___('card_rulings_body',    'FR', <<<EOD
+Les jugements sont des clarifications officielles sur la façon dont une règle ou un texte ambigu doit être interprété.
+EOD
+);
+___('card_rulings_date',    'EN', "Ruling issued on {{1}}");
+___('card_rulings_date',    'FR', "Jugement rendu le {{1}}");
+___('card_rulings_update',  'EN', "Ruling issued on {{1}}, updated on {{2}}");
+___('card_rulings_update',  'FR', "Jugement rendu le {{1}}, mis à jour le {{2}}");
+___('card_rulings_situ',    'EN', "Situation");
+___('card_rulings_situ',    'FR', "Situation");
+___('card_rulings_ruling',  'EN', "Ruling");
+___('card_rulings_ruling',  'FR', "Jugement");
 ___('card_tags_title',      'EN', "Card tags");
 ___('card_tags_title',      'FR', "Tags de la carte");
 ___('card_tags_body',       'EN', <<<EOD
@@ -180,6 +198,106 @@ ___('arsenal_list_count_tags',  'EN', " are tagged as <span class=\"italics\">{{
 ___('arsenal_list_count_tags',  'FR', " ont le tag <span class=\"italics\">{{1}}</span>");
 ___('arsenal_list_count_form',  'EN', " are designed for the <span class=\"bold\">{{1}}</span> format");
 ___('arsenal_list_count_form',  'FR', " sont conçus pour le format <span class=\"bold\">{{1}}</span>");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      RULINGS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Individual ruling
+___('ruling_title',         'EN', "Ruling");
+___('ruling_title',         'FR', "Jugement");
+___('ruling_body',          'EN', <<<EOD
+A ruling is an official clarification on the way an ambiguous rule or card text should be interpreted.
+EOD
+);
+___('ruling_body',          'FR', <<<EOD
+Un jugement est une clarification officielle sur la façon dont une règle ou un texte ambigu doit être interprété.
+EOD
+);
+___('ruling_date',          'EN', "Ruling issued on {{1}}");
+___('ruling_date',          'FR', "Jugement rendu le {{1}}");
+___('ruling_update',        'EN', "Ruling issued on {{1}}, updated on {{2}}");
+___('ruling_update',        'FR', "Jugement rendu le {{1}}, mis à jour le {{2}}");
+___('ruling_situ',          'EN', "Situation");
+___('ruling_situ',          'FR', "Situation");
+___('ruling_ruling',        'EN', "Ruling");
+___('ruling_ruling',        'FR', "Jugement");
+___('ruling_tags',          'EN', "Linked tags");
+___('ruling_tags',          'FR', "Tags liés");
+___('ruling_tags_body',     'EN', <<<EOD
+This ruling applies to all cards with the following tags.<br>
+Tags are used to categorize cards with similar characteristics.
+EOD
+);
+___('ruling_tags_body',     'FR', <<<EOD
+Ce jugement s'applique à toutes les cartes ayant les tags suivants.<br>
+Les tags sont utilisés pour regrouper les cartes aux caractéristiques similaires.
+EOD
+);
+___('ruling_cards',         'EN', "Linked cards");
+___('ruling_cards',         'FR', "Cartes liées");
+___('ruling_cards_body',    'EN', <<<EOD
+This ruling applies to the following cards.
+EOD
+);
+___('ruling_cards_body',    'FR', <<<EOD
+Ce jugement s'applique aux cartes suivantes.
+EOD
+);
+___('ruling_cards_summary', 'EN', "{{2}} - {{1}} release");
+___('ruling_cards_summary', 'FR', "{{2}} - Version {{1}}");
+
+
+// Rulings list
+___('rulings_list_title',     'EN', "Rulings");
+___('rulings_list_title',     'FR', "Jugements");
+___('rulings_list_body_1',    'EN', <<<EOD
+Rulings are official clarifications on how ambiguous rules or card texts should be interpreted.
+EOD
+);
+___('rulings_list_body_1',    'FR', <<<EOD
+Les jugements sont des clarifications officielles sur la manière d'interpréter une règle ou un texte ambigu.
+EOD
+);
+___('rulings_list_body_2',    'EN', <<<EOD
+Below is a list of all rulings. Global rulings that apply to the game as a whole appear first, followed by rulings specific to certain cards or card interactions.
+EOD
+);
+___('rulings_list_body_2',    'FR', <<<EOD
+Vous trouverez ci-dessous une liste de tous les jugements. Les jugements globaux, qui s'appliquent à l'ensemble du jeu, sont listés en premier, suivis de ceux spécifiques à certaines cartes ou interactions.
+EOD
+);
+___('rulings_list_body_3',    'EN', <<<EOD
+You can search the rulings by typing in the search form below then pressing the search button.
+EOD
+);
+___('rulings_list_body_3',    'FR', <<<EOD
+Vous pouvez effectuer une recherche parmi les jugements en écrivant dans le formulaire de recherche ci-dessous puis en appuyant sur le bouton de recherche.
+EOD
+);
+___('rulings_list_body_4',    'EN', <<<EOD
+If you're looking for a rules clarification but can't find a ruling that answers your question, ask the community on {{link|404|Discord}} or {{link|404|IRC}} for advice. It might even lead to a new ruling!
+EOD
+);
+___('rulings_list_body_4',    'FR', <<<EOD
+Si vous recherchez une clarification de règle et ne trouvez pas de jugement correspondant, demandez l'avis de la communauté sur {{link|404|Discord}} ou {{link|404|IRC}}. Un nouveau jugement pourrait être nécessaire !
+EOD
+);
+___('rulings_search_submit',  'EN', "Search rulings");
+___('rulings_search_submit',  'FR', "Chercher un jugement");
+___('rulings_list_global',    'EN', "Global rulings");
+___('rulings_list_global',    'FR', "Jugements globaux");
+___('rulings_list_none',      'EN', "No rulings found matching your search");
+___('rulings_list_none',      'FR', "Aucun jugement ne correspond à votre recherche");
+___('rulings_list_specific',  'EN', "Specific rulings");
+___('rulings_list_specific',  'FR', "Jugements spécifiques");
+___('ruling_list_applies',    'EN', "This ruling applies to");
+___('ruling_list_applies',    'FR', "Ce jugement s'applique sur");
 
 
 

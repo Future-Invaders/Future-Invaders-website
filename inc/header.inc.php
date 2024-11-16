@@ -282,7 +282,7 @@ $javascripts .= '
             <?=__link('pages/game/formats', __('submenu_guides_formats'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_guides_rulings'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/game/rulings', __('submenu_guides_rulings'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 

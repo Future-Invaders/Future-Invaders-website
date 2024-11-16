@@ -27,6 +27,14 @@
 /*                                                                                                                   */
 /*  admin_arsenal_difficulties_delete       Triggers the deletion of an entry in the arsenal difficulty list.        */
 /*                                                                                                                   */
+/*  admin_rulings_search                    Searches the ruling list.                                                */
+/*  admin_rulings_regenerate_all_slugs      Triggers the regeneration of all ruling slugs.                           */
+/*  admin_rulings_delete                    Triggers the deletion of an entry in the ruling list.                    */
+/*  admin_rulings_duplicate_cards           Duplicate the cards creation form when editing a ruling.                 */
+/*  admin_rulings_unduplicate_cards         Delete the last created card creation form when editing a ruling.        */
+/*  admin_rulings_duplicate_tags            Duplicate the tags creation form when editing a ruling.                  */
+/*  admin_rulings_unduplicate_tags          Delete the last created tags creation form when editing a ruling.        */
+/*                                                                                                                   */
 /*  admin_tags_search                       Searches the tag list.                                                   */
 /*  admin_tags_delete                       Triggers the deletion of an entry in the tag list.                       */
 /*                                                                                                                   */
@@ -536,6 +544,189 @@ function admin_arsenal_difficulties_delete( message   ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('arsenal_difficulties', 'admin_arsenal_difficulties_tbody', postdata);
+}
+
+
+
+
+/**
+ * Searches for rulings.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_search( sort_data = null )
+{
+  // Update the search input if required
+  if(sort_data)
+    document.getElementById('admin_rulings_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata =  'admin_rulings_sort='           + document.getElementById('admin_rulings_sort').value;
+  postdata += '&admin_rulings_search_title='  + document.getElementById('admin_rulings_search_title').value;
+  postdata += '&admin_rulings_search_body='   + document.getElementById('admin_rulings_search_body').value;
+  postdata += '&admin_rulings_search_cards='  + document.getElementById('admin_rulings_search_cards').value;
+  postdata += '&admin_rulings_search_tags='   + document.getElementById('admin_rulings_search_tags').value;
+
+  // Submit the search
+  fetch_page('rulings', 'admin_rulings_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the regeneration of all rulings slugs.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_regenerate_all_slugs( message )
+{
+  // Make sure the user knows what they're doing, then trigger the global slug regeneration
+  if(confirm(message))
+    fetch_page('rulings', 'admin_rulingss_tbody', 'admin_rulings_regenerate_slugs=true');
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the ruling list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     ruling    The id of the ruling to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_delete( message   ,
+                               ruling    )
+{
+  // Assemble the postdata
+  postdata = 'admin_rulings_delete=' + fetch_sanitize(ruling);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('rulings', 'admin_rulings_tbody', postdata);
+}
+
+
+
+
+/**
+ * Duplicate the cards creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_duplicate_cards()
+{
+  // Fetch the element containing the card form and clone it
+  const cards_form_div      = document.getElementById("rulings_cards");
+  const new_cards_form_div  = cards_form_div.cloneNode(true);
+
+  // Clear input and select values in the cloned div
+  const inputs = new_cards_form_div.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+  const selects = new_cards_form_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
+
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("rulings_cards_container").appendChild(new_cards_form_div);
+}
+
+
+
+
+/**
+ * Delete the last created card creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_unduplicate_cards()
+{
+  // Fetch the element containing the card selectors and its parent container
+  const cards_list_container = document.getElementById("rulings_cards_container");
+  const cards_list_div       = document.getElementById("rulings_cards");
+
+  // If there's more than one card selector, delete the last one
+  if(cards_list_container.children.length > 1 && cards_list_container.lastElementChild !== cards_list_div)
+  {
+    const cards_list_last_element = cards_list_container.lastElementChild;
+    cards_list_container.removeChild(cards_list_last_element);
+  }
+
+  // If there's only one card selector left, clear its input and select values
+  else
+  {
+    const inputs = cards_list_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = cards_list_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
+  }
+}
+
+
+
+
+/**
+ * Duplicate the tags creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_duplicate_tags()
+{
+  // Fetch the element containing the tag form and clone it
+  const tags_form_div     = document.getElementById("rulings_tags");
+  const new_tags_form_div = tags_form_div.cloneNode(true);
+
+  // Clear input and select values in the cloned div
+  const inputs = new_tags_form_div.querySelectorAll("input");
+  inputs.forEach(input => input.value = "");
+  const selects = new_tags_form_div.querySelectorAll("select");
+  selects.forEach(select => select.value = "0");
+
+  // Append the cloned and cleared div to its parent container
+  document.getElementById("rulings_tags_container").appendChild(new_tags_form_div);
+}
+
+
+
+
+/**
+ * Delete the last created tag creation form when editing a ruling.
+ *
+ * @returns {void}
+ */
+
+function admin_rulings_unduplicate_tags()
+{
+  // Fetch the element containing the tag selectors and its parent container
+  const tags_list_container = document.getElementById("rulings_tags_container");
+  const tags_list_div       = document.getElementById("rulings_tags");
+
+  // If there's more than one tag selector, delete the last one
+  if(tags_list_container.children.length > 1 && tags_list_container.lastElementChild !== tags_list_div)
+  {
+    const tags_list_last_element = tags_list_container.lastElementChild;
+    tags_list_container.removeChild(tags_list_last_element);
+  }
+
+  // If there's only one tag selector left, clear its input and select values
+  else
+  {
+    const inputs = tags_list_div.querySelectorAll("input");
+    inputs.forEach(input => input.value = "");
+    const selects = tags_list_div.querySelectorAll("select");
+    selects.forEach(select => select.value = "0");
+  }
 }
 
 
