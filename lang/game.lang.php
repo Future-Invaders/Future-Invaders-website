@@ -253,6 +253,53 @@ ___('ruling_cards_summary', 'EN', "{{2}} - {{1}} release");
 ___('ruling_cards_summary', 'FR', "{{2}} - Version {{1}}");
 
 
+// Rulings list
+___('rulings_list_title',     'EN', "Rulings");
+___('rulings_list_title',     'FR', "Jugements");
+___('rulings_list_body_1',    'EN', <<<EOD
+Rulings are official clarifications on how ambiguous rules or card texts should be interpreted.
+EOD
+);
+___('rulings_list_body_1',    'FR', <<<EOD
+Les jugements sont des clarifications officielles sur la manière d'interpréter une règle ou un texte ambigu.
+EOD
+);
+___('rulings_list_body_2',    'EN', <<<EOD
+Below is a list of all rulings. Global rulings that apply to the game as a whole appear first, followed by rulings specific to certain cards or card interactions.
+EOD
+);
+___('rulings_list_body_2',    'FR', <<<EOD
+Vous trouverez ci-dessous une liste de tous les jugements. Les jugements globaux, qui s'appliquent à l'ensemble du jeu, sont listés en premier, suivis de ceux spécifiques à certaines cartes ou interactions.
+EOD
+);
+___('rulings_list_body_3',    'EN', <<<EOD
+You can search the rulings by typing in the search form below then pressing the search button.
+EOD
+);
+___('rulings_list_body_3',    'FR', <<<EOD
+Vous pouvez effectuer une recherche parmi les jugements en écrivant dans le formulaire de recherche ci-dessous puis en appuyant sur le bouton de recherche.
+EOD
+);
+___('rulings_list_body_4',    'EN', <<<EOD
+If you're looking for a rules clarification but can't find a ruling that answers your question, ask the community on {{link|404|Discord}} or {{link|404|IRC}} for advice. It might even lead to a new ruling!
+EOD
+);
+___('rulings_list_body_4',    'FR', <<<EOD
+Si vous recherchez une clarification de règle et ne trouvez pas de jugement correspondant, demandez l'avis de la communauté sur {{link|404|Discord}} ou {{link|404|IRC}}. Un nouveau jugement pourrait être nécessaire !
+EOD
+);
+___('rulings_search_submit',  'EN', "Search rulings");
+___('rulings_search_submit',  'FR', "Chercher un jugement");
+___('rulings_list_global',    'EN', "Global rulings");
+___('rulings_list_global',    'FR', "Jugements globaux");
+___('rulings_list_none',      'EN', "No rulings found matching your search");
+___('rulings_list_none',      'FR', "Aucun jugement ne correspond à votre recherche");
+___('rulings_list_specific',  'EN', "Specific rulings");
+___('rulings_list_specific',  'FR', "Jugements spécifiques");
+___('ruling_list_applies',    'EN', "This ruling applies to");
+___('ruling_list_applies',    'FR', "Ce jugement s'applique sur");
+
+
 
 
 /*********************************************************************************************************************/

@@ -17,6 +17,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  rulings_generate_slug            Generates a unique slug identifier for a ruling                                 */
 /*  rulings_regenerate_all_slugs     Regenerates all ruling slugs                                                    */
 /*                                                                                                                   */
+/*  rulings_assemble_tag_links       Assembles the links to a ruling's tags.                                         */
+/*  rulings_assemble_card_links      Assembles the links to a ruling's cards.                                        */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 /**
@@ -238,6 +241,7 @@ function rulings_list(  string  $sort_by  = 'date'  ,
   $search_card_uuid = sanitize_array_element($search, 'card_uuid', 'string');
   $search_tag_id    = sanitize_array_element($search, 'tag_id', 'int');
   $search_tag_uuid  = sanitize_array_element($search, 'tag_uuid', 'string');
+  $search_all       = sanitize_array_element($search, 'search', 'string');
 
   // Search through the data
   $query_search  = ($search_title)  ? " WHERE ( rulings.title_en        LIKE '%$search_title%'
@@ -250,6 +254,12 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                     ? " AND     rulings_cards.fk_cards  IS NULL "                   : "";
   $query_search .= ($search_tag_id === -1)
                                     ? " AND     rulings_tags.fk_tags    IS NULL "                   : "";
+  $query_search .= ($search_all)    ? " AND   ( rulings.title_en        LIKE '%$search_all%'
+                                        OR      rulings.title_fr        LIKE '%$search_all%'
+                                        OR      rulings.ruling_en       LIKE '%$search_all%'
+                                        OR      rulings.ruling_fr       LIKE '%$search_all%'
+                                        OR      rulings.situation_en    LIKE '%$search_all%'
+                                        OR      rulings.situation_fr    LIKE '%$search_all%' ) "   : "";
 
   // Use a different search technique for linked cards
   $query_having = ($search_card_id && $search_card_id !== -1)
@@ -322,10 +332,13 @@ function rulings_list(  string  $sort_by  = 'date'  ,
                                               SEPARATOR ', ') AS 'rc_names'       ,
                                 GROUP_CONCAT( DISTINCT  cards.name_en
                                               ORDER BY  cards.name_en ASC
-                                              SEPARATOR ', ') AS 'rc_names_en'   ,
+                                              SEPARATOR ', ') AS 'rc_names_en'    ,
                                 GROUP_CONCAT( DISTINCT  cards.name_fr
                                               ORDER BY  cards.name_fr ASC
-                                              SEPARATOR ', ') AS 'rc_names_fr'   ,
+                                              SEPARATOR ', ') AS 'rc_names_fr'    ,
+                                GROUP_CONCAT( DISTINCT  cards.slug
+                                              ORDER BY  cards.name_$lang ASC
+                                              SEPARATOR ', ') AS 'rc_slugs'       ,
                                 GROUP_CONCAT( DISTINCT  tags.uuid
                                               ORDER BY  tags.name ASC
                                               SEPARATOR ', ')   AS 'rt_uuids'     ,
@@ -352,11 +365,17 @@ function rulings_list(  string  $sort_by  = 'date'  ,
       $data[$i]['id']           = sanitize_output($row['r_id']);
       $data[$i]['slug']         = sanitize_output($row['r_slug']);
       $data[$i]['date']         = ($row['r_date'] !== '0000-00-00') ? sanitize_output($row['r_date']) : '';
+      $data[$i]['fdate']        = $row['r_date'] != '0000-00-00'
+                                ? sanitize_output(date_to_text($row['r_date'], strip_day: 1))
+                                : '';
       $data[$i]['date_since']   = ($row['r_date'] !== '0000-00-00')
                                 ? sanitize_output(time_since(strtotime($row['r_date']))).'<br>'
                                   .sanitize_output(date_to_text($row['r_date'], strip_day: 1))
                                 : '';
       $data[$i]['update']       = ($row['r_update'] !== '0000-00-00') ? sanitize_output($row['r_update']) : '';
+      $data[$i]['fupdate']      = $row['r_update'] != '0000-00-00'
+                                ? sanitize_output(date_to_text($row['r_update'], strip_day: 1))
+                                : '';
       $data[$i]['update_since'] = ($row['r_update'] !== '0000-00-00')
                                 ? sanitize_output(time_since(strtotime($row['r_update']))).'<br>'
                                 .sanitize_output(date_to_text($row['r_update'], strip_day: 1))
@@ -364,16 +383,24 @@ function rulings_list(  string  $sort_by  = 'date'  ,
       $data[$i]['title_en']     = sanitize_output($row['r_title_en']);
       $data[$i]['title_fr']     = sanitize_output($row['r_title_fr']);
       $data[$i]['title']        = sanitize_output(string_truncate($row['r_title'], 50, '...'));
+      $data[$i]['ftitle']       = sanitize_output($row['r_title']);
       $data[$i]['situation_en'] = nl2br($row['r_situation_en']);
       $data[$i]['situation_fr'] = nl2br($row['r_situation_fr']);
+      $data[$i]['situation']    = nl2br($row['r_situation']);
       $data[$i]['nsituation']   = mb_strlen($row['r_situation']);
       $data[$i]['ruling_en']    = nl2br($row['r_ruling_en']);
       $data[$i]['ruling_fr']    = nl2br($row['r_ruling_fr']);
+      $data[$i]['ruling']       = nl2br($row['r_ruling']);
       $data[$i]['nruling']      = mb_strlen($row['r_ruling']);
       $data[$i]['ncards']       = sanitize_output($row['rc_count']);
       $data[$i]['cards']        = sanitize_output($row['rc_names']);
+      $data[$i]['cards_slugs']  = sanitize_output($row['rc_slugs']);
+      $data[$i]['lcards']       = ($row['rc_names'])
+                                ? rulings_assemble_card_links($row['rc_names'], $row['rc_slugs'])
+                                : '';
       $data[$i]['ntags']        = sanitize_output($row['rt_count']);
       $data[$i]['tags']         = sanitize_output($row['rt_names']);
+      $data[$i]['ltags']        = ($row['rt_names']) ? rulings_assemble_tag_links($row['rt_names']) : '';
     }
 
     // Prepare for the API
@@ -707,4 +734,81 @@ function rulings_regenerate_all_slugs() : void
     // Regenerate the ruling's slug
     rulings_generate_slug($row['a_id']);
   }
+}
+
+
+
+
+/**
+ * Assembles the links to a ruling's tags.
+ *
+ * @param   string  $ruling_tags  The ruling's tags.
+ *
+ * @return  string                The assembled links.
+ */
+
+function rulings_assemble_tag_links( string $ruling_tags ) : string
+{
+  // If there are no tags, return an empty string
+  if(!$ruling_tags)
+    return '';
+
+  // Split the tags into an array
+  $ruling_tags = explode(', ', $ruling_tags);
+
+  // Initialize the list of links
+  $links = '';
+
+  // Loop through the tags
+  for($i = 0; $i < count($ruling_tags); $i++)
+  {
+    // Add the tag to the list of links, unless it's empty
+    if($ruling_tags[$i])
+      $links .= '<li>'.__link('pages/game/cards?tag='.$ruling_tags[$i], $ruling_tags[$i]).'</li>';
+  }
+
+  // Return the assembled links
+  return $links;
+}
+
+
+
+
+/**
+ * Assembles the links to a ruling's cards.
+ *
+ * @param   string  $ruling_card_names  The ruling's cards' names.
+ * @param   string  $ruling_card_slugs  The ruling's cards' slugs.
+ *
+ * @return  string                      The assembled links.
+ */
+
+function rulings_assemble_card_links( string $ruling_card_names ,
+                                      string $ruling_card_slugs ) : string
+{
+  // If there are no cards, return an empty string
+  if(!$ruling_card_names)
+    return '';
+
+  // Split the cards and slugs into arrays
+  $ruling_card_names = explode(', ', $ruling_card_names);
+  $ruling_card_slugs = explode(', ', $ruling_card_slugs);
+
+  // If the number of cards and slugs don't match, return an empty string
+  if(count($ruling_card_names) !== count($ruling_card_slugs))
+    return '';
+
+  // Initialize the list of links
+  $links = '';
+
+  // Loop through the cards
+  for($i = 0; $i < count($ruling_card_names); $i++)
+  {
+    // Add the card to the list of links, unless it's empty
+    if($ruling_card_names[$i])
+      $links .= '<li>'.__link('pages/card/'.$ruling_card_slugs[$i], $ruling_card_names[$i]).'</li>';
+  }
+
+  // Return the assembled links
+  return $links;
 }
