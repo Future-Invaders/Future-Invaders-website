@@ -162,6 +162,27 @@ function cards_get( int     $card_id    = null    ,
                         LEFT JOIN arsenals ON arsenals_compositions.fk_arsenals = arsenals.id
                         WHERE     arsenals_compositions.fk_cards = '$card_id' ");
 
+  // Fetch linked rulings
+  $qrulings = query(" SELECT    rulings.uuid      AS 'r_uuid'     ,
+                                rulings.slug      AS 'r_slug'     ,
+                                rulings.title_en  AS 'r_title_en'  ,
+                                rulings.title_fr  AS 'r_title_fr'
+                      FROM      rulings_cards
+                      LEFT JOIN rulings ON rulings_cards.fk_rulings = rulings.id
+                      WHERE     rulings_cards.fk_cards = '$card_id'
+
+                      UNION
+
+                      SELECT    rulings.uuid      AS 'r_uuid'     ,
+                                rulings.slug      AS 'r_slug'     ,
+                                rulings.title_en  AS 'r_title_en'  ,
+                                rulings.title_fr  AS 'r_title_fr'
+                      FROM      rulings_tags
+                      LEFT JOIN rulings     ON rulings_tags.fk_rulings = rulings.id
+                      LEFT JOIN tags        ON rulings_tags.fk_tags = tags.id
+                      LEFT JOIN tags_cards  ON tags_cards.fk_tags = tags.id
+                      WHERE     tags_cards.fk_cards = '$card_id' ");
+
   // Fetch linked tags
   $qtags = query("  SELECT    tags.uuid               AS 't_uuid'         ,
                               tags.name               AS 't_name'         ,
@@ -317,6 +338,23 @@ function cards_get( int     $card_id    = null    ,
       }
       if($i === 0)
         $data['arsenals']                   = array();
+    }
+
+    // Rulings
+    if(!$no_depth)
+    {
+      for($i = 0; $drulings = query_row($qrulings); $i++)
+      {
+        $data['rulings'][$i]['uuid']        = sanitize_json($drulings['r_uuid']);
+        $data['rulings'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url']
+                                                            .'api/ruling/'.$drulings['r_uuid']);
+        $data['rulings'][$i]['url']         = sanitize_json($GLOBALS['website_url']
+                                                            .'pages/ruling/'.$drulings['r_slug']);
+        $data['rulings'][$i]['title']['en'] = sanitize_json($drulings['r_title_en']);
+        $data['rulings'][$i]['title']['fr'] = sanitize_json($drulings['r_title_fr']);
+      }
+      if($i === 0)
+        $data['rulings']                    = array();
     }
 
     // Tags

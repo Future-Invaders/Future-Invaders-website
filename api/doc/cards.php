@@ -341,6 +341,18 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       },
       ...
     ],
+    "rulings": [
+      {
+        "uuid": string,
+        "endpoint": string,
+        "url": string,
+        "title": {
+          "en": string,
+          "fr": string
+        }
+      },
+      ...
+    ],
     "tags": [
       {
         "uuid": string,
