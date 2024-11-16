@@ -18,6 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  cards_regenerate_all_slugs      Regenerates all card slugs                                                       */
 /*  cards_format_body               Formats a card's body                                                            */
 /*  cards_format_cost               Formats a card's cost                                                            */
+/*  cards_format_rulings            Formats a ruling linked to a card                                                */
 /*                                                                                                                   */
 /*  card_types_get                  Returns data related to a card type                                              */
 /*  card_types_list                 Lists card types in the database                                                 */
@@ -270,8 +271,8 @@ function cards_get( int     $card_id    = null    ,
       $data['rulings'][$i]['update']    = $drulings['r_update'] != '0000-00-00'
                                         ? sanitize_json(date_to_text($drulings['r_update'], strip_day: 1))
                                         : '';
-      $data['rulings'][$i]['situation'] = nl2br($drulings['r_situation_'.$lang]);
-      $data['rulings'][$i]['ruling']    = nl2br($drulings['r_ruling_'.$lang]);
+      $data['rulings'][$i]['situation'] = cards_format_rulings(nl2br($drulings['r_situation_'.$lang]));
+      $data['rulings'][$i]['ruling']    = cards_format_rulings(nl2br($drulings['r_ruling_'.$lang]));
     }
     $data['rulings']['count'] = $i;
 
@@ -1182,6 +1183,46 @@ function cards_format_cost( string $cost ) : string
 
   // Return the formatted card cost
   return $cost;
+}
+
+
+
+
+/**
+ * Formats a ruling linked to a card.
+ *
+ * @param   string  $ruling_text  The ruling text.
+ *
+ * @return  string                The formatted ruling text.
+ */
+
+function cards_format_rulings(  string $ruling_body     ,
+                                string $format = 'html' ) : string
+{
+  // Find all matches of card links
+  $pattern = '/\{\{card\|([^|]+)\|([^}]+)\}\}/';
+  preg_match_all($pattern, $ruling_body, $matches, PREG_SET_ORDER);
+
+  // Replace them with the proper content
+  foreach ($matches as $match)
+  {
+    $card_name    = $match[2];
+    $card_slug    = $match[1];
+
+    // Use a link when displaying on the website
+    if($format === 'html')
+    {
+      $card_link    = __link('pages/card/'.$card_slug, $card_name, popup: true);
+      $ruling_body  = str_replace($match[0], $card_link, $ruling_body);
+    }
+
+    // Use the plain name when displaying in the API
+    if($format === 'api')
+      $ruling_body  = str_replace($match[0], $card_name, $ruling_body);
+  }
+
+  // Return the formatted body
+  return $ruling_body;
 }
 
 
