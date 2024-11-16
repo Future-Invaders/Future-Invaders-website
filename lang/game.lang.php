@@ -41,10 +41,10 @@ ___('card_rulings_body',    'FR', <<<EOD
 Les jugements sont des clarifications officielles sur la façon dont une règle ou un texte ambigu doit être interprété.
 EOD
 );
-___('card_rulings_date',    'EN', "Ruling made on {{1}}");
-___('card_rulings_date',    'FR', "Jugement fait le {{1}}");
-___('card_rulings_update',  'EN', "Ruling made on {{1}}, updated on {{2}}");
-___('card_rulings_update',  'FR', "Jugement du {{1}}, mis à jour le {{2}}");
+___('card_rulings_date',    'EN', "Ruling issued on {{1}}");
+___('card_rulings_date',    'FR', "Jugement rendu le {{1}}");
+___('card_rulings_update',  'EN', "Ruling issued on {{1}}, updated on {{2}}");
+___('card_rulings_update',  'FR', "Jugement rendu le {{1}}, mis à jour le {{2}}");
 ___('card_rulings_situ',    'EN', "Situation");
 ___('card_rulings_situ',    'FR', "Situation");
 ___('card_rulings_ruling',  'EN', "Ruling");
@@ -219,10 +219,10 @@ ___('ruling_body',          'FR', <<<EOD
 Un jugement est une clarification officielle sur la façon dont une règle ou un texte ambigu doit être interprété.
 EOD
 );
-___('ruling_date',          'EN', "Ruling made on {{1}}");
-___('ruling_date',          'FR', "Jugement fait le {{1}}");
-___('ruling_update',        'EN', "Ruling made on {{1}}, updated on {{2}}");
-___('ruling_update',        'FR', "Jugement du {{1}}, mis à jour le {{2}}");
+___('ruling_date',          'EN', "Ruling issued on {{1}}");
+___('ruling_date',          'FR', "Jugement rendu le {{1}}");
+___('ruling_update',        'EN', "Ruling issued on {{1}}, updated on {{2}}");
+___('ruling_update',        'FR', "Jugement rendu le {{1}}, mis à jour le {{2}}");
 ___('ruling_situ',          'EN', "Situation");
 ___('ruling_situ',          'FR', "Situation");
 ___('ruling_ruling',        'EN', "Ruling");

@@ -19,6 +19,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  rulings_assemble_tag_links       Assembles the links to a ruling's tags.                                         */
 /*  rulings_assemble_card_links      Assembles the links to a ruling's cards.                                        */
+/*  rulings_format_body              Formats a ruling's body.                                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -136,10 +137,10 @@ function rulings_get( int     $ruling_id    = null    ,
     $data['title']        = sanitize_output($ruling_data['r_title']);
     $data['situation_en'] = sanitize_output($ruling_data['r_situation_en']);
     $data['situation_fr'] = sanitize_output($ruling_data['r_situation_fr']);
-    $data['situation']    = nl2br($ruling_data['r_situation']);
+    $data['situation']    = rulings_format_body(nl2br($ruling_data['r_situation']));
     $data['ruling_en']    = sanitize_output($ruling_data['r_ruling_en']);
     $data['ruling_fr']    = sanitize_output($ruling_data['r_ruling_fr']);
-    $data['ruling']       = nl2br($ruling_data['r_ruling']);
+    $data['ruling']       = rulings_format_body(nl2br($ruling_data['r_ruling']));
 
     // Card data
     for($i = 0; $dcards = query_row($qcards); $i++)
@@ -178,10 +179,10 @@ function rulings_get( int     $ruling_id    = null    ,
     // Ruling text
     $data['title']['en']      = sanitize_json($ruling_data['r_title_en']);
     $data['title']['fr']      = sanitize_json($ruling_data['r_title_fr']);
-    $data['situation']['en']  = sanitize_json($ruling_data['r_situation_en']);
-    $data['situation']['fr']  = sanitize_json($ruling_data['r_situation_fr']);
-    $data['ruling']['en']     = sanitize_json($ruling_data['r_ruling_en']);
-    $data['ruling']['fr']     = sanitize_json($ruling_data['r_ruling_fr']);
+    $data['situation']['en']  = sanitize_json(rulings_format_body($ruling_data['r_situation_en'], 'api'));
+    $data['situation']['fr']  = sanitize_json(rulings_format_body($ruling_data['r_situation_fr'], 'api'));
+    $data['ruling']['en']     = sanitize_json(rulings_format_body($ruling_data['r_ruling_en'], 'api'));
+    $data['ruling']['fr']     = sanitize_json(rulings_format_body($ruling_data['r_ruling_fr'], 'api'));
 
     // Cards
     for($i = 0; $dcards = query_row($qcards); $i++)
@@ -384,13 +385,13 @@ function rulings_list(  string  $sort_by  = 'date'  ,
       $data[$i]['title_fr']     = sanitize_output($row['r_title_fr']);
       $data[$i]['title']        = sanitize_output(string_truncate($row['r_title'], 50, '...'));
       $data[$i]['ftitle']       = sanitize_output($row['r_title']);
-      $data[$i]['situation_en'] = nl2br($row['r_situation_en']);
-      $data[$i]['situation_fr'] = nl2br($row['r_situation_fr']);
-      $data[$i]['situation']    = nl2br($row['r_situation']);
+      $data[$i]['situation_en'] = rulings_format_body(nl2br($row['r_situation_en']));
+      $data[$i]['situation_fr'] = rulings_format_body(nl2br($row['r_situation_fr']));
+      $data[$i]['situation']    = rulings_format_body(nl2br($row['r_situation']));
       $data[$i]['nsituation']   = mb_strlen($row['r_situation']);
-      $data[$i]['ruling_en']    = nl2br($row['r_ruling_en']);
-      $data[$i]['ruling_fr']    = nl2br($row['r_ruling_fr']);
-      $data[$i]['ruling']       = nl2br($row['r_ruling']);
+      $data[$i]['ruling_en']    = rulings_format_body(nl2br($row['r_ruling_en']));
+      $data[$i]['ruling_fr']    = rulings_format_body(nl2br($row['r_ruling_fr']));
+      $data[$i]['ruling']       = rulings_format_body(nl2br($row['r_ruling']));
       $data[$i]['nruling']      = mb_strlen($row['r_ruling']);
       $data[$i]['ncards']       = sanitize_output($row['rc_count']);
       $data[$i]['cards']        = sanitize_output($row['rc_names']);
@@ -422,10 +423,10 @@ function rulings_list(  string  $sort_by  = 'date'  ,
       // Ruling text
       $data[$i]['title']['en']      = sanitize_json($row['r_title_en']);
       $data[$i]['title']['fr']      = sanitize_json($row['r_title_fr']);
-      $data[$i]['situation']['en']  = sanitize_json($row['r_situation_en']);
-      $data[$i]['situation']['fr']  = sanitize_json($row['r_situation_fr']);
-      $data[$i]['ruling']['en']     = sanitize_json($row['r_ruling_en']);
-      $data[$i]['ruling']['fr']     = sanitize_json($row['r_ruling_fr']);
+      $data[$i]['situation']['en']  = sanitize_json(rulings_format_body($row['r_situation_en'], 'api'));
+      $data[$i]['situation']['fr']  = sanitize_json(rulings_format_body($row['r_situation_fr'], 'api'));
+      $data[$i]['ruling']['en']     = sanitize_json(rulings_format_body($row['r_ruling_en'], 'api'));
+      $data[$i]['ruling']['fr']     = sanitize_json(rulings_format_body($row['r_ruling_fr'], 'api'));
 
       // Cards
       $data[$i]['cards']['uuids']       = ($row['rc_uuids']) ? explode(', ', $row['rc_uuids']) : array();
@@ -811,4 +812,45 @@ function rulings_assemble_card_links( string $ruling_card_names ,
 
   // Return the assembled links
   return $links;
+}
+
+
+
+
+/**
+ * Formats a ruling's body.
+ *
+ * @param   string  $ruling_body  The ruling's body.
+ * @param   string  $format       The format to use for the returned data ('html', 'api').
+ *
+ * @return  string                The formatted body.
+ */
+
+function rulings_format_body( string $ruling_body     ,
+                              string $format = 'html' ) : string
+{
+  // Find all matches of card links
+  $pattern = '/\{\{card\|([^|]+)\|([^}]+)\}\}/';
+  preg_match_all($pattern, $ruling_body, $matches, PREG_SET_ORDER);
+
+  // Replace them with the proper content
+  foreach ($matches as $match)
+  {
+    $card_name    = $match[2];
+    $card_slug    = $match[1];
+
+    // Use a link when displaying on the website
+    if($format === 'html')
+    {
+      $card_link    = __link('pages/card/'.$card_slug, $card_name, popup: true);
+      $ruling_body  = str_replace($match[0], $card_link, $ruling_body);
+    }
+
+    // Use the plain name when displaying in the API
+    if($format === 'api')
+      $ruling_body  = str_replace($match[0], $card_name, $ruling_body);
+  }
+
+  // Return the formatted body
+  return $ruling_body;
 }
