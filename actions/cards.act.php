@@ -455,6 +455,8 @@ function cards_list( string   $sort_by    = 'name'  ,
   $search_weapons       = sanitize_array_element($search, 'weapons', 'int');
   $search_durability    = sanitize_array_element($search, 'durability', 'int');
   $search_body          = sanitize_array_element($search, 'body', 'string');
+  $search_body_en       = sanitize_array_element($search, 'body_en', 'string');
+  $search_body_fr       = sanitize_array_element($search, 'body_fr', 'string');
   $search_extra         = sanitize_array_element($search, 'extra', 'int');
   $search_arsenal_id    = sanitize_array_element($search, 'arsenal_id', 'int');
   $search_tag_id        = sanitize_array_element($search, 'tag_id', 'int');
@@ -497,6 +499,8 @@ function cards_list( string   $sort_by    = 'name'  ,
   $query_search .= ($search_durability)     ? " AND   cards.durability    = '$search_durability' "    : "";
   $query_search .= ($search_body)           ? " AND ( cards.body_en       LIKE '%$search_body%'
                                                 OR    cards.body_fr       LIKE '%$search_body%' ) "  : "";
+  $query_search .= ($search_body_en)        ? " AND   cards.body_en       LIKE '%$search_body_en%' "  : "";
+  $query_search .= ($search_body_fr)        ? " AND   cards.body_fr       LIKE '%$search_body_fr%' "  : "";
   $query_search .= ($search_extra === 1 )   ? " AND   cards.is_hidden     = '1' "                     : "";
   $query_search .= ($search_extra === 10 )  ? " AND   cards.is_extra_card = '1' "                     : "";
   $query_search .= ($search_extra === 100 ) ? " AND   cards.fk_images_en != ''

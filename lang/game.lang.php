@@ -82,8 +82,10 @@ ___('cards_list_search_open',   'EN', "Click here to search for specific cards")
 ___('cards_list_search_open',   'FR', "Cliquez ici si vous êtes à la recherche de cartes spécifiques");
 ___('cards_list_search_close',  'EN', "Click here to close the search form");
 ___('cards_list_search_close',  'FR', "Cliquez ici pour fermer le formulaire de recherche");
-___('cards_search_name',        'EN', "Card name (part of the name is enough)");
-___('cards_search_name',        'FR', "Nom de la carte (une partie du nom suffit)");
+___('cards_search_name',        'EN', "Card name");
+___('cards_search_name',        'FR', "Nom de la carte");
+___('cards_search_body',        'EN', "Card text");
+___('cards_search_body',        'FR', "Texte de la carte");
 ___('cards_search_submit',      'EN', "Search the cards");
 ___('cards_search_submit',      'FR', "Chercher parmi les cartes");
 ___('cards_search_type',        'EN', "Card type");
