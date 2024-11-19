@@ -195,7 +195,7 @@ $page_description  = $card_data['page_title_en'].$page_description ;
 
   <?php if($card_data['rulings']['count']): ?>
   <div class="bigpadding_top">
-    <div class="black bigspaced tinypadding_top tinypadding_bot">
+    <div class="black bigspaced smallpadding_top smallpadding_bot">
       <h5>
         <?=__('card_rulings_title')?>
       </h5>
