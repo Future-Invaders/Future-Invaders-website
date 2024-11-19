@@ -159,7 +159,7 @@ $rulings_list = rulings_list( sort_by:  'default'                             ,
         <?=$rulings_list[$i]['ruling']?><br>
       </p>
 
-      <p class="bold padding_top">
+      <p class="bold padding_top tinypadding_bot">
         <?=__('ruling_list_applies').__(':')?>
       </p>
       <ul>

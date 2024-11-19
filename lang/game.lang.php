@@ -297,7 +297,7 @@ ___('rulings_list_none',      'FR', "Aucun jugement ne correspond à votre reche
 ___('rulings_list_specific',  'EN', "Specific rulings");
 ___('rulings_list_specific',  'FR', "Jugements spécifiques");
 ___('ruling_list_applies',    'EN', "This ruling applies to");
-___('ruling_list_applies',    'FR', "Ce jugement s'applique sur");
+___('ruling_list_applies',    'FR', "Ce jugement s'applique à");
 
 
 

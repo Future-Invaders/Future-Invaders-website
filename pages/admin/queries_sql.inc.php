@@ -1218,27 +1218,3 @@ if($last_query < X)
   sql_update_query_id(X);
 }
 */
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Card history (old versions)
-
-/*
-if($last_query < X)
-{
-  sql_create_table('card_history');
-  sql_create_field('card_history', 'fk_cards', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('card_history', 'fk_images_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_cards');
-  sql_create_field('card_history', 'fk_images_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_images_en');
-  sql_create_field('card_history', 'errata_en', 'LONGTEXT', 'fk_images_fr');
-  sql_create_field('card_history', 'errata_fr', 'LONGTEXT', 'errata_en');
-
-  sql_create_index('card_history', 'card_history_card', 'fk_cards');
-  sql_create_index('card_history', 'card_history_image_en', 'fk_images_en');
-  sql_create_index('card_history', 'card_history_image_fr', 'fk_images_fr');
-
-  sql_update_query_id(X);
-}
-*/
