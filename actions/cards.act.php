@@ -1058,15 +1058,11 @@ function cards_generate_slug( string $card_id ) : void
                         fetch_row: true);
 
   // Assemble a tentative slug
-  $release      = ($card_data['r_name_en'])
-                ? preg_replace("/[^a-zA-Z0-9]/", "", $card_data['r_name_en'])
-                : 'card';
   $name         = ($card_data['c_name_en'])
                 ? preg_replace("/[^a-zA-Z0-9]/", "", $card_data['c_name_en'])
                 : $card_data['c_id'];
-  $slug_release = string_truncate(string_change_case($release, 'lowercase'), 10);
-  $slug_name    = string_truncate(string_change_case($name, 'lowercase'), 29);
-  $slug         = $slug_release.'-'.$slug_name;
+  $slug_name    = string_truncate(string_change_case($name, 'lowercase'), 39);
+  $slug         = $slug_name;
 
   // Increment the slug until it's unique
   while(database_entry_exists('cards', 'slug', $slug))

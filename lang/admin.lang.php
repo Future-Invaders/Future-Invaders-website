@@ -349,7 +349,7 @@ ___('admin_arsenal_list_tags',        'FR', "Tags");
 ___('admin_arsenals_list_regenslugs', 'EN', "Regenerate all arsenal slugs");
 ___('admin_arsenals_list_regenslugs', 'FR', "Régénérer les slugs de tous les arsenaux");
 ___('admin_arsenals_list_regen_go',   'EN', "Confirm the regeneration of all arsenal slugs (might be long)");
-___('admin_arsenals_list_regen_go',   'FR', "Confirmer la régénération de tous les slugs d'arsenaux (peut durer longtemps)");
+___('admin_arsenals_list_regen_go',   'FR', "Confirmer la régénération de tous les slugs d\'arsenaux (peut durer longtemps)");
 ___('admin_arsenal_list_count',       'EN', "{{1}} arsenal");
 ___('admin_arsenal_list_count',       'FR', "{{1}} arsenal");
 ___('admin_arsenal_list_count+',      'EN', "{{1}} arsenals");

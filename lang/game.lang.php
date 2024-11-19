@@ -1726,11 +1726,11 @@ Lorsque vous construisez un arsenal, vous devez prendre en compte la synergie en
 EOD
 );
 ___('strategy_synergy_body_3', 'EN', <<<EOD
-Not all synergies are obvious. For instance, a {{link|pages/card/beta-ringstation|Ring Station}} and a {{link|pages/card/beta-tradingstation|Trading Station}} might seem underwhelming on their own, but together they guarantee you two cards per turn. Detecting these synergies and leveraging them is key to mastering arsenal building.
+Not all synergies are obvious. For instance, a {{link|pages/card/ringstation|Ring Station}} and a {{link|pages/card/tradingstation|Trading Station}} might seem underwhelming on their own, but together they guarantee you two cards per turn. Detecting these synergies and leveraging them is key to mastering arsenal building.
 EOD
 );
 ___('strategy_synergy_body_3', 'FR', <<<EOD
-Certaines synergies ne sont pas évidentes à voir. Par exemple, une {{link|pages/card/beta-ringstation|Station en anneau}} et un {{link|pages/card/beta-tradingstation|Comptoir commercial}} ne sont pas particulièrement puissants individuellement, mais leur combinaison vous garantit la possibilité de piocher deux cartes par tour. Identifier et comprendre ces synergies est votre responsabilité en tant que constructeur d'arsenaux.
+Certaines synergies ne sont pas évidentes à voir. Par exemple, une {{link|pages/card/ringstation|Station en anneau}} et un {{link|pages/card/tradingstation|Comptoir commercial}} ne sont pas particulièrement puissants individuellement, mais leur combinaison vous garantit la possibilité de piocher deux cartes par tour. Identifier et comprendre ces synergies est votre responsabilité en tant que constructeur d'arsenaux.
 EOD
 );
 
@@ -1863,11 +1863,11 @@ Vous pouvez aller encore plus loin en affinant votre arsenal : inclure des car
 EOD
 );
 ___('strategy_thinning_body_3', 'EN', <<<EOD
-For example, cards like {{link|pages/card/beta-accelerate|Accelerate}} or {{link|pages/card/beta-spacescanner|Space Scanner}} may not win you the game directly, but they replace themselves by drawing a card, thinning your deck and improving your chances of drawing a win condition.
+For example, cards like {{link|pages/card/accelerate|Accelerate}} or {{link|pages/card/spacescanner|Space Scanner}} may not win you the game directly, but they replace themselves by drawing a card, thinning your deck and improving your chances of drawing a win condition.
 EOD
 );
 ___('strategy_thinning_body_3', 'FR', <<<EOD
-Par exemple, une {{link|pages/card/beta-accelerate|Accélération}} ou un {{link|pages/card/beta-spacescanner|Scrutateur spatial}} n'auront probablement pas d'impact direct sur la partie, mais les deux se remplacent en vous permettant de piocher une carte lorsqu'ils sont joués, affinant ainsi votre arsenal.
+Par exemple, une {{link|pages/card/accelerate|Accélération}} ou un {{link|pages/card/spacescanner|Scrutateur spatial}} n'auront probablement pas d'impact direct sur la partie, mais les deux se remplacent en vous permettant de piocher une carte lorsqu'ils sont joués, affinant ainsi votre arsenal.
 EOD
 );
 ___('strategy_thinning_body_4', 'EN', <<<EOD
