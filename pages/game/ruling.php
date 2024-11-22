@@ -61,7 +61,7 @@ $page_description .= $ruling_data['pagetitle_en'];
 <div class="width_50 smallpadding_top">
 
   <h2>
-    <?=__('ruling_title')?>
+    <?=__link('pages/game/rulings', __('ruling_title'))?>
   </h2>
   <p class="italics tinypadding_top bigpadding_bot">
     <?=__('ruling_body')?>
@@ -113,11 +113,11 @@ $page_description .= $ruling_data['pagetitle_en'];
       <h5>
         <?=__('ruling_cards')?>
       </h5>
-      <p class="italics tinypadding_top">
+      <p class="italics tinypadding_top tinypadding_bot">
         <?=__('ruling_cards_body')?>
       </p>
       <?php for($i = 0; $i < $ruling_data['cards']['rows']; $i++): ?>
-      <p>
+      <p class="tinypadding_top">
         &bullet; <?=__link('pages/card/'.$ruling_data['cards']['slug'][$i], $ruling_data['cards']['name'][$i])?><br>
       </p>
       <?php endfor; ?>

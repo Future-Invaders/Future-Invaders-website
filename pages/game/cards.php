@@ -32,8 +32,10 @@ $css = array('game');
 // Fetch the list of cards
 
 // Fetch the search data
-$cards_search_language  = 'name_'.string_change_case($lang, 'lowercase');
+$cards_search_name_lang = 'name_'.string_change_case($lang, 'lowercase');
 $cards_search_name      = form_fetch_element('cards_search_name');
+$cards_search_body_lang = 'body_'.string_change_case($lang, 'lowercase');
+$cards_search_body      = form_fetch_element('cards_search_body');
 $cards_search_type      = form_fetch_element('cards_search_type');
 $cards_search_faction   = form_fetch_element('cards_search_faction');
 $cards_search_rarity    = form_fetch_element('cards_search_rarity');
@@ -42,7 +44,8 @@ $cards_search_tag       = form_fetch_element('tag', request_type: 'GET');
 
 // Assemble the search data
 $cards_sort   = form_fetch_element('cards_sort', default_value: 'default');
-$cards_search = array(  $cards_search_language  => $cards_search_name     ,
+$cards_search = array(  $cards_search_name_lang => $cards_search_name     ,
+                        $cards_search_body_lang => $cards_search_body     ,
                         'type_id'               => $cards_search_type     ,
                         'faction_id'            => $cards_search_faction  ,
                         'rarity_id'             => $cards_search_rarity   ,
@@ -140,6 +143,10 @@ foreach($cards_sort_options as $cards_sort_option)
       <div class="padding_top smallpadding_bot">
         <label for="cards_search_name"><?=__('cards_search_name')?></label>
         <input class="indiv" type="text" id="cards_search_name" name="cards_search_name" value="<?=$cards_search_name?>">
+      </div>
+      <div class="smallpadding_bot">
+        <label for="cards_search_body"><?=__('cards_search_body')?></label>
+        <input class="indiv" type="text" id="cards_search_body" name="cards_search_body" value="<?=$cards_search_body?>">
       </div>
       <div class="smallpadding_bot">
         <label for="cards_search_type"><?=__('cards_search_type')?></label>
