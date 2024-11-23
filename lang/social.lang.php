@@ -311,11 +311,11 @@ Pour donner votre avis ou partager vos idées, visitez la {{link|pages/social/fe
 EOD
 );
 ___('contact_body_3', 'EN', <<<EOD
-If you want to help or contribute in any way, visit the {{link|404|help the game page}}.
+If you want to help or contribute in any way, visit the {{link|pages/social/help|help the game page}}.
 EOD
 );
 ___('contact_body_3', 'FR', <<<EOD
-Si vous désirez aider ou contribuer au développement du jeu, visitez la {{link|404|page « Contribuer au jeu »}}.
+Si vous désirez aider ou contribuer au développement du jeu, visitez la {{link|pages/social/help|page « Contribuer au jeu »}}.
 EOD
 );
 ___('contact_body_4', 'EN', <<<EOD
@@ -377,6 +377,113 @@ EOD
 );
 ___('feedback_body_4', 'FR', <<<EOD
 Pour des retours d'expérience professionnels, envoyez un e-mail à {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   HELP THE GAME                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Help the game
+___('social_help_title',  'EN', "Help the game");
+___('social_help_title',  'FR', "Contribuer au jeu");
+___('social_help_body_1', 'EN', <<<EOD
+Future Invaders is currently a small, unpublished project, looking to bloom into a fully-fledged game. To make this transformation possible, any and all support is greatly appreciated.
+EOD
+);
+___('social_help_body_1', 'FR', <<<EOD
+Future Invaders est actuellement un petit projet non publié, cherchant à se transformer en un jeu à grande échelle. Afin de réussir cette transformation, toute aide est précieuse.
+EOD
+);
+___('social_help_body_2', 'EN', <<<EOD
+Here's how you can help:
+EOD
+);
+___('social_help_body_2', 'FR', <<<EOD
+Voici quelques façons de nous aider :
+EOD
+);
+
+
+// Play the game
+___('social_help_play_title',  'EN', "Play the game");
+___('social_help_play_title',  'FR', "Jouez au jeu");
+___('social_help_play_body',   'EN', <<<EOD
+The best way to help is by playing. Knowing that you're enjoying Future Invaders truly means a lot to us. {{link|pages/tools/print|Print your own copy of the game}}, invite some friends over, {{link|pages/game/rules|read the rules}}, and have fun!
+EOD
+);
+___('social_help_play_body',   'FR', <<<EOD
+Jouer au jeu est la meilleure façon de nous aider. Le simple fait de savoir que vous vous amusez en jouant à Future Invaders nous rend heureux. {{link|pages/tools/print|Imprimez votre propre copie du jeu}}, puis invitez des amis à jouer, {{link|pages/game/rules|lisez les règles}}, et amusez-vous !
+EOD
+);
+
+
+// Spread the word
+___('social_help_spread_title',  'EN', "Spread the word");
+___('social_help_spread_title',  'FR', "Parlez du jeu");
+___('social_help_spread_body',   'EN', <<<EOD
+Talk about Future Invaders with your friends, {{link|pages/social/links|follow us on social media}}, and introduce the game to your local gaming communities. The more people know about it, the more players it will attract, and the more likely it is to be published and grow into something bigger!
+EOD
+);
+___('social_help_spread_body',   'FR', <<<EOD
+Parlez de Future Invaders à vos amis, {{link|pages/social/links|suivez nous sur les réseaux sociaux}}, et partagez le jeu avec vos communautés de joueurs locales. Plus les gens entendent parler du jeu, plus il y aura de joueurs, et plus les chances sont élevées que le jeu soit publié et puisse ainsi continuer à grandir !
+EOD
+);
+
+
+// Participate in the community
+___('social_help_community_title',  'EN', "Participate in the community");
+___('social_help_community_title',  'FR', "Participez à la communauté");
+___('social_help_community_body',   'EN', <<<EOD
+A game is nothing without its community. Join our {{link|pages/social/discord|Discord server}} and/or {{link|pages/social/irc|IRC chat}} to interact with other players, and help build the community. Engage with our posts on {{link|pages/social/links|social media}} to extend our reach and get more people involved.
+EOD
+);
+___('social_help_community_body',   'FR', <<<EOD
+Un jeu n'est rien sans sa communauté. Rejoignez notre {{link|pages/social/discord|serveur Discord}} et/ou notre {{link|pages/social/irc|chat IRC}} pour interagir avec d'autres joueurs et faire grandir la communauté. Partagez et interagissez avec nos messages sur {{link|pages/social/links|les réseaux sociaux}}, afin qu'ils atteignent un public plus large.
+EOD
+);
+
+
+// Give feedback
+___('social_help_feedback_title',  'EN', "Give feedback");
+___('social_help_feedback_title',  'FR', "Donnez votre avis");
+___('social_help_feedback_body',   'EN', <<<EOD
+We love hearing your stories and feedback. A game cannot improve without listening to its players. Use {{link|pages/social/discord|Discord}} or {{link|pages/social/irc|IRC}} to tell us stories about the games of Future Invaders you play.
+EOD
+);
+___('social_help_feedback_body',   'FR', <<<EOD
+Nous adorons entendre parler de vos expériences avec le jeu, et prenons vos retours d'expérience en compte. Un jeu ne peut pas s'améliorer sans écouter ses joueurs. Utilisez {{link|pages/social/discord|Discord}} ou {{link|pages/social/irc|IRC}} pour nous raconter des histoires issues des parties de Future Invaders auxquelles vous jouez.
+EOD
+);
+
+
+// Contribute code
+___('social_help_code_title',  'EN', "Create third party projects");
+___('social_help_code_title',  'FR', "Créer des projets tiers");
+___('social_help_code_body',   'EN', <<<EOD
+Interested in developing something related to Future Invaders? If it's a technical project, get in touch with the team to add it to the {{external_popup|https://github.com/orgs/Future-Invaders/repositories|Future Invaders organization on GitHub}}, and share your awesome projects with the community!
+EOD
+);
+___('social_help_code_body',   'FR', <<<EOD
+Vous développez un projet lié au jeu ? S'il s'agit d'un projet technique, contactez l'équipe de développement de Future Invaders pour qu'il soit ajouté à {{external_popup|https://github.com/orgs/Future-Invaders/repositories|l'organisation Future Invaders sur GitHub}}, et partagez vos super projets avec la communauté !
+EOD
+);
+
+
+// Help find an editor
+___('social_help_editor_title',  'EN', "Help us find an editor");
+___('social_help_editor_title',  'FR', "Aidez-nous à trouver un éditeur");
+___('social_help_editor_body',   'EN', <<<EOD
+The ultimate goal for Future Invaders is publication, whether through an editor or self-publishing. If you know someone who could help make that happen, share the {{link|pages/social/publish|publish this game page}} and encourage them to reach out via the {{link|pages/social/contact|contact info page}}.
+EOD
+);
+___('social_help_editor_body',   'FR', <<<EOD
+L'objectif de Future Invaders est d'être publié, soit par un éditeur, soit en auto-édition. Trouver un éditeur est une question de chance et d'opportunités. Si vous avez la possibilité d'aider le jeu à accomplir cet objectif, partagez la page {{link|pages/social/publish|publier ce jeu}} avec des gens que vous connaissez, et dites aux éditeurs de nous contacter via la page {{link|pages/social/contact|infos de contact}}.
 EOD
 );
 
