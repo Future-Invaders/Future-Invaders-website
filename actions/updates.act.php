@@ -8,11 +8,55 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  updates_list                     Returns a list of all updates                                                   */
 /*  updates_add                      Adds an update to the database                                                  */
 /*                                                                                                                   */
 /*  updates_generate_slug            Generates a unique slug identifier for an update                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Returns a list of all updates.
+ *
+ * @return  array   An array containing the updates.
+ */
+
+function updates_list() : array
+{
+  // Get the user's language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch the updates
+  $updates = query("  SELECT    updates.id          AS 'u_id'       ,
+                                updates.date        AS 'u_date'     ,
+                                updates.slug        AS 'u_slug'     ,
+                                updates.title_en    AS 'u_title_en' ,
+                                updates.title_fr    AS 'u_title_fr' ,
+                                updates.title_$lang AS 'u_title'
+                      FROM      updates
+                      ORDER BY  updates.date DESC ");
+
+  // Prepare the data for display
+  for($i = 0; $row = query_row($updates); $i++)
+  {
+    $data[$i]['id']           = sanitize_output($row['u_id']);
+    $data[$i]['date']         = sanitize_output(date_to_text($row['u_date'], strip_day: 1));
+    $data[$i]['date_since']   = sanitize_output(time_since(strtotime($row['u_date'])));
+    $data[$i]['slug']         = sanitize_output($row['u_slug']);
+    $data[$i]['title_en']     = sanitize_output($row['u_title_en']);
+    $data[$i]['title_fr']     = sanitize_output($row['u_title_fr']);
+    $data[$i]['title']        = sanitize_output(string_truncate($row['u_title'], 40, '...'));
+  }
+
+  // Add the number of rows to the returned data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
 
 /**
  * Adds an update to the database.

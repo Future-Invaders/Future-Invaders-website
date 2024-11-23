@@ -855,6 +855,17 @@ ___('admin_page_stats_delete_confirm', 'FR', "Confirmez la suppression de cette 
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// List updates
+___('admin_update_list_date',   'EN', "Date");
+___('admin_update_list_date',   'FR', "Date");
+___('admin_update_list_title',  'EN', "Title");
+___('admin_update_list_title',  'FR', "Titre");
+___('admin_update_list_count',  'EN', "{{1}} update");
+___('admin_update_list_count',  'FR', "{{1}} mise à jour");
+___('admin_update_list_count+', 'EN', "{{1}} updates");
+___('admin_update_list_count+', 'FR', "{{1}} mises à jour");
+
+
 // Add an update
 ___('admin_update_add_title',     'EN', "New update");
 ___('admin_update_add_title',     'FR', "Nouvelle mise à jour");
