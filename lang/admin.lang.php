@@ -879,3 +879,8 @@ ___('admin_update_add_body_fr',   'EN', "Update (French)");
 ___('admin_update_add_body_fr',   'FR', "Contenu (Français)");
 ___('admin_update_add_submit',    'EN', "Create update");
 ___('admin_update_add_submit',    'FR', "Créer la mise à jour");
+
+
+// Delete an update
+___('admin_update_delete_confirm',  'EN', "Confirm the deletion of this update");
+___('admin_update_delete_confirm',  'FR', "Confirmez la suppression de cette mise à jour");

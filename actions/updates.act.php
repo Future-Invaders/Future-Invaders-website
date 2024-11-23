@@ -10,6 +10,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  updates_list                     Returns a list of all updates                                                   */
 /*  updates_add                      Adds an update to the database                                                  */
+/*  updates_delete                   Deletes an update from the database                                             */
 /*                                                                                                                   */
 /*  updates_generate_slug            Generates a unique slug identifier for an update                                */
 /*                                                                                                                   */
@@ -89,6 +90,26 @@ function updates_add( array $data ) : void
 
   // Generate a slug for the update
   updates_generate_slug($update_id);
+}
+
+
+
+
+/**
+ * Deletes an update from the database.
+ *
+ * @param   int     $update_id  The id of the update.
+ *
+ */
+
+function updates_delete( int $update_id ) : void
+{
+  // Sanitize the data
+  $update_id = sanitize($update_id, 'int');
+
+  // Delete the update from the database
+  query(" DELETE FROM updates
+          WHERE       updates.id = '$update_id' ");
 }
 
 
