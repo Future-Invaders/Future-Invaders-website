@@ -8,13 +8,56 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  updates_get                      Returns data related to an update                                               */
 /*  updates_list                     Returns a list of all updates                                                   */
 /*  updates_add                      Adds an update to the database                                                  */
+/*  updates_edit                     Edits an update in the database                                                 */
 /*  updates_delete                   Deletes an update from the database                                             */
 /*                                                                                                                   */
 /*  updates_generate_slug            Generates a unique slug identifier for an update                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Returns data related to an update.
+ *
+ * @param   int         $update_id   The id of the update.
+ *
+ * @return  array|null                An array containing the update's data, or null if the update does not exist.
+ */
+
+function updates_get( int $update_id ) : array|null
+{
+  // Sanitize the update's id
+  $update_id = sanitize($update_id, 'int');
+
+  // Return null if the update does not exist
+  if(!database_row_exists('updates', $update_id))
+    return null;
+
+  // Fetch the update's data
+  $update_data = query("  SELECT    updates.id        AS 'u_id'       ,
+                                    updates.title_en  AS 'u_title_en' ,
+                                    updates.title_fr  AS 'u_title_fr' ,
+                                    updates.body_en   AS 'u_body_en'  ,
+                                    updates.body_fr   AS 'u_body_fr'
+                          FROM      updates
+                          WHERE     updates.id = '$update_id' ",
+                          fetch_row: true);
+
+  // Assemble an array with the update's data
+  $data['id']         = sanitize_output($update_data['u_id']);
+  $data['title_en']   = sanitize_output($update_data['u_title_en']);
+  $data['title_fr']   = sanitize_output($update_data['u_title_fr']);
+  $data['body_en']    = sanitize_output($update_data['u_body_en']);
+  $data['body_fr']    = sanitize_output($update_data['u_body_fr']);
+
+  // Return the update's data
+  return $data;
+}
+
+
+
 
 /**
  * Returns a list of all updates.
@@ -89,6 +132,45 @@ function updates_add( array $data ) : void
   $update_id = sanitize(query_id(), "int");
 
   // Generate a slug for the update
+  updates_generate_slug($update_id);
+}
+
+
+
+
+/**
+ * Edits an update in the database.
+ *
+ * @param   int         $update_id   The id of the update to edit.
+ * @param   array       $data        An array containing the update's data.
+ *
+ * @return  void
+ */
+
+function updates_edit(  int   $update_id  ,
+                        array $data       ) : void
+{
+  // Sanitize the data
+  $update_id = sanitize($update_id, 'int');
+  $title_en  = sanitize_array_element($data, 'title_en', 'string');
+  $title_fr  = sanitize_array_element($data, 'title_fr', 'string');
+  $body_en   = sanitize_array_element($data, 'body_en', 'string');
+  $body_fr   = sanitize_array_element($data, 'body_fr', 'string');
+
+  // Stop here if the update does not exist
+  if(!database_row_exists('updates', $update_id))
+    return;
+
+  // Edit the update and reset its slug
+  query(" UPDATE  updates
+          SET     updates.title_en  = '$title_en' ,
+                  updates.title_fr  = '$title_fr' ,
+                  updates.body_en   = '$body_en'  ,
+                  updates.body_fr   = '$body_fr'  ,
+                  updates.slug      = ''
+          WHERE   updates.id        = '$update_id' ");
+
+  // Regenerate the update's slug
   updates_generate_slug($update_id);
 }
 

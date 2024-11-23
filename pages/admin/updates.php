@@ -55,6 +55,34 @@ if(isset($_POST['update_add']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit an update
+
+if(isset($_POST['update_edit']))
+{
+  // Gather the update's id
+  $update_edit_id = form_fetch_element('update_id');
+
+  // Gather update postdata
+  $update_edit_title_en = form_fetch_element('update_title_en');
+  $update_edit_title_fr = form_fetch_element('update_title_fr');
+  $update_edit_body_en  = form_fetch_element('update_body_en');
+  $update_edit_body_fr  = form_fetch_element('update_body_fr');
+
+  // Assemble an array with the update postdata
+  $update_edit_data = array(  'title_en'  => $update_edit_title_en ,
+                              'title_fr'  => $update_edit_title_fr ,
+                              'body_en'   => $update_edit_body_en  ,
+                              'body_fr'   => $update_edit_body_fr  );
+
+  // Edit the update
+  updates_edit(  $update_edit_id    ,
+                 $update_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete an update
 
 if(isset($_POST['admin_updates_delete']))
