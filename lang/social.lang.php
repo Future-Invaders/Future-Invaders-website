@@ -70,6 +70,84 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  DISCORD SERVER                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Discord server
+___('discord_title',  'EN', "Discord server");
+___('discord_title',  'FR', "Serveur Discord");
+___('discord_body_1', 'EN', <<<EOD
+Future Invaders' official Discord server is a public chatroom where you can discuss the game, ask questions, and interact with the community.
+EOD
+);
+___('discord_body_1', 'FR', <<<EOD
+Le serveur Discord officiel de Future Invaders est un salon de discussion public où vous pouvez discuter du jeu, poser des questions et interagir avec la communauté.
+EOD
+);
+___('discord_body_2', 'EN', <<<EOD
+{{external_popup|https://discord.gg/ankRwsqASX|Join the Future Invaders Discord server by clicking here.}}.
+EOD
+);
+___('discord_body_2', 'FR', <<<EOD
+{{external|https://discord.gg/ankRwsqASX|Rejoignez le serveur Discord de Future Invaders en cliquant ici.}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     IRC CHAT                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// IRC chat
+___('irc_title',        'EN', "IRC chat");
+___('irc_title',        'FR', "Chat IRC");
+___('irc_body_1',       'EN', <<<EOD
+If you would like to interact with the community in real time but prefer not to use our main community hub on {{link|pages/social/discord|on Discord}}, Future Invaders also has an official IRC chat room.
+EOD
+);
+___('irc_body_1',       'FR', <<<EOD
+Si vous souhaitez interagir avec la communauté en temps réel mais préférez ne pas utiliser notre plateforme principale de communication sur {{link|pages/social/discord|sur Discord}}, Future Invaders dispose également d'un salon de discussion IRC officiel.
+EOD
+);
+___('irc_body_2',       'EN', <<<EOD
+Using IRC is a bit complex, so if you're not very tech-savvy, it's recommended to use {{link|pages/social/discord|Discord}} instead. For guidance on how IRC works, we suggest reading {{external_popup|https://nobleme.com/pages/social/irc|this guide to using IRC}} on Nobleme, the website that hosts our IRC chat room.
+EOD
+);
+___('irc_body_2',       'FR', <<<EOD
+Le fonctionnement d'IRC peut être complexe à comprendre. Si vous n'êtes pas très technique, il est préférable d'utiliser {{link|pages/social/discord|Discord}} à la place. Pour mieux comprendre IRC, nous vous recommandons de consulter {{external_popup|https://nobleme.com/pages/social/irc|ce guide d'utilisation d'IRC}} sur NoBleme, le site qui héberge notre salon de discussion IRC.
+EOD
+);
+___('irc_body_3',       'EN', <<<EOD
+Connection details for Future Invaders' IRC chat room:
+EOD
+);
+___('irc_body_3',       'FR', <<<EOD
+Informations pour se connecter au salon de discussion IRC de Future Invaders :
+EOD
+);
+___('irc_server',       'EN', "Server");
+___('irc_server',       'FR', "Serveur");
+___('irc_server_name',  'EN', "irc.nobleme.com");
+___('irc_server_name',  'FR', "irc.nobleme.com");
+___('irc_port',         'EN', "Port");
+___('irc_port',         'FR', "Port");
+___('irc_port_name',    'EN', "6697 (SSL) / 6667 (standard)");
+___('irc_port_name',    'FR', "6697 (SSL) / 6667 (standard)");
+___('irc_channel',      'EN', "Channel");
+___('irc_channel',      'FR', "Channel");
+___('irc_channel_name', 'EN', "#futureinvaders");
+___('irc_channel_name', 'FR', "#futureinvaders");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       LEGAL                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
