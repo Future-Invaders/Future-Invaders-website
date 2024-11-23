@@ -41,6 +41,35 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                   SOCIAL MEDIA                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Social media
+___('social_media_title',  'EN', "Social media");
+___('social_media_title',  'FR', "Médias sociaux");
+___('social_media_body_1', 'EN', <<<EOD
+Outside of this website, Future Invaders only has an official account on one social media platform, which you can follow to get updates about the game: {{external_popup|https://bsky.app/profile/futureinvaders.com|Future Invaders on Bluesky}}.
+EOD
+);
+___('social_media_body_1', 'FR', <<<EOD
+Hors de ce site Internet, Future Invaders n'a de présence officielle que sur une seule plateforme de médias sociaux, que vous pouvez suivre pour obtenir des mises à jour sur le jeu : {{external|https://bsky.app/profile/futureinvaders.com|Future Invaders sur Bluesky}}.
+EOD
+);
+___('social_media_body_2', 'EN', <<<EOD
+You can also receive official updates about the game through its {{link|404|Discord server}}.
+EOD
+);
+___('social_media_body_2', 'FR', <<<EOD
+Vous pouvez également recevoir des nouvelles officielles du jeu via son {{link|404|serveur Discord}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       LEGAL                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

@@ -9,6 +9,8 @@ img/404/*
 !img/404/index.php
 img/gameplay/*
 !img/gameplay/index.php
+img/social/*
+!img/social/index.php
 img/homepage.jpg
 
 # Card images shouldn't be stored in the repository

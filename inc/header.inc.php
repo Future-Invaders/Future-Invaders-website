@@ -248,6 +248,9 @@ $javascripts .= '
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_game_news'), 'header_submenu_wip', 1, $path);?>
           </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/social/links', __('submenu_social_links'), 'header_submenu_link', 1, $path);?>
+          </div>
         </div>
 
         <div class="header_submenu_column desktop_wide">
@@ -383,6 +386,9 @@ $javascripts .= '
         <div class="header_submenu_column">
           <div class="header_submenu_title">
             <?=__('submenu_social_community')?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/social/links', __('submenu_social_links'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_social_discord'), 'header_submenu_wip', 1, $path);?>
