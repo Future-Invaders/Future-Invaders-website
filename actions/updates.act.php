@@ -76,9 +76,11 @@ function updates_list() : array
                                 updates.slug        AS 'u_slug'     ,
                                 updates.title_en    AS 'u_title_en' ,
                                 updates.title_fr    AS 'u_title_fr' ,
-                                updates.title_$lang AS 'u_title'
+                                updates.title_$lang AS 'u_title'    ,
+                                updates.body_$lang  AS 'u_body'
                       FROM      updates
-                      ORDER BY  updates.date DESC ");
+                      ORDER BY  updates.date      DESC  ,
+                                updates.title_en  ASC   ");
 
   // Prepare the data for display
   for($i = 0; $row = query_row($updates); $i++)
@@ -90,6 +92,8 @@ function updates_list() : array
     $data[$i]['title_en']     = sanitize_output($row['u_title_en']);
     $data[$i]['title_fr']     = sanitize_output($row['u_title_fr']);
     $data[$i]['title']        = sanitize_output(string_truncate($row['u_title'], 40, '...'));
+    $data[$i]['ftitle']       = sanitize_output($row['u_title']);
+    $data[$i]['body']         = nl2br($row['u_body']);
   }
 
   // Add the number of rows to the returned data
