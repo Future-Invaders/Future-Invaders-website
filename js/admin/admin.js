@@ -45,6 +45,8 @@
 /*                                                                                                                   */
 /*  admin_formats_delete                    Triggers the deletion of an entry in the game formats list.              */
 /*                                                                                                                   */
+/*  admin_updates_delete                    Triggers the deletion of an entry in the updates list.                   */
+/*                                                                                                                   */
 /*  admin_page_stats_search                 Searches the page stats list.                                            */
 /*  admin_page_stats_delete                 Triggers the deletion of an entry in the page stats list.                */
 /*                                                                                                                   */
@@ -872,6 +874,29 @@ function admin_formats_delete( message   ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('formats', 'admin_formats_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the updates list.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     update    The id of the update to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_updates_delete(  message ,
+                                update  )
+{
+  // Assemble the postdata
+  postdata = 'admin_updates_delete=' + fetch_sanitize(update);
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('updates', 'admin_updates_tbody', postdata);
 }
 
 
