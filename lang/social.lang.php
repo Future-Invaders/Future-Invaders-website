@@ -462,6 +462,19 @@ EOD
 );
 
 
+// Provide art
+___('social_help_art_title',  'EN', "Provide art");
+___('social_help_art_title',  'FR', "Proposer de l'art");
+___('social_help_art_body',   'EN', <<<EOD
+As you likely noticed, most of the website and game's art is currently AI generated. This is not something we are happy with or proud of. Currently, the game has zero budget, therefore we will not be asking artists for anything until the game has secured funding. If you're interested in providing art regardless, we appreciate it, but be aware that we will not be able to pay for your work, and it will therefore not be included in the final commercial relase of the game.
+EOD
+);
+___('social_help_art_body',   'FR', <<<EOD
+Comme vous pouvez le voir, la majorité des illustrations du site et du jeu sont générées par IA. Ce n'est pas quelque chose dont nous sommes satisfaits ou fiers. Actuellement, le budget du jeu est de zéro, par conséquent nous ne commissionnerons pas d'artistes tant que nous n'aurons pas trouvé de source de financement. Si vous tenez malgré tout à proposer de l'art pour le jeu, nous l'apprécions, mais sachez que nous ne pourrons pas vous payer, et que votre art ne sera par conséquent pas inclus dans la version commerciale finale du jeu.
+EOD
+);
+
+
 // Contribute code
 ___('social_help_code_title',  'EN', "Create third party projects");
 ___('social_help_code_title',  'FR', "Créer des projets tiers");

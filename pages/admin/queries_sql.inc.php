@@ -981,7 +981,7 @@ if($last_query < 15)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Rulings
 
-if($last_query < 17)
+if($last_query < 16)
 {
   query(" DELETE FROM tag_types WHERE tag_types.name = 'Ruling' ");
 
@@ -1017,6 +1017,28 @@ if($last_query < 17)
   sql_create_index('rulings_tags', 'rulings_tags_tag', 'fk_tags');
 
   sql_update_query_id(16);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Game updates
+
+if($last_query < 18)
+{
+  sql_create_table('updates');
+  sql_create_field('updates', 'date', 'DATE NOT NULL', 'id');
+  sql_create_field('updates', 'slug', 'VARCHAR(40) NOT NULL', 'date');
+  sql_create_field('updates', 'title_en', 'TINYTEXT NOT NULL', 'slug');
+  sql_create_field('updates', 'title_fr', 'TINYTEXT NOT NULL', 'title_en');
+  sql_create_field('updates', 'body_en', 'TEXT NOT NULL', 'title_fr');
+  sql_create_field('updates', 'body_en', 'TEXT NOT NULL', 'body_en');
+
+  sql_create_index('updates', 'updates_date', 'date');
+  sql_create_index('updates', 'updates_slug', 'slug');
+
+  sql_update_query_id(17);
 }
 
 
@@ -1192,28 +1214,6 @@ if($last_query < X)
 
   sql_create_index('cards_bans', 'cards_bans_card', 'fk_cards');
   sql_create_index('cards_bans', 'cards_bans_format', 'fk_formats');
-
-  sql_update_query_id(X);
-}
-*/
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Game updates
-
-/*
-if($last_query < X)
-{
-  sql_create_table('updates');
-  sql_create_field('updates', 'datetime', 'DATETIME NOT NULL', 'id');
-  sql_create_field('updates', 'name_en', 'TINYTEXT NOT NULL', 'datetime');
-  sql_create_field('updates', 'name_fr', 'TINYTEXT NOT NULL', 'name_en');
-  sql_create_field('updates', 'description_en', 'TEXT', 'name_fr');
-  sql_create_field('updates', 'description_fr', 'TEXT', 'description_en');
-
-  sql_create_index('updates', 'updates_datetime', 'datetime');
 
   sql_update_query_id(X);
 }
