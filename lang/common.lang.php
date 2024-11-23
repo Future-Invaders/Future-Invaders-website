@@ -1012,6 +1012,8 @@ ___('submenu_tools_api',            'FR', "API");
 // Submenu: Social
 ___('submenu_social_community',   'EN', "Community");
 ___('submenu_social_community',   'FR', "Communauté");
+___('submenu_social_links',       'EN', "Social media");
+___('submenu_social_links',       'FR', "Médias sociaux");
 ___('submenu_social_discord',     'EN', "Discord server");
 ___('submenu_social_discord',     'FR', "Serveur Discord");
 ___('submenu_social_irc',         'EN', "IRC chat");

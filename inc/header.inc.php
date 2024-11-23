@@ -222,7 +222,7 @@ $javascripts .= '
             <?=__link('pages/tools/print', __('submenu_tools_printhelp'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_discord'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/discord', __('submenu_social_discord'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 
@@ -247,6 +247,9 @@ $javascripts .= '
           </div>
           <div class="header_submenu_item">
             <?=__link('404', __('submenu_game_news'), 'header_submenu_wip', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/social/links', __('submenu_social_links'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 
@@ -385,16 +388,16 @@ $javascripts .= '
             <?=__('submenu_social_community')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_discord'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/links', __('submenu_social_links'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_irc'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/discord', __('submenu_social_discord'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_tournaments'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/irc', __('submenu_social_irc'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('404', __('submenu_social_contribute'), 'header_submenu_wip', 1, $path);?>
+            <?=__link('pages/social/help', __('submenu_social_contribute'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 
