@@ -31,6 +31,8 @@ ___('admin_menu_rulings',         'EN', "Rulings");
 ___('admin_menu_rulings',         'FR', "Jugements");
 ___('admin_menu_tags',            'EN', "Tags");
 ___('admin_menu_tags',            'FR', "Tags");
+___('admin_menu_updates',         'EN', "Updates");
+___('admin_menu_updates',         'FR', "Mises à jour");
 ___('admin_menu_page_stats',      'EN', "Page stats");
 ___('admin_menu_page_stats',      'FR', "Stats des pages");
 ___('admin_menu_queries',         'EN', "SQL Queries");
@@ -843,3 +845,26 @@ ___('admin_page_stats_list_count',    'FR', "{{1}} pages");
 // Delete a page stats entry
 ___('admin_page_stats_delete_confirm', 'EN', "Confirm the deletion of this page stats entry");
 ___('admin_page_stats_delete_confirm', 'FR', "Confirmez la suppression de cette entrée des stats des pages");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      UPDATES                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Add an update
+___('admin_update_add_title',     'EN', "New update");
+___('admin_update_add_title',     'FR', "Nouvelle mise à jour");
+___('admin_update_add_title_en',  'EN', "Title (English)");
+___('admin_update_add_title_en',  'FR', "Titre (Anglais)");
+___('admin_update_add_title_fr',  'EN', "Title (French)");
+___('admin_update_add_title_fr',  'FR', "Titre (Français)");
+___('admin_update_add_body_en',   'EN', "Update (English)");
+___('admin_update_add_body_en',   'FR', "Contenu (Anglais)");
+___('admin_update_add_body_fr',   'EN', "Update (French)");
+___('admin_update_add_body_fr',   'FR', "Contenu (Français)");
+___('admin_update_add_submit',    'EN', "Create update");
+___('admin_update_add_submit',    'FR', "Créer la mise à jour");

@@ -1028,13 +1028,15 @@ if($last_query < 16)
 if($last_query < 18)
 {
   sql_create_table('updates');
-  sql_create_field('updates', 'date', 'DATE NOT NULL', 'id');
+  sql_create_field('updates', 'uuid', 'VARCHAR(36) NOT NULL', 'id');
+  sql_create_field('updates', 'date', 'DATE NOT NULL', 'uuid');
   sql_create_field('updates', 'slug', 'VARCHAR(40) NOT NULL', 'date');
   sql_create_field('updates', 'title_en', 'TINYTEXT NOT NULL', 'slug');
   sql_create_field('updates', 'title_fr', 'TINYTEXT NOT NULL', 'title_en');
   sql_create_field('updates', 'body_en', 'TEXT NOT NULL', 'title_fr');
-  sql_create_field('updates', 'body_en', 'TEXT NOT NULL', 'body_en');
+  sql_create_field('updates', 'body_fr', 'TEXT NOT NULL', 'body_en');
 
+  sql_create_index('updates', 'updates_uuid', 'uuid');
   sql_create_index('updates', 'updates_date', 'date');
   sql_create_index('updates', 'updates_slug', 'slug');
 

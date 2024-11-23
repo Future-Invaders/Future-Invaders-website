@@ -9,7 +9,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 // Prepare the menu entries
 
 // Set up the admin menu
-$admin_menu_entries = array('index', 'images', 'cards', 'arsenals', 'rulings', 'tags', 'releases', 'formats', 'factions','page_stats', 'queries');
+$admin_menu_entries = array('index', 'images', 'cards', 'arsenals', 'rulings', 'tags', 'releases', 'formats', 'factions', 'updates', 'page_stats', 'queries');
 
 // Select the correct menu entry
 foreach($admin_menu_entries as $admin_menu_entry)
