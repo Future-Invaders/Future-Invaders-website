@@ -283,11 +283,11 @@ Vous pouvez effectuer une recherche parmi les jugements en écrivant dans le for
 EOD
 );
 ___('rulings_list_body_4',    'EN', <<<EOD
-If you're looking for a rules clarification but can't find a ruling that answers your question, ask the community on {{link|404|Discord}} or {{link|404|IRC}} for advice. It might even lead to a new ruling!
+If you're looking for a rules clarification but can't find a ruling that answers your question, ask the community on {{link|pages/social/discord|Discord}} or {{link|pages/social/irc|IRC}} for advice. It might even lead to a new ruling!
 EOD
 );
 ___('rulings_list_body_4',    'FR', <<<EOD
-Si vous recherchez une clarification de règle et ne trouvez pas de jugement correspondant, demandez l'avis de la communauté sur {{link|404|Discord}} ou {{link|404|IRC}}. Un nouveau jugement pourrait être nécessaire !
+Si vous recherchez une clarification de règle et ne trouvez pas de jugement correspondant, demandez l'avis de la communauté sur {{link|pages/social/discord|Discord}} ou {{link|pages/social/irc|IRC}}. Un nouveau jugement pourrait être nécessaire !
 EOD
 );
 ___('rulings_search_submit',  'EN', "Search rulings");
@@ -402,11 +402,11 @@ Cette page liste les termes les plus utilisés dans le jeu.
 EOD
 );
 ___('vocabulary_body_2',  'EN', <<<EOD
-This glossary is not part of the {{link|pages/rules/rules|official rules of the game}}, and should therefore not be considered a substitute for them. If anything written in a {{link|pages/rules/rules|rule}} or {{link|404|ruling}} directly contradicts this glossary, then you should refer to the rule or ruling instead as the source of truth.
+This glossary is not part of the {{link|pages/rules/rules|official rules of the game}}, and should therefore not be considered a substitute for them. If anything written in a {{link|pages/rules/rules|rule}} or {{link|pages/game/rulings|ruling}} directly contradicts this glossary, then you should refer to the rule or ruling instead as the source of truth.
 EOD
 );
 ___('vocabulary_body_2',  'FR', <<<EOD
-Ce glossaire ne fait pas partie des {{link|pages/rules/rules|règles officielles du jeu}}. Si une information issue de ce glossaire contredit une {{link|pages/rules/rules|règle}} ou un {{link|404|jugement}} officiel, c'est la règle ou le jugement qui fait office de source de vérité.
+Ce glossaire ne fait pas partie des {{link|pages/rules/rules|règles officielles du jeu}}. Si une information issue de ce glossaire contredit une {{link|pages/rules/rules|règle}} ou un {{link|pages/game/rulings|jugement}} officiel, c'est la règle ou le jugement qui fait office de source de vérité.
 EOD
 );
 
@@ -1483,11 +1483,11 @@ La chance ne peut être améliorée, mais vos compétences en construction et en
 EOD
 );
 ___('strategy_body_3', 'EN', <<<EOD
-This page outlines a few concepts which should help you think about the game in a more strategic way. For deeper strategic discussions, you will have to interact with the community on {{link|404|Discord}} or {{link|404|IRC}}.
+This page outlines a few concepts which should help you think about the game in a more strategic way. For deeper strategic discussions, you will have to interact with the community on {{link|pages/social/discord|Discord}} or {{link|pages/social/irc|IRC}}.
 EOD
 );
 ___('strategy_body_3', 'FR', <<<EOD
-Cette page présente des concepts de base qui devraient vous aider à développer une approche plus stratégique du jeu. Si vous souhaitez approfondir votre compréhension stratégique, vous devrez le faire en intéragissant avec la communauté du jeu sur {{link|404|Discord}} ou {{link|404|IRC}}.
+Cette page présente des concepts de base qui devraient vous aider à développer une approche plus stratégique du jeu. Si vous souhaitez approfondir votre compréhension stratégique, vous devrez le faire en intéragissant avec la communauté du jeu sur {{link|pages/social/discord|Discord}} ou {{link|pages/social/irc|IRC}}.
 EOD
 );
 

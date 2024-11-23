@@ -57,11 +57,11 @@ Hors de ce site Internet, Future Invaders n'a de présence officielle que sur un
 EOD
 );
 ___('social_media_body_2', 'EN', <<<EOD
-You can also receive official updates about the game through its {{link|404|Discord server}}.
+You can also receive official updates about the game through its {{link|pages/social/discord|Discord server}}.
 EOD
 );
 ___('social_media_body_2', 'FR', <<<EOD
-Vous pouvez également recevoir des nouvelles officielles du jeu via son {{link|404|serveur Discord}}.
+Vous pouvez également recevoir des nouvelles officielles du jeu via son {{link|pages/social/discord|serveur Discord}}.
 EOD
 );
 
@@ -245,11 +245,11 @@ Future Invaders a été créé par {{external|https://e-bis.fr/games/fr.html|Ér
 EOD
 );
 ___('credits_game_body_2', 'EN', <<<EOD
-All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|404|can be accessed here}}.
+All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|pages/tools/design_doc|can be accessed here}}.
 EOD
 );
 ___('credits_game_body_2', 'FR', <<<EOD
-Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|404|peut être consulté ici}}.
+Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|pages/tools/design_doc|peut être consulté ici}}.
 EOD
 );
 ___('credits_game_body_3', 'EN', <<<EOD
@@ -295,11 +295,11 @@ EOD
 ___('contact_title',  'EN', "Contact info");
 ___('contact_title',  'FR', "Infos de contact");
 ___('contact_body_1', 'EN', <<<EOD
-If you have any questions about the game or its players, ask on the game's {{link|404|Discord server}} or its {{link|404|IRC chat}}.
+If you have any questions about the game or its players, ask on the game's {{link|pages/social/discord|Discord server}} or its {{link|pages/social/irc|IRC chat}}.
 EOD
 );
 ___('contact_body_1', 'FR', <<<EOD
-Si vous avez des questions sur le jeu, posez-les sur le {{link|404|serveur Discord}} ou le {{link|404|chat IRC du jeu}}.
+Si vous avez des questions sur le jeu, posez-les sur le {{link|pages/social/discord|serveur Discord}} ou le {{link|pages/social/irc|chat IRC du jeu}}.
 EOD
 );
 ___('contact_body_2', 'EN', <<<EOD
@@ -348,11 +348,11 @@ EOD
 ___('feedback_title',  'EN', "Give feedback");
 ___('feedback_title',  'FR', "Donnez votre avis");
 ___('feedback_body_1', 'EN', <<<EOD
-Feedback on the game is very welcome, whether it's positive or negative. We love hearing your Future Invaders stories and listening to your ideas for improvement. Please keep your feedback to one of two specific places: the game's {{link|404|Discord server}} or its {{link|404|IRC chat}}. Other lines of communication are for professional inquiries only.
+Feedback on the game is very welcome, whether it's positive or negative. We love hearing your Future Invaders stories and listening to your ideas for improvement. Please keep your feedback to one of two specific places: the game's {{link|pages/social/discord|Discord server}} or its {{link|pages/social/irc|IRC chat}}. Other lines of communication are for professional inquiries only.
 EOD
 );
 ___('feedback_body_1', 'FR', <<<EOD
-Les retours d'expérience sont appréciés, qu'ils soient positifs ou négatifs. Nous adorons lire vos histoires de Future Invaders et écouter vos idées pour améliorer le jeu. Merci de partager vos retours d'expérience sur l'un de ces deux endroits : {{link|404|le serveur Discord}} ou le {{link|404|chat IRC du jeu}}. Les autres lignes de communication sont réservées à un usage professionnel.
+Les retours d'expérience sont appréciés, qu'ils soient positifs ou négatifs. Nous adorons lire vos histoires de Future Invaders et écouter vos idées pour améliorer le jeu. Merci de partager vos retours d'expérience sur l'un de ces deux endroits : {{link|pages/social/discord|le serveur Discord}} ou le {{link|pages/social/irc|chat IRC du jeu}}. Les autres lignes de communication sont réservées à un usage professionnel.
 EOD
 );
 ___('feedback_body_2', 'EN', <<<EOD
