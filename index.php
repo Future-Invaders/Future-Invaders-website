@@ -89,13 +89,14 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </div>
 
   <h4 class="hugepadding_top">
-    <div class="floater float_right float_noborder float_above float_small">
-      <a href="pages/card/mobilebase">
-        <img src="<?=$path?>img/thumbnails/cards/en/mobile_base.png" alt="Card">
-      </a>
-    </div>
     <?=__('home_special_title')?>
   </h4>
+
+  <div class="floater float_right float_noborder float_above float_small">
+    <a href="pages/card/mobilebase">
+      <img src="<?=$path?>img/thumbnails/cards/en/mobile_base.png" alt="Card">
+    </a>
+  </div>
 
   <p>
     <?=__('home_special_body_1')?>
@@ -103,6 +104,10 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
 
   <p>
     <?=__('home_special_body_2')?>
+  </p>
+
+  <p>
+    <?=__('home_special_body_3')?>
   </p>
 
   <div class="align_center hugepadding_top">

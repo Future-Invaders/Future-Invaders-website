@@ -95,19 +95,27 @@ EOT
 ___('home_special_title',   'EN', "What makes Future Invaders special");
 ___('home_special_title',   'FR', "Qu'est-ce qui rend Future Invaders spécial");
 ___('home_special_body_1',  'EN', <<<EOT
-As a brand-new game, Future Invaders had the opportunity to learn from the mistakes of similar card games. Its rules are simple and streamlined, yet provide ample room for tactical depth. Every card is thoughtfully designed to present unique strategic decisions, while strict design principles ensure that frustrating "anti-fun" mechanics are excluded from the game.
+As a brand-new game, Future Invaders had the opportunity to learn from the successes and failures of other similar card games. Its rules are simple and streamlined, yet provide ample room for tactical depth. Every card is designed to present unique strategic decisions, while strict overall design principles ensure that frustrating "anti-fun" mechanics are excluded from the game.
 EOT
 );
 ___('home_special_body_1',  'FR', <<<EOT
-En tant que nouveau jeu, Future Invaders a eu l'opportunité de tirer des leçons des erreurs de conception des autres jeux de cartes similaires. Ses règles sont simples et claires, tout en permettant des interactions complexes. Chaque carte est conçue pour offrir des décisions stratégiques uniques. Des règles de conception strictes garantissent que les mécaniques "anti-fun" n'auront jamais leur place dans le jeu.
+En tant que tout nouveau jeu, Future Invaders a eu l'opportunité de tirer des leçons des succès et échecs des autres jeux de cartes similaires. Ses règles sont simples et claires, tout en permettant des interactions complexes. Chaque carte est conçue pour offrir des décisions stratégiques uniques. Des règles de conception strictes garantissent que les mécaniques "anti-fun" n'auront jamais leur place dans le jeu.
 EOT
 );
 ___('home_special_body_2',  'EN', <<<EOT
-Future Invaders does not treat its players as customers. Created by a card game enthusiast for other enthusiasts, the game actively incorporates player feedback, meaning your suggestions could influence its design and balance. Unlike many other card games, Future Invaders does not use randomized booster packs. Instead, all cards are currently available for free as printable files, and will later be sold as complete collections.
+It stands apart from other games in the genre thanks to its innovative mechanics. The scrap pile serves as a comeback mechanism, avoiding one-sided matches. The multiplayer mode features a dynamic grid that shifts as players are eliminated. The reaction system allows for exciting chain reactions. Each turn, players must decide between drawing an extra card or filling their game grid, a decision that opens up a world of tactical possibilities.
 EOT
 );
 ___('home_special_body_2',  'FR', <<<EOT
-Ce jeu ne traite pas ses joueurs comme de simples clients. Créé par un passionné de jeux de cartes, à destination d'autres passionnés, il valorise vos retours d'expérience. Les cartes ne sont pas vendues sous forme de boosters aléatoires : elles sont actuellement disponibles gratuitement à l'impression, et seront vendues dans le futur sous forme de collections complètes.
+Il se distingue des autres jeux similaires par ses mécaniques innovantes. La casse sert de mécanisme de rattrapage, donnant une chance aux joueurs en difficulté de revenir dans la partie. Le mode multijoueur inclut une grille dynamique, qui se repositionne au fur et à mesure que les bases sont détruites. Le système de réaction permet de créer des chaînes de réactions excitantes. Chaque tour, les joueurs doivent choisir entre piocher une carte supplémentaire ou remplir leur grille de jeu, une décision qui ouvre de nombreuses possibilités tactiques.
+EOT
+);
+___('home_special_body_3',  'EN', <<<EOT
+Future Invaders does not treat its players as customers. Created by a card game enthusiast for other enthusiasts, the game actively incorporates player feedback, meaning your suggestions could influence its design and balance. Future Invaders does not use randomized booster packs. Instead, it will be a living card game: all cards are currently available for free as printable files and will later be sold as complete collections.
+EOT
+);
+___('home_special_body_3',  'FR', <<<EOT
+Ce jeu ne traite pas ses joueurs comme de simples clients. Créé par un passionné de jeux de cartes, à destination d'autres passionnés, il valorise vos retours d'expérience. Les cartes ne sont pas vendues sous forme de boosters aléatoires. Future Invaders est un jeu de cartes vivant : il est actuellement disponible gratuitement à l'impression, et sera vendu dans le futur sous forme de collections complètes.
 EOT
 );
 
