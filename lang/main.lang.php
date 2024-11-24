@@ -91,7 +91,7 @@ Now you can start playing. It's that simple. Have fun!
 EOT
 );
 ___('home_play_body_3',  'FR', <<<EOT
-Maintenant, vous pouvej jouer. C'est aussi simple que ça ! Amusez-vous bien !
+Maintenant, vous pouvez jouer. C'est aussi simple que ça ! Amusez-vous bien !
 EOT
 );
 
