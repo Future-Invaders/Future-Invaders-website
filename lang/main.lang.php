@@ -46,6 +46,51 @@ EOT
 );
 
 
+// Summary of the game
+___('home_summary_title',   'EN', "Summary of the game");
+___('home_summary_title',   'FR', "Résumé du jeu");
+___('home_summary_body_1',  'EN', <<<EOT
+Your goal in Future Invaders is to destroy your opponents' bases, while protecting your own. You do this by drawing cards, some of which are ships and structures, with which you populate a small grid in front of you.
+EOT
+);
+___('home_summary_body_1',  'FR', <<<EOT
+Votre objectif dans Future Invaders est de détruire les bases de vos adversaires, tout en protégeant la vôtre. Pour ce faire, vous piochez des cartes, dont certaines sont des vaisseaux et des structures, que vous placez sur une grille de jeu devant vous.
+EOT
+);
+___('home_summary_body_2',  'EN', <<<EOT
+Ships attack your opponents every turn, and both ships and structures protect you from enemy attacks. You can also play action cards, which change the state of the game, and reaction cards, which alter actions or prevent them from happening.
+EOT
+);
+___('home_summary_body_2',  'FR', <<<EOT
+Les vaisseaux attaquent vos adversaires chaque tour, et les vaisseaux comme les structures vous protègent des attaques de vos adversaires. Vous pouvez également jouer des cartes d'action, qui changent l'état du jeu, et des cartes de réaction, qui modifient les effets des actions ou les empêchent de se produire.
+EOT
+);
+___('home_summary_body_3',  'EN', <<<EOT
+Most cards cost resources, which you earn by having ships and structures on the grid. There are five different factions, each with their own unique resource and gameplay style. Mixing factions is allowed, and encouraged.
+EOT
+);
+___('home_summary_body_3',  'FR', <<<EOT
+La plupart des cartes coûtent des ressources, que vous accumulez grâce aux vaisseaux et structures sur la grille de jeu. Il existe cinq factions différentes, chacune disposant de sa propre ressource et de son propre style de jeu. Mélanger les factions est autorisé, et même encouragé.
+EOT
+);
+___('home_summary_body_4',  'EN', <<<EOT
+The game can be played as a regular 1v1 battle, as a multiplayer battle, or in draft mode. Pre-assembled decks of cards are suggested on the website, to get you started.
+EOT
+);
+___('home_summary_body_4',  'FR', <<<EOT
+Le jeu peut se jouer sous forme de duels, de combats multijoueurs, ou en mode draft. Des paquets de cartes pré-assemblés sont proposés sur le site pour vous aider à commencer.
+EOT
+);
+___('home_summary_body_5',  'EN', <<<EOT
+{{external|./pages/game/rules|Click here to read the complete rules of the game}}
+EOT
+);
+___('home_summary_body_5',  'FR', <<<EOT
+{{external|./pages/game/rules|Cliquez ici pour lire les règles complètes du jeu}}
+EOT
+);
+
+
 // What makes it special
 ___('home_special_title',   'EN', "What makes Future Invaders special");
 ___('home_special_title',   'FR', "Qu'est-ce qui rend Future Invaders spécial");
@@ -71,11 +116,11 @@ EOT
 ___('home_play_title',   'EN', "How to play Future Invaders");
 ___('home_play_title',   'FR', "Comment jouer à Future Invaders");
 ___('home_play_body_1',  'EN', <<<EOT
-Start by reading {{external|./pages/game/rules|the rules}} to get a basic understanding of the game.
+Start by {{external|./pages/game/rules|reading the rules}} to get a basic understanding of the game.
 EOT
 );
 ___('home_play_body_1',  'FR', <<<EOT
-Tout d'abord, lisez {{external|./pages/game/rules|les règles}} pour comprendre les bases du jeu.
+Tout d'abord, {{external|./pages/game/rules|lisez les règles}} pour comprendre les bases du jeu.
 EOT
 );
 ___('home_play_body_2',  'EN', <<<EOT
