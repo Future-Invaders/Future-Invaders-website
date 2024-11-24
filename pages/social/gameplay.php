@@ -50,8 +50,8 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../../img/thumbnails/cards/en/crippler.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/cards/en/crippler.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/thumbnails/cards/en/rustwing.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/cards/en/rustwing.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <div class="gallery_cell">

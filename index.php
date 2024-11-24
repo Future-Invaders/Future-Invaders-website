@@ -54,20 +54,66 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_intro_3')?>
   </p>
 
+  <div class="align_center hugepadding_top">
+    <img src="<?=$path?>img/gameplay/gameplay_1.png" alt="Gameplay">
+  </div>
+
   <h3 class="hugepadding_top">
-    <?=__('home_wip_title')?>
+    <div class="floater float_right float_noborder float_above float_small">
+      <a href="pages/card/mobilebase">
+        <img src="<?=$path?>img/thumbnails/cards/en/mobile_base.png" alt="Card">
+      </a>
+    </div>
+    <?=__('home_special_title')?>
   </h3>
 
   <p>
-    <?=__('home_wip_body_1')?>
+    <?=__('home_special_body_1')?>
   </p>
 
   <p>
-    <?=__('home_wip_body_2')?>
+    <?=__('home_special_body_2')?>
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_1.png" alt="404">
+    <img src="<?=$path?>img/gameplay/gameplay_2.png" alt="Gameplay">
+  </div>
+
+
+  <h4 class="hugepadding_top">
+    <?=__('home_play_title')?>
+  </h4>
+
+  <p>
+    <?=__('home_play_body_1')?>
+  </p>
+
+  <p>
+    <?=__('home_play_body_2')?>
+  </p>
+
+  <p>
+    <?=__('home_play_body_3')?>
+  </p>
+
+  <h4 class="hugepadding_top">
+    <?=__('home_community_title')?>
+  </h4>
+
+  <p>
+    <?=__('home_community_body_1')?>
+  </p>
+
+  <p>
+    <?=__('home_community_body_2')?>
+  </p>
+
+  <p>
+    <?=__('home_community_body_3')?>
+  </p>
+
+  <div class="align_center hugepadding_top">
+    <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
   </div>
 
 </div>
