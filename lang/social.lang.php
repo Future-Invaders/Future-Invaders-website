@@ -262,6 +262,27 @@ EOD
 );
 
 
+// Icon credits
+___('credits_icons_title',  'EN', "Icon credits");
+___('credits_icons_title',  'FR', "Crédits des icônes");
+___('credits_icons_body_1', 'EN', <<<EOD
+All of the symbols and icons used on the cards are from {{external_popup|https://game-icons.net/|game-icons.net}}.
+EOD
+);
+___('credits_icons_body_1', 'FR', <<<EOD
+Tous les symboles et icônes utilisés sur les cartes sont issus de {{external_popup|https://game-icons.net/|game-icons.net}}.
+EOD
+);
+___('credits_icons_body_2', 'EN', <<<EOD
+They are made by Lorc, Delapouite, and {{external_popup|https://game-icons.net/about.html#authors|other contributors}}, and are licenced under a CCBY licence.
+EOD
+);
+___('credits_icons_body_2', 'FR', <<<EOD
+Elles sont faites par Lorc, Delapouite, et {{external_popup|https://game-icons.net/about.html#authors|d'autres contributeurs}}, et sont sous licence CCBY.
+EOD
+);
+
+
 // Art credits
 ___('credits_art_title',  'EN', "Art credits");
 ___('credits_art_title',  'FR', "Crédits artistiques");
