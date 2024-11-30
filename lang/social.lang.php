@@ -262,6 +262,27 @@ EOD
 );
 
 
+// Icon credits
+___('credits_icons_title',  'EN', "Icon credits");
+___('credits_icons_title',  'FR', "Crédits des icônes");
+___('credits_icons_body_1', 'EN', <<<EOD
+All of the symbols and icons used on the cards are from {{external_popup|https://game-icons.net/|game-icons.net}}.
+EOD
+);
+___('credits_icons_body_1', 'FR', <<<EOD
+Tous les symboles et icônes utilisés sur les cartes sont issus de {{external_popup|https://game-icons.net/|game-icons.net}}.
+EOD
+);
+___('credits_icons_body_2', 'EN', <<<EOD
+They are made by Lorc, Delapouite, and {{external_popup|https://game-icons.net/about.html#authors|other contributors}}, and are licenced under a CCBY licence.
+EOD
+);
+___('credits_icons_body_2', 'FR', <<<EOD
+Elles sont faites par Lorc, Delapouite, et {{external_popup|https://game-icons.net/about.html#authors|d'autres contributeurs}}, et sont sous licence CCBY.
+EOD
+);
+
+
 // Art credits
 ___('credits_art_title',  'EN', "Art credits");
 ___('credits_art_title',  'FR', "Crédits artistiques");
@@ -488,11 +509,11 @@ EOD
 );
 
 
-// Help find an editor
-___('social_help_editor_title',  'EN', "Help us find an editor");
+// Help find a publisher
+___('social_help_editor_title',  'EN', "Help us find a publisher");
 ___('social_help_editor_title',  'FR', "Aidez-nous à trouver un éditeur");
 ___('social_help_editor_body',   'EN', <<<EOD
-The ultimate goal for Future Invaders is publication, whether through an editor or self-publishing. If you know someone who could help make that happen, share the {{link|pages/social/publish|publish this game page}} and encourage them to reach out via the {{link|pages/social/contact|contact info page}}.
+The ultimate goal for Future Invaders is publication, whether through a publisher or self-publishing. If you know someone who could help make that happen, share the {{link|pages/social/publish|publish this game page}} and encourage them to reach out via the {{link|pages/social/contact|contact info page}}.
 EOD
 );
 ___('social_help_editor_body',   'FR', <<<EOD

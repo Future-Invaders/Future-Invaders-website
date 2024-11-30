@@ -1,8 +1,13 @@
 ErrorDocument 404 https://futureinvaders.com/404
 Options -Indexes
 
-# API routes
+# Enforce HTTPS
 RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(www\.)?futureinvaders\.com$ [NC]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# API routes
 RewriteRule ^api/arsenal/(.*)$ api/arsenal/arsenal.php?uuid=$1 [QSA,NC]
 RewriteRule ^api/card/(.*)$ api/card/card.php?uuid=$1 [QSA,NC]
 RewriteRule ^api/image/(.*)$ api/image/image.php?uuid=$1 [QSA,NC]

@@ -58,14 +58,45 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <img src="<?=$path?>img/gameplay/gameplay_1.png" alt="Gameplay">
   </div>
 
-  <h3 class="hugepadding_top">
-    <div class="floater float_right float_noborder float_above float_small">
-      <a href="pages/card/mobilebase">
-        <img src="<?=$path?>img/thumbnails/cards/en/mobile_base.png" alt="Card">
-      </a>
-    </div>
+  <h4 class="hugepadding_top">
+    <?=__('home_summary_title')?>
+  </h4>
+
+  <div class="floater float_right float_noborder float_above float_small">
+    <a href="pages/card/controloverride">
+      <img src="<?=$path?>img/thumbnails/cards/en/control_override.png" alt="Card">
+    </a>
+  </div>
+
+  <p>
+    <?=__('home_summary_body_1')?>
+  </p>
+
+  <p>
+    <?=__('home_summary_body_2')?>
+  </p>
+
+  <p>
+    <?=__('home_summary_body_3')?>
+  </p>
+
+  <p>
+    <?=__('home_summary_body_4')?>
+  </p>
+
+  <div class="align_center hugepadding_top">
+    <img src="<?=$path?>img/gameplay/gameplay_2.png" alt="Gameplay">
+  </div>
+
+  <h4 class="hugepadding_top">
     <?=__('home_special_title')?>
-  </h3>
+  </h4>
+
+  <div class="floater float_right float_noborder float_above float_small">
+    <a href="pages/card/mobilebase">
+      <img src="<?=$path?>img/thumbnails/cards/en/mobile_base.png" alt="Card">
+    </a>
+  </div>
 
   <p>
     <?=__('home_special_body_1')?>
@@ -75,10 +106,13 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_special_body_2')?>
   </p>
 
-  <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_2.png" alt="Gameplay">
-  </div>
+  <p>
+    <?=__('home_special_body_3')?>
+  </p>
 
+  <div class="align_center hugepadding_top">
+    <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
+  </div>
 
   <h4 class="hugepadding_top">
     <?=__('home_play_title')?>
@@ -113,7 +147,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_6.png" alt="Gameplay">
   </div>
 
 </div>

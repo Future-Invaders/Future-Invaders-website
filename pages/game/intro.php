@@ -6,6 +6,7 @@
 include_once './../../inc/includes.inc.php';  # Core
 include_once './../../actions/cards.act.php'; # Card management
 include_once './../../lang/game.lang.php';    # Translations
+include_once './../../lang/main.lang.php';    # More translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -52,129 +53,59 @@ $reminder_cards = cards_list( sort_by:  'name'                            ,
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50 bigpadding_bot">
+<div class="width_50">
 
   <h2>
-    <?=__('rules_title')?>
+    <?=__('howto_title')?>
   </h2>
 
   <p>
-    <?=__('rules_body_1')?>
+    <?=__('howto_body_1')?>
   </p>
 
   <p>
-    <?=__('rules_body_2')?>
+    <?=__('howto_body_2')?>
   </p>
 
   <p>
-    <?=__('rules_body_3')?>
+    <?=__('howto_body_3')?>
   </p>
 
   <p>
-    <?=__('rules_body_4')?>
+    <?=__('howto_body_4')?>
   </p>
 
-  <h5 class="smallpadding_top">
-    <?=__('rules_cards_title')?>
-  </h5>
+  <p>
+    <?=__('howto_body_5')?>
+  </p>
 
-  <ul class="smallpadding_top">
-    <?php for($i = 0; $i < $rules_cards['rows']; $i++): ?>
-    <li>
-      <?=__link('pages/game/rules#rule_'.($i+1), $rules_cards[$i]['name_'.$card_lang])?>
-    </li>
-    <?php endfor; ?>
-  </ul>
-
-  <h5 class="smallpadding_top">
-    <?=__('reminder_cards_title')?>
-  </h5>
-
-  <ul class="smallpadding_top">
-    <?php for($i = 0; $i < $reminder_cards['rows']; $i++): ?>
-    <li>
-      <?=__link('pages/game/rules#reminder_'.($i+1), $reminder_cards[$i]['name_'.$card_lang])?>
-    </li>
-    <?php endfor; ?>
-  </ul>
-
-</div>
-
-<hr>
-
-<div class="width_50 bigpadding_top bigpadding_bot" id="rules">
-
-  <h2 class="bigpadding_bot">
-    <?=__('rules_cards_title')?>
-  </h2>
-
-  <?php for($i = 0; $i < $rules_cards['rows']; $i++): ?>
-
-  <div class="flexcontainer rules_container padding_bot" id="rule_<?=($i+1)?>">
-
-    <div class="align_center" style="flex: 4">
-      <a href="<?=$path.$rules_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$rules_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$rules_cards[$i]['name_'.$card_lang]?>" loading="lazy">
-      </a>
-    </div>
-
-    <div style="flex: 1">
-      &nbsp;
-    </div>
-
-    <div style="flex: 8">
-      <div class="black bigspaced tinypadding_top tinypadding_bot">
-        <h4>
-          <?=$rules_cards[$i]['name_'.$card_lang]?>
-        </h4>
-        <p>
-          <?=$rules_cards[$i]['body_'.$card_lang.'_raw']?>
-        </p>
-      </div>
-    </div>
-
+  <div class="align_center hugepadding_top">
+    <img src="<?=$path?>img/gameplay/gameplay_2.png" alt="Gameplay">
   </div>
 
-  <?php endfor; ?>
+  <h4 class="hugepadding_top">
+    <?=__('home_summary_title')?>
+  </h4>
 
-</div>
+  <p>
+    <?=__('home_summary_body_1')?>
+  </p>
 
-<hr>
+  <p>
+    <?=__('home_summary_body_2')?>
+  </p>
 
-<div class="width_50 bigpadding_top" id="reminders">
+  <p>
+    <?=__('home_summary_body_3')?>
+  </p>
 
-  <h2 class="bigpadding_bot">
-    <?=__('reminder_cards_title')?>
-  </h2>
+  <p class="smallpadding_bot">
+    <?=__('home_summary_body_4')?>
+  </p>
 
-  <?php for($i = 0; $i < $reminder_cards['rows']; $i++): ?>
-
-  <div class="flexcontainer rules_container padding_bot" id="reminder_<?=($i+1)?>">
-
-    <div class="align_center" style="flex: 4">
-      <a href="<?=$path.$reminder_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$reminder_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$reminder_cards[$i]['name_'.$card_lang]?>" loading="lazy">
-      </a>
-    </div>
-
-    <div style="flex: 1">
-      &nbsp;
-    </div>
-
-    <div style="flex: 8">
-      <div class="black bigspaced tinypadding_top tinypadding_bot">
-        <h4>
-          <?=$reminder_cards[$i]['name_'.$card_lang]?>
-        </h4>
-        <p>
-          <?=$reminder_cards[$i]['body_'.$card_lang.'_raw']?>
-        </p>
-      </div>
-    </div>
-
+  <div class="align_center hugepadding_top">
+    <img src="<?=$path?>img/gameplay/gameplay_1.png" alt="Gameplay">
   </div>
-
-  <?php endfor; ?>
 
 </div>
 
