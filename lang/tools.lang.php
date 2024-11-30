@@ -335,55 +335,92 @@ ___('source_code_stack_list_5', 'FR', "Versionnage : {{external|https://fr.wik
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                  ARSENAL BUILDER                                                  */
+/*                                                TABLETOP SIMULATOR                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// WIP
-___('arsenal_builder_title',  'EN', "Work in progress");
-___('arsenal_builder_title',  'FR', "En construction");
-___('arsenal_builder_body_1', 'EN', <<<EOD
-This page is a work in progress. It will be completed in the future.
+// Intro
+___('tabletop_simulator_title',  'EN', "Tabletop Simulator");
+___('tabletop_simulator_title',  'FR', "Tabletop Simulator");
+___('tabletop_simulator_body_1', 'EN', <<<EOD
+Want to test Future Invaders before printing it? Or prefer playing the game online instead of in person? Good news! A prototype of Future Invaders is available in Tabletop Simulator.
 EOD
 );
-___('arsenal_builder_body_1', 'FR', <<<EOD
-Cette page est en construction. Elle sera complétée dans le futur.
+___('tabletop_simulator_body_1', 'FR', <<<EOD
+Vous souhaitez tester Future Invaders avant de l'imprimer ? Ou préférez jouer en ligne plutôt qu'en personne ? Bonne nouvelle ! Un prototype de Future Invaders est disponible dans Tabletop Simulator.
 EOD
 );
-___('arsenal_builder_body_2', 'EN', <<<EOD
-An arsenal building tool will allow you to come up with your own custom {{link|pages/game/arsenals|arsenals}}, in a format that makes them easy to share with other players.
+___('tabletop_simulator_body_2', 'EN', <<<EOD
+To play, you'll need to own (or purchase) {{external_popup|https://store.steampowered.com/app/286160/Tabletop_Simulator/|Tabletop Simulator on Steam}}. Simply subscribe to the {{external_popup|https://steamcommunity.com/sharedfiles/filedetails/?id=3373495982|Future Invaders mod on the Steam Workshop}}, and you'll be able to host your own games of Future Invaders in Tabletop Simulator.
 EOD
 );
-___('arsenal_builder_body_2', 'FR', <<<EOD
-Un outil de construction d'arsenal vous permettra de créer vos propres {{link|pages/game/arsenals|arsenaux}}, dans un format facile à partager avec les autres joueurs.
+___('tabletop_simulator_body_2', 'FR', <<<EOD
+Pour y jouer, vous devez posséder (ou acheter) {{external_popup|https://store.steampowered.com/app/286160/Tabletop_Simulator/|Tabletop Simulator sur Steam}}. Abonnez-vous au mod {{external_popup|https://steamcommunity.com/sharedfiles/filedetails/?id=3373495982|Future Invaders dans le Workshop}}, et vous pourrez héberger des parties de Future Invaders dans Tabletop Simulator.
 EOD
 );
 
 
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                  GRID SIMULATOR                                                   */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// WIP
-___('grid_simulator_title',  'EN', "Work in progress");
-___('grid_simulator_title',  'FR', "En construction");
-___('grid_simulator_body_1', 'EN', <<<EOD
-This page is a work in progress. It will be completed in the future.
+// Limitations
+___('tabletop_simulator_limits_title',  'EN', "Limitations");
+___('tabletop_simulator_limits_title',  'FR', "Limites");
+___('tabletop_simulator_limits_body',   'EN', <<<EOD
+The Tabletop Simulator version of Future Invaders comes with a few limitations:
 EOD
 );
-___('grid_simulator_body_1', 'FR', <<<EOD
-Cette page est en construction. Elle sera complétée dans le futur.
+___('tabletop_simulator_limits_body', 'FR', <<<EOD
+La version Tabletop Simulator de Future Invaders présente les limitations suivantes :
 EOD
 );
-___('grid_simulator_body_2', 'EN', <<<EOD
-A grid simulator will act as a companion tool, allowing you to keep track of the state of the board during a two player game of Future Invaders from your mobile device.
+___('tabletop_simulator_limits_1',    'EN', "The cards are only available in English, no French version is included.");
+___('tabletop_simulator_limits_1',    'FR', "Les cartes sont uniquement en anglais, la version française n'est pas disponible.");
+___('tabletop_simulator_limits_2',    'EN', "You can only play with a sample of 8 preconstructed arsenals.");
+___('tabletop_simulator_limits_2',    'FR', "Seule une sélection de 8 arsenaux pré-assemblés est disponible.");
+___('tabletop_simulator_limits_3',    'EN', "The table setup is configured for 1v1 matches, you'll need to clone some items to play multiplayer games.");
+___('tabletop_simulator_limits_3',    'FR', "La table est configurée pour des parties 1v1, vous devrez cloner certains éléments pour jouer à plusieurs.");
+___('tabletop_simulator_limits_4',    'EN', "There are no scripts included, so everything must be resolved manually.");
+___('tabletop_simulator_limits_4',    'FR', "Aucun script n'est inclus, tout doit être résolu manuellement.");
+
+
+// Tips
+___('tabletop_simulator_tips_title',  'EN', "Tips & suggestions");
+___('tabletop_simulator_tips_title',  'FR', "Conseils & suggestions");
+___('tabletop_simulator_tips_body_1', 'EN', <<<EOD
+Hold the ALT key while hovering your mouse over a card or game object to view it in full screen and read its text more clearly.
 EOD
 );
-___('grid_simulator_body_2', 'FR', <<<EOD
-Un simulateur de grille de jeu vous accompagnera dans vos parties, vous permettant de suivre l'état d'une partie à deux joueurs de Future Invaders depuis votre appareil mobile.
+___('tabletop_simulator_tips_body_1', 'FR', <<<EOD
+Maintenez la touche ALT enfoncée lorsque vous survolez une carte ou un objet, cela vous permet de la voir en plein écran afin de pouvoir lire son texte clairement.
+EOD
+);
+___('tabletop_simulator_tips_body_2', 'EN', <<<EOD
+Rules reminders are displayed on the side of the table, refer to them when needed.
+EOD
+);
+___('tabletop_simulator_tips_body_2', 'FR', <<<EOD
+Des rappels des règles sont affichés sur le côté de la table, pensez à les consulter au besoin.
+EOD
+);
+___('tabletop_simulator_tips_body_3', 'EN', <<<EOD
+To place a card under your arsenal, right-click it, select Flip, then move your arsenal above it.
+EOD
+);
+___('tabletop_simulator_tips_body_3', 'FR', <<<EOD
+Pour placer une carte sous votre arsenal, faites un clic droit dessus, sélectionnez "Flip", puis déplacez votre arsenal par-dessus.
+EOD
+);
+___('tabletop_simulator_tips_body_4', 'EN', <<<EOD
+In multiplayer games, use the line tool to draw lines between players, making it easier to know where to place your cards.
+EOD
+);
+___('tabletop_simulator_tips_body_4', 'FR', <<<EOD
+Dans les parties multijoueurs, utilisez l'outil de dessin de lignes pour tracer des limites entre les joueurs. Cela facilitera le placement des cartes.
+EOD
+);
+___('tabletop_simulator_tips_body_5', 'EN', <<<EOD
+To resolve the "Deny" keyword, the easiest method is for the targeted player to right-click their arsenal, select Deal, then choose the player targeting them. This will place the card into the targeting player's hand. Once they have viewed the card, they can press Flip before placing it either on top or at the bottom of the targeted player's arsenal.
+EOD
+);
+___('tabletop_simulator_tips_body_5', 'FR', <<<EOD
+Pour résoudre le mot-clé "Priver", la solution la plus simple consiste à ce que le joueur ciblé fasse un clic droit sur son arsenal, sélectionne "Deal", puis choisisse le joueur qui le cible, afin que ce joueur récupère la carte dans sa main. Une fois qu'il a regardé la carte, il peut appuyer sur "Flip" avant de la placer sur le dessus ou en dessous de l'arsenal du joueur ciblé.
 EOD
 );

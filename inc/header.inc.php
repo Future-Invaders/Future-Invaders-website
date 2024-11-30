@@ -350,10 +350,7 @@ $javascripts .= '
             <?=__('submenu_tools_gametools')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/tools/arsenal_builder', __('submenu_tools_deck'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/grid_simulator', __('submenu_tools_board'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/tools/tabletop_simulator', __('submenu_tools_tts'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 
