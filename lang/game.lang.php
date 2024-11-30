@@ -99,6 +99,8 @@ ___('cards_search_name',        'EN', "Card name");
 ___('cards_search_name',        'FR', "Nom de la carte");
 ___('cards_search_body',        'EN', "Card text");
 ___('cards_search_body',        'FR', "Texte de la carte");
+___('cards_search_languages',   'EN', "Search text and title in both languages");
+___('cards_search_languages',   'FR', "Rechercher le titre et le texte dans les deux langues");
 ___('cards_search_submit',      'EN', "Search the cards");
 ___('cards_search_submit',      'FR', "Chercher parmi les cartes");
 ___('cards_search_type',        'EN', "Card type");
