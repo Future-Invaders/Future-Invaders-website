@@ -61,7 +61,7 @@ Card backs are not strictly necessary, but they are highly recommended, as your 
 EOD
 );
 ___('print_requirements_body_4',  'FR', <<<EOD
-Les soutiens de cartes ne sont pas indispensables, mais fortement recommandés, car sans eux, vos cartes risquent de se détériorer rapidement. Tout morceau de plastique ou de carton rigide de la taille d'une carte à jouer standard (63x88mm) fera l'affaire. Si vous ne trouvez pas ou ne souhaitez pas utiliser des soutiens de cartes de qualité, vous pouvez utiliser à des cartes à jouer classiques à la place.
+Les soutiens de cartes ne sont pas indispensables, mais fortement recommandés, car sans eux, vos cartes risquent de se détériorer rapidement. Tout morceau de plastique ou de carton rigide de la taille d'une carte à jouer standard (63x88mm) fera l'affaire. Si vous ne trouvez pas ou ne souhaitez pas utiliser des soutiens de cartes de qualité, vous pouvez utiliser des cartes à jouer classiques à la place.
 EOD
 );
 ___('print_requirements_body_5',  'EN', <<<EOD

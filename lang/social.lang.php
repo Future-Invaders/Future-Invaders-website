@@ -509,11 +509,11 @@ EOD
 );
 
 
-// Help find an editor
-___('social_help_editor_title',  'EN', "Help us find an editor");
+// Help find a publisher
+___('social_help_editor_title',  'EN', "Help us find a publisher");
 ___('social_help_editor_title',  'FR', "Aidez-nous à trouver un éditeur");
 ___('social_help_editor_body',   'EN', <<<EOD
-The ultimate goal for Future Invaders is publication, whether through an editor or self-publishing. If you know someone who could help make that happen, share the {{link|pages/social/publish|publish this game page}} and encourage them to reach out via the {{link|pages/social/contact|contact info page}}.
+The ultimate goal for Future Invaders is publication, whether through a publisher or self-publishing. If you know someone who could help make that happen, share the {{link|pages/social/publish|publish this game page}} and encourage them to reach out via the {{link|pages/social/contact|contact info page}}.
 EOD
 );
 ___('social_help_editor_body',   'FR', <<<EOD
