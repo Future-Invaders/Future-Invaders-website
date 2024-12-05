@@ -40,6 +40,10 @@ $page_description = "Official IRC chat room of the tactical sci-fi card game Fut
     <?=__('irc_body_3')?>
   </p>
 
+  <p>
+    <?=__('irc_body_4')?>
+  </p>
+
   <ul class="tinypadding_top">
     <li>
       <span class="bold"><?=__('irc_server')?></span><?=__(':').' '.__('irc_server_name')?>

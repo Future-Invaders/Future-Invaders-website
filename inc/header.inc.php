@@ -397,6 +397,9 @@ $javascripts .= '
             <?=__link('pages/social/irc', __('submenu_social_irc'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
+            <?=__link('pages/social/coc', __('submenu_social_coc'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
             <?=__link('pages/social/help', __('submenu_social_contribute'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
