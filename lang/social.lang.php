@@ -86,11 +86,19 @@ Le serveur Discord officiel de Future Invaders est un salon de discussion public
 EOD
 );
 ___('discord_body_2', 'EN', <<<EOD
-{{external_popup|https://discord.gg/ankRwsqASX|Join the Future Invaders Discord server by clicking here.}}.
+While using this Discord server, you must abide by the {{link|pages/social/coc|code of conduct}}.
 EOD
 );
 ___('discord_body_2', 'FR', <<<EOD
-{{external|https://discord.gg/ankRwsqASX|Rejoignez le serveur Discord de Future Invaders en cliquant ici.}}.
+Lorsque vous utilisez ce serveur Discord, vous devez respecter le {{link|pages/social/coc|code de conduite}}.
+EOD
+);
+___('discord_body_3', 'EN', <<<EOD
+{{external_popup|https://discord.gg/ankRwsqASX|Join the Future Invaders Discord server by clicking here}}.
+EOD
+);
+___('discord_body_3', 'FR', <<<EOD
+{{external|https://discord.gg/ankRwsqASX|Rejoignez le serveur Discord de Future Invaders en cliquant ici}}.
 EOD
 );
 
@@ -123,10 +131,18 @@ Le fonctionnement d'IRC peut être complexe à comprendre. Si vous n'êtes pas t
 EOD
 );
 ___('irc_body_3',       'EN', <<<EOD
-Connection details for Future Invaders' IRC chat room:
+While using this IRC server, you must abide by the {{link|pages/social/coc|code of conduct}}.
 EOD
 );
 ___('irc_body_3',       'FR', <<<EOD
+Lorsque vous utilisez ce serveur IRC, vous devez respecter le {{link|pages/social/coc|code de conduite}}.
+EOD
+);
+___('irc_body_4',       'EN', <<<EOD
+Connection details for Future Invaders' IRC chat room:
+EOD
+);
+___('irc_body_4',       'FR', <<<EOD
 Informations pour se connecter au salon de discussion IRC de Future Invaders :
 EOD
 );
@@ -142,6 +158,45 @@ ___('irc_channel',      'EN', "Channel");
 ___('irc_channel',      'FR', "Channel");
 ___('irc_channel_name', 'EN', "#futureinvaders");
 ___('irc_channel_name', 'FR', "#futureinvaders");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  CODE OF CONDUCT                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Code of conduct
+___('coc_title',  'EN', "Code of conduct");
+___('coc_title',  'FR', "Code de conduite");
+___('coc_body_1', 'EN', <<<EOD
+When interacting with the Future Invaders community, you must follow the following rules:
+EOD
+);
+___('coc_body_1', 'FR', <<<EOD
+Lorsque vous interagissez avec la communauté de Future Invaders, vous devez respecter les règles suivantes :
+EOD
+);
+___('coc_list_1', 'EN', "Pornography and explicit sexual content are strictly prohibited.");
+___('coc_list_1', 'FR', "La pornographie et les contenus sexuels explicites sont interdits.");
+___('coc_list_2', 'EN', "Hate speech and discrimination will result in a ban.");
+___('coc_list_2', 'FR', "L'incitation à la haine et la discrimination entraîneront une exclusion.");
+___('coc_list_3', 'EN', "Illegal content will be reported to the relevant authorities.");
+___('coc_list_3', 'FR', "Tout contenu illégal sera signalé aux autorités compétentes.");
+___('coc_list_4', 'EN', "Resolve tense situations privately, don't harrass people you dislike.");
+___('coc_list_4', 'FR', "Essayez de résoudre les situations tendues en privé, ne harcelez pas les autres.");
+___('coc_list_5', 'EN', "Trolls and purposeful agitators will be banned if they try to test boundaries.");
+___('coc_list_5', 'FR', "Les trolls et provocateurs seront bannis s'ils cherchent à tester les limites.");
+___('coc_body_2', 'EN', <<<EOD
+Our aim is to ban as little as possible, while ensuring the community is inclusive. If your behavior prevents other people from having a good time, then we will have to exclude you. Let's all be respectful of others, we collectively benefit from it.
+EOD
+);
+___('coc_body_2', 'FR', <<<EOD
+Nous visons à bannir le moins possible tout en maintenant une communauté inclusive. Si votre comportement empêche d'autres personnes de passer un bon moment, nous devrons vous exclure. La bonne ambiance de la communauté dépend de la bienveillance collective de ses membres.
+EOD
+);
 
 
 

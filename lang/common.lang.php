@@ -1016,8 +1016,8 @@ ___('submenu_social_discord',     'EN', "Discord server");
 ___('submenu_social_discord',     'FR', "Serveur Discord");
 ___('submenu_social_irc',         'EN', "IRC chat");
 ___('submenu_social_irc',         'FR', "Chat IRC");
-___('submenu_social_tournaments', 'EN', "Tournaments");
-___('submenu_social_tournaments', 'FR', "Tournois");
+___('submenu_social_coc',         'EN', "Code of conduct");
+___('submenu_social_coc',         'FR', "Code de conduite");
 ___('submenu_social_contribute',  'EN', "Help the game");
 ___('submenu_social_contribute',  'FR', "Contribuer au jeu");
 

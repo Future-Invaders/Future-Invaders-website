@@ -8,10 +8,10 @@ include_once './../../lang/social.lang.php';  # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/social/discord";
-$page_title_en    = "Discord server";
-$page_title_fr    = "Serveur Discord";
-$page_description = "Official Discord server of the tactical sci-fi card game Future Invaders";
+$page_url         = "pages/social/coc";
+$page_title_en    = "Code of conduct";
+$page_title_fr    = "Code de conduite";
+$page_description = "Code of conduct when interacting with the community of the tactical sci-fi card game Future Invaders";
 
 
 
@@ -25,24 +25,34 @@ $page_description = "Official Discord server of the tactical sci-fi card game Fu
 <div class="width_50">
 
   <h2>
-    <?=__('discord_title')?>
+    <?=__('coc_title')?>
   </h2>
 
   <p>
-    <?=__('discord_body_1')?>
+    <?=__('coc_body_1')?>
   </p>
+
+  <ul class="smallpadding_top">
+    <li>
+      <?=__('coc_list_1')?>
+    </li>
+    <li>
+      <?=__('coc_list_2')?>
+    </li>
+    <li>
+      <?=__('coc_list_3')?>
+    </li>
+    <li>
+      <?=__('coc_list_4')?>
+    </li>
+    <li>
+      <?=__('coc_list_5')?>
+    </li>
+  </ul>
 
   <p>
-    <?=__('discord_body_2')?>
+    <?=__('coc_body_2')?>
   </p>
-
-  <p class="smallpadding_bot">
-    <?=__('discord_body_3')?>
-  </p>
-
-  <div class="bigpadding_top">
-    <iframe src="https://discord.com/widget?id=1309587053310251125&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-  </div>
 
 </div>
 
