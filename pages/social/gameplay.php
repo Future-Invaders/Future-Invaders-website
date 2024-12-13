@@ -96,8 +96,8 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../../img/thumbnails/cards/fr/ecraseur.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/cards/fr/ecraseur.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/thumbnails/cards/fr/rafiot_rouille.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/cards/fr/rafiot_rouille.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <div class="gallery_cell">
@@ -138,16 +138,44 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
     <?php endif; ?>
   </div>
 
-  <h2 class="align_center padding_bot padding_top">
+  <h2 class="align_center padding_bot padding_top" id="videos">
     <?=__('gameplay_videos_title')?>
   </h2>
 
   <p>
-    <?=__('gameplay_videos_body_1')?>
+    <?=__('gameplay_videos_game_body_1')?>
   </p>
 
   <p class="padding_bot">
-    <?=__('gameplay_videos_body_2')?>
+    <?=__('gameplay_videos_game_body_2')?>
+  </p>
+
+  <div class="align_center padding_top bigpadding_bot">
+    <?php if($lang === 'EN'): ?>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/zrX7WYPoo0A?si=FODiURYmfJs6_MDf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <?php else: ?>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/EVOo2xH9NMM?si=P29P-xR5ZTzTAVpj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <?php endif; ?>
+  </div>
+
+  <p id="videos_tts">
+    <?=__('gameplay_videos_tts_body_1')?>
+  </p>
+
+  <p class="padding_bot">
+    <?=__('gameplay_videos_tts_body_2')?>
+  </p>
+
+  <div class="align_center padding_top bigpadding_bot">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/0ZrrbsrncRk?si=FpXJdI5KIwBbDdym" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+
+  <p>
+    <?=__('gameplay_videos_old_body_1')?>
+  </p>
+
+  <p class="padding_bot">
+    <?=__('gameplay_videos_old_body_2')?>
   </p>
 
   <div class="align_center padding_top padding_bot">

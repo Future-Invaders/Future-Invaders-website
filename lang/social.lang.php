@@ -13,26 +13,58 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 
 // Gameplay showcase
-___('gameplay_pictures_title',  'EN', "Gameplay pictures");
-___('gameplay_pictures_title',  'FR', "Images du jeu");
-___('gameplay_cards_title',     'EN', "Sample cards");
-___('gameplay_cards_title',     'FR', "Exemples de cartes");
-___('gameplay_videos_title',    'EN', "Gameplay videos");
-___('gameplay_videos_title',    'FR', "Vidéos du jeu");
-___('gameplay_videos_body_1',   'EN', <<<EOD
-These videos were filmed during the early stages of the game's development, showcasing "alpha" gameplay with English commentary. They are not representative of the current game's balance.
+___('gameplay_pictures_title',      'EN', "Gameplay pictures");
+___('gameplay_pictures_title',      'FR', "Images du jeu");
+___('gameplay_cards_title',         'EN', "Sample cards");
+___('gameplay_cards_title',         'FR', "Exemples de cartes");
+___('gameplay_videos_title',        'EN', "Gameplay videos");
+___('gameplay_videos_title',        'FR', "Vidéos du jeu");
+___('gameplay_videos_game_body_1',  'EN', <<<EOD
+The video below features a standard Future Invaders duel: a best of three series between an {{link|pages/arsenal/aggroterran|Aggro Terran}} and a {{link|pages/arsenal/scrappertechsmith|Scrapper Techsmith}}. These are friendly, non-competitive games designed to showcase how the game is played.
 EOD
 );
-___('gameplay_videos_body_1',   'FR', <<<EOD
-Ces vidéos ont été filmées pendant les premières phases de développement du jeu, lorsqu'il était encore un prototype. Elles montrent la version "alpha" du jeu, avec des commentaires en anglais expliquant le gameplay. Elles ne reflètent pas l'état actuel de l'équilibrage actuel du jeu.
+___('gameplay_videos_game_body_1',  'FR', <<<EOD
+La vidéo ci-dessous présente un duel standard de Future Invaders : une série de trois parties entre un {{link|pages/arsenal/aggroterran|Terrien agressif}} et un {{link|pages/arsenal/scrappertechsmith|Technoforgé recycleur}}. Ce sont des parties amicales et non compétitives, permettant de montrer à quoi ressemble une partie du jeu.
 EOD
 );
-___('gameplay_videos_body_2',   'EN', <<<EOD
-New, improved videos will be recorded in the future to replace them.
+___('gameplay_videos_game_body_2',  'EN', <<<EOD
+English commentary has been added, {{external_popup|https://www.youtube.com/watch?v=EVOo2xH9NMM|a french version is also available}}.
 EOD
 );
-___('gameplay_videos_body_2',   'FR', <<<EOD
-De nouvelles vidéos seront filmées dans le futur pour les remplacer.
+___('gameplay_videos_game_body_2',  'FR', <<<EOD
+Des commentaires en français ont été ajoutés, {{external_popup|https://www.youtube.com/watch?v=zrX7WYPoo0A|une version anglaise est également disponible}}.
+EOD
+);
+___('gameplay_videos_tts_body_1',   'EN', <<<EOD
+The video below shows a limited version of Future Invaders being played online via {{link|pages/tools/tabletop_simulator|Tabletop Simulator}}. It features a three-way match between a {{link|pages/arsenal/controlinvader|Control Invader}}, an {{link|pages/arsenal/artillerybetrayer|Artillery Betrayer}}, and a {{link|pages/arsenal/denialpirate|Denial Pirate}}.
+EOD
+);
+___('gameplay_videos_tts_body_1',   'FR', <<<EOD
+La vidéo ci-dessous présente une version limitée de Future Invaders, jouée en ligne via {{link|pages/tools/tabletop_simulator|Tabletop Simulator}}. Il s'agit d'une partie à trois joueurs entre un {{link|pages/arsenal/controlinvader|Envahisseur contrôle}}, un {{link|pages/arsenal/artillerybetrayer|Traître artilleur}}, et un {{link|pages/arsenal/denialpirate|Pirate privateur}}.
+EOD
+);
+___('gameplay_videos_tts_body_2',   'EN', <<<EOD
+The original audio recording is in French, no english commentary is provided.
+EOD
+);
+___('gameplay_videos_tts_body_2',   'FR', <<<EOD
+L'enregistrement audio d'origine de la partie a été conservé, sans commentaires ajoutés.
+EOD
+);
+___('gameplay_videos_old_body_1',   'EN', <<<EOD
+The three videos below were filmed during the early stages of the game's development, showcasing "alpha" gameplay with English commentary.
+EOD
+);
+___('gameplay_videos_old_body_1',   'FR', <<<EOD
+Les trois vidéos ci-dessous ont été filmées pendant les premières phases de développement du jeu, lorsqu'il était encore un prototype. Elles montrent la version "alpha" du jeu, avec des commentaires en anglais expliquant le gameplay.
+EOD
+);
+___('gameplay_videos_old_body_2',   'EN', <<<EOD
+They are not representative of the current game's balance.
+EOD
+);
+___('gameplay_videos_old_body_2',   'FR', <<<EOD
+Elles ne reflètent pas l'état actuel de l'équilibrage actuel du jeu.
 EOD
 );
 
