@@ -424,3 +424,11 @@ ___('tabletop_simulator_tips_body_5', 'FR', <<<EOD
 Pour résoudre le mot-clé "Priver", la solution la plus simple consiste à ce que le joueur ciblé fasse un clic droit sur son arsenal, sélectionne "Deal", puis choisisse le joueur qui le cible, afin que ce joueur récupère la carte dans sa main. Une fois qu'il a regardé la carte, il peut appuyer sur "Flip" avant de la placer sur le dessus ou en dessous de l'arsenal du joueur ciblé.
 EOD
 );
+___('tabletop_simulator_tips_body_6', 'EN', <<<EOD
+If you need a visual example, a showcase of Future Invaders being played in Tabletop Simulator is available {{external_popup|https://www.youtube.com/watch?v=0ZrrbsrncRk|on Future Invader's official YouTube channel}}.
+EOD
+);
+___('tabletop_simulator_tips_body_6', 'FR', <<<EOD
+Si vous préférez un exemple visuel, une vidéo montrant une partie de Future Invaders dans Tabletop Simulator est disponible {{external_popup|https://www.youtube.com/watch?v=0ZrrbsrncRk|sur la chaîne YouTube officielle de Future Invaders}}.
+EOD
+);

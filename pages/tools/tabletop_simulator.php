@@ -90,6 +90,10 @@ $page_description = "Play the sci-fi card battling game Future Invaders in Table
     <?=__('tabletop_simulator_tips_body_5')?>
   </p>
 
+  <p>
+    <?=__('tabletop_simulator_tips_body_6')?>
+  </p>
+
   <div class="bigpadding_top">
     <img src="<?=$path?>img/gameplay/tabletop_simulator_3.png" alt="Tabletop Simulator">
   </div>
