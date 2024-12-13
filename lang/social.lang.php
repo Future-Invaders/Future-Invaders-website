@@ -98,6 +98,19 @@ EOD
 );
 
 
+// YouTube
+___('social_youtube_title', 'EN', "Vidéos");
+___('social_youtube_title', 'FR', "Videos");
+___('social_youtube_body',  'EN', <<<EOD
+Future Invaders also has an {{external_popup|https://www.youtube.com/@FutureInvaders|official YouTube channel}}, to which you can subscribe to watch gameplay videos with commentary.
+EOD
+);
+___('social_youtube_body',  'FR', <<<EOD
+Future Invaders dispose également d'une {{external_popup|https://www.youtube.com/@FutureInvaders|chaîne YouTube officielle}}, à laquelle vous pouvez vous abonner pour regarder des vidéos commentées du jeu.
+EOD
+);
+
+
 
 
 /*********************************************************************************************************************/

@@ -36,9 +36,23 @@ $page_description = "Official social media links for the tactical sci-fi card ga
     <?=__('social_media_body_2')?>
   </p>
 
-  <div class="bigpadding_top">
+  <div class="bigpadding_top smallpadding_bot">
     <a href="https://bsky.app/profile/futureinvaders.com" target="_blank">
       <img src="./../../img/social/bluesky.png" alt="Bluesky" title="Bluesky">
+    </a>
+  </div>
+
+  <h2 class="bigpadding_top">
+    <?=__('social_youtube_title')?>
+  </h2>
+
+  <p>
+    <?=__('social_youtube_body')?>
+  </p>
+
+  <div class="bigpadding_top smallpadding_bot">
+    <a href="https://www.youtube.com/@FutureInvaders" target="_blank">
+      <img src="./../../img/social/youtube.png" alt="YouTube" title="YouTube">
     </a>
   </div>
 
