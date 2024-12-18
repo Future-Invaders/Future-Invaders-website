@@ -110,6 +110,10 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_special_body_3')?>
   </p>
 
+  <p>
+    <?=__('home_special_body_4')?>
+  </p>
+
   <div class="align_center hugepadding_top">
     <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
   </div>
