@@ -29,13 +29,36 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
   </h2>
 
   <div class="gallery bigpadding_top padding_bot">
-    <?php for($i = 1; $i <= 6; $i++): ?>
     <div class="gallery_cell">
-      <a href="./../../img/gameplay/gameplay_<?=$i?>.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_<?=$i?>.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/gameplay/gameplay_7.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_7.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
-    <?php endfor; ?>
+    <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_2.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_2.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_3.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_3.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_4.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_4.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_5.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_5.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_6.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_6.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
   </div>
 
   <h2 class="align_center padding_top">

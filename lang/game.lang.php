@@ -399,6 +399,224 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  UNIQUE FEATURES                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Intro
+___('features_intro_title',   'EN', "Unique features");
+___('features_intro_title',   'FR', "Originalités");
+___('features_intro_body_1',  'EN', <<<EOD
+Future Invaders has several innovative mechanics that set it apart from any existing card game.
+EOD
+);
+___('features_intro_body_1',  'FR', <<<EOD
+Future Invaders propose plusieurs mécaniques innovantes qui le distinguent des autres jeux de cartes.
+EOD
+);
+___('features_intro_body_2',  'EN', <<<EOD
+While it draws inspiration from the successes and lessons of other games in the genre, Future Invaders is built on fresh concepts that make it unique and engaging.
+EOD
+);
+___('features_intro_body_2',  'FR', <<<EOD
+Bien qu'il s'inspire d'autres jeux du genre, Future Invaders repose sur des concepts originaux, qui le rendent intéressant à découvrir.
+EOD
+);
+
+
+// Grid
+___('features_grid_title',  'EN', "Tactical grid: Strategy in positioning");
+___('features_grid_title',  'FR', "Grille tactique : Positionnement stratégique");
+___('features_grid_body_1', 'EN', <<<EOD
+Each player deploys cards on a 4x2 grid, adding a layer of spatial strategy to the game that challenges them to think about the positioning of their Ships and Structures.
+EOD
+);
+___('features_grid_body_1', 'FR', <<<EOD
+Chaque joueur déploie ses cartes sur une grille 4x2, ajoutant une dimension stratégique spatiale au jeu qui les pousse à réfléchir au placement de leurs Vaisseaux et Structures.
+EOD
+);
+___('features_grid_body_2', 'EN', <<<EOD
+Placing cards on the grid shapes offensive and defensive strategies, rewarding clever tactics and anticipation of opponents' moves.
+EOD
+);
+___('features_grid_body_2', 'FR', <<<EOD
+Le positionnement des cartes sur la grille crée des opportunités offensives et défensives, récompensant les tactiques ingénieuses et l'anticipation des choix de positionnement des adversaires.
+EOD
+);
+
+
+// Multiplayer
+___('features_multi_title',   'EN', "Adaptive grid: Ever shifting battles");
+___('features_multi_title',   'FR', "Grilles adaptives : Batailles en évolution");
+___('features_multi_body_1',  'EN', <<<EOD
+In multiplayer games, each player's grid splits into halves, facing their nearest neighbors.
+EOD
+);
+___('features_multi_body_1',  'FR', <<<EOD
+Dans les parties multijoueurs, la grille de chaque joueur se divise en deux moitiés, chacune faisant face à son voisin le plus proche.
+EOD
+);
+___('features_multi_body_2',  'EN', <<<EOD
+As players are eliminated from a game, grids dynamically reconfigure to face new opponents. This predictable yet evolving battlefield encourages strategic alliances, sudden betrayals, and ever-evolving social tactics around the table.
+EOD
+);
+___('features_multi_body_2',  'FR', <<<EOD
+Au fur et à mesure que des joueurs sont éliminés, les grilles se réorganisent dynamiquement pour faire face à de nouveaux adversaires. Ce champ de bataille, à la fois évolutif et prévisible, favorise les alliances stratégiques, les trahisons soudaines, et autres tactiques sociales autour d'une table de jeu en constante évolution.
+EOD
+);
+
+
+// Card types
+___('features_types_title',   'EN', "Card types: Depth in deck-building");
+___('features_types_title',   'FR', "Types de cartes : Profondeur de construction de deck");
+___('features_types_body_1',  'EN', <<<EOD
+With four distinct card types: Ships, Structures, Actions, and Reactions, players have to take an extra layer of strategy into account when building their decks, carefully balancing card types for optimal synergies.
+EOD
+);
+___('features_types_body_1',  'FR', <<<EOD
+Avec quatre types de cartes distincts : Vaisseaux, Structures, Actions, et Réactions, les joueurs doivent intégrer une dimension supplémentaire dans la construction de leurs decks, en équilibrant soigneusement leurs cartes pour créer des synergies optimales.
+EOD
+);
+___('features_types_body_2',  'EN', <<<EOD
+Card types interact dynamically: Structures defend against Ships while offering utility, and Reactions can counter or modify Actions, flipping the tide of battle in unexpected ways.
+EOD
+);
+___('features_types_body_2',  'FR', <<<EOD
+Les types de cartes interagissent entre eux de manière dynamique : les Structures défendent contre les Vaisseaux tout en offrant des bénéfices, tandis que les Réactions modifient ou contrent les Actions, permettant de surprendre les adversaires avec des retournements de situations.
+EOD
+);
+
+
+// Chain reactions
+___('features_chain_title',   'EN', "Chain reactions: Thrilling escalations");
+___('features_chain_title',   'FR', "Réactions en chaîne : Escalades excitantes");
+___('features_chain_body_1',  'EN', <<<EOD
+Players can stack Reactions in response to each other, creating cascades of effects until one Reaction takes precedence and the entire chain is resolved.
+EOD
+);
+___('features_chain_body_1',  'FR', <<<EOD
+Les joueurs peuvent enchaîner des Réactions en réponse les unes aux autres, créant des cascades d'effets jusqu'à ce qu'une Réaction prenne le dessus sur les autres et que toute la chaîne soit résolue.
+EOD
+);
+___('features_chain_body_2',  'EN', <<<EOD
+These unpredictable moments reward players who come prepared with the right cards and resources, turning small skirmishes into thrilling tests of strategy from which only one player can emerge victorious.
+EOD
+);
+___('features_chain_body_2',  'FR', <<<EOD
+Ces moments imprévisibles récompensent les joueurs les mieux préparés, transformant de simples escarmouches en affrontements stratégiques palpitants dont seul le meilleur stratège sortira vainqueur.
+EOD
+);
+
+
+// Scrap pile
+___('features_scrap_title',   'EN', "Scrap pile: Built-in comeback mechanic");
+___('features_scrap_title',   'FR', "Casse : Une mécanique de rebond intégrée");
+___('features_scrap_body_1',  'EN', <<<EOD
+Destroyed Ships and Structures are not removed from the game, but rather sent to their owner's scrap pile, ready to be recycled into resources at any time.
+EOD
+);
+___('features_scrap_body_1',  'FR', <<<EOD
+Les Vaisseaux et Structures détruits ne sont pas retirés du jeu, mais envoyés dans la casse de leur propriétaire, prêts à être recyclés en ressources à tout moment.
+EOD
+);
+___('features_scrap_body_2',  'EN', <<<EOD
+This mechanic keeps players in the game even after losing entire armadas, creating opportunities for dynamic games with exciting comebacks.
+EOD
+);
+___('features_scrap_body_2',  'FR', <<<EOD
+Cette mécanique permet aux joueurs de se maintenir dans la partie même après avoir perdu des armadas entières, ouvrant la voie à des parties dynamiques pleines de retournements de situations.
+EOD
+);
+
+
+// Draw or deploy
+___('features_draw_title',  'EN', "Draw or deploy: Tactical options every turn");
+___('features_draw_title',  'FR', "Piocher ou déployer : Option tactique à chaque tour");
+___('features_draw_body_1', 'EN', <<<EOD
+Every turn presents a strategic dilemma: deploy Ships and Structures to strengthen your presence on the grid, or draw an extra card to expand your future options.
+EOD
+);
+___('features_draw_body_1', 'FR', <<<EOD
+Chaque tour offre un dilemme stratégique : déployer des Vaisseaux et Structures pour renforcer sa présence sur la grille, ou piocher une carte supplémentaire pour augmenter ses options futures.
+EOD
+);
+___('features_draw_body_2', 'EN', <<<EOD
+This seemingly simple choice adds an impactful layer of strategic depth to the game, forcing players to balance immediate needs with long-term planning.
+EOD
+);
+___('features_draw_body_2', 'FR', <<<EOD
+Ce choix en apparence simple ajoute une grande profondeur stratégique au jeu, forçant les joueurs à équilibrer leurs besoins immédiats avec leurs plans à long terme.
+EOD
+);
+
+
+// Choices
+___('features_choices_title',   'EN', "Choices: Every card is a decision");
+___('features_choices_title',   'FR', "Choix : Chaque carte est une décision");
+___('features_choices_body_1',  'EN', <<<EOD
+Other than the basic building blocks of each faction, every card in the game offers a choice to the players, ensuring games don't feel linear and every turn comes with impactful decisions.
+EOD
+);
+___('features_choices_body_1',  'FR', <<<EOD
+À l'exception des cartes de base de chaque faction, toutes les cartes du jeu offrent des choix aux joueurs, garantissant que les parties ne soient jamais linéaires.
+EOD
+);
+___('features_choices_body_2',  'EN', <<<EOD
+Players must adapt to an ever-evolving game state, but the versatility of each card means they remain useful in most scenarios, making games unpredictable and infinitely repalyable.
+EOD
+);
+___('features_choices_body_2',  'FR', <<<EOD
+Les joueurs doivent s'adapter à des états de jeu en changement constant, la polyvalence des cartes garantit qu'elles sont utiles dans la majorité des scénarios, rendant les parties imprévisibles et rejouables à l'infini.
+EOD
+);
+
+
+// Rarity
+___('features_rarity_title',  'EN', "Meaningful rarity: Cards that feel truly special");
+___('features_rarity_title',  'FR', "Rareté littérale : Des cartes vraiment spéciales");
+___('features_rarity_body_1', 'EN', <<<EOD
+Rarity is tied to a card's power level, not its monetary value. Some cards are stronger than others, but their numbers are limited by deck building restrictions to keep them in check.
+EOD
+);
+___('features_rarity_body_1', 'FR', <<<EOD
+La rareté est liée à la puissance d'une carte, et non à sa valeur monétaire. Certaines cartes sont plus puissantes, mais leur nombre est limité par des restrictions lors de la construction des decks.
+EOD
+);
+___('features_rarity_body_2', 'EN', <<<EOD
+Deploying a Pinnacle level Ship, powerful enough to take on an entire armada on its own, is a truly special feeling. These rare cards enhance gameplay, but each of them has a drawback that keeps them from breaking the game's balance.
+EOD
+);
+___('features_rarity_body_2', 'FR', <<<EOD
+Déployer un Vaisseau Suprême, capable de faire face à une armada entière à lui seul, est une expérience mémorable. Ces cartes rares enrichissent l'expérience de jeu, mais chacune d'entre elle vient avec des inconvénients intégrés afin de préserver l'équilibre du jeu.
+EOD
+);
+
+
+// Anti-fun restrictions
+___('features_restrictions_title',  'EN', "Design restrictions: Keeping the game fair and fun");
+___('features_restrictions_title',  'FR', "Restrictions de design : Garder le jeu juste et amusant");
+___('features_restrictions_body_1', 'EN', <<<EOD
+Having learned from decades of card games, Future Invaders has design restrictions which ensure no mechanic that feels unfair or "unfun" ever makes it into the game.
+EOD
+);
+___('features_restrictions_body_1', 'FR', <<<EOD
+S'appuyant sur des décennies d'expérience des autres jeux de cartes, Future Invaders inclut des restrictions de conception qui s'assurent que le jeu ne contiendra pas de mécaniques injustes ou "anti-fun".
+EOD
+);
+___('features_restrictions_body_2', 'EN', <<<EOD
+Players won't face one sided denial such as forced discards or resource starvation, which could ruin accessibility and enjoyment. This design restruction ensures the game remains engaging for everyone.
+EOD
+);
+___('features_restrictions_body_2', 'FR', <<<EOD
+Les joueurs ne seront pas confrontés à des situations énervantes telles que l'obligation de se défausser de cartes, ou à des privations totales de ressources, qui peuvent nuire au plaisir et à l'accessibilité du jeu. Ces restrictions garantissent une expérience agréable et équitable pour tous.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       RULES                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

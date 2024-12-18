@@ -219,6 +219,9 @@ $javascripts .= '
             <?=__link('pages/game/intro', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
+            <?=__link('pages/game/features', __('submenu_guides_features'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
             <?=__link('pages/tools/print', __('submenu_tools_printhelp'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
@@ -274,6 +277,9 @@ $javascripts .= '
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/game/intro', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/game/features', __('submenu_guides_features'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/game/rules', __('submenu_guides_rules'), 'header_submenu_link', 1, $path);?>
