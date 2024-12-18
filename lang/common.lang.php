@@ -954,6 +954,8 @@ ___('submenu_guides_game',      'EN', "Game");
 ___('submenu_guides_game',      'FR', "Future Invaders");
 ___('submenu_guides_rules',     'EN', "Rules");
 ___('submenu_guides_rules',     'FR', "Règles");
+___('submenu_guides_features',  'EN', "Unique features");
+___('submenu_guides_features',  'FR', "Originalités");
 ___('submenu_guides_howto',     'EN', "How to play");
 ___('submenu_guides_howto',     'FR', "Comment jouer");
 ___('submenu_guides_lore',      'EN', "Lore");

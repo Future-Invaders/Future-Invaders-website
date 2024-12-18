@@ -118,6 +118,14 @@ ___('home_special_body_3',  'FR', <<<EOT
 Ce jeu ne traite pas ses joueurs comme de simples clients. Créé par un passionné de jeux de cartes, à destination d'autres passionnés, il valorise vos retours d'expérience. Les cartes ne sont pas vendues sous forme de boosters aléatoires. Future Invaders est un jeu de cartes vivant : il est actuellement disponible gratuitement à l'impression, et sera vendu dans le futur sous forme de collections complètes.
 EOT
 );
+___('home_special_body_4',  'EN', <<<EOT
+{{external|./pages/game/features|Click here for a list of the game's unique features}}.
+EOT
+);
+___('home_special_body_4',  'FR', <<<EOT
+{{external|./pages/game/features|Cliquez ici pour voir la liste des originalités du jeu}}.
+EOT
+);
 
 
 // Play the game
