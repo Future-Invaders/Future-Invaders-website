@@ -1408,7 +1408,7 @@ function arsenals_update_card_data( int $arsenal_id ) : void
     if(isset($row['c_cost']))
     {
       for($i = 0; $i < strlen($row['c_cost']); $i++)
-        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+        $formatted_cost .= "[".$row['c_cost'][$i]."]";
     }
 
     // Assemble the main card list
@@ -1459,7 +1459,7 @@ function arsenals_update_card_data( int $arsenal_id ) : void
     if(isset($row['c_cost']))
     {
       for($i = 0; $i < strlen($row['c_cost']); $i++)
-        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+        $formatted_cost .= "[".$row['c_cost'][$i]."]";
     }
 
     // Assemble the main card list

@@ -562,7 +562,7 @@ ___('features_choices_body_1',  'FR', <<<EOD
 EOD
 );
 ___('features_choices_body_2',  'EN', <<<EOD
-Players must adapt to an ever-evolving game state, but the versatility of each card means they remain useful in most scenarios, making games unpredictable and infinitely repalyable.
+Players must adapt to an ever-evolving game state, but the versatility of each card means they remain useful in most scenarios, making games unpredictable and infinitely replayable.
 EOD
 );
 ___('features_choices_body_2',  'FR', <<<EOD
