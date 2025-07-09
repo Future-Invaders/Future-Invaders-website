@@ -175,8 +175,12 @@ ___('print_arsenals_body_2',  'FR', <<<EOD
 Avant d'imprimer, assurez-vous de comprendre {{link|pages/tools/print|le processus d'impression maison}}.
 EOD
 );
-___('print_arsenals_choose',  'EN', "Choose the arsenals you want to print");
-___('print_arsenals_choose',  'FR', "Choisissez les arsenaux à imprimer");
+___('print_arsenals_choose',  'EN', "Choose the arsenals you want to print.");
+___('print_arsenals_choose',  'FR', "Choisissez les arsenaux à imprimer.");
+___('print_arsenals_res',     'EN', "After printing an arsenal, refer to its composition to separate its main cards from its reserve cards.");
+___('print_arsenals_res',     'FR', "Après avoir imprimé un arsenal, référez-vous à sa composition pour séparer ses cartes principales de ses réserves.");
+___('print_arsenals_all',     'EN', "All arsenals");
+___('print_arsenals_all',     'FR', "Tous les arsenaux");
 ___('print_arsenals_desc',    'EN', "Arsenal description");
 ___('print_arsenals_desc',    'FR', "Description de l'arsenal");
 ___('print_aresnals_cards',   'EN', "Main & reserves cards");

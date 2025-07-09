@@ -66,9 +66,22 @@ $arsenals_list = arsenals_list( sort_by: 'name'                   ,
     <?=__('print_allcards_body_3')?>
   </p>
 
-  <p class="smallpadding_bot">
-    <?=__('print_arsenals_choose').__(':')?>
+  <p>
+    <?=__('print_arsenals_choose')?>
   </p>
+
+  <p class="smallpadding_bot">
+    <?=__('print_arsenals_res')?>
+  </p>
+
+  <p class="nopadding_top smallpadding_top tinypadding_bot bold">
+    <?=__('print_arsenals_all')?>
+  </p>
+  <ul class="tinypadding_bot">
+    <li>
+      <?=__link('img/print/arsenals/'.$imglang.'/all_arsenals.pdf', __('print_arsenals_extra'), popup: true)?>
+    </li>
+  </ul>
 
   <?php for($i = 0; $i < $arsenals_list['rows']; $i++): ?>
   <?php if($arsenals_list[$i]['print_'.$imglang]): ?>
@@ -77,14 +90,14 @@ $arsenals_list = arsenals_list( sort_by: 'name'                   ,
   </p>
   <ul class="tinypadding_bot">
     <li>
-      <?=__link('pages/arsenal/'.$arsenals_list[$i]['slug'], __('print_arsenals_desc'), popup: true)?>
-    </li>
-    <li>
       <?=__link($arsenals_list[$i]['print_'.$imglang], __('print_aresnals_cards'), popup: true)?>
     </li>
     <?php if($arsenals_list[$i]['print_extra_'.$imglang]): ?>
     <li>
       <?=__link($arsenals_list[$i]['print_extra_'.$imglang], __('print_arsenals_extra'), popup: true)?>
+    </li>
+    <li>
+      <?=__link('pages/arsenal/'.$arsenals_list[$i]['slug'], __('print_arsenals_desc'), popup: true)?>
     </li>
     <?php endif; ?>
   </ul>
