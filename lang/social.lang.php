@@ -20,51 +20,19 @@ ___('gameplay_cards_title',         'FR', "Exemples de cartes");
 ___('gameplay_videos_title',        'EN', "Gameplay videos");
 ___('gameplay_videos_title',        'FR', "Vidéos du jeu");
 ___('gameplay_videos_game_body_1',  'EN', <<<EOD
-The video below features a standard Future Invaders duel: a best of three series between an {{link|pages/arsenal/aggroterran|Aggro Terran}} and a {{link|pages/arsenal/scrappertechsmith|Scrapper Techsmith}}. These are friendly, non-competitive games designed to showcase how the game is played.
+There are currently no gameplay videos available.
 EOD
 );
 ___('gameplay_videos_game_body_1',  'FR', <<<EOD
-La vidéo ci-dessous présente un duel standard de Future Invaders : une série de trois parties entre un {{link|pages/arsenal/aggroterran|Terrien agressif}} et un {{link|pages/arsenal/scrappertechsmith|Technoforgé recycleur}}. Ce sont des parties amicales et non compétitives, permettant de montrer à quoi ressemble une partie du jeu.
+Il n'y a actuellement pas de vidéos du jeu disponibles.
 EOD
 );
 ___('gameplay_videos_game_body_2',  'EN', <<<EOD
-English commentary has been added, {{external_popup|https://www.youtube.com/watch?v=EVOo2xH9NMM|a french version is also available}}.
+The only existing videos at the moment portray an older version of the game. New videos reflecting the current state of the game will be made soon.
 EOD
 );
 ___('gameplay_videos_game_body_2',  'FR', <<<EOD
-Des commentaires en français ont été ajoutés, {{external_popup|https://www.youtube.com/watch?v=zrX7WYPoo0A|une version anglaise est également disponible}}.
-EOD
-);
-___('gameplay_videos_tts_body_1',   'EN', <<<EOD
-The video below shows a limited version of Future Invaders being played online via {{link|pages/tools/tabletop_simulator|Tabletop Simulator}}. It features a three-way match between a {{link|pages/arsenal/controlinvader|Control Invader}}, an {{link|pages/arsenal/artillerybetrayer|Artillery Betrayer}}, and a {{link|pages/arsenal/denialpirate|Denial Pirate}}.
-EOD
-);
-___('gameplay_videos_tts_body_1',   'FR', <<<EOD
-La vidéo ci-dessous présente une version limitée de Future Invaders, jouée en ligne via {{link|pages/tools/tabletop_simulator|Tabletop Simulator}}. Il s'agit d'une partie à trois joueurs entre un {{link|pages/arsenal/controlinvader|Envahisseur contrôle}}, un {{link|pages/arsenal/artillerybetrayer|Traître artilleur}}, et un {{link|pages/arsenal/denialpirate|Pirate privateur}}.
-EOD
-);
-___('gameplay_videos_tts_body_2',   'EN', <<<EOD
-The original audio recording is in French, no english commentary is provided.
-EOD
-);
-___('gameplay_videos_tts_body_2',   'FR', <<<EOD
-L'enregistrement audio d'origine de la partie a été conservé, sans commentaires ajoutés.
-EOD
-);
-___('gameplay_videos_old_body_1',   'EN', <<<EOD
-The three videos below were filmed during the early stages of the game's development, showcasing "alpha" gameplay with English commentary.
-EOD
-);
-___('gameplay_videos_old_body_1',   'FR', <<<EOD
-Les trois vidéos ci-dessous ont été filmées pendant les premières phases de développement du jeu, lorsqu'il était encore un prototype. Elles montrent la version "alpha" du jeu, avec des commentaires en anglais expliquant le gameplay.
-EOD
-);
-___('gameplay_videos_old_body_2',   'EN', <<<EOD
-They are not representative of the current game's balance.
-EOD
-);
-___('gameplay_videos_old_body_2',   'FR', <<<EOD
-Elles ne reflètent pas l'état actuel de l'équilibrage actuel du jeu.
+Les vidéos existantes représentent une ancienne version du jeu. De nouvelles vidéos reflétant l'état actuel du jeu seront bientôt disponibles.
 EOD
 );
 
@@ -293,11 +261,11 @@ Les concepts de jeu, designs des cartes, textes des cartes, règles, jugements, 
 EOD
 );
 ___('privacy_copyright_body_2', 'EN', <<<EOD
-The current Future Invaders art has been generated using Microsoft Image Creator. It is not subject to copyright by Microsoft, nor is it subject to copyright by the author of the Future Invaders game. It is placeholder art until the Future Invaders game is released, and will be replaced by hand-drawn art in the future.
+Some of the earliest prototypes have been generated using Microsoft Image Creator. These images are not subject to copyright by Microsoft, nor is it subject to copyright by the author of the Future Invaders game.
 EOD
 );
 ___('privacy_copyright_body_2', 'FR', <<<EOD
-L'art actuellement utilisé par Future Invaders a été généré en utilisant Microsoft Image Creator. Il n'est pas soumis à la propriété intellectuelle par Microsoft, ni par l'auteur du jeu Future Invaders. Il s'agit d'illustrations temporaires, ayant vocation à être remplacées par des illustrations professionnelles lorsque le jeu sera publié.
+Certains des premiers prototypes du jeu ont été généré en utilisant Microsoft Image Creator. Ces images ne sont pas soumises à la propriété intellectuelle par Microsoft, ni par l'auteur du jeu Future Invaders.
 EOD
 );
 ___('privacy_copyright_body_3', 'EN', <<<EOD
@@ -366,11 +334,11 @@ EOD
 ___('credits_icons_title',  'EN', "Icon credits");
 ___('credits_icons_title',  'FR', "Crédits des icônes");
 ___('credits_icons_body_1', 'EN', <<<EOD
-All of the symbols and icons used on the cards are from {{external_popup|https://game-icons.net/|game-icons.net}}.
+Some symbols and icons used early prototypes are from {{external_popup|https://game-icons.net/|game-icons.net}}.
 EOD
 );
 ___('credits_icons_body_1', 'FR', <<<EOD
-Tous les symboles et icônes utilisés sur les cartes sont issus de {{external_popup|https://game-icons.net/|game-icons.net}}.
+Certains symboles et icônes utilisés sur les premiers prototypes sont issus de {{external_popup|https://game-icons.net/|game-icons.net}}.
 EOD
 );
 ___('credits_icons_body_2', 'EN', <<<EOD
@@ -387,19 +355,19 @@ EOD
 ___('credits_art_title',  'EN', "Art credits");
 ___('credits_art_title',  'FR', "Crédits artistiques");
 ___('credits_art_body_1', 'EN', <<<EOD
-All of the game's current artworks were generated using Microsoft Image Creator.
+Some of the game's early prototype artworks were generated using Microsoft Image Creator.
 EOD
 );
 ___('credits_art_body_1', 'FR', <<<EOD
-Toutes les illustrations du jeu ont été générées par Microsoft Image Creator.
+Certaines des illustrations des premiers prototypes du jeu ont été générées par Microsoft Image Creator.
 EOD
 );
 ___('credits_art_body_2', 'EN', <<<EOD
-These artworks are temporary and will be replaced by hand-drawn illustrations in the future once the game is funded or published.
+Everything else has been hand drawn by Bad.
 EOD
 );
 ___('credits_art_body_2', 'FR', <<<EOD
-Ces illustrations sont temporaires et seront remplacées par des illustrations professionnelles à l'avenir, une fois que le jeu sera financé ou publié.
+Tout le reste a été dessiné à la main par Bad.
 EOD
 );
 
@@ -583,19 +551,6 @@ EOD
 );
 
 
-// Provide art
-___('social_help_art_title',  'EN', "Provide art");
-___('social_help_art_title',  'FR', "Proposer de l'art");
-___('social_help_art_body',   'EN', <<<EOD
-As you likely noticed, most of the website and game's art is currently AI generated. This is not something we are happy with or proud of. Currently, the game has zero budget, therefore we will not be asking artists for anything until the game has secured funding. If you're interested in providing art regardless, we appreciate it, but be aware that we will not be able to pay for your work, and it will therefore not be included in the final commercial relase of the game.
-EOD
-);
-___('social_help_art_body',   'FR', <<<EOD
-Comme vous pouvez le voir, la majorité des illustrations du site et du jeu sont générées par IA. Ce n'est pas quelque chose dont nous sommes satisfaits ou fiers. Actuellement, le budget du jeu est de zéro, par conséquent nous ne commissionnerons pas d'artistes tant que nous n'aurons pas trouvé de source de financement. Si vous tenez malgré tout à proposer de l'art pour le jeu, nous l'apprécions, mais sachez que nous ne pourrons pas vous payer, et que votre art ne sera par conséquent pas inclus dans la version commerciale finale du jeu.
-EOD
-);
-
-
 // Contribute code
 ___('social_help_code_title',  'EN', "Create third party projects");
 ___('social_help_code_title',  'FR', "Créer des projets tiers");
@@ -691,19 +646,6 @@ EOD
 );
 ___('publish_answer_free',    'FR', <<<EOD
 La version beta actuelle est imprimable gratuitement chez soi, dans le but de susciter l'intérêt des gens et de les inciter à essayer le jeu. La majorité des testeurs ont exprimé leur souhait d'acheter une version imprimée professionnellement, ce qui montre que la gratuité actuelle n'affectera pas les ventes futures.
-EOD
-);
-
-
-// What's left to be done
-___('publish_question_left',  'EN', "What remains to be done before the game is finished?");
-___('publish_question_left',  'FR', "Que reste-t-il à faire avant que le jeu soit prêt ?");
-___('publish_answer_left',    'EN', <<<EOD
-Regarding game design, the core set is complete, heavily playtested, and well-balanced. The current illustrations are AI-generated and need to be replaced by professional art. The rules also need to be formatted for a booklet, and additional accessories such as durability counters, resource trackers, and playmats need to be designed. Lastly, the game must be printed, distributed, and marketed.
-EOD
-);
-___('publish_answer_left',    'FR', <<<EOD
-Le game design du jeu est finalisé, fortement testé, et équilibré. Les illustrations actuelles, faites par IA, doivent être remplacées par des illustrations professionnelles, et les règles formatées en livret. La création d'accessoires, tels que des compteurs de durabilité et un tapis de jeu, sont également une possibilité. Finalement, le jeu doit être imprimé, distribué et commercialisé.
 EOD
 );
 

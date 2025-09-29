@@ -625,19 +625,27 @@ EOD
 ___('rules_title',  'EN', "Rules of the game");
 ___('rules_title',  'FR', "Règles du jeu");
 ___('rules_body_1', 'EN', <<<EOD
-At the bottom of the page, you'll find {{link|pages/game/rules#reminders|reminder cards}} that summarize the rules, including a step-by-step guide to a turn's structure. The website also includes a {{link|pages/game/vocabulary|glossary}} of terms used in the game.
+For now, the rules of the game are presented as a pdf file. They will be properly included and detailed on the website at a later date.
 EOD
 );
 ___('rules_body_1', 'FR', <<<EOD
-En bas de la page, après les règles, des {{link|pages/game/rules#reminders|cartes de rappel}} résument les règles de manière plus concise, incluant un guide étape par étape de la structure d'un tour. Le site contient également un {{link|pages/game/vocabulary|glossaire}} des termes utilisés dans le jeu.
+Pour le moment, les règles du jeu sont présentées sous forme d'un fichier pdf. Elles seront prochainement incluses et détaillées plus proprement sur le site.
 EOD
 );
 ___('rules_body_2', 'EN', <<<EOD
-Rules and reminders are on cards, allowing you to {{link|pages/tools/print_extra|print them at home}}.
+The rules are available in a {{link|pages/tools/print_extra|printable format}}, if you'd like a physical copy.
 EOD
 );
 ___('rules_body_2', 'FR', <<<EOD
-Les règles et rappels sont présentés sous forme de cartes, ce qui vous permet de les {{link|pages/tools/print_extra|imprimer chez vous}}.
+Les règles sont également disponible au {{link|pages/tools/print_extra|printable format}}, si vous en désirez une copie physique.
+EOD
+);
+___('rules_body_3', 'EN', <<<EOD
+The website also includes a {{link|pages/game/vocabulary|glossary}} of terms used in the game.
+EOD
+);
+___('rules_body_3', 'FR', <<<EOD
+Le site contient également un {{link|pages/game/vocabulary|glossaire}} des termes utilisés dans le jeu.
 EOD
 );
 
@@ -1713,14 +1721,6 @@ EOD
 );
 ___('lore_body_2', 'FR', <<<EOD
 L'univers du jeu s'explore en jouant des cartes, qui offrent un aperçu des vaisseaux, des structures, des technologies et des cultures de chaque faction.
-EOD
-);
-___('lore_body_3', 'EN', <<<EOD
-The game's background story is presented through lore cards. These cards can be {{link|pages/tools/print_extra|printed at home}}.
-EOD
-);
-___('lore_body_3', 'FR', <<<EOD
-L'histoire du jeu est introduite par des cartes de lore. Vous pouvez les {{link|pages/tools/print_extra|imprimer chez vous}}.
 EOD
 );
 

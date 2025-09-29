@@ -132,13 +132,16 @@ $javascripts .= '
 <html lang="<?=string_change_case($lang,'lowercase')?>">
   <head>
     <title><?=$page_title?></title>
+    <link rel="canonical" href="<?='https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <link rel="shortcut icon" href="<?=$path?>favicon.ico">
+    <link rel="icon" href="<?=$path?>favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="robots" content="index, follow">
     <meta name="description" content="<?=$page_description?>">
+    <meta property="og:type" content="website">
     <meta property="og:title" content="<?=$page_title?>">
     <meta property="og:description" content="<?=$page_description?>">
-    <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
+    <meta property="og:url" content="<?='https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <meta property="og:site_name" content="Future Invaders">
     <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/common/logo_filled.png">
     <meta property="og:locale" content="en_US">

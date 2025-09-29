@@ -65,14 +65,6 @@ $page_description = "For publishers wondering why they should publish the card g
   </p>
 
   <h5 class="bigpadding_top">
-    <?=__('publish_question_left')?>
-  </h5>
-
-  <p class="tinypadding_bot">
-    <?=__('publish_answer_left')?>
-  </p>
-
-  <h5 class="bigpadding_top">
     <?=__('publish_question_model')?>
   </h5>
 

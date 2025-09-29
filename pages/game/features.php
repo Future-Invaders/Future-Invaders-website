@@ -67,7 +67,7 @@ $page_description = "Unique features of the strategy sci-fi card battling game F
   </ul>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_7.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_5.png" alt="Gameplay">
   </div>
 
   <h5 class="hugepadding_top" id="grid">
@@ -95,7 +95,7 @@ $page_description = "Unique features of the strategy sci-fi card battling game F
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_8.png" alt="Gameplay">
   </div>
 
   <h5 class="hugepadding_top" id="types">
@@ -123,7 +123,7 @@ $page_description = "Unique features of the strategy sci-fi card battling game F
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_8.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_6.png" alt="Gameplay">
   </div>
 
   <h5 class="hugepadding_top" id="scrap">
@@ -151,7 +151,7 @@ $page_description = "Unique features of the strategy sci-fi card battling game F
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/tabletop_simulator_3.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_2.png" alt="Gameplay">
   </div>
 
   <h5 class="hugepadding_top" id="choices">
@@ -191,7 +191,7 @@ $page_description = "Unique features of the strategy sci-fi card battling game F
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_9.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_1.png" alt="Gameplay">
   </div>
 
 </div>

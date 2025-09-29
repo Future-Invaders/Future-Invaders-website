@@ -69,14 +69,6 @@ $page_description = "Help the tactical sci-fi card game Future Invaders grow int
   </p>
 
   <h5 class="bigpadding_top">
-    <?=__('social_help_art_title')?>
-  </h5>
-
-  <p>
-    <?=__('social_help_art_body')?>
-  </p>
-
-  <h5 class="bigpadding_top">
     <?=__('social_help_code_title')?>
   </h5>
 

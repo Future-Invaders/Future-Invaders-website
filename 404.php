@@ -56,7 +56,7 @@ $this_page_is_a_404 = '';
         </td>
         <td class="img404 noborder">
           <a href="<?=$path?>index">
-            <img class="img404right" src="<?=$path?>img/404/404_right.jpg" alt="404">
+            <img class="img404right" src="<?=$path?>img/404/404_right.png" alt="404">
           </a>
         </td>
       </tr>
@@ -70,7 +70,7 @@ $this_page_is_a_404 = '';
   </a>
   <textarea class="indiv monospace text404" rows="10" id="text404_mobile" readonly></textarea>
   <a href="<?=$path?>index">
-    <img class="img404right" src="<?=$path?>img/404/404_right.jpg" alt="404">
+    <img class="img404right" src="<?=$path?>img/404/404_right.png" alt="404">
   </a>
 </div>
 

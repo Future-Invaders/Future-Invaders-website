@@ -4,14 +4,15 @@
 # Local config should not be committed
 conf/main.conf.php
 
-# Anything AI generated shouldn't be committed
+# Don't commit artworks
 img/404/*
 !img/404/index.php
 img/gameplay/*
 !img/gameplay/index.php
 img/social/*
 !img/social/index.php
-img/homepage.jpg
+img/website/*
+!img/website/index.php
 
 # Card images shouldn't be stored in the repository
 img/arsenals/en/*
@@ -68,3 +69,6 @@ img/print/extras/en/*
 !img/print/extras/en/index.php
 img/print/extras/fr/*
 !img/print/extras/fr/index.php
+
+pages/admin/image_backups/
+pages/admin/image_backups/*

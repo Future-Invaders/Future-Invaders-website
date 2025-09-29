@@ -22,32 +22,6 @@ $css = array('game');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                     BACK END                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch rules and reminder cards
-
-// Prepare the correct language string
-$card_lang = string_change_case($lang, 'lowercase');
-
-// Fetch rules cards
-$rules_cards = cards_list(  sort_by:  'name'                        ,
-                            search:   array(  'type'    => 'Rules'  ,
-                                              'public'  => true   ) );
-
-// Fetch reminder cards
-$reminder_cards = cards_list( sort_by:  'name'                            ,
-                              search:   array(  'type'    => 'Reminders'  ,
-                                                'public'  => true       ) );
-
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
@@ -70,111 +44,16 @@ $reminder_cards = cards_list( sort_by:  'name'                            ,
     <?=__('rules_body_3')?>
   </p>
 
-  <p>
-    <?=__('rules_body_4')?>
-  </p>
-
-  <h5 class="smallpadding_top">
-    <?=__('rules_cards_title')?>
-  </h5>
-
-  <ul class="smallpadding_top">
-    <?php for($i = 0; $i < $rules_cards['rows']; $i++): ?>
-    <li>
-      <?=__link('pages/game/rules#rule_'.($i+1), $rules_cards[$i]['name_'.$card_lang])?>
-    </li>
-    <?php endfor; ?>
-  </ul>
-
-  <h5 class="smallpadding_top">
-    <?=__('reminder_cards_title')?>
-  </h5>
-
-  <ul class="smallpadding_top">
-    <?php for($i = 0; $i < $reminder_cards['rows']; $i++): ?>
-    <li>
-      <?=__link('pages/game/rules#reminder_'.($i+1), $reminder_cards[$i]['name_'.$card_lang])?>
-    </li>
-    <?php endfor; ?>
-  </ul>
-
 </div>
 
-<hr>
+<div class="width_70 padding_top">
 
-<div class="width_50 bigpadding_top bigpadding_bot" id="rules">
-
-  <h2 class="bigpadding_bot">
-    <?=__('rules_cards_title')?>
-  </h2>
-
-  <?php for($i = 0; $i < $rules_cards['rows']; $i++): ?>
-
-  <div class="flexcontainer rules_container padding_bot" id="rule_<?=($i+1)?>">
-
-    <div class="align_center" style="flex: 4">
-      <a href="<?=$path.$rules_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$rules_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$rules_cards[$i]['name_'.$card_lang]?>" loading="lazy">
-      </a>
-    </div>
-
-    <div style="flex: 1">
-      &nbsp;
-    </div>
-
-    <div style="flex: 8">
-      <div class="black bigspaced tinypadding_top tinypadding_bot">
-        <h4>
-          <?=$rules_cards[$i]['name_'.$card_lang]?>
-        </h4>
-        <p>
-          <?=$rules_cards[$i]['body_'.$card_lang.'_raw']?>
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-  <?php endfor; ?>
-
-</div>
-
-<hr>
-
-<div class="width_50 bigpadding_top" id="reminders">
-
-  <h2 class="bigpadding_bot">
-    <?=__('reminder_cards_title')?>
-  </h2>
-
-  <?php for($i = 0; $i < $reminder_cards['rows']; $i++): ?>
-
-  <div class="flexcontainer rules_container padding_bot" id="reminder_<?=($i+1)?>">
-
-    <div class="align_center" style="flex: 4">
-      <a href="<?=$path.$reminder_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$reminder_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$reminder_cards[$i]['name_'.$card_lang]?>" loading="lazy">
-      </a>
-    </div>
-
-    <div style="flex: 1">
-      &nbsp;
-    </div>
-
-    <div style="flex: 8">
-      <div class="black bigspaced tinypadding_top tinypadding_bot">
-        <h4>
-          <?=$reminder_cards[$i]['name_'.$card_lang]?>
-        </h4>
-        <p>
-          <?=$reminder_cards[$i]['body_'.$card_lang.'_raw']?>
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-  <?php endfor; ?>
+  <iframe
+    src="./../../img/rules/rules_<?=string_change_case($lang, 'lowercase')?>.pdf"
+    width="100%"
+    height="1050px"
+    style="border:0;">
+  </iframe>
 
 </div>
 

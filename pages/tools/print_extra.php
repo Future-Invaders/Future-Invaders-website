@@ -67,9 +67,6 @@ $imglang = string_change_case($lang, 'lowercase');
     <li>
       <?=__link('img/print/extras/'.$imglang.'/reminders.pdf', __('print_extra_reminders'), popup: true)?>
     </li>
-    <li>
-      <?=__link('img/print/extras/'.$imglang.'/lore.pdf', __('print_extra_lore'), popup: true)?>
-    </li>
   </ul>
 
 </div>

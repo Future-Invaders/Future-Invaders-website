@@ -30,13 +30,8 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
 
   <div class="gallery bigpadding_top padding_bot">
     <div class="gallery_cell">
-      <a href="./../../img/gameplay/gameplay_7.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_7.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../../img/gameplay/gameplay_2.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_2.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/gameplay/gameplay_1.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_1.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <div class="gallery_cell">
@@ -45,18 +40,23 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
       </a>
     </div>
     <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_9.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_9.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_8.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_8.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="./../../img/gameplay/gameplay_7.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_7.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      </a>
+    </div>
+    <div class="gallery_cell">
       <a href="./../../img/gameplay/gameplay_4.png" class="noglow">
         <img class="tinypadding_top" src="./../../img/gameplay/gameplay_4.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../../img/gameplay/gameplay_5.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_5.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../../img/gameplay/gameplay_6.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/gameplay/gameplay_6.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
   </div>
@@ -98,13 +98,13 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
       </a>
     </div>
     <div class="gallery_cell desktop">
-      <a href="./../../img/thumbnails/cards/en/scrap_shot.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/cards/en/scrap_shot.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/thumbnails/cards/en/misdirection.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/cards/en/misdirection.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../../img/thumbnails/cards/en/fake_intel.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/cards/en/fake_intel.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/thumbnails/cards/en/swap_places.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/cards/en/swap_places.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <div class="gallery_cell">
@@ -144,18 +144,18 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
       </a>
     </div>
     <div class="gallery_cell desktop">
-      <a href="./../../img/thumbnails/cards/fr/tir_de_ferraille.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/cards/fr/tir_de_ferraille.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/thumbnails/cards/fr/desorientation.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/cards/fr/desorientation.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../../img/thumbnails/cards/fr/infox.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/cards/fr/infox.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/thumbnails/cards/fr/echange.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/cards/fr/echange.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../../img/thumbnails/cards/fr/destruction_mutuellement_assuree.png" class="noglow">
-        <img class="tinypadding_top" src="./../../img/cards/fr/destruction_mutuellement_assuree.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="./../../img/thumbnails/cards/fr/destruction_mutuelle_assuree.png" class="noglow">
+        <img class="tinypadding_top" src="./../../img/cards/fr/destruction_mutuelle_assuree.png" alt="<?=__('futureinvaders')?>" loading="lazy">
       </a>
     </div>
     <?php endif; ?>
@@ -172,46 +172,6 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
   <p class="padding_bot">
     <?=__('gameplay_videos_game_body_2')?>
   </p>
-
-  <div class="align_center padding_top bigpadding_bot">
-    <?php if($lang === 'EN'): ?>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/zrX7WYPoo0A?si=FODiURYmfJs6_MDf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <?php else: ?>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/EVOo2xH9NMM?si=P29P-xR5ZTzTAVpj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <?php endif; ?>
-  </div>
-
-  <p id="videos_tts">
-    <?=__('gameplay_videos_tts_body_1')?>
-  </p>
-
-  <p class="padding_bot">
-    <?=__('gameplay_videos_tts_body_2')?>
-  </p>
-
-  <div class="align_center padding_top bigpadding_bot">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/0ZrrbsrncRk?si=FpXJdI5KIwBbDdym" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>
-
-  <p>
-    <?=__('gameplay_videos_old_body_1')?>
-  </p>
-
-  <p class="padding_bot">
-    <?=__('gameplay_videos_old_body_2')?>
-  </p>
-
-  <div class="align_center padding_top padding_bot">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/O-YbEDV-n7M?si=LuBjGolSSSJMKkfX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>
-
-  <div class="align_center padding_top padding_bot">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/aNww-8WESXA?si=mnnLTZkoOo4z7Uej" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>
-
-  <div class="align_center padding_top">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/lX7wSCas6yU?si=G4bpgCpJ3BuVKr_7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>
 
 </div>
 

@@ -61,30 +61,16 @@ $lore_cards = cards_list( sort_by:  'name'                        ,
     <?=__('lore_body_2')?>
   </p>
 
-  <p>
-    <?=__('lore_body_3')?>
-  </p>
-
 </div>
 
-<div class="width_50 bigpadding_top">
+<div class="width_50">
 
   <?php for($i = 0; $i < $lore_cards['rows']; $i++): ?>
 
   <div class="flexcontainer rules_container padding_bot" id="rule_<?=($i+1)?>">
 
-    <div class="align_center" style="flex: 4">
-      <a href="<?=$path.$lore_cards[$i]['image_'.$card_lang]?>">
-        <img class="rules_image" src="<?=$lore_cards[$i]['thumb_'.$card_lang]?>" alt="<?=$lore_cards[$i]['name_'.$card_lang]?>" loading="lazy">
-      </a>
-    </div>
-
-    <div style="flex: 1">
-      &nbsp;
-    </div>
-
     <div style="flex: 8">
-      <div class="black bigspaced tinypadding_top tinypadding_bot">
+      <div class="black bigspaced tinypadding_top smallpadding_bot">
         <h4>
           <?=$lore_cards[$i]['name_'.$card_lang]?>
         </h4>

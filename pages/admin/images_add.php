@@ -40,7 +40,7 @@ $image_tags = tags_list(search: array('ftype' => 'Image'));
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Define the placeholder artist
 
-$placeholder_artist = "Microsoft Image Creator (AI)";
+$placeholder_artist = "Bad";
 
 
 

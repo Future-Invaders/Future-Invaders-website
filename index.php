@@ -20,10 +20,10 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
 /*                                                                                                                   */
 /**********************************************************************************/ include './inc/header.inc.php'; ?>
 
-<div class="width_60">
+<div class="width_50">
 
   <div class="align_center padding_bot">
-    <img src="<?=$path?>img/homepage.jpg" alt="Future Invaders">
+    <img src="<?=$path?>img/website/title_banner.png" alt="Future Invaders">
   </div>
 
 </div>
@@ -39,7 +39,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </h5>
 
   <div class="floater float_right float_noborder">
-    <img src="<?=$path?>img/404/404_right.jpg" alt="404">
+    <img src="<?=$path?>img/website/consortium.png" alt="Consortium headquarters">
   </div>
 
   <p>
@@ -63,8 +63,8 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </h4>
 
   <div class="floater float_right float_noborder float_above float_small">
-    <a href="pages/card/controloverride">
-      <img src="<?=$path?>img/thumbnails/cards/en/control_override.png" alt="Card">
+    <a href="pages/card/malfunction">
+      <img src="<?=$path?>img/thumbnails/cards/en/malfunction.png" alt="Card">
     </a>
   </div>
 
@@ -85,7 +85,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_2.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
   </div>
 
   <h4 class="hugepadding_top">
@@ -115,7 +115,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_6.png" alt="Gameplay">
   </div>
 
   <h4 class="hugepadding_top">
@@ -134,6 +134,10 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_play_body_3')?>
   </p>
 
+  <div class="align_center hugepadding_top">
+    <img src="<?=$path?>img/gameplay/gameplay_5.png" alt="Gameplay">
+  </div>
+
   <h4 class="hugepadding_top">
     <?=__('home_community_title')?>
   </h4>
@@ -151,7 +155,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_7.png" alt="Gameplay">
+    <img src="<?=$path?>img/gameplay/gameplay_9.png" alt="Gameplay">
   </div>
 
 </div>
