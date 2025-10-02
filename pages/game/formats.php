@@ -37,7 +37,13 @@ $formats_list = formats_list();
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_40 bigpadding_bot">
+<div class="width_40">
+
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/guides">
+      <img src="<?=$path?>img/banners/banner_formats.png" alt="<?=__('menu_formats')?>">
+    </a>
+  </div>
 
   <h2>
     <?=__('formats_title')?>

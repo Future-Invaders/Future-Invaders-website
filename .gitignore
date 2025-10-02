@@ -7,6 +7,8 @@ conf/main.conf.php
 # Don't commit artworks
 img/404/*
 !img/404/index.php
+img/banners/*
+!img/banners/index.php
 img/gameplay/*
 !img/gameplay/index.php
 img/social/*
@@ -41,11 +43,6 @@ img/extras/fr/*
 !img/extras/fr/index.php
 img/thumbnails/extras/fr/*
 !img/thumbnails/extras/fr/index.php
-
-img/lore/*
-!img/lore/index.php
-img/thumbnails/lore/*
-!img/thumbnails/lore/index.php
 
 img/rules/*
 !img/rules/index.php

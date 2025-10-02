@@ -42,7 +42,13 @@ $updates_list = updates_list();
 
 <div class="width_50">
 
-  <h2 class="align_center padding_bot">
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/game">
+      <img src="<?=$path?>img/banners/banner_updates.png" alt="<?=__('menu_updates')?>">
+    </a>
+  </div>
+
+  <h2 class="padding_bot">
     <?=__('updates_title')?>
   </h2>
 

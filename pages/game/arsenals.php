@@ -55,7 +55,13 @@ if($cards_search_tag)
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_60 smallpadding_top">
+<div class="width_60">
+
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/cards">
+      <img src="<?=$path?>img/banners/banner_arsenals.png" alt="<?=__('menu_arsenals')?>">
+    </a>
+  </div>
 
   <h2>
     <?=__('arsenal_list_title')?>

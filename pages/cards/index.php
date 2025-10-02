@@ -3,11 +3,11 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
+include_once './../../inc/includes.inc.php'; # Core
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/game/index";
+$page_url         = "pages/cards/index";
 $page_title_en    = "Future Invaders";
 $page_title_fr    = "Future Invaders";
 $page_description = "Future Invaders, a sci-fi card battling game overflowing with strategic depth";
@@ -24,56 +24,56 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
 <div class="width_40">
 
   <div>
-    <a href="<?=$path?>">
+    <a href="<?=$path?>pages/game/cards">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_main')?>
+        <?=__('menu_cards')?>
       </h2>
-      <img src="<?=$path?>img/banners/banner_main.png" alt="<?=__('menu_main')?>">
+      <img src="<?=$path?>img/banners/banner_cards.png" alt="<?=__('menu_cards')?>">
     </a>
   </div>
 
   <div class="bigpadding_top">
-    <a href="<?=$path?>pages/game/updates">
+    <a href="<?=$path?>pages/game/arsenals">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_updates')?>
+        <?=__('menu_arsenals')?>
       </h2>
-      <img src="<?=$path?>img/banners/banner_updates.png" alt="<?=__('menu_updates')?>">
+      <img src="<?=$path?>img/banners/banner_arsenals.png" alt="<?=__('menu_arsenals')?>">
     </a>
   </div>
 
   <div class="bigpadding_top">
-    <a href="<?=$path?>pages/game/features">
+    <a href="<?=$path?>pages/game/rulings">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_features')?>
+        <?=__('menu_rulings')?>
       </h2>
-      <img src="<?=$path?>img/banners/banner_features.png" alt="<?=__('menu_features')?>">
+      <img src="<?=$path?>img/banners/banner_rulings.png" alt="<?=__('menu_rulings')?>">
     </a>
   </div>
 
   <div class="bigpadding_top">
-    <a href="<?=$path?>pages/social/gameplay">
+    <a href="<?=$path?>pages/tools/print_cards">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_pictures')?>
+        <?=__('menu_printcards')?>
       </h2>
-      <img src="<?=$path?>img/banners/banner_pictures.png" alt="<?=__('menu_pictures')?>">
+      <img src="<?=$path?>img/banners/banner_printcards.png" alt="<?=__('menu_printcards')?>">
     </a>
   </div>
 
   <div class="bigpadding_top">
-    <a href="<?=$path?>pages/tools/design_doc">
+    <a href="<?=$path?>pages/tools/print_arsenals">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_designdoc')?>
+        <?=__('menu_printarsenals')?>
       </h2>
-      <img src="<?=$path?>img/banners/banner_designdoc.png" alt="<?=__('menu_designdoc')?>">
+      <img src="<?=$path?>img/banners/banner_printarsenals.png" alt="<?=__('menu_printarsenals')?>">
     </a>
   </div>
 
   <div class="bigpadding_top">
-    <a href="<?=$path?>pages/social/publish">
+    <a href="<?=$path?>pages/tools/print_extra">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_publish')?>
+        <?=__('menu_printextra')?>
       </h2>
-      <img src="<?=$path?>img/banners/banner_publish.png" alt="<?=__('menu_publish')?>">
+      <img src="<?=$path?>img/banners/banner_printextra.png" alt="<?=__('menu_printextra')?>">
     </a>
   </div>
 

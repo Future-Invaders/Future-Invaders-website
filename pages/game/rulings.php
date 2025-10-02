@@ -49,6 +49,12 @@ $rulings_list = rulings_list( sort_by:  'default'                             ,
 
 <div class="width_50 bigpadding_bot">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/cards">
+      <img src="<?=$path?>img/banners/banner_rulings.png" alt="<?=__('menu_rulings')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('rulings_list_title')?>
   </h2>

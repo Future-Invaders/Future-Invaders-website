@@ -24,6 +24,12 @@ $page_description = "Privacy policy of Future Invader's website";
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_legal.png" alt="<?=__('menu_legal')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('privacy_policy_title')?>
   </h2>

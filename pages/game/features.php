@@ -24,6 +24,12 @@ $page_description = "Unique features of the strategy sci-fi card battling game F
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/game">
+      <img src="<?=$path?>img/banners/banner_features.png" alt="<?=__('menu_features')?>">
+    </a>
+  </div>
+
   <h1>
     <?=__('features_intro_title')?>
   </h1>

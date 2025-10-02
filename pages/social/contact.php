@@ -24,6 +24,12 @@ $page_description = "How to contact the people behind the card game Future Invad
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_contactinfo.png" alt="<?=__('menu_contactinfo')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('contact_title')?>
   </h2>

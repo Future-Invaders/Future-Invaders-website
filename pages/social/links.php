@@ -24,6 +24,12 @@ $page_description = "Official social media links for the tactical sci-fi card ga
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_socialmedia.png" alt="<?=__('menu_socialmedia')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('social_media_title')?>
   </h2>

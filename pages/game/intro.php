@@ -25,6 +25,12 @@ $page_description = "Intro to the strategy sci-fi card battling game Future Inva
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/guides">
+      <img src="<?=$path?>img/banners/banner_howtoplay.png" alt="<?=__('menu_howtoplay')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('howto_title')?>
   </h2>

@@ -24,6 +24,12 @@ $page_description = "The design document which spawned the sci-fi card battling 
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/game">
+      <img src="<?=$path?>img/banners/banner_designdoc.png" alt="<?=__('menu_designdoc')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('design_doc_dev_title')?>
   </h2>

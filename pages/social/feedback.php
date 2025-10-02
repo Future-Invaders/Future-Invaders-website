@@ -24,6 +24,12 @@ $page_description = "Give feedback on the card game Future Invaders";
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_feedback.png" alt="<?=__('menu_feedback')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('feedback_title')?>
   </h2>

@@ -50,6 +50,12 @@ $arsenals_list = arsenals_list( sort_by: 'name'                   ,
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/cards">
+      <img src="<?=$path?>img/banners/banner_printarsenals.png" alt="<?=__('menu_printarsenals')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('print_arsenals_title')?>
   </h2>

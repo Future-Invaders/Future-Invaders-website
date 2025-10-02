@@ -32,7 +32,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 <div class="width_50 padding_top">
 
   <h1>
-    <?=__('submenu_tools_api')?>
+    <?=__('api')?>
   </h1>
 
   <h5>

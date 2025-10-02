@@ -24,6 +24,12 @@ $page_description = "Credits for the card game Future Invaders";
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_credits.png" alt="<?=__('menu_credits')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('credits_game_title')?>
   </h2>

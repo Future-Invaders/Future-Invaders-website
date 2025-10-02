@@ -24,6 +24,12 @@ $page_description = "Official IRC chat room of the tactical sci-fi card game Fut
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_irc.png" alt="<?=__('menu_irc')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('irc_title')?>
   </h2>

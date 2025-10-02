@@ -24,6 +24,12 @@ $page_description = "Play the sci-fi card battling game Future Invaders in Table
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/tools">
+      <img src="<?=$path?>img/banners/banner_tts.png" alt="<?=__('menu_tts')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('tabletop_simulator_title')?>
   </h2>

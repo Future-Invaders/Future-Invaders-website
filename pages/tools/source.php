@@ -24,6 +24,12 @@ $page_description = "Source code of the strategy sci-fi card battling game Futur
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/tools">
+      <img src="<?=$path?>img/banners/banner_source.png" alt="<?=__('menu_source')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('source_code_title')?>
   </h2>

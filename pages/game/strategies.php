@@ -24,6 +24,12 @@ $page_description = "Strategies which might help you when playing the sci-fi car
 
 <div class="width_50 bigpadding_bot">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/guides">
+      <img src="<?=$path?>img/banners/banner_strategies.png" alt="<?=__('menu_strategies')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('strategy_title')?>
   </h2>

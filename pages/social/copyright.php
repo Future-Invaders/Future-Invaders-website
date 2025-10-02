@@ -27,6 +27,12 @@ $year = date('Y');
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_copyright.png" alt="<?=__('menu_copyright')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('privacy_copyright_title')?>
   </h2>

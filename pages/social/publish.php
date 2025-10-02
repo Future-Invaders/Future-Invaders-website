@@ -24,6 +24,12 @@ $page_description = "For publishers wondering why they should publish the card g
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/game">
+      <img src="<?=$path?>img/banners/banner_publish.png" alt="<?=__('menu_publish')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('publish_title')?>
   </h2>

@@ -38,6 +38,12 @@ $imglang = string_change_case($lang, 'lowercase');
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/cards">
+      <img src="<?=$path?>img/banners/banner_printextra.png" alt="<?=__('menu_printextra')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('print_extra_title')?>
   </h2>

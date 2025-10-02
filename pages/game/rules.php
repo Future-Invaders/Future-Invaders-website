@@ -28,6 +28,12 @@ $css = array('game');
 
 <div class="width_50 bigpadding_bot">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/guides">
+      <img src="<?=$path?>img/banners/banner_rules.png" alt="<?=__('menu_rules')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('rules_title')?>
   </h2>

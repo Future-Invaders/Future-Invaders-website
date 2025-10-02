@@ -24,6 +24,12 @@ $page_description = "How to print the contents of the sci-fi card battling game 
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/tools">
+      <img src="<?=$path?>img/banners/banner_print.png" alt="<?=__('menu_print')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('print_title')?>
   </h2>

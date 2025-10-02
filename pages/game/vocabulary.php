@@ -24,6 +24,12 @@ $page_description = "Glossary for the strategy sci-fi card battling game Future 
 
 <div class="width_50 bigpadding_bot">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/guides">
+      <img src="<?=$path?>img/banners/banner_definitions.png" alt="<?=__('menu_definitions')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('vocabulary_title')?>
   </h2>

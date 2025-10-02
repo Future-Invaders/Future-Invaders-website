@@ -24,6 +24,12 @@ $page_description = "Help the tactical sci-fi card game Future Invaders grow int
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_helpus.png" alt="<?=__('menu_helpus')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('social_help_title')?>
   </h2>

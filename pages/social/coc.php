@@ -24,6 +24,12 @@ $page_description = "Code of conduct when interacting with the community of the 
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_coc.png" alt="<?=__('menu_coc')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('coc_title')?>
   </h2>

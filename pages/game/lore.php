@@ -49,6 +49,12 @@ $lore_cards = cards_list( sort_by:  'name'                        ,
 
 <div class="width_50 bigpadding_bot">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/guides">
+      <img src="<?=$path?>img/banners/banner_lore.png" alt="<?=__('menu_lore')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('lore_title')?>
   </h2>

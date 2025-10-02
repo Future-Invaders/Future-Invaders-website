@@ -120,7 +120,13 @@ foreach($cards_sort_options as $cards_sort_option)
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_60 smallpadding_top">
+<div class="width_60">
+
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/cards">
+      <img src="<?=$path?>img/banners/banner_cards.png" alt="<?=__('menu_cards')?>">
+    </a>
+  </div>
 
   <h2>
     <?=__('card_list_title')?>

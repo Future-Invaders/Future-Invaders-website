@@ -24,6 +24,12 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/game">
+      <img src="<?=$path?>img/banners/banner_pictures.png" alt="<?=__('menu_pictures')?>">
+    </a>
+  </div>
+
   <h2 class="align_center">
     <?=__('gameplay_pictures_title')?>
   </h2>

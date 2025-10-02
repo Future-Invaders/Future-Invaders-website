@@ -23,12 +23,10 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
 <div class="width_50">
 
   <div class="align_center padding_bot">
-    <img src="<?=$path?>img/website/title_banner.png" alt="Future Invaders">
+    <a href="<?=$path?>pages/game">
+      <img src="<?=$path?>img/website/title_banner.png" alt="Future Invaders">
+    </a>
   </div>
-
-</div>
-
-<div class="width_50">
 
   <h1 class="padding_top">
     <?=__('home_intro_title')?>

@@ -924,6 +924,8 @@ ___('header_language_error', 'FR', "Désolé ! Cette page n'est disponible qu'e
 // Top menu
 ___('menu_top_game',    'EN', "GAME");
 ___('menu_top_game',    'FR', "JEU");
+___('menu_top_cards',   'EN', "CARDS");
+___('menu_top_cards',   'FR', "CARTES");
 ___('menu_top_guides',  'EN', "GUIDES");
 ___('menu_top_guides',  'FR', "GUIDES");
 ___('menu_top_tools',   'EN', "TOOLS");
@@ -932,114 +934,79 @@ ___('menu_top_social',  'EN', "SOCIAL");
 ___('menu_top_social',  'FR', "SOCIAL");
 
 
-// Submenu: Game
-___('submenu_game_home',      'EN', "Introduction");
-___('submenu_game_home',      'FR', "Présentation");
+// Banner menu entries: Game
+___('menu_main',      'EN', "Game introduction");
+___('menu_main',      'FR', "Introduction au jeu");
+___('menu_features',  'EN', "Unique features");
+___('menu_features',  'FR', "Originalités");
+___('menu_pictures',  'EN', "Showcase");
+___('menu_pictures',  'FR', "Galerie");
+___('menu_updates',   'EN', "Latest updates");
+___('menu_updates',   'FR', "Dernières nouveautés");
+___('menu_designdoc', 'EN', "Game design document");
+___('menu_designdoc', 'FR', "Document de design");
+___('menu_publish',   'EN', "Publish this game!");
+___('menu_publish',   'FR', "Éditez ce jeu !");
 
-___('submenu_game_updates',   'EN', "Updates");
-___('submenu_game_updates',   'FR', "Mises à jour");
-___('submenu_game_news',      'EN', "Game updates");
-___('submenu_game_news',      'FR', "Évolution du jeu");
-___('submenu_game_blog',      'EN', "Development blog");
-___('submenu_game_blog',      'FR', "Blog de développement");
+// Banner menu entries: Guides
+___('menu_howtoplay',   'EN', "How to play");
+___('menu_howtoplay',   'FR', "Comment jouer");
+___('menu_rules',       'EN', "Rules of the game");
+___('menu_rules',       'FR', "Règles du jeu");
+___('menu_lore',        'EN', "Lore");
+___('menu_lore',        'FR', "Univers du jeu");
+___('menu_formats',     'EN', "Game formats");
+___('menu_formats',     'FR', "Formats de jeu");
+___('menu_definitions', 'EN', "Glossary");
+___('menu_definitions', 'FR', "Glossaire");
+___('menu_strategies',  'EN', "Strategies");
+___('menu_strategies',  'FR', "Stratégies");
 
-___('submenu_game_media',     'EN', "Media");
-___('submenu_game_media',     'FR', "Média");
-___('submenu_game_pictures',  'EN', "Pictures & Videos");
-___('submenu_game_pictures',  'FR', "Photos & Vidéos");
+// Banner menu entries: Cards
+___('menu_cards',     'EN', "Card list");
+___('menu_cards',     'FR', "Liste des cartes");
+___('menu_arsenals',  'EN', "Arsenals");
+___('menu_arsenals',  'FR', "Arsenaux");
+___('menu_rulings',   'EN', "Rulings");
+___('menu_rulings',   'FR', "Jugements");
 
+// Banner menu entries: Tools
+___('menu_print',         'EN', "Print the game");
+___('menu_print',         'FR', "Imprimez le jeu");
+___('menu_printcards',    'EN', "Print cards");
+___('menu_printcards',    'FR', "Imprimer les cartes");
+___('menu_printarsenals', 'EN', "Print arsenals");
+___('menu_printarsenals', 'FR', "Imprimer les arsenaux");
+___('menu_printextra',    'EN', "Print extras");
+___('menu_printextra',    'FR', "Imprimer les accessoires");
+___('menu_tts',           'EN', "Tabletop Simulator");
+___('menu_tts',           'FR', "Tabletop Simulator");
+___('menu_source',        'EN', "Source code");
+___('menu_source',        'FR', "Code source");
+___('menu_api',           'EN', "API");
+___('menu_api',           'FR', "API");
 
-// Submenu: Guides
-___('submenu_guides_game',      'EN', "Game");
-___('submenu_guides_game',      'FR', "Future Invaders");
-___('submenu_guides_rules',     'EN', "Rules");
-___('submenu_guides_rules',     'FR', "Règles");
-___('submenu_guides_features',  'EN', "Unique features");
-___('submenu_guides_features',  'FR', "Originalités");
-___('submenu_guides_howto',     'EN', "How to play");
-___('submenu_guides_howto',     'FR', "Comment jouer");
-___('submenu_guides_lore',      'EN', "Lore");
-___('submenu_guides_lore',      'FR', "Univers");
-___('submenu_guides_formats',   'EN', "Formats");
-___('submenu_guides_formats',   'FR', "Formats");
-___('submenu_guides_vocab',     'EN', "Vocabulary");
-___('submenu_guides_vocab',     'FR', "Vocabulaire");
-___('submenu_guides_rulings',   'EN', "Rulings");
-___('submenu_guides_rulings',   'FR', "Jugements");
-
-___('submenu_guides_cards',     'EN', "Cards");
-___('submenu_guides_cards',     'FR', "Cartes");
-___('submenu_guides_cardlist',  'EN', "Card list");
-___('submenu_guides_cardlist',  'FR', "Liste des cartes");
-___('submenu_guides_arsenals',  'EN', "Arsenal list");
-___('submenu_guides_arsenals',  'FR', "Liste des arsenaux");
-
-___('submenu_guides_help',      'EN', "Tutorials");
-___('submenu_guides_help',      'FR', "Apprentissage");
-___('submenu_guides_strats',    'EN', "Strategies");
-___('submenu_guides_strats',    'FR', "Stratégies");
-___('submenu_guides_video',     'EN', "Video guides");
-___('submenu_guides_video',     'FR', "Guides vidéo");
-
-
-// Submenu: Tools
-___('submenu_tools_print',          'EN', "Printing");
-___('submenu_tools_print',          'FR', "Impression");
-___('submenu_tools_printhelp',      'EN', "Print at home");
-___('submenu_tools_printhelp',      'FR', "Impression maison");
-___('submenu_tools_printcards',     'EN', "Print cards");
-___('submenu_tools_printcards',     'FR', "Imprimer des cartes");
-___('submenu_tools_printarsenals',  'EN', "Print arsenals");
-___('submenu_tools_printarsenals',  'FR', "Imprimer des arsenaux");
-___('submenu_tools_printextra',     'EN', "Print extras");
-___('submenu_tools_printextra',     'FR', "Imprimer des accessoires");
-
-___('submenu_tools_gametools',      'EN', "Game tools");
-___('submenu_tools_gametools',      'FR', "Outils de jeu");
-___('submenu_tools_tts',            'EN', "Tabletop Simulator");
-___('submenu_tools_tts',            'FR', "Tabletop Simulator");
-
-___('submenu_tools_development',    'EN', "Development");
-___('submenu_tools_development',    'FR', "Développement");
-___('submenu_tools_design_doc',     'EN', "Design document");
-___('submenu_tools_design_doc',     'FR', "Document de design");
-___('submenu_tools_source',         'EN', "Source code");
-___('submenu_tools_source',         'FR', "Code source");
-___('submenu_tools_api',            'EN', "API");
-___('submenu_tools_api',            'FR', "API");
-
-
-// Submenu: Social
-___('submenu_social_community',   'EN', "Community");
-___('submenu_social_community',   'FR', "Communauté");
-___('submenu_social_links',       'EN', "Social media");
-___('submenu_social_links',       'FR', "Médias sociaux");
-___('submenu_social_discord',     'EN', "Discord server");
-___('submenu_social_discord',     'FR', "Serveur Discord");
-___('submenu_social_irc',         'EN', "IRC chat");
-___('submenu_social_irc',         'FR', "Chat IRC");
-___('submenu_social_coc',         'EN', "Code of conduct");
-___('submenu_social_coc',         'FR', "Code de conduite");
-___('submenu_social_contribute',  'EN', "Help the game");
-___('submenu_social_contribute',  'FR', "Contribuer au jeu");
-
-___('submenu_social_legal',       'EN', "Legal");
-___('submenu_social_legal',       'FR', "Légal");
-___('submenu_social_mentions',    'EN', "Legal mentions");
-___('submenu_social_mentions',    'FR', "Mentions légales");
-___('submenu_social_copyright',   'EN', "Intellectual property");
-___('submenu_social_copyright',   'FR', "Propriété intellectuelle");
-
-___('submenu_social_contact',     'EN', "Contact");
-___('submenu_social_contact',     'FR', "Contact");
-___('submenu_social_feedback',    'EN', "Give feedback");
-___('submenu_social_feedback',    'FR', "Donnez votre avis");
-___('submenu_social_publish',     'EN', "Publish this game!");
-___('submenu_social_publish',     'FR', "Éditez ce jeu !");
-___('submenu_social_contactme',   'EN', "Contact info");
-___('submenu_social_contactme',   'FR', "Infos de contact");
-___('submenu_social_credits',     'EN', "Credits");
-___('submenu_social_credits',     'FR', "Crédits");
+// Banner menu entries: Social
+___('menu_socialmedia', 'EN', "Social media");
+___('menu_socialmedia', 'FR', "Médias sociaux");
+___('menu_discord',     'EN', "Discord");
+___('menu_discord',     'FR', "Discord");
+___('menu_irc',         'EN', "IRC chat");
+___('menu_irc',         'FR', "Chat IRC");
+___('menu_coc',         'EN', "Code of conduct");
+___('menu_coc',         'FR', "Code de conduite");
+___('menu_contactinfo', 'EN', "Contact info");
+___('menu_contactinfo', 'FR', "Infos de contact");
+___('menu_feedback',    'EN', "Give feedback");
+___('menu_feedback',    'FR', "Donnez votre avis");
+___('menu_helpus',      'EN', "Help the game");
+___('menu_helpus',      'FR', "Contribuer au jeu");
+___('menu_credits',     'EN', "Credits");
+___('menu_credits',     'FR', "Crédits");
+___('menu_copyright',   'EN', "Intellectual property");
+___('menu_copyright',   'FR', "Propriété intellectuelle");
+___('menu_legal',       'EN', "Privacy policy");
+___('menu_legal',       'FR', "Mentions légales");
 
 
 

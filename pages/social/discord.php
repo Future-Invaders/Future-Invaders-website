@@ -24,6 +24,12 @@ $page_description = "Official Discord server of the tactical sci-fi card game Fu
 
 <div class="width_50">
 
+  <div class="bigpadding_bot">
+    <a href="<?=$path?>pages/social">
+      <img src="<?=$path?>img/banners/banner_discord.png" alt="<?=__('menu_discord')?>">
+    </a>
+  </div>
+
   <h2>
     <?=__('discord_title')?>
   </h2>
