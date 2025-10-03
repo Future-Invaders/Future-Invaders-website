@@ -82,11 +82,11 @@ Le jeu peut se jouer sous forme de duels, de combats multijoueurs, ou en mode dr
 EOT
 );
 ___('home_summary_body_5',  'EN', <<<EOT
-{{external|./pages/game/rules|Click here to read the complete rules of the game}}
+{{external|./guides/rules|Click here to read the complete rules of the game}}
 EOT
 );
 ___('home_summary_body_5',  'FR', <<<EOT
-{{external|./pages/game/rules|Cliquez ici pour lire les règles complètes du jeu}}
+{{external|./guides/rules|Cliquez ici pour lire les règles complètes du jeu}}
 EOT
 );
 
@@ -119,11 +119,11 @@ Ce jeu ne traite pas ses joueurs comme de simples clients. Créé par un passion
 EOT
 );
 ___('home_special_body_4',  'EN', <<<EOT
-{{external|./pages/game/features|Click here for a list of the game's unique features}}.
+{{external|./game/features|Click here for a list of the game's unique features}}.
 EOT
 );
 ___('home_special_body_4',  'FR', <<<EOT
-{{external|./pages/game/features|Cliquez ici pour voir la liste des originalités du jeu}}.
+{{external|./game/features|Cliquez ici pour voir la liste des originalités du jeu}}.
 EOT
 );
 
@@ -132,19 +132,19 @@ EOT
 ___('home_play_title',   'EN', "How to play Future Invaders");
 ___('home_play_title',   'FR', "Comment jouer à Future Invaders");
 ___('home_play_body_1',  'EN', <<<EOT
-Start by {{external|./pages/game/rules|reading the rules}} to get a basic understanding of the game.
+Start by {{external|./guides/rules|reading the rules}} to get a basic understanding of the game.
 EOT
 );
 ___('home_play_body_1',  'FR', <<<EOT
-Tout d'abord, {{external|./pages/game/rules|lisez les règles}} pour comprendre les bases du jeu.
+Tout d'abord, {{external|./guides/rules|lisez les règles}} pour comprendre les bases du jeu.
 EOT
 );
 ___('home_play_body_2',  'EN', <<<EOT
-Then, {{external|./pages/tools/print|print out some cards}}, and invite your friends over.
+Then, {{external|./tools/print|print out some cards}}, and invite your friends over.
 EOT
 );
 ___('home_play_body_2',  'FR', <<<EOT
-Ensuite, {{external|./pages/tools/print|imprimez vos cartes}}, et invitez vos amis à jouer.
+Ensuite, {{external|./tools/print|imprimez vos cartes}}, et invitez vos amis à jouer.
 EOT
 );
 ___('home_play_body_3',  'EN', <<<EOT
@@ -169,11 +169,11 @@ Future Invaders est un jeune jeu en pleine croissance. C'est le moment idéal po
 EOT
 );
 ___('home_community_body_2',  'EN', <<<EOT
-Join the conversation {{external|./pages/social/discord|on Discord}}, and follow us {{external|./pages/social/links|on social media}}.
+Join the conversation {{external|./social/discord|on Discord}}, and follow us {{external|./social/links|on social media}}.
 EOT
 );
 ___('home_community_body_2',  'FR', <<<EOT
-Participez à la conversation {{external|./pages/social/discord|sur Discord}}, et suivez-nous {{external|./pages/social/links|sur les réseaux sociaux}}.
+Participez à la conversation {{external|./social/discord|sur Discord}}, et suivez-nous {{external|./social/links|sur les réseaux sociaux}}.
 EOT
 );
 ___('home_community_body_3',  'EN', <<<EOT

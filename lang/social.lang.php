@@ -8,39 +8,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                 PICTURES & VIDEOS                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Gameplay showcase
-___('gameplay_pictures_title',      'EN', "Gameplay pictures");
-___('gameplay_pictures_title',      'FR', "Images du jeu");
-___('gameplay_cards_title',         'EN', "Sample cards");
-___('gameplay_cards_title',         'FR', "Exemples de cartes");
-___('gameplay_videos_title',        'EN', "Gameplay videos");
-___('gameplay_videos_title',        'FR', "Vidéos du jeu");
-___('gameplay_videos_game_body_1',  'EN', <<<EOD
-There are currently no gameplay videos available.
-EOD
-);
-___('gameplay_videos_game_body_1',  'FR', <<<EOD
-Il n'y a actuellement pas de vidéos du jeu disponibles.
-EOD
-);
-___('gameplay_videos_game_body_2',  'EN', <<<EOD
-The only existing videos at the moment portray an older version of the game. New videos reflecting the current state of the game will be made soon.
-EOD
-);
-___('gameplay_videos_game_body_2',  'FR', <<<EOD
-Les vidéos existantes représentent une ancienne version du jeu. De nouvelles vidéos reflétant l'état actuel du jeu seront bientôt disponibles.
-EOD
-);
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                   SOCIAL MEDIA                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -57,11 +24,11 @@ Hors de ce site Internet, Future Invaders n'a de présence officielle que sur un
 EOD
 );
 ___('social_media_body_2', 'EN', <<<EOD
-You can also receive official updates about the game through its {{link|pages/social/discord|Discord server}}.
+You can also receive official updates about the game through its {{link|social/discord|Discord server}}.
 EOD
 );
 ___('social_media_body_2', 'FR', <<<EOD
-Vous pouvez également recevoir des nouvelles officielles du jeu via son {{link|pages/social/discord|serveur Discord}}.
+Vous pouvez également recevoir des nouvelles officielles du jeu via son {{link|social/discord|serveur Discord}}.
 EOD
 );
 
@@ -99,11 +66,11 @@ Le serveur Discord officiel de Future Invaders est un salon de discussion public
 EOD
 );
 ___('discord_body_2', 'EN', <<<EOD
-While using this Discord server, you must abide by the {{link|pages/social/coc|code of conduct}}.
+While using this Discord server, you must abide by the {{link|social/coc|code of conduct}}.
 EOD
 );
 ___('discord_body_2', 'FR', <<<EOD
-Lorsque vous utilisez ce serveur Discord, vous devez respecter le {{link|pages/social/coc|code de conduite}}.
+Lorsque vous utilisez ce serveur Discord, vous devez respecter le {{link|social/coc|code de conduite}}.
 EOD
 );
 ___('discord_body_3', 'EN', <<<EOD
@@ -128,27 +95,27 @@ EOD
 ___('irc_title',        'EN', "IRC chat");
 ___('irc_title',        'FR', "Chat IRC");
 ___('irc_body_1',       'EN', <<<EOD
-If you would like to interact with the community in real time but prefer not to use our main community hub on {{link|pages/social/discord|on Discord}}, Future Invaders also has an official IRC chat room.
+If you would like to interact with the community in real time but prefer not to use our main community hub on {{link|social/discord|on Discord}}, Future Invaders also has an official IRC chat room.
 EOD
 );
 ___('irc_body_1',       'FR', <<<EOD
-Si vous souhaitez interagir avec la communauté en temps réel mais préférez ne pas utiliser notre plateforme principale de communication sur {{link|pages/social/discord|sur Discord}}, Future Invaders dispose également d'un salon de discussion IRC officiel.
+Si vous souhaitez interagir avec la communauté en temps réel mais préférez ne pas utiliser notre plateforme principale de communication sur {{link|social/discord|sur Discord}}, Future Invaders dispose également d'un salon de discussion IRC officiel.
 EOD
 );
 ___('irc_body_2',       'EN', <<<EOD
-Using IRC is a bit complex, so if you're not very tech-savvy, it's recommended to use {{link|pages/social/discord|Discord}} instead. For guidance on how IRC works, we suggest reading {{external_popup|https://nobleme.com/pages/social/irc|this guide to using IRC}} on Nobleme, the website that hosts our IRC chat room.
+Using IRC is a bit complex, so if you're not very tech-savvy, it's recommended to use {{link|social/discord|Discord}} instead. For guidance on how IRC works, we suggest reading {{external_popup|https://nobleme.com/social/irc|this guide to using IRC}} on Nobleme, the website that hosts our IRC chat room.
 EOD
 );
 ___('irc_body_2',       'FR', <<<EOD
-Le fonctionnement d'IRC peut être complexe à comprendre. Si vous n'êtes pas très technique, il est préférable d'utiliser {{link|pages/social/discord|Discord}} à la place. Pour mieux comprendre IRC, nous vous recommandons de consulter {{external_popup|https://nobleme.com/pages/social/irc|ce guide d'utilisation d'IRC}} sur NoBleme, le site qui héberge notre salon de discussion IRC.
+Le fonctionnement d'IRC peut être complexe à comprendre. Si vous n'êtes pas très technique, il est préférable d'utiliser {{link|social/discord|Discord}} à la place. Pour mieux comprendre IRC, nous vous recommandons de consulter {{external_popup|https://nobleme.com/social/irc|ce guide d'utilisation d'IRC}} sur NoBleme, le site qui héberge notre salon de discussion IRC.
 EOD
 );
 ___('irc_body_3',       'EN', <<<EOD
-While using this IRC server, you must abide by the {{link|pages/social/coc|code of conduct}}.
+While using this IRC server, you must abide by the {{link|social/coc|code of conduct}}.
 EOD
 );
 ___('irc_body_3',       'FR', <<<EOD
-Lorsque vous utilisez ce serveur IRC, vous devez respecter le {{link|pages/social/coc|code de conduite}}.
+Lorsque vous utilisez ce serveur IRC, vous devez respecter le {{link|social/coc|code de conduite}}.
 EOD
 );
 ___('irc_body_4',       'EN', <<<EOD
@@ -232,11 +199,11 @@ Ce site Internet ne collecte aucune donnée personnelle.
 EOD
 );
 ___('privacy_policy_body_2', 'EN', <<<EOD
-Everything on this website is custom made and handcrafted. No third party scripts or services are used. Your personal data is not shared with anyone. This can be verified by looking at this website's {{link|pages/tools/source|source code}}, which is open source and publicly available.
+Everything on this website is custom made and handcrafted. No third party scripts or services are used. Your personal data is not shared with anyone. This can be verified by looking at this website's {{link|tools/source|source code}}, which is open source and publicly available.
 EOD
 );
 ___('privacy_policy_body_2', 'FR', <<<EOD
-Tout ce qui se trouve sur ce site est fait main, sur mesure. Aucun script ou service tiers n'est utilisé. Vos données personnelles ne sont pas partagées. Vous pouvez le vérifier en regardant le {{link|pages/tools/source|code source}} du site, qui est public.
+Tout ce qui se trouve sur ce site est fait main, sur mesure. Aucun script ou service tiers n'est utilisé. Vos données personnelles ne sont pas partagées. Vous pouvez le vérifier en regardant le {{link|tools/source|code source}} du site, qui est public.
 EOD
 );
 ___('privacy_policy_body_3', 'EN', <<<EOD
@@ -277,11 +244,11 @@ Future Invaders n'est pas affilié à Microsoft, et ne soutient ni n'est sponsor
 EOD
 );
 ___('privacy_copyright_body_4', 'EN', <<<EOD
-The Future Invaders website is {{link|pages/tools/source|open sourced}}, and its source code is subject to the MIT license: anyone can use part or all of the Future Invaders website's source code to create their own websites, as long as they credit the original author.
+The Future Invaders website is {{link|tools/source|open sourced}}, and its source code is subject to the MIT license: anyone can use part or all of the Future Invaders website's source code to create their own websites, as long as they credit the original author.
 EOD
 );
 ___('privacy_copyright_body_4', 'FR', <<<EOD
-Le site Internet de Future Invaders est {{link|pages/tools/source|open source}}. Son code source est soumis à la licence MIT : n'importe qui est libre d'utiliser une partie ou l'intégralité du code source de ce site Internet pour créer son propre site Internet, à condition de créditer l'auteur originel du code.
+Le site Internet de Future Invaders est {{link|tools/source|open source}}. Son code source est soumis à la licence MIT : n'importe qui est libre d'utiliser une partie ou l'intégralité du code source de ce site Internet pour créer son propre site Internet, à condition de créditer l'auteur originel du code.
 EOD
 );
 ___('privacy_copyright_body_5', 'EN', <<<EOD
@@ -313,11 +280,11 @@ Future Invaders a été créé par {{external|https://e-bis.fr/games/fr.html|Ér
 EOD
 );
 ___('credits_game_body_2', 'EN', <<<EOD
-All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|pages/tools/design_doc|can be accessed here}}.
+All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|game/gdd|can be accessed here}}.
 EOD
 );
 ___('credits_game_body_2', 'FR', <<<EOD
-Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|pages/tools/design_doc|peut être consulté ici}}.
+Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|game/gdd|peut être consulté ici}}.
 EOD
 );
 ___('credits_game_body_3', 'EN', <<<EOD
@@ -384,35 +351,35 @@ EOD
 ___('contact_title',  'EN', "Contact info");
 ___('contact_title',  'FR', "Infos de contact");
 ___('contact_body_1', 'EN', <<<EOD
-If you have any questions about the game or its players, ask on the game's {{link|pages/social/discord|Discord server}} or its {{link|pages/social/irc|IRC chat}}.
+If you have any questions about the game or its players, ask on the game's {{link|social/discord|Discord server}} or its {{link|social/irc|IRC chat}}.
 EOD
 );
 ___('contact_body_1', 'FR', <<<EOD
-Si vous avez des questions sur le jeu, posez-les sur le {{link|pages/social/discord|serveur Discord}} ou le {{link|pages/social/irc|chat IRC du jeu}}.
+Si vous avez des questions sur le jeu, posez-les sur le {{link|social/discord|serveur Discord}} ou le {{link|social/irc|chat IRC du jeu}}.
 EOD
 );
 ___('contact_body_2', 'EN', <<<EOD
-To provide feedback or share your ideas, visit the {{link|pages/social/feedback|give feedback page}}.
+To provide feedback or share your ideas, visit the {{link|social/feedback|give feedback page}}.
 EOD
 );
 ___('contact_body_2', 'FR', <<<EOD
-Pour donner votre avis ou partager vos idées, visitez la {{link|pages/social/feedback|page « Donnez votre avis »}}.
+Pour donner votre avis ou partager vos idées, visitez la {{link|social/feedback|page « Donnez votre avis »}}.
 EOD
 );
 ___('contact_body_3', 'EN', <<<EOD
-If you want to help or contribute in any way, visit the {{link|pages/social/help|help the game page}}.
+If you want to help or contribute in any way, visit the {{link|social/help|help the game page}}.
 EOD
 );
 ___('contact_body_3', 'FR', <<<EOD
-Si vous désirez aider ou contribuer au développement du jeu, visitez la {{link|pages/social/help|page « Contribuer au jeu »}}.
+Si vous désirez aider ou contribuer au développement du jeu, visitez la {{link|social/help|page « Contribuer au jeu »}}.
 EOD
 );
 ___('contact_body_4', 'EN', <<<EOD
-For discussions about publishing the game, visit the {{link|pages/social/publish|publish this game page}}.
+For discussions about publishing the game, visit the {{link|game/publish|publish this game page}}.
 EOD
 );
 ___('contact_body_4', 'FR', <<<EOD
-Si vous souhaitez éditer le jeu ou discuter de sa publication, visitez la {{link|pages/social/publish|page « Éditez ce jeu ! »}}.
+Si vous souhaitez éditer le jeu ou discuter de sa publication, visitez la {{link|game/publish|page « Éditez ce jeu ! »}}.
 EOD
 );
 ___('contact_body_5', 'EN', <<<EOD
@@ -437,11 +404,11 @@ EOD
 ___('feedback_title',  'EN', "Give feedback");
 ___('feedback_title',  'FR', "Donnez votre avis");
 ___('feedback_body_1', 'EN', <<<EOD
-Feedback on the game is very welcome, whether it's positive or negative. We love hearing your Future Invaders stories and listening to your ideas for improvement. Please keep your feedback to one of two specific places: the game's {{link|pages/social/discord|Discord server}} or its {{link|pages/social/irc|IRC chat}}. Other lines of communication are for professional inquiries only.
+Feedback on the game is very welcome, whether it's positive or negative. We love hearing your Future Invaders stories and listening to your ideas for improvement. Please keep your feedback to one of two specific places: the game's {{link|social/discord|Discord server}} or its {{link|social/irc|IRC chat}}. Other lines of communication are for professional inquiries only.
 EOD
 );
 ___('feedback_body_1', 'FR', <<<EOD
-Les retours d'expérience sont appréciés, qu'ils soient positifs ou négatifs. Nous adorons lire vos histoires de Future Invaders et écouter vos idées pour améliorer le jeu. Merci de partager vos retours d'expérience sur l'un de ces deux endroits : {{link|pages/social/discord|le serveur Discord}} ou le {{link|pages/social/irc|chat IRC du jeu}}. Les autres lignes de communication sont réservées à un usage professionnel.
+Les retours d'expérience sont appréciés, qu'ils soient positifs ou négatifs. Nous adorons lire vos histoires de Future Invaders et écouter vos idées pour améliorer le jeu. Merci de partager vos retours d'expérience sur l'un de ces deux endroits : {{link|social/discord|le serveur Discord}} ou le {{link|social/irc|chat IRC du jeu}}. Les autres lignes de communication sont réservées à un usage professionnel.
 EOD
 );
 ___('feedback_body_2', 'EN', <<<EOD
@@ -503,11 +470,11 @@ EOD
 ___('social_help_play_title',  'EN', "Play the game");
 ___('social_help_play_title',  'FR', "Jouez au jeu");
 ___('social_help_play_body',   'EN', <<<EOD
-The best way to help is by playing. Knowing that you're enjoying Future Invaders truly means a lot to us. {{link|pages/tools/print|Print your own copy of the game}}, invite some friends over, {{link|pages/game/rules|read the rules}}, and have fun!
+The best way to help is by playing. Knowing that you're enjoying Future Invaders truly means a lot to us. {{link|tools/print|Print your own copy of the game}}, invite some friends over, {{link|guides/rules|read the rules}}, and have fun!
 EOD
 );
 ___('social_help_play_body',   'FR', <<<EOD
-Jouer au jeu est la meilleure façon de nous aider. Le simple fait de savoir que vous vous amusez en jouant à Future Invaders nous rend heureux. {{link|pages/tools/print|Imprimez votre propre copie du jeu}}, puis invitez des amis à jouer, {{link|pages/game/rules|lisez les règles}}, et amusez-vous !
+Jouer au jeu est la meilleure façon de nous aider. Le simple fait de savoir que vous vous amusez en jouant à Future Invaders nous rend heureux. {{link|tools/print|Imprimez votre propre copie du jeu}}, puis invitez des amis à jouer, {{link|guides/rules|lisez les règles}}, et amusez-vous !
 EOD
 );
 
@@ -516,11 +483,11 @@ EOD
 ___('social_help_spread_title',  'EN', "Spread the word");
 ___('social_help_spread_title',  'FR', "Parlez du jeu");
 ___('social_help_spread_body',   'EN', <<<EOD
-Talk about Future Invaders with your friends, {{link|pages/social/links|follow us on social media}}, and introduce the game to your local gaming communities. The more people know about it, the more players it will attract, and the more likely it is to be published and grow into something bigger!
+Talk about Future Invaders with your friends, {{link|social/links|follow us on social media}}, and introduce the game to your local gaming communities. The more people know about it, the more players it will attract, and the more likely it is to be published and grow into something bigger!
 EOD
 );
 ___('social_help_spread_body',   'FR', <<<EOD
-Parlez de Future Invaders à vos amis, {{link|pages/social/links|suivez nous sur les réseaux sociaux}}, et partagez le jeu avec vos communautés de joueurs locales. Plus les gens entendent parler du jeu, plus il y aura de joueurs, et plus les chances sont élevées que le jeu soit publié et puisse ainsi continuer à grandir !
+Parlez de Future Invaders à vos amis, {{link|social/links|suivez nous sur les réseaux sociaux}}, et partagez le jeu avec vos communautés de joueurs locales. Plus les gens entendent parler du jeu, plus il y aura de joueurs, et plus les chances sont élevées que le jeu soit publié et puisse ainsi continuer à grandir !
 EOD
 );
 
@@ -529,11 +496,11 @@ EOD
 ___('social_help_community_title',  'EN', "Participate in the community");
 ___('social_help_community_title',  'FR', "Participez à la communauté");
 ___('social_help_community_body',   'EN', <<<EOD
-A game is nothing without its community. Join our {{link|pages/social/discord|Discord server}} and/or {{link|pages/social/irc|IRC chat}} to interact with other players, and help build the community. Engage with our posts on {{link|pages/social/links|social media}} to extend our reach and get more people involved.
+A game is nothing without its community. Join our {{link|social/discord|Discord server}} and/or {{link|social/irc|IRC chat}} to interact with other players, and help build the community. Engage with our posts on {{link|social/links|social media}} to extend our reach and get more people involved.
 EOD
 );
 ___('social_help_community_body',   'FR', <<<EOD
-Un jeu n'est rien sans sa communauté. Rejoignez notre {{link|pages/social/discord|serveur Discord}} et/ou notre {{link|pages/social/irc|chat IRC}} pour interagir avec d'autres joueurs et faire grandir la communauté. Partagez et interagissez avec nos messages sur {{link|pages/social/links|les réseaux sociaux}}, afin qu'ils atteignent un public plus large.
+Un jeu n'est rien sans sa communauté. Rejoignez notre {{link|social/discord|serveur Discord}} et/ou notre {{link|social/irc|chat IRC}} pour interagir avec d'autres joueurs et faire grandir la communauté. Partagez et interagissez avec nos messages sur {{link|social/links|les réseaux sociaux}}, afin qu'ils atteignent un public plus large.
 EOD
 );
 
@@ -542,11 +509,11 @@ EOD
 ___('social_help_feedback_title',  'EN', "Give feedback");
 ___('social_help_feedback_title',  'FR', "Donnez votre avis");
 ___('social_help_feedback_body',   'EN', <<<EOD
-We love hearing your stories and feedback. A game cannot improve without listening to its players. Use {{link|pages/social/discord|Discord}} or {{link|pages/social/irc|IRC}} to tell us stories about the games of Future Invaders you play.
+We love hearing your stories and feedback. A game cannot improve without listening to its players. Use {{link|social/discord|Discord}} or {{link|social/irc|IRC}} to tell us stories about the games of Future Invaders you play.
 EOD
 );
 ___('social_help_feedback_body',   'FR', <<<EOD
-Nous adorons entendre parler de vos expériences avec le jeu, et prenons vos retours d'expérience en compte. Un jeu ne peut pas s'améliorer sans écouter ses joueurs. Utilisez {{link|pages/social/discord|Discord}} ou {{link|pages/social/irc|IRC}} pour nous raconter des histoires issues des parties de Future Invaders auxquelles vous jouez.
+Nous adorons entendre parler de vos expériences avec le jeu, et prenons vos retours d'expérience en compte. Un jeu ne peut pas s'améliorer sans écouter ses joueurs. Utilisez {{link|social/discord|Discord}} ou {{link|social/irc|IRC}} pour nous raconter des histoires issues des parties de Future Invaders auxquelles vous jouez.
 EOD
 );
 
@@ -568,161 +535,10 @@ EOD
 ___('social_help_editor_title',  'EN', "Help us find a publisher");
 ___('social_help_editor_title',  'FR', "Aidez-nous à trouver un éditeur");
 ___('social_help_editor_body',   'EN', <<<EOD
-The ultimate goal for Future Invaders is publication, whether through a publisher or self-publishing. If you know someone who could help make that happen, share the {{link|pages/social/publish|publish this game page}} and encourage them to reach out via the {{link|pages/social/contact|contact info page}}.
+The ultimate goal for Future Invaders is publication, whether through a publisher or self-publishing. If you know someone who could help make that happen, share the {{link|game/publish|publish this game page}} and encourage them to reach out via the {{link|social/contact|contact info page}}.
 EOD
 );
 ___('social_help_editor_body',   'FR', <<<EOD
-L'objectif de Future Invaders est d'être publié, soit par un éditeur, soit en auto-édition. Trouver un éditeur est une question de chance et d'opportunités. Si vous avez la possibilité d'aider le jeu à accomplir cet objectif, partagez la page {{link|pages/social/publish|publier ce jeu}} avec des gens que vous connaissez, et dites aux éditeurs de nous contacter via la page {{link|pages/social/contact|infos de contact}}.
-EOD
-);
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 PUBLISH THIS GAME                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Publish this game!
-___('publish_title',  'EN', "Publish this game!");
-___('publish_title',  'FR', "Éditez ce jeu !");
-___('publish_body',   'EN', <<<EOD
-Are you a board or card game publisher looking for a new project? Future Invaders could be your next success story! Years of design and development have already gone into the game, with only the final steps remaining. Below is a Q&A addressing common questions, followed by contact information if you're interested in further discussing the publishing process.
-EOD
-);
-___('publish_body',   'FR', <<<EOD
-Êtes-vous un éditeur de jeux de cartes ou de société à la recherche d'un nouveau projet ? Future Invaders pourrait bien être votre prochain succès ! Des années de développement ont déjà été consacrées à ce jeu, seules les étapes finales restent. Vous trouverez ci-dessous une FAQ couvrant les questions les plus courantes, ainsi qu'une adresse de contact si vous souhaitez en discuter plus en détail.
-EOD
-);
-
-
-// Sales pitch
-___('publish_question_pitch', 'EN', "What is the sales pitch for Future Invaders?");
-___('publish_question_pitch', 'FR', "Quel est l'argumentaire de vente de Future Invaders ?");
-___('publish_answer_pitch',   'EN', <<<EOD
-Quick to learn, challenging to master. Fewer rules than the average tactical card game. Little equipment required, all you need are 30 cards and a few dice. Strict design restrictions to avoid replicating the "unfun" aspects of the genre. Near future science-fiction, an underused theme in card games. Years of future content already planned and designed. With universal acclaim from both new and experienced playtesters, this game is primed for success!
-EOD
-);
-___('publish_answer_pitch',   'FR', <<<EOD
-Rapide à apprendre, difficile à maîtriser. Moins de règles que le jeu de cartes tactique moyen. Peu d'équipement nécessaire, 30 cartes et quelques dés suffisent. Des règles de conception strictes évitent les éléments "anti-fun" des autres jeux. Science-fiction située dans le future proche, thème rare dans les jeux de cartes. Des années de contenus futurs déjà planifiés. Un succès unanime auprès de testeurs débutants comme confirmés.
-EOD
-);
-
-
-// Target audience
-___('publish_question_audience',  'EN', "What is the target audience for Future Invaders?");
-___('publish_question_audience',  'FR', "Quel est le public cible de Future Invaders ?");
-___('publish_answer_audience',    'EN', <<<EOD
-Casual to midcore board and card game players. This game appeals to people looking for an accessible entry into tactical card games, or to those who already enjoy the genre but want a fresh, back-to-basics experience.
-EOD
-);
-___('publish_answer_audience',    'FR', <<<EOD
-Des joueurs de jeux de cartes ou de société allant de "casual" à "midcore". Ce jeu est destiné à ceux qui cherchent une porte d'entrée dans les jeux de cartes tactiques, ainsi qu'à ceux qui aiment déjà le genre et cherchent une expérience qui revient à ses fondamentaux.
-EOD
-);
-
-
-// How is it different
-___('publish_question_difference',  'EN', "How is Future Invaders different from other card games?");
-___('publish_question_difference',  'FR', "En quoi Future Invaders est différent des autres jeux ?");
-___('publish_answer_difference',    'EN', <<<EOD
- Playtesting shows strong interest in two main areas: the setting, which offers a near-future sci-fi world unconnected to existing media franchises, and the mechanics, which simplify gameplay compared to modern card games while still allowing for creative and complex interactions.
-EOD
-);
-___('publish_answer_difference',    'FR', <<<EOD
-Les séances de playtesting ont montré un fort intérêt pour deux aspects du jeu : son univers, de la science-fiction située dans le futur proche sans pour autant être lié à une franchise existante, et ses mécaniques, plus simples que les jeux de cartes modernes, tout en permettant des interactions complexes et créatives.
-EOD
-);
-
-
-// Why publish a free game
-___('publish_question_free',  'EN', "Why publish a game that's available for free?");
-___('publish_question_free',  'FR', "Pourquoi publier un jeu disponible gratuitement ?");
-___('publish_answer_free',    'EN', <<<EOD
- The current beta version is available for free as print-and-play to help generate interest and get players to try the game. Most playtesters have expressed a desire to buy a professionally printed version, showing that the free version will not reduce future sales.
-EOD
-);
-___('publish_answer_free',    'FR', <<<EOD
-La version beta actuelle est imprimable gratuitement chez soi, dans le but de susciter l'intérêt des gens et de les inciter à essayer le jeu. La majorité des testeurs ont exprimé leur souhait d'acheter une version imprimée professionnellement, ce qui montre que la gratuité actuelle n'affectera pas les ventes futures.
-EOD
-);
-
-
-// Which business model
-___('publish_question_model',  'EN', "What is this game's business model?");
-___('publish_question_model',  'FR', "Quel est le modèle économique du jeu ?");
-___('publish_answer_model',    'EN', <<<EOD
-The tactical card game market is crowded with the "random booster" model, which many playtesters have criticized. Future Invaders will be sold as prebuilt decks of 45 cards. The core set includes 12 such decks, and each expansion will add 12 to 16 more. Special packages of 150 and 300 cards will also be available for "draft mode". This model has received positive feedback from playtesters, who have expressed a willingness to buy 2 to 10 items per expansion, but remains open to discussion.
-EOD
-);
-___('publish_answer_model',    'FR', <<<EOD
-Le marché des jeux de cartes tactiques est dominé par le modèle des "boosters aléatoires", critiqué par de nombreux testeurs. Future Invaders se vendra sous forme d'arsenaux pré-assemblés de 45 cartes, avec 12 paquets dans le set de base, et 12 à 16 par extension future. Des collections de 150 et 300 cartes seront également disponibles pour le mode "draft". Ce modèle a reçu des retours positifs des testeurs, qui se disent prêts à acheter 2 à 10 paquets par extension, bien que le modèle reste ouvert à discussion.
-EOD
-);
-
-
-// Long term plans
-___('publish_question_plans',  'EN', "What are the long-term plans for Future Invaders?");
-___('publish_question_plans',  'FR', "Quels sont les plans au long terme ?");
-___('publish_answer_plans',    'EN', <<<EOD
-Multiple future expansions have been drafted, with new card designs already done. Each expansion will introduce a new major mechanic, refreshing gameplay along with major progress in the game's story and worldbuilding. Discussing future plans for the game would act as a spoiler to its players. If you are looking to know more, this topic will have to be discussed privately.
-EOD
-);
-___('publish_answer_plans',    'FR', <<<EOD
-Plusieurs extensions futures ont déjà été conçues, incluant de nombreuses nouvelles cartes. Chaque extension introduira une nouvelle mécanique majeure, qui rafraichira l'expérience de jeu, tout en faisant progresser son histoire et son univers. Pour plus de détails sur les projets futurs, une discussion en privé serait plus appropriée afin d'éviter les spoilers publics.
-EOD
-);
-
-
-// Intellectual property
-___('publish_question_ip',  'EN', "What is the status of the game's intellectual property?");
-___('publish_question_ip',  'FR', "Quel est le statut de la propriété intellectuelle du jeu ?");
-___('publish_answer_ip',    'EN', <<<EOD
-The IP is currently owned by the author, Éric Bisceglia. The Future Invaders card game is meant to be the centerpiece of a larger universe, which will include free online games and novellas developed by the author. Publishing the game would entail shared IP rights, with card game rights going to the publisher, while the author retains rights to produce non-commercial works within its universe.
-EOD
-);
-___('publish_answer_ip',    'FR', <<<EOD
-L'auteur, Éric Bisceglia, détient actuellement la propriété intellectuelle. Future Invaders sera au cœur d'un univers comprenant d'autres jeux en ligne gratuits ainsi que des nouvelles, développés par l'auteur. La publication du jeu implique un partage des droits : les droits sur le jeu de cartes reviendront à l'éditeur, tandis que l'auteur conservera le droit de créer des contenus non commerciaux dans l'univers du jeu.
-EOD
-);
-
-
-// Website status
-___('publish_question_website',  'EN', "How about this website?");
-___('publish_question_website',  'FR', "Qu'en est-il de ce site web ?");
-___('publish_answer_website',    'EN', <<<EOD
-Designing a complete website for a game is a long and complex task. Having an already completed website will save a lot of development time, and its ownership can be transferred if desired, although I am willing to continue developing it in the future.
-EOD
-);
-___('publish_answer_website',    'FR', <<<EOD
-Le développement complet d'un site pour le jeu est déjà réalisé, un atout qui économisera du temps de développement. Sa propriété peut être transférée si nécessaire, bien que je sois disposé à continuer à le gérer.
-EOD
-);
-
-
-// Self-publishing
-___('publish_question_self',  'EN', "Why not self-publish Future Invaders?");
-___('publish_question_self',  'FR', "Pourquoi ne pas auto-publier Future Invaders ?");
-___('publish_answer_self',    'EN', <<<EOD
-Future Invaders is envisioned as a long-term project, not a one-off game. Crowdfunding could fund the initial core set but wouldn't guarantee the quality or stability that comes with an established publisher.
-EOD
-);
-___('publish_answer_self',    'FR', <<<EOD
-Future Invaders est envisagé comme un projet à long terme. Bien que le crowdfunding pourrait financer le lancement du jeu, il n'apporterait pas la stabilité ni la qualité qu'un éditeur établi peut garantir sur le long terme.
-EOD
-);
-
-
-// Contact info
-___('publish_question_contact', 'EN', "How can I contact you?");
-___('publish_question_contact', 'FR', "Peut-on discuter ?");
-___('publish_answer_contact',   'EN', <<<EOD
-If you're interested in publishing the game, please contact me at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
-EOD
-);
-___('publish_answer_contact',   'FR', <<<EOD
-Si vous êtes intéressé par la publication du jeu, contactez-moi à l’adresse {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+L'objectif de Future Invaders est d'être publié, soit par un éditeur, soit en auto-édition. Trouver un éditeur est une question de chance et d'opportunités. Si vous avez la possibilité d'aider le jeu à accomplir cet objectif, partagez la page {{link|game/publish|publier ce jeu}} avec des gens que vous connaissez, et dites aux éditeurs de nous contacter via la page {{link|social/contact|infos de contact}}.
 EOD
 );

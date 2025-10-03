@@ -67,5 +67,5 @@ img/print/extras/en/*
 img/print/extras/fr/*
 !img/print/extras/fr/index.php
 
-pages/admin/image_backups/
-pages/admin/image_backups/*
+admin/image_backups/
+admin/image_backups/*

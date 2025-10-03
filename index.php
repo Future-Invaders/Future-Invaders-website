@@ -23,7 +23,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
 <div class="width_50">
 
   <div class="align_center padding_bot">
-    <a href="<?=$path?>pages/game">
+    <a href="<?=$path?>game">
       <img src="<?=$path?>img/website/title_banner.png" alt="Future Invaders">
     </a>
   </div>
@@ -61,7 +61,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </h4>
 
   <div class="floater float_right float_noborder float_above float_small">
-    <a href="pages/card/malfunction">
+    <a href="card/malfunction">
       <img src="<?=$path?>img/thumbnails/cards/en/malfunction.png" alt="Card">
     </a>
   </div>
@@ -91,7 +91,7 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </h4>
 
   <div class="floater float_right float_noborder float_above float_small">
-    <a href="pages/card/mobilebase">
+    <a href="card/mobilebase">
       <img src="<?=$path?>img/thumbnails/cards/en/mobile_base.png" alt="Card">
     </a>
   </div>

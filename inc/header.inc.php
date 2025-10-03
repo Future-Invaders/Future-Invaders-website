@@ -34,6 +34,18 @@ $current_url = $_SERVER['REQUEST_URI'];
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Select the correct menus
+
+$menu_game_selected   = (isset($menu_game_selected))    ? ' header_topmenu_title_selected' : '';
+$menu_guides_selected = (isset($menu_guides_selected))  ? ' header_topmenu_title_selected' : '';
+$menu_cards_selected  = (isset($menu_cards_selected))   ? ' header_topmenu_title_selected' : '';
+$menu_tools_selected  = (isset($menu_tools_selected))   ? ' header_topmenu_title_selected' : '';
+$menu_social_selected = (isset($menu_social_selected))  ? ' header_topmenu_title_selected' : '';
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                  HEADER CONTENTS                                                  */
@@ -168,32 +180,32 @@ $javascripts .= '
 
         <div id="header_titles" class="header_topmenu_zone">
 
-          <a href="<?=$path?>pages/game">
-            <div class="header_topmenu_title" id="header_menu_title_game">
+          <a href="<?=$path?>game">
+            <div class="header_topmenu_title<?=$menu_game_selected?>" id="header_menu_title_game">
               <?=__('menu_top_game')?>
             </div>
           </a>
 
-          <a href="<?=$path?>pages/guides">
-            <div class="header_topmenu_title" id="header_menu_title_guides">
+          <a href="<?=$path?>guides">
+            <div class="header_topmenu_title<?=$menu_guides_selected?>" id="header_menu_title_guides">
               <?=__('menu_top_guides')?>
             </div>
           </a>
 
-          <a href="<?=$path?>pages/cards">
-            <div class="header_topmenu_title" id="header_menu_title_cards">
+          <a href="<?=$path?>cards">
+            <div class="header_topmenu_title<?=$menu_cards_selected?>" id="header_menu_title_cards">
               <?=__('menu_top_cards')?>
             </div>
           </a>
 
-          <a href="<?=$path?>pages/tools">
-            <div class="header_topmenu_title" id="header_menu_title_tools">
+          <a href="<?=$path?>tools">
+            <div class="header_topmenu_title<?=$menu_tools_selected?>" id="header_menu_title_tools">
               <?=__('menu_top_tools')?>
             </div>
           </a>
 
-          <a href="<?=$path?>pages/social">
-            <div class="header_topmenu_title" id="header_menu_title_social">
+          <a href="<?=$path?>social">
+            <div class="header_topmenu_title<?=$menu_social_selected?>" id="header_menu_title_social">
               <?=__('menu_top_social')?>
             </div>
           </a>

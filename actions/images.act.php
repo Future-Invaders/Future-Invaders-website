@@ -305,12 +305,12 @@ function images_list( string  $sort_by  = 'path'  ,
     if($format === 'html')
     {
       $data[$i]['id']       = sanitize_output($row['i_id']);
-      $data[$i]['path']     = './../../'.sanitize_output($row['i_path']);
+      $data[$i]['path']     = './../'.sanitize_output($row['i_path']);
       $data[$i]['dpath']    = sanitize_output($row['i_path']);
       $data[$i]['spath']    = sanitize_output(mb_substr($row['i_path'], 4));
       $data[$i]['ppath']    = sanitize_output(string_truncate($row['i_path'], 25, '...'));
       $data[$i]['bpath']    = sanitize_output(basename($row['i_path']));
-      $temp_thumb_path      = './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path']);
+      $temp_thumb_path      = './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path']);
       $data[$i]['thumb']    = sanitize_output($temp_thumb_path);
       $data[$i]['name']     = sanitize_output(string_truncate($row['i_name'], 20, '...'));
       $data[$i]['fname']    = sanitize_output($row['i_name']);
@@ -372,9 +372,7 @@ function images_list( string  $sort_by  = 'path'  ,
 
 function images_list_directories() : array
 {
-  $directories = array( 'rules'       ,
-                        'lore'        ,
-                        'arsenals/en' ,
+  $directories = array( 'arsenals/en' ,
                         'arsenals/fr' ,
                         'cards/en'    ,
                         'cards/fr'    ,
@@ -409,15 +407,15 @@ function images_list_uncategorized() : array
   // Store these images in an array
   $images_list = array();
   while($dimages = query_row($qimages, 'both'))
-    $images_list[] = './../../'.$dimages['i_path'];
+    $images_list[] = './../'.$dimages['i_path'];
 
   // Look for images that aren't in the database
   foreach($directories as $directory)
   {
     // Fetch the images in the directory
-    if(is_dir('./../../img/'.$directory))
+    if(is_dir('./../img/'.$directory))
       // Get the full path of the images
-      $images_in_directory = scandir('./../../img/'.$directory);
+      $images_in_directory = scandir('./../img/'.$directory);
     else
       $images_in_directory = array();
 
@@ -428,7 +426,7 @@ function images_list_uncategorized() : array
 
     // Add the images to the array if they aren't in the database
     foreach($images_in_directory as $image)
-      if(!in_array('./../../img/'.$directory.'/'.$image, $images_list))
+      if(!in_array('./../img/'.$directory.'/'.$image, $images_list))
         $missing_images[] = 'img/'.$directory.'/'.$image;
 
     // Use an empty array if the directory has no images

@@ -15,10 +15,10 @@ RewriteRule ^api/ruling/(.*)$ api/ruling/ruling.php?uuid=$1 [QSA,NC]
 RewriteRule ^api/tag/(.*)$ api/tag/tag.php?uuid=$1 [QSA,NC]
 
 # Cards
-RewriteRule ^pages/card/(.*)$ pages/game/card.php?slug=$1 [QSA,NC]
+RewriteRule ^card/(.*)$ cards/card.php?slug=$1 [QSA,NC]
 
 # Arsenals
-RewriteRule ^pages/arsenal/(.*)$ pages/game/arsenal.php?slug=$1 [QSA,NC]
+RewriteRule ^arsenal/(.*)$ cards/arsenal.php?slug=$1 [QSA,NC]
 
 # Rulings
-RewriteRule ^pages/ruling/(.*)$ pages/game/ruling.php?slug=$1 [QSA,NC]
+RewriteRule ^ruling/(.*)$ cards/ruling.php?slug=$1 [QSA,NC]

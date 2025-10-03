@@ -64,11 +64,11 @@ $copyright_date = date('Y');
 
       <footer>
 
-        <?=__link("pages/social/contact", __('footer_contact'), "text_light text_white_hover", true, $path);?><br>
+        <?=__link("social/contact", __('footer_contact'), "text_light text_white_hover", true, $path);?><br>
 
-        <?=__link("pages/social/legal", __('footer_legal'), "text_light text_white_hover", true, $path);?><br>
+        <?=__link("social/legal", __('footer_legal'), "text_light text_white_hover", true, $path);?><br>
 
-        <?=__link("pages/social/copyright", __('footer_copyright', preset_values: array($copyright_date)), "text_light text_white_hover", true, $path);?><br>
+        <?=__link("social/copyright", __('footer_copyright', preset_values: array($copyright_date)), "text_light text_white_hover", true, $path);?><br>
 
       </footer>
 

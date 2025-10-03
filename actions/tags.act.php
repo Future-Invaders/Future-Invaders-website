@@ -145,7 +145,7 @@ function tags_get(  ?int    $tag_id   = NULL    ,
         $data['tagged_cards'][$i]['endpoint']   = sanitize_json($GLOBALS['website_url']
                                                   .'api/card/'.$dcards['c_uuid']);
         $data['tagged_cards'][$i]['url']        = sanitize_json($GLOBALS['website_url']
-                                                  .'pages/card/'.$dcards['c_slug']);
+                                                  .'card/'.$dcards['c_slug']);
       }
       if($i === 0)
         $data['tagged_cards']                   = array();
@@ -162,7 +162,7 @@ function tags_get(  ?int    $tag_id   = NULL    ,
         $data['tagged_arsenals'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url']
                                                     .'api/arsenal/'.$darsenals['a_uuid']);
         $data['tagged_arsenals'][$i]['url']         = sanitize_json($GLOBALS['website_url']
-                                                    .'pages/arsenal/'.$darsenals['a_slug']);
+                                                    .'arsenal/'.$darsenals['a_slug']);
       }
       if($i === 0)
         $data['tagged_arsenals']                    = array();
