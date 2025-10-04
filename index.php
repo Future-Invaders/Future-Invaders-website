@@ -52,8 +52,14 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_intro_3')?>
   </p>
 
+  <p>
+    <?=__('home_intro_4')?>
+  </p>
+
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_1.png" alt="Gameplay">
+    <a href="<?=$path?>img/gameplay/gameplay_1.png">
+      <img src="<?=$path?>img/gameplay/gameplay_1.png" alt="Gameplay">
+    </a>
   </div>
 
   <h4 class="hugepadding_top">
@@ -62,7 +68,11 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
 
   <div class="floater float_right float_noborder float_above float_small">
     <a href="card/malfunction">
-      <img src="<?=$path?>img/thumbnails/cards/en/malfunction.png" alt="Card">
+      <?php if($lang == 'EN'): ?>
+        <img src="<?=$path?>img/cards/en/malfunction.png" alt="Card">
+      <?php else: ?>
+        <img src="<?=$path?>img/cards/fr/defaillance.png" alt="Carte">
+      <?php endif; ?>
     </a>
   </div>
 
@@ -82,8 +92,14 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_summary_body_4')?>
   </p>
 
+  <p>
+    <?=__('home_summary_body_5')?>
+  </p>
+
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
+    <a href="<?=$path?>img/gameplay/gameplay_6.png">
+      <img src="<?=$path?>img/gameplay/gameplay_6.png" alt="Gameplay">
+    </a>
   </div>
 
   <h4 class="hugepadding_top">
@@ -91,8 +107,12 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </h4>
 
   <div class="floater float_right float_noborder float_above float_small">
-    <a href="card/mobilebase">
-      <img src="<?=$path?>img/thumbnails/cards/en/mobile_base.png" alt="Card">
+    <a href="card/jumperbehemoth">
+      <?php if($lang == 'EN'): ?>
+        <img src="<?=$path?>img/cards/en/jumper_behemoth.png" alt="Card">
+      <?php else: ?>
+        <img src="<?=$path?>img/cards/fr/behemoth_phaseur.png" alt="Carte">
+      <?php endif; ?>
     </a>
   </div>
 
@@ -112,8 +132,24 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_special_body_4')?>
   </p>
 
+  <p>
+    <?=__('home_special_body_5')?>
+  </p>
+
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_6.png" alt="Gameplay">
+    <a href="<?=$path?>img/gameplay/gameplay_3.png">
+      <img src="<?=$path?>img/gameplay/gameplay_3.png" alt="Gameplay">
+    </a>
+  </div>
+
+  <div class="floater float_right float_noborder float_above float_small desktop">
+    <a href="card/bluff">
+      <?php if($lang == 'EN'): ?>
+        <img src="<?=$path?>img/cards/en/bluff.png" alt="Card">
+      <?php else: ?>
+        <img src="<?=$path?>img/cards/fr/bluff.png" alt="Carte">
+      <?php endif; ?>
+    </a>
   </div>
 
   <h4 class="hugepadding_top">
@@ -132,8 +168,28 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
     <?=__('home_play_body_3')?>
   </p>
 
+  <p>
+    <?=__('home_play_body_4')?>
+  </p>
+
+  <p>
+    <?=__('home_play_body_5')?>
+  </p>
+
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_5.png" alt="Gameplay">
+    <a href="<?=$path?>img/gameplay/gameplay_5.png">
+      <img src="<?=$path?>img/gameplay/gameplay_5.png" alt="Gameplay">
+    </a>
+  </div>
+
+  <div class="floater float_right float_noborder float_above float_small desktop">
+    <a href="card/neuronalnexus">
+      <?php if($lang == 'EN'): ?>
+        <img src="<?=$path?>img/cards/en/neuronal_nexus.png" alt="Card">
+      <?php else: ?>
+        <img src="<?=$path?>img/cards/fr/nexus_neuronal.png" alt="Carte">
+      <?php endif; ?>
+    </a>
   </div>
 
   <h4 class="hugepadding_top">
@@ -153,7 +209,9 @@ $page_description = "Future Invaders, a sci-fi card battling game overflowing wi
   </p>
 
   <div class="align_center hugepadding_top">
-    <img src="<?=$path?>img/gameplay/gameplay_9.png" alt="Gameplay">
+    <a href="<?=$path?>img/gameplay/gameplay_9.png">
+      <img src="<?=$path?>img/gameplay/gameplay_9.png" alt="Gameplay">
+    </a>
   </div>
 
 </div>

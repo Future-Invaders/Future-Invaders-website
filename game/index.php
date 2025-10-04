@@ -45,20 +45,20 @@ $menu_game_selected = true;
   </div>
 
   <div class="bigpadding_top">
-    <a href="<?=$path?>game/features">
-      <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_features')?>
-      </h2>
-      <img src="<?=$path?>img/banners/banner_features.png" alt="<?=__('menu_features')?>">
-    </a>
-  </div>
-
-  <div class="bigpadding_top">
     <a href="<?=$path?>game/showcase">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
         <?=__('menu_pictures')?>
       </h2>
       <img src="<?=$path?>img/banners/banner_pictures.png" alt="<?=__('menu_pictures')?>">
+    </a>
+  </div>
+
+  <div class="bigpadding_top">
+    <a href="<?=$path?>game/features">
+      <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
+        <?=__('menu_features')?>
+      </h2>
+      <img src="<?=$path?>img/banners/banner_features.png" alt="<?=__('menu_features')?>">
     </a>
   </div>
 
