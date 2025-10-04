@@ -248,8 +248,6 @@ ___('gameplay_pictures_title',      'EN', "Gameplay pictures");
 ___('gameplay_pictures_title',      'FR', "Images du jeu");
 ___('gameplay_cards_title',         'EN', "Sample cards");
 ___('gameplay_cards_title',         'FR', "Exemples de cartes");
-___('gameplay_art_title',           'EN', "Art showcase");
-___('gameplay_art_title',           'FR', "Galerie d'art du jeu");
 ___('gameplay_videos_title',        'EN', "Gameplay videos");
 ___('gameplay_videos_title',        'FR', "Vidéos du jeu");
 ___('gameplay_videos_game_body_1',  'EN', <<<EOD
@@ -266,6 +264,51 @@ EOD
 );
 ___('gameplay_videos_game_body_2',  'FR', <<<EOD
 Les vidéos existantes représentent une ancienne version du jeu. De nouvelles vidéos reflétant l'état actuel du jeu seront bientôt disponibles.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                        ART                                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Art showcase
+___('art_showcase_title',   'EN', "The art of Future Invaders");
+___('art_showcase_title',   'FR', "L'art de Future Invaders");
+___('art_showcase_body_1',  'EN', <<<EOD
+Every card in Future Invaders features its own unique artwork, all hand-drawn by {{link|social/credits|the game's designer}}. These illustrations are part of the game's worldbuilding, enhancing the flavor of cards.
+EOD
+);
+___('art_showcase_body_1',  'FR', <<<EOD
+Chaque carte de Future Invaders possède sa propre illustration sur mesure. Elles sont toutes dessinées par {{link|social/credits|le créateur du jeu}}.
+EOD
+);
+___('art_showcase_body_2',  'EN', <<<EOD
+The art style aims to feel as "human" as possible: it is purposefully flawed and imperfect, but sincere. Drawn in MS Paint with a computer mouse, the limitations of the tool and software create a naïve-art vibe that gives Future Invaders its unique (and hopefully charming) appearance.
+EOD
+);
+___('art_showcase_body_2',  'FR', <<<EOD
+Le style graphique se veut "humain" : il est volontairement imparfait, mais sincère. Réalisé sur MS Paint à la souris d'ordinateur, les limites de l'outil et du logiciel contribuent à créer une esthétique d'art naïf qui donne à Future Invaders son apparence unique (et charmante, j'espère).
+EOD
+);
+___('art_showcase_body_3',  'EN', <<<EOD
+Each faction has its own distinct visual identity: Terrans are orange and industrious, Invaders are brown and sleek, Organics are green and terrifying, Pirates are grey and scrappy, and Neutrals are purple and simple. Many cards are cross-faction, featuring illustrations that reflect their blended faction identities.
+EOD
+);
+___('art_showcase_body_3',  'FR', <<<EOD
+Chaque faction possède sa propre identité visuelle : les Terriens sont oranges et industriels, les Envahisseurs sont marrons et technologiques, les Organiques sont verts et terrifiants, les Pirates sont gris et débrouillards, et les Neutres sont violets et simples. De nombreuses cartes mélangent les factions, leurs illustrations reflètent la combinaison de leurs identités visuelles.
+EOD
+);
+___('art_showcase_body_4',  'EN', <<<EOD
+Below are a few examples of the artwork featured on Future Invaders cards.
+EOD
+);
+___('art_showcase_body_4',  'FR', <<<EOD
+Voici quelques exemples d’illustrations utilisées sur les cartes de Future Invaders.
 EOD
 );
 

@@ -47,9 +47,9 @@ $menu_game_selected = true;
   <div class="bigpadding_top">
     <a href="<?=$path?>game/showcase">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
-        <?=__('menu_pictures')?>
+        <?=__('menu_showcase')?>
       </h2>
-      <img src="<?=$path?>img/banners/banner_pictures.png" alt="<?=__('menu_pictures')?>">
+      <img src="<?=$path?>img/banners/banner_showcase.png" alt="<?=__('menu_showcase')?>">
     </a>
   </div>
 
@@ -59,6 +59,15 @@ $menu_game_selected = true;
         <?=__('menu_features')?>
       </h2>
       <img src="<?=$path?>img/banners/banner_features.png" alt="<?=__('menu_features')?>">
+    </a>
+  </div>
+
+  <div class="bigpadding_top">
+    <a href="<?=$path?>game/art">
+      <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
+        <?=__('menu_art')?>
+      </h2>
+      <img src="<?=$path?>img/banners/banner_art.png" alt="<?=__('menu_art')?>">
     </a>
   </div>
 

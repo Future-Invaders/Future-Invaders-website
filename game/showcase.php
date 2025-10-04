@@ -10,7 +10,7 @@ include_once './../lang/game.lang.php';    # Translations
 $page_lang        = array('FR', 'EN');
 $page_url         = "game/showcase";
 $page_title_en    = "Showcase";
-$page_title_fr    = "Galerie";
+$page_title_fr    = "Images du jeu";
 $page_description = "Pictures and videos of the sci-fi card battling game Future Invaders";
 
 
@@ -26,7 +26,7 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
 
   <div class="bigpadding_bot">
     <a href="<?=$path?>game">
-      <img src="<?=$path?>img/banners/banner_pictures.png" alt="<?=__('menu_pictures')?>">
+      <img src="<?=$path?>img/banners/banner_showcase.png" alt="<?=__('menu_showcase')?>">
     </a>
   </div>
 
@@ -182,7 +182,7 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
     </div>
   </div>
 
-  <h2 class="align_center bigpadding_bot padding_top" id="videos">
+  <h2 class="align_center padding_bot padding_top" id="videos">
     <?=__('gameplay_videos_title')?>
   </h2>
 
@@ -193,64 +193,6 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
   <p class="padding_bot">
     <?=__('gameplay_videos_game_body_2')?>
   </p>
-
-  <h2 class="align_center bigpadding_bot bigpadding_top" id="videos">
-    <?=__('gameplay_art_title')?>
-  </h2>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/consortiumheadquarters.png">
-      <img src="<?=$path?>img/showcase/consortiumheadquarters.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/malfunction.png">
-      <img src="<?=$path?>img/showcase/malfunction.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/retaliationmodule.png">
-      <img src="<?=$path?>img/showcase/retaliationmodule.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/mind.png">
-      <img src="<?=$path?>img/showcase/mind.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/energybomb.png">
-      <img src="<?=$path?>img/showcase/energybomb.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/digest.png">
-      <img src="<?=$path?>img/showcase/digest.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/negativefield.png">
-      <img src="<?=$path?>img/showcase/negativefield.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/jumperbehemoth.png">
-      <img src="<?=$path?>img/showcase/jumperbehemoth.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
-
-  <div class="smallpadding_top">
-    <a href="<?=$path?>img/showcase/empoweredstrike.png">
-      <img src="<?=$path?>img/showcase/empoweredstrike.png" alt="<?=__('gameplay_art_title')?>">
-    </a>
-  </div>
 
 </div>
 
