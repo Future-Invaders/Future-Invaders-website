@@ -9,8 +9,8 @@ include_once './../lang/game.lang.php';    # Translations
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "game/showcase";
-$page_title_en    = "Media";
-$page_title_fr    = "Média";
+$page_title_en    = "Showcase";
+$page_title_fr    = "Galerie";
 $page_description = "Pictures and videos of the sci-fi card battling game Future Invaders";
 
 
@@ -72,102 +72,117 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
   </h2>
 
   <div class="gallery bigpadding_top bigpadding_bot">
-    <?php if($lang === 'EN'): ?>
     <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/light_cruiser.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/light_cruiser.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/rustwing.png" class="noglow">
+      <a href="<?=$path?>card/rustwing" class="noglow">
+        <?php if($lang === 'EN'): ?>
         <img class="tinypadding_top" src="./../img/cards/en/rustwing.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/planet_destroyer.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/planet_destroyer.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/plasmasteel_cannon.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/plasmasteel_cannon.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/black_hole.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/black_hole.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/hatch.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/hatch.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell desktop">
-      <a href="./../img/thumbnails/cards/en/misdirection.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/misdirection.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/swap_places.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/swap_places.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/en/mutually_assured_destruction.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/en/mutually_assured_destruction.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <?php else: ?>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/croiseur_leger.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/fr/croiseur_leger.png" alt="<?=__('futureinvaders')?>" loading="lazy">
-      </a>
-    </div>
-    <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/rafiot_rouille.png" class="noglow">
+        <?php else: ?>
         <img class="tinypadding_top" src="./../img/cards/fr/rafiot_rouille.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/destructeur_de_planetes.png" class="noglow">
+      <a href="<?=$path?>card/escapepod" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/escape_pod.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/capsule_de_sauvetage.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="<?=$path?>card/planetdestroyer" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/planet_destroyer.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
         <img class="tinypadding_top" src="./../img/cards/fr/destructeur_de_planetes.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/canon_en_plasmacier.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/fr/canon_en_plasmacier.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="<?=$path?>card/controlstation" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/control_station.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/station_de_controle.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/trou_noir.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/fr/trou_noir.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="<?=$path?>card/darkwavegenerator" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/dark_wave_generator.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/generateur_d_ondes_sombres.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/eclosion.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/fr/eclosion.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="<?=$path?>card/ringstation" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/ring_station.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/station_en_anneau.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
-    <div class="gallery_cell desktop">
-      <a href="./../img/thumbnails/cards/fr/desorientation.png" class="noglow">
+    <div class="gallery_cell">
+      <a href="<?=$path?>card/misdirection" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/misdirection.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
         <img class="tinypadding_top" src="./../img/cards/fr/desorientation.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/echange.png" class="noglow">
-        <img class="tinypadding_top" src="./../img/cards/fr/echange.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+      <a href="<?=$path?>card/omegaprotocol" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/omega_protocol.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/directive_omega.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
     <div class="gallery_cell">
-      <a href="./../img/thumbnails/cards/fr/destruction_mutuelle_assuree.png" class="noglow">
+      <a href="<?=$path?>card/alternatetimeline" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/alternate_timeline.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/chronologie_alteree.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="<?=$path?>card/friendlywinds" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/friendly_winds.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/vents_favorables.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="<?=$path?>card/sabotage" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/sabotage.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
+        <img class="tinypadding_top" src="./../img/cards/fr/sabotage.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
+      </a>
+    </div>
+    <div class="gallery_cell">
+      <a href="<?=$path?>card/mutuallyassureddestruction" class="noglow">
+        <?php if($lang === 'EN'): ?>
+        <img class="tinypadding_top" src="./../img/cards/en/mutually_assured_destruction.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php else: ?>
         <img class="tinypadding_top" src="./../img/cards/fr/destruction_mutuelle_assuree.png" alt="<?=__('futureinvaders')?>" loading="lazy">
+        <?php endif; ?>
       </a>
     </div>
-    <?php endif; ?>
   </div>
 
-  <h2 class="align_center padding_bot padding_top" id="videos">
+  <h2 class="align_center bigpadding_bot padding_top" id="videos">
     <?=__('gameplay_videos_title')?>
   </h2>
 
@@ -178,6 +193,64 @@ $page_description = "Pictures and videos of the sci-fi card battling game Future
   <p class="padding_bot">
     <?=__('gameplay_videos_game_body_2')?>
   </p>
+
+  <h2 class="align_center bigpadding_bot bigpadding_top" id="videos">
+    <?=__('gameplay_art_title')?>
+  </h2>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/consortiumheadquarters.png">
+      <img src="<?=$path?>img/showcase/consortiumheadquarters.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/malfunction.png">
+      <img src="<?=$path?>img/showcase/malfunction.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/retaliationmodule.png">
+      <img src="<?=$path?>img/showcase/retaliationmodule.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/mind.png">
+      <img src="<?=$path?>img/showcase/mind.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/energybomb.png">
+      <img src="<?=$path?>img/showcase/energybomb.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/digest.png">
+      <img src="<?=$path?>img/showcase/digest.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/negativefield.png">
+      <img src="<?=$path?>img/showcase/negativefield.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/jumperbehemoth.png">
+      <img src="<?=$path?>img/showcase/jumperbehemoth.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
+
+  <div class="smallpadding_top">
+    <a href="<?=$path?>img/showcase/empoweredstrike.png">
+      <img src="<?=$path?>img/showcase/empoweredstrike.png" alt="<?=__('gameplay_art_title')?>">
+    </a>
+  </div>
 
 </div>
 

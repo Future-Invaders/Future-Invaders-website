@@ -248,6 +248,8 @@ ___('gameplay_pictures_title',      'EN', "Gameplay pictures");
 ___('gameplay_pictures_title',      'FR', "Images du jeu");
 ___('gameplay_cards_title',         'EN', "Sample cards");
 ___('gameplay_cards_title',         'FR', "Exemples de cartes");
+___('gameplay_art_title',           'EN', "Art showcase");
+___('gameplay_art_title',           'FR', "Galerie d'art du jeu");
 ___('gameplay_videos_title',        'EN', "Gameplay videos");
 ___('gameplay_videos_title',        'FR', "Vidéos du jeu");
 ___('gameplay_videos_game_body_1',  'EN', <<<EOD

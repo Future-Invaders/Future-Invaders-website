@@ -11,8 +11,8 @@ include_once './../lang/game.lang.php';         # Translations
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "game/updates";
-$page_title_en    = "Game updates";
-$page_title_fr    = "Mises à jour du jeu";
+$page_title_en    = "Updates";
+$page_title_fr    = "Mises à jour";
 $page_description = "Updates on the strategy sci-fi card battling game Future Invaders";
 
 // Extra CSS

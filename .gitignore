@@ -67,5 +67,8 @@ img/print/extras/en/*
 img/print/extras/fr/*
 !img/print/extras/fr/index.php
 
+img/showcase/*
+!img/showcase/index.php
+
 admin/image_backups/
 admin/image_backups/*
