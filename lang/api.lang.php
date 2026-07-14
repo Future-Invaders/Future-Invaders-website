@@ -109,11 +109,11 @@ Utiliser l'API ne requiert pas d'authentification. Il n'y a aucune restriction d
 EOD
 );
 ___('api_intro_usage_body_5', 'EN', <<<EOD
-The API is not versioned. This means if a breaking change happens, the previous way of interacting with the API will disappear, and you will need to update your applications accordingly. Although the API is designed so that breaking changes should ideally never need to happen, advance warnings will be given before any future API breaking changes on {{link|pages/social/discord|IRC}} and {{link|pages/social/discord|Discord}}.
+The API is not versioned. This means if a breaking change happens, the previous way of interacting with the API will disappear, and you will need to update your applications accordingly. Although the API is designed so that breaking changes should ideally never need to happen, advance warnings will be given before any future API breaking changes on {{link|social/discord|IRC}} and {{link|social/discord|Discord}}.
 EOD
 );
 ___('api_intro_usage_body_5', 'FR', <<<EOD
-L'API n'est pas versionnée. Cela signifie que si un changement majeur altère la structure de l'API dans le futur, la manière actuelle d'interagir avec l'API disparaîtra, et vous devrez mettre à jour vos applications en conséquence. Bien que l'API soit conçue de manière à ce que des changements majeurs ne soient pas nécessaires, s'il doit y en avoir, un avertissement sera fait à l'avance sur {{link|pages/social/irc|IRC}} et {{link|pages/social/discord|Discord}}.
+L'API n'est pas versionnée. Cela signifie que si un changement majeur altère la structure de l'API dans le futur, la manière actuelle d'interagir avec l'API disparaîtra, et vous devrez mettre à jour vos applications en conséquence. Bien que l'API soit conçue de manière à ce que des changements majeurs ne soient pas nécessaires, s'il doit y en avoir, un avertissement sera fait à l'avance sur {{link|social/irc|IRC}} et {{link|social/discord|Discord}}.
 EOD
 );
 

@@ -18,11 +18,11 @@ ___('print_title',  'FR', "Impression à domicile");
 ___('print_image',  'EN', "Cards being printed");
 ___('print_image',  'FR', "Cartes en cours d'impression");
 ___('print_body',   'EN', <<<EOD
-Until Future Invaders is published and available for sale, you can print the cards needed to play the game yourself, at home. This page explains the process. Once you're familiar with it, you can visit the pages listing the {{link|pages/tools/print_cards|cards}}, {{link|pages/tools/print_arsenals|arsenals}}, and {{link|pages/tools/print_extra|extra contents}} to print them.
+Until Future Invaders is published and available for sale, you can print the cards needed to play the game yourself, at home. This page explains the process. Once you're familiar with it, you can visit the pages listing the {{link|cards/print_cards|cards}}, {{link|cards/print_arsenals|arsenals}}, and {{link|cards/print_extra|extra contents}} to print them.
 EOD
 );
 ___('print_body',   'FR', <<<EOD
-En attendant que Future Invaders soit publié et disponible à la vente, vous pouvez imprimer chez vous les cartes nécessaires pour jouer. Cette page vous explique la procédure. Une fois que vous aurez compris comment faire, vous pourrez consulter les pages des {{link|pages/tools/print_cards|cartes}}, {{link|pages/tools/print_arsenals|arsenaux}}, et {{link|pages/tools/print_extra|contenus supplémentaires}} disponibles à l'impression.
+En attendant que Future Invaders soit publié et disponible à la vente, vous pouvez imprimer chez vous les cartes nécessaires pour jouer. Cette page vous explique la procédure. Une fois que vous aurez compris comment faire, vous pourrez consulter les pages des {{link|cards/print_cards|cartes}}, {{link|cards/print_arsenals|arsenaux}}, et {{link|cards/print_extra|contenus supplémentaires}} disponibles à l'impression.
 EOD
 );
 
@@ -80,11 +80,11 @@ ___('print_cards_title',  'FR', "Impression des cartes");
 ___('print_cards_image',  'EN', "Cards being sleeved");
 ___('print_cards_image',  'FR', "Cartes en train d'être mises sous plastique");
 ___('print_cards_body_1', 'EN', <<<EOD
-Start by choosing the cards you want to print. You can print {{link|pages/tools/print_cards|all of the game's cards}}, or begin by printing the {{link|pages/tools/print_extra|rules and extra cards}}, or just enough cards {{link|pages/tools/print_arsenals|for one arsenal}}.
+Start by choosing the cards you want to print. You can print {{link|cards/print_cards|all of the game's cards}}, or begin by printing the {{link|cards/print_extra|rules and extra cards}}, or just enough cards {{link|cards/print_arsenals|for one arsenal}}.
 EOD
 );
 ___('print_cards_body_1', 'FR', <<<EOD
-Commencez par choisir les cartes que vous souhaitez imprimer. Vous pouvez imprimer {{link|pages/tools/print_cards|toutes les cartes du jeu}} d'un coup, ou bien commencer par {{link|pages/tools/print_extra|les règles et cartes utilitaires}}, ou encore imprimer uniquement {{link|pages/tools/print_arsenals|les cartes d'un arsenal}}.
+Commencez par choisir les cartes que vous souhaitez imprimer. Vous pouvez imprimer {{link|cards/print_cards|toutes les cartes du jeu}} d'un coup, ou bien commencer par {{link|cards/print_extra|les règles et cartes utilitaires}}, ou encore imprimer uniquement {{link|cards/print_arsenals|les cartes d'un arsenal}}.
 EOD
 );
 ___('print_cards_body_2', 'EN', <<<EOD
@@ -117,144 +117,6 @@ EOD
 );
 ___('print_cards_body_5', 'FR', <<<EOD
 Félicitations, vous pouvez maintenant jouer à Future Invaders. Amusez-vous bien !
-EOD
-);
-
-
-// Print cards
-___('print_allcards_title',   'EN', "Print cards");
-___('print_allcards_title',   'FR', "Imprimer les cartes");
-___('print_allcards_body_1',  'EN', <<<EOD
-From this page, you can print every legal card in a game of Future Invaders. You have two options: print one copy of each card, or print the maximum legal copies of each card allowed in an arsenal. You can then use these to assemble your own arsenals.
-EOD
-);
-___('print_allcards_body_1',  'FR', <<<EOD
-Depuis cette page, vous pouvez imprimer toutes les cartes jouables dans une partie de Future Invaders. Deux options sont disponibles : imprimer un exemplaire de chaque carte, ou imprimer le nombre maximum autorisé de copies de chaque carte dans un arsenal. Vous pourrez ensuite utiliser ces cartes pour composer vos propres arsenaux.
-EOD
-);
-___('print_allcards_body_2',  'EN', <<<EOD
-Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}. You might also prefer to print {{link|pages/tools/print_arsenals|prebuilt arsenals}} instead of all cards.
-EOD
-);
-___('print_allcards_body_2',  'FR', <<<EOD
-Avant d'imprimer, assurez-vous de comprendre {{link|pages/tools/print|le processus d'impression maison}}, et demandez-vous si vous préférez imprimer {{link|pages/tools/print_arsenals|des arsenaux pré-assemblés}} plutôt que toutes les cartes.
-EOD
-);
-___('print_allcards_body_3',  'EN', <<<EOD
-Cards are available for printing in both English and French. To change the language, click on the flag icon in the top right corner.
-EOD
-);
-___('print_allcards_body_3',  'FR', <<<EOD
-Les cartes sont également imprimables en anglais. Pour changer la langue du site, cliquez sur le drapeau en haut à droite de la page.
-EOD
-);
-___('print_allcards_choice',  'EN', "Choose the cards you want to print");
-___('print_allcards_choice',  'FR', "Choisissez les cartes à imprimer");
-___('print_allcards_single',  'EN', "One copy of each card in the game");
-___('print_allcards_single',  'FR', "Un exemplaire de chaque carte");
-___('print_allcards_max',     'EN', "Maximum legal copies of each card");
-___('print_allcards_max',     'FR', "Nombre maximum de copies autorisé de chaque carte");
-
-
-// Print arsenals
-___('print_arsenals_title',   'EN', "Print arsenals");
-___('print_arsenals_title',   'FR', "Imprimer des arsenaux");
-___('print_arsenals_body_1',  'EN', <<<EOD
-Arsenals are the collections of cards which you use to play a game of Future Invaders. The game comes with some suggested prebuilt arsenals, to give you ideas on how to build your own. From this page, you can print these arsenals at home. You can have a better look at individual arsenals in the {{link|pages/game/arsenals|arsenal list}}.
-EOD
-);
-___('print_arsenals_body_1',  'FR', <<<EOD
-Les arsenaux sont les collections de cartes que vous utilisez pour jouer à Future Invaders. Le jeu vient avec des suggestions d'arsenaux déjà assemblés, pour vous donner des idées sur la façon de construire vos propres arsenaux. Depuis cette page, vous pouvez imprimer ces arsenaux chez vous. Pour en savoir plus sur les arsenaux, utilisez la {{link|pages/game/arsenals|liste des arsenaux}}.
-EOD
-);
-___('print_arsenals_body_2',  'EN', <<<EOD
-Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}.
-EOD
-);
-___('print_arsenals_body_2',  'FR', <<<EOD
-Avant d'imprimer, assurez-vous de comprendre {{link|pages/tools/print|le processus d'impression maison}}.
-EOD
-);
-___('print_arsenals_choose',  'EN', "Choose the arsenals you want to print");
-___('print_arsenals_choose',  'FR', "Choisissez les arsenaux à imprimer");
-___('print_arsenals_desc',    'EN', "Arsenal description");
-___('print_arsenals_desc',    'FR', "Description de l'arsenal");
-___('print_aresnals_cards',   'EN', "Main & reserves cards");
-___('print_aresnals_cards',   'FR', "Cartes et réserves de l'arsenal");
-___('print_arsenals_extra',   'EN', "Extra arsenal cards");
-___('print_arsenals_extra',   'FR', "Cartes additionnelles de l'arsenal");
-
-
-// Print extra cards
-___('print_extra_title',      'EN', "Print extra cards");
-___('print_extra_title',      'FR', "Imprimer les accessoires");
-___('print_extra_body_1',     'EN', <<<EOD
-From this page, you can print additional cards for Future Invaders. These cards are optional, but they can enhance your gameplay experience.
-EOD
-);
-___('print_extra_body_1',     'FR', <<<EOD
-Depuis cette page, vous pouvez imprimer des cartes accessoires pour Future Invaders. Bien qu'elles ne soient pas nécessaires, elles peuvent enrichir votre expérience de jeu.
-EOD
-);
-___('print_extra_body_2',     'EN', <<<EOD
-Before printing, ensure you understand {{link|pages/tools/print|how to print cards at home}}. If you're looking to print the main game cards, separate pages are available for {{link|pages/tools/print|printing all cards}} and {{link|pages/tools/print_arsenals|printing prebuilt arsenals}}.
-EOD
-);
-___('print_extra_body_2',     'FR', <<<EOD
-Avant d'imprimer, assurez-vous de comprendre {{link|pages/tools/print|le processus d'impression maison}}. Si vous souhaitez imprimer les cartes de jeu, rendez-vous sur les pages dédiées à {{link|pages/tools/print|imprimer toutes les cartes}} et à {{link|pages/tools/print_arsenals|imprimer des arsenaux pré-assemblés}}.
-EOD
-);
-___('print_extra_trackers',   'EN', "Resource and base durability trackers");
-___('print_extra_trackers',   'FR', "Compteurs de ressources et de durabilité");
-___('print_extra_rules',      'EN', "Rules of the game");
-___('print_extra_rules',      'FR', "Règles du jeu");
-___('print_extra_reminders',  'EN', "Abridged rule summaries");
-___('print_extra_reminders',  'FR', "Rappels des règles");
-___('print_extra_lore',       'EN', "Game backstory");
-___('print_extra_lore',       'FR', "Histoire du jeu");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                  DESIGN DOCUMENT                                                  */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Design doc dev page
-___('design_doc_dev_title',   'EN', "Design document");
-___('design_doc_dev_title',   'FR', "Document de design");
-___('design_doc_dev_body_1',  'EN', <<<EOD
-Are you curious to see how a game is born? Or how it evolves over time? In the spirit of {{link|pages/tools/source|transparency}}, Future Invaders' design document is available to the public.
-EOD
-);
-___('design_doc_dev_body_1',  'FR', <<<EOD
-Êtes-vous curieux de voir comment un jeu naît ? Ou comment il évolue au fil du temps ? Dans un esprit de {{link|pages/tools/source|transparence}}, le document de design de Future Invaders est partagé publiquement sur le site.
-EOD
-);
-___('design_doc_dev_body_2',  'EN', <<<EOD
-In the coming months, a new, improved version of this document will be added, serving as a supplement to the original version. Until then, only the original document is available. Some of its contents are outdated, compared to the current state of the game.
-EOD
-);
-___('design_doc_dev_body_2',  'FR', <<<EOD
-Une version mise à jour de ce document est prévue dans les mois à venir, en complément de la version actuelle. En attendant, seul le document original est disponible, ce qui signifie que certains contenus de ce document ne sont pas à jour.
-EOD
-);
-___('design_doc_dev_english', 'EN', <<<EOD
-The design document is only available in English, it currently has no French translation.
-EOD
-);
-___('design_doc_dev_english', 'FR', <<<EOD
-Le document de design est uniquement disponible en anglais, il n'a pas de traduction française pour le moment.
-EOD
-);
-___('design_doc_dev_link',    'EN', <<<EOD
-{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Click here to read the design document}}.
-EOD
-);
-___('design_doc_dev_link',    'FR', <<<EOD
-{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Cliquez ici pour lire le document de design}}.
 EOD
 );
 
@@ -430,5 +292,50 @@ EOD
 );
 ___('tabletop_simulator_tips_body_6', 'FR', <<<EOD
 Si vous préférez un exemple visuel, une vidéo montrant une partie de Future Invaders dans Tabletop Simulator est disponible {{external_popup|https://www.youtube.com/watch?v=0ZrrbsrncRk|sur la chaîne YouTube officielle de Future Invaders}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  DESIGN DOCUMENT                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Design doc dev page
+___('design_doc_dev_title',   'EN', "Design document");
+___('design_doc_dev_title',   'FR', "Document de design");
+___('design_doc_dev_body_1',  'EN', <<<EOD
+Are you curious to see how a game is born? Or how it evolves over time? In the spirit of {{link|tools/source|transparency}}, Future Invaders' design document is available to the public.
+EOD
+);
+___('design_doc_dev_body_1',  'FR', <<<EOD
+Êtes-vous curieux de voir comment un jeu naît ? Ou comment il évolue au fil du temps ? Dans un esprit de {{link|tools/source|transparence}}, le document de design de Future Invaders est partagé publiquement sur le site.
+EOD
+);
+___('design_doc_dev_body_2',  'EN', <<<EOD
+In the coming months, a new, improved version of this document will be added, serving as a supplement to the original version. Until then, only the original document is available. Some of its contents are outdated, compared to the current state of the game.
+EOD
+);
+___('design_doc_dev_body_2',  'FR', <<<EOD
+Une version mise à jour de ce document est prévue dans les mois à venir, en complément de la version actuelle. En attendant, seul le document original est disponible, ce qui signifie que certains contenus de ce document ne sont pas à jour.
+EOD
+);
+___('design_doc_dev_english', 'EN', <<<EOD
+The design document is only available in English, it currently has no French translation.
+EOD
+);
+___('design_doc_dev_english', 'FR', <<<EOD
+Le document de design est uniquement disponible en anglais, il n'a pas de traduction française pour le moment.
+EOD
+);
+___('design_doc_dev_link',    'EN', <<<EOD
+{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Click here to read the design document}}.
+EOD
+);
+___('design_doc_dev_link',    'FR', <<<EOD
+{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Cliquez ici pour lire le document de design}}.
 EOD
 );

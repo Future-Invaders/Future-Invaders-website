@@ -168,7 +168,7 @@ function rulings_get( int     $ruling_id    = null    ,
   {
     // Sanitize ruling data
     $data['uuid'] = sanitize_json($ruling_data['r_uuid']);
-    $data['url']  = sanitize_json($GLOBALS['website_url'].'pages/ruling/'.$ruling_data['r_slug']);
+    $data['url']  = sanitize_json($GLOBALS['website_url'].'ruling/'.$ruling_data['r_slug']);
 
     // Ruling dates
     if($ruling_data['r_date'] !== '0000-00-00')
@@ -191,7 +191,7 @@ function rulings_get( int     $ruling_id    = null    ,
     {
       $data['cards'][$i]['uuid']        = sanitize_json($dcards['c_uuid']);
       $data['cards'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url'].'api/card/'.$dcards['c_uuid']);
-      $data['cards'][$i]['url']         = sanitize_json($GLOBALS['website_url'].'pages/card/'.$dcards['c_slug']);
+      $data['cards'][$i]['url']         = sanitize_json($GLOBALS['website_url'].'card/'.$dcards['c_slug']);
       $data['cards'][$i]['name']['en']  = sanitize_json($dcards['c_name_en']);
       $data['cards'][$i]['name']['fr']  = sanitize_json($dcards['c_name_fr']);
     }
@@ -412,7 +412,7 @@ function rulings_list(  string  $sort_by  = 'date'  ,
       // Ruling data
       $data[$i]['uuid']     = sanitize_json($row['r_uuid']);
       $data[$i]['endpoint'] = sanitize_json($GLOBALS['website_url'].'api/ruling/'.$row['r_uuid']);
-      $data[$i]['url']      = sanitize_json($GLOBALS['website_url'].'pages/ruling/'.$row['r_slug']);
+      $data[$i]['url']      = sanitize_json($GLOBALS['website_url'].'ruling/'.$row['r_slug']);
 
       // Ruling dates
       if($row['r_date'] !== '0000-00-00')
@@ -767,7 +767,7 @@ function rulings_assemble_tag_links( string $ruling_tags ) : string
   {
     // Add the tag to the list of links, unless it's empty
     if($ruling_tags[$i])
-      $links .= '<li>'.__link('pages/game/cards?tag='.$ruling_tags[$i], $ruling_tags[$i]).'</li>';
+      $links .= '<li>'.__link('cards/list?tag='.$ruling_tags[$i], $ruling_tags[$i]).'</li>';
   }
 
   // Return the assembled links
@@ -809,7 +809,7 @@ function rulings_assemble_card_links( string $ruling_card_names ,
   {
     // Add the card to the list of links, unless it's empty
     if($ruling_card_names[$i])
-      $links .= '<li>'.__link('pages/card/'.$ruling_card_slugs[$i], $ruling_card_names[$i]).'</li>';
+      $links .= '<li>'.__link('card/'.$ruling_card_slugs[$i], $ruling_card_names[$i]).'</li>';
   }
 
   // Return the assembled links
@@ -844,7 +844,7 @@ function rulings_format_body( string $ruling_body     ,
     // Use a link when displaying on the website
     if($format === 'html')
     {
-      $card_link    = __link('pages/card/'.$card_slug, $card_name, popup: true);
+      $card_link    = __link('card/'.$card_slug, $card_name, popup: true);
       $ruling_body  = str_replace($match[0], $card_link, $ruling_body);
     }
 

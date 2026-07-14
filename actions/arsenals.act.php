@@ -280,7 +280,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
       $data['cards']['name'][$i]      = $dcards['c_name'];
       $data['cards']['slug'][$i]      = $dcards['c_slug'];
       $temp_thumb_path                = (isset($dcards['i_path']))
-                                      ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $dcards['i_path'])
+                                      ? './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $dcards['i_path'])
                                       : '';
       $data['cards']['thumb'][$i]     = sanitize_output($temp_thumb_path);
     }
@@ -301,7 +301,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
     // Sanitize the data
     $data['uuid']                     = sanitize_json($arsenal_data['a_uuid']);
     $data['url']                      = sanitize_json($GLOBALS['website_url']
-                                                      .'pages/arsenal/'.$arsenal_data['a_slug']);
+                                                      .'arsenal/'.$arsenal_data['a_slug']);
     $data['name']['en']               = sanitize_json($arsenal_data['a_name_en']);
     $data['name']['fr']               = sanitize_json($arsenal_data['a_name_fr']);
     $data['playstyle']['en']          = sanitize_json($arsenal_data['a_playstyle_en']);
@@ -388,7 +388,7 @@ function arsenals_get(  int     $arsenal_id   = null    ,
         $data['cards'][$i]['endpoint']            = sanitize_json($GLOBALS['website_url']
                                                                   .'api/card/'.$dcards['c_uuid']);
         $data['cards'][$i]['url']                 = sanitize_json($GLOBALS['website_url']
-                                                                  .'pages/card/'.$dcards['c_slug']);
+                                                                  .'card/'.$dcards['c_slug']);
         $data['cards'][$i]['name']['en']          = sanitize_json($dcards['c_name_en']);
         $data['cards'][$i]['name']['fr']          = sanitize_json($dcards['c_name_fr']);
         $data['cards'][$i]['amount']['main']      = (int)sanitize_json($dcards['c_main']);
@@ -749,29 +749,29 @@ function arsenals_list( string  $sort_by  = ''      ,
       $data[$i]['image_fr']         = sanitize_output($row['i_path_fr']);
       $data[$i]['image_name']       = sanitize_output($row['i_name']);
       $temp_thumb_path_en           = (isset($row['i_path_en']))
-                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
+                                    ? './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
                                     : '';
       $temp_thumb_path_fr           = (isset($row['i_path_fr']))
-                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
+                                    ? './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
                                     : '';
       $temp_thumb_path              = (isset($row['i_path']))
-                                    ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path'])
+                                    ? './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path'])
                                     : '';
       $data[$i]['thumb_en']         = sanitize_output($temp_thumb_path_en);
       $data[$i]['thumb_fr']         = sanitize_output($temp_thumb_path_fr);
       $data[$i]['thumb']            = sanitize_output($temp_thumb_path);
-      $data[$i]['print_en']         = (is_file('./../../img/print/arsenals/en/'.$row['a_print_en']))
+      $data[$i]['print_en']         = (is_file('./../img/print/arsenals/en/'.$row['a_print_en']))
                                     ? 'img/print/arsenals/en/'.$row['a_print_en']
                                     : NULL;
-      $data[$i]['print_fr']         = (is_file('./../../img/print/arsenals/fr/'.$row['a_print_fr']))
+      $data[$i]['print_fr']         = (is_file('./../img/print/arsenals/fr/'.$row['a_print_fr']))
                                     ? 'img/print/arsenals/fr/'.$row['a_print_fr']
                                     : NULL;
       $temp_print_extra_en          = str_replace(".pdf", "_extras.pdf", $row['a_print_en']);
       $temp_print_extra_fr          = str_replace(".pdf", "_extras.pdf", $row['a_print_fr']);
-      $data[$i]['print_extra_en']   = (is_file('./../../img/print/arsenals/en/'.$temp_print_extra_en))
+      $data[$i]['print_extra_en']   = (is_file('./../img/print/arsenals/en/'.$temp_print_extra_en))
                                     ? 'img/print/arsenals/en/'.$temp_print_extra_en
                                     : NULL;
-      $data[$i]['print_extra_fr']   = (is_file('./../../img/print/arsenals/fr/'.$temp_print_extra_fr))
+      $data[$i]['print_extra_fr']   = (is_file('./../img/print/arsenals/fr/'.$temp_print_extra_fr))
                                     ? 'img/print/arsenals/fr/'.$temp_print_extra_fr
                                     : NULL;
       $data[$i]['ntags']            = sanitize_output($row['at_count']);
@@ -796,7 +796,7 @@ function arsenals_list( string  $sort_by  = ''      ,
       // Sanitize the data
       $data[$i]['uuid']                     = sanitize_json($row['a_uuid']);
       $data[$i]['endpoint']                 = sanitize_json($GLOBALS['website_url'].'api/arsenal/'.$row['a_uuid']);
-      $data[$i]['url']                      = sanitize_json($GLOBALS['website_url'].'pages/arsenal/'.$row['a_slug']);
+      $data[$i]['url']                      = sanitize_json($GLOBALS['website_url'].'arsenal/'.$row['a_slug']);
       $data[$i]['name']['en']               = sanitize_json($row['a_name_en']);
       $data[$i]['name']['fr']               = sanitize_json($row['a_name_fr']);
       $data[$i]['playstyle']['en']          = sanitize_json($row['a_playstyle_en']);
@@ -1408,7 +1408,7 @@ function arsenals_update_card_data( int $arsenal_id ) : void
     if(isset($row['c_cost']))
     {
       for($i = 0; $i < strlen($row['c_cost']); $i++)
-        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+        $formatted_cost .= "[".$row['c_cost'][$i]."]";
     }
 
     // Assemble the main card list
@@ -1459,7 +1459,7 @@ function arsenals_update_card_data( int $arsenal_id ) : void
     if(isset($row['c_cost']))
     {
       for($i = 0; $i < strlen($row['c_cost']); $i++)
-        $formatted_cost .= "[".$row['c_cost'][$i]."] ";
+        $formatted_cost .= "[".$row['c_cost'][$i]."]";
     }
 
     // Assemble the main card list

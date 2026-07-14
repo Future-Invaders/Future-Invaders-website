@@ -290,7 +290,7 @@ function cards_get( int     $card_id    = null    ,
   {
     // Sanitize card data
     $data['uuid']         = sanitize_json($card_data['c_uuid']);
-    $data['url']          = sanitize_json($GLOBALS['website_url'].'pages/card/'.$card_data['c_slug']);
+    $data['url']          = sanitize_json($GLOBALS['website_url'].'card/'.$card_data['c_slug']);
     $data['name']['en']   = sanitize_json($card_data['c_name_en']);
     $data['name']['fr']   = sanitize_json($card_data['c_name_fr']);
     $data['cost']         = sanitize_json($card_data['c_cost']);
@@ -369,7 +369,7 @@ function cards_get( int     $card_id    = null    ,
         $data['arsenals'][$i]['endpoint']   = sanitize_json($GLOBALS['website_url']
                                                             .'api/arsenal/'.$darsenals['a_uuid']);
         $data['arsenals'][$i]['url']        = sanitize_json($GLOBALS['website_url']
-                                                            .'pages/arsenal/'.$darsenals['a_slug']);
+                                                            .'arsenal/'.$darsenals['a_slug']);
         $data['arsenals'][$i]['name']['en'] = sanitize_json($darsenals['a_name_en']);
         $data['arsenals'][$i]['name']['fr'] = sanitize_json($darsenals['a_name_fr']);
       }
@@ -386,7 +386,7 @@ function cards_get( int     $card_id    = null    ,
         $data['rulings'][$i]['endpoint']    = sanitize_json($GLOBALS['website_url']
                                                             .'api/ruling/'.$drulings['r_uuid']);
         $data['rulings'][$i]['url']         = sanitize_json($GLOBALS['website_url']
-                                                            .'pages/ruling/'.$drulings['r_slug']);
+                                                            .'ruling/'.$drulings['r_slug']);
         $data['rulings'][$i]['title']['en'] = sanitize_json($drulings['r_title_en']);
         $data['rulings'][$i]['title']['fr'] = sanitize_json($drulings['r_title_fr']);
       }
@@ -719,13 +719,13 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['image_path']   = sanitize_output($row['i_path']);
       $data[$i]['image_name']   = sanitize_output($row['i_name']);
       $temp_thumb_path_en       = (isset($row['i_path_en']))
-                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
+                                ? './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_en'])
                                 : '';
       $temp_thumb_path_fr       = (isset($row['i_path_fr']))
-                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
+                                ? './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path_fr'])
                                 : '';
       $temp_thumb_path          = (isset($row['i_path']))
-                                ? './../../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path'])
+                                ? './../img/thumbnails'.preg_replace('/^[^\/]*\//', '/', $row['i_path'])
                                 : '';
       $data[$i]['thumb_en']     = sanitize_output($temp_thumb_path_en);
       $data[$i]['thumb_fr']     = sanitize_output($temp_thumb_path_fr);
@@ -747,7 +747,7 @@ function cards_list( string   $sort_by    = 'name'  ,
       $data[$i]['uuid']         = sanitize_json($row['c_uuid']);
       if($search_type === null)
       {
-        $data[$i]['url']        = sanitize_json($GLOBALS['website_url'].'pages/card/'.$row['c_slug']);
+        $data[$i]['url']        = sanitize_json($GLOBALS['website_url'].'card/'.$row['c_slug']);
         $data[$i]['endpoint']   = sanitize_json($GLOBALS['website_url'].'api/card/'.$row['c_uuid']);
       }
       $data[$i]['name']['en']   = sanitize_json($row['c_name_en']);
@@ -1229,7 +1229,7 @@ function cards_format_rulings(  string $ruling_body     ,
     // Use a link when displaying on the website
     if($format === 'html')
     {
-      $card_link    = __link('pages/card/'.$card_slug, $card_name, popup: true);
+      $card_link    = __link('card/'.$card_slug, $card_name, popup: true);
       $ruling_body  = str_replace($match[0], $card_link, $ruling_body);
     }
 

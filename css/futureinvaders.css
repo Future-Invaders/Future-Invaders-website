@@ -668,6 +668,7 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
 .header_topmenu_panel          { height: 2.0rem; margin-top: 0.1rem; margin-right: 1.0rem; margin-left: -0.2rem;  }
 .header_topmenu_mode           { height: 2.0rem; margin-top: 0.1rem; margin-right: 1.0rem; margin-left: -0.2rem;  }
 .header_topmenu_flag           { height: 1.7rem; margin-right: 0.8rem                                             }
+.header_topmenu_logo           { height: 2.8rem; margin-top: 0.1rem; margin-right: 0.5rem;                        }
 .header_infobar                { background-color: var(--future-light); text-align: center                        ;
                                  border-bottom: 3px solid var(--future-dark); padding-top: 0.2rem                 ;
                                  padding-bottom: 0.2rem; padding-left: 2.0rem; padding-right: 2.0rem;             }
@@ -679,13 +680,25 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
 
 @media (max-width: 992px)                                                               {
 .header_topmenu_zone    { margin-left: 1.0rem; margin-right: 0.8rem;                    }
-.header_topmenu_title   { font-size: 100%; padding-left: 1.2rem; padding-right: 1.2rem  ;
+.header_topmenu_title   { font-size: 80%; padding-left: 1.2rem; padding-right: 1.2rem  ;
                           padding-top: 0.6rem; padding-bottom: 0.6rem;                  }
 .header_topmenu_account { height: 2.5rem; margin-right: 1.2rem;                         }
 .header_topmenu_mail    { height: 2.7rem; margin-right: 1.2rem;                         }
 .header_topmenu_panel   { height: 2.5rem; margin-right: 1.2rem;                         }
 .header_topmenu_mode    { height: 2.5rem; margin-right: 1.2rem; margin-top: -0.5rem;    }
-.header_topmenu_flag    { height: 2.3rem; margin-right: 1.2rem; margin-top: -0.5rem;  } }
+.header_topmenu_flag    { height: 2.0rem; margin-right: 1.2rem; margin-top: -0.5rem;    }
+.header_topmenu_logo    { height: 3.7rem; margin-right: 1.0rem;                       } }
+
+@media (max-width: 800px)                   {
+.header_topmenu_title   { font-size: 70%;   }
+.header_topmenu_flag    { height: 1.8rem; } }
+
+@media (max-width: 730px)                   {
+.header_topmenu_title   { font-size: 60%;   }
+.header_topmenu_flag    { height: 1.6rem; } }
+
+@media (max-width: 660px)                   {
+.header_topmenu_title   { font-size: 50%; } }
 
 /***************************************** TOP MENU HIDDEN DROPDOWN SECTION ******************************************/
 

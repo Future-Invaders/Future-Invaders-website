@@ -34,6 +34,18 @@ $current_url = $_SERVER['REQUEST_URI'];
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Select the correct menus
+
+$menu_game_selected   = (isset($menu_game_selected))    ? ' header_topmenu_title_selected' : '';
+$menu_guides_selected = (isset($menu_guides_selected))  ? ' header_topmenu_title_selected' : '';
+$menu_cards_selected  = (isset($menu_cards_selected))   ? ' header_topmenu_title_selected' : '';
+$menu_tools_selected  = (isset($menu_tools_selected))   ? ' header_topmenu_title_selected' : '';
+$menu_social_selected = (isset($menu_social_selected))  ? ' header_topmenu_title_selected' : '';
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                  HEADER CONTENTS                                                  */
@@ -121,6 +133,7 @@ $javascripts .= '
 
 
 
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                           DISPLAY THE HEADER AND MENUS                                            */
@@ -131,13 +144,16 @@ $javascripts .= '
 <html lang="<?=string_change_case($lang,'lowercase')?>">
   <head>
     <title><?=$page_title?></title>
+    <link rel="canonical" href="<?='https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <link rel="shortcut icon" href="<?=$path?>favicon.ico">
+    <link rel="icon" href="<?=$path?>favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="robots" content="index, follow">
     <meta name="description" content="<?=$page_description?>">
+    <meta property="og:type" content="website">
     <meta property="og:title" content="<?=$page_title?>">
     <meta property="og:description" content="<?=$page_description?>">
-    <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
+    <meta property="og:url" content="<?='https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <meta property="og:site_name" content="Future Invaders">
     <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/common/logo_filled.png">
     <meta property="og:locale" content="en_US">
@@ -158,30 +174,41 @@ $javascripts .= '
   <?php if(!isset($hide_header)) { ?>
 
   <input id="root_path" type="hidden" class="hidden" value="<?=$path?>">
-
-<?php /* ############################################## TOP MENU ################### */ if(!isset($_GET["popup"])) { ?>
-
     <div class="header_topbar">
 
       <div class="header_topmenu width_50">
 
         <div id="header_titles" class="header_topmenu_zone">
 
-          <div class="header_topmenu_title" id="header_menu_title_game" onclick="toggle_header_menu('game', 1);">
-            <?=__('menu_top_game')?>
-          </div>
+          <a href="<?=$path?>game">
+            <div class="header_topmenu_title<?=$menu_game_selected?>" id="header_menu_title_game">
+              <?=__('menu_top_game')?>
+            </div>
+          </a>
 
-          <div class="header_topmenu_title" id="header_menu_title_guides" onclick="toggle_header_menu('guides', 1);">
-            <?=__('menu_top_guides')?>
-          </div>
+          <a href="<?=$path?>guides">
+            <div class="header_topmenu_title<?=$menu_guides_selected?>" id="header_menu_title_guides">
+              <?=__('menu_top_guides')?>
+            </div>
+          </a>
 
-          <div class="header_topmenu_title" id="header_menu_title_tools" onclick="toggle_header_menu('tools', 1);">
-            <?=__('menu_top_tools')?>
-          </div>
+          <a href="<?=$path?>cards">
+            <div class="header_topmenu_title<?=$menu_cards_selected?>" id="header_menu_title_cards">
+              <?=__('menu_top_cards')?>
+            </div>
+          </a>
 
-          <div class="header_topmenu_title" id="header_menu_title_social" onclick="toggle_header_menu('social', 1);">
-            <?=__('menu_top_social')?>
-          </div>
+          <a href="<?=$path?>tools">
+            <div class="header_topmenu_title<?=$menu_tools_selected?>" id="header_menu_title_tools">
+              <?=__('menu_top_tools')?>
+            </div>
+          </a>
+
+          <a href="<?=$path?>social">
+            <div class="header_topmenu_title<?=$menu_social_selected?>" id="header_menu_title_social">
+              <?=__('menu_top_social')?>
+            </div>
+          </a>
 
         </div>
 
@@ -199,255 +226,7 @@ $javascripts .= '
         </div>
       </div>
 
-
-<?php ############################################# SUBMENU: GAME ################################################## ?>
-
-      <div class="header_submenu header_submenu_5" id="header_submenu_game">
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('futureinvaders')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('index', __('submenu_game_home'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/intro', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/features', __('submenu_guides_features'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/print', __('submenu_tools_printhelp'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/discord', __('submenu_social_discord'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_game_media')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/gameplay', __('submenu_game_pictures'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/contact', __('submenu_social_contactme'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/publish', __('submenu_social_publish'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_game_updates')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/updates', __('submenu_game_news'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/links', __('submenu_social_links'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-      </div>
-
-
-<?php ############################################ SUBMENU: GUIDES ################################################# ?>
-
-      <div class="header_submenu header_submenu_5" id="header_submenu_guides">
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_guides_game')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/intro', __('submenu_guides_howto'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/features', __('submenu_guides_features'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/rules', __('submenu_guides_rules'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/lore', __('submenu_guides_lore'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/vocabulary', __('submenu_guides_vocab'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/formats', __('submenu_guides_formats'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_guides_cards')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/cards', __('submenu_guides_cardlist'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/arsenals', __('submenu_guides_arsenals'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/rulings', __('submenu_guides_rulings'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_guides_help')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/game/strategies', __('submenu_guides_strats'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-      </div>
-
-<?php ############################################ SUBMENU: TOOLS ################################################## ?>
-
-      <div class="header_submenu header_submenu_5" id="header_submenu_tools">
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_tools_print')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/print', __('submenu_tools_printhelp'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/print_cards', __('submenu_tools_printcards'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/print_arsenals', __('submenu_tools_printarsenals'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/print_extra', __('submenu_tools_printextra'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_tools_gametools')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/tabletop_simulator', __('submenu_tools_tts'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_tools_development')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/design_doc', __('submenu_tools_design_doc'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/tools/source', __('submenu_tools_source'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('api/doc/intro', __('submenu_tools_api'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-      </div>
-
-<?php ############################################ SUBMENU: SOCIAL ################################################# ?>
-
-      <div class="header_submenu header_submenu_5" id="header_submenu_social">
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_social_community')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/links', __('submenu_social_links'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/discord', __('submenu_social_discord'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/irc', __('submenu_social_irc'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/coc', __('submenu_social_coc'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/help', __('submenu_social_contribute'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_social_contact')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/credits', __('submenu_social_credits'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/contact', __('submenu_social_contactme'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/feedback', __('submenu_social_feedback'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/publish', __('submenu_social_publish'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column">
-          <div class="header_submenu_title">
-            <?=__('submenu_social_legal')?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/legal', __('submenu_social_mentions'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/social/copyright', __('submenu_social_copyright'), 'header_submenu_link', 1, $path);?>
-          </div>
-        </div>
-
-        <div class="header_submenu_column desktop_wide">
-          &nbsp;
-        </div>
-
-      </div>
-
     </div>
-    <?php } ?>
 
 
 <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
