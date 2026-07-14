@@ -228,34 +228,18 @@ Les concepts de jeu, designs des cartes, textes des cartes, règles, jugements, 
 EOD
 );
 ___('privacy_copyright_body_2', 'EN', <<<EOD
-Some of the earliest prototypes have been generated using Microsoft Image Creator. These images are not subject to copyright by Microsoft, nor is it subject to copyright by the author of the Future Invaders game.
-EOD
-);
-___('privacy_copyright_body_2', 'FR', <<<EOD
-Certains des premiers prototypes du jeu ont été généré en utilisant Microsoft Image Creator. Ces images ne sont pas soumises à la propriété intellectuelle par Microsoft, ni par l'auteur du jeu Future Invaders.
-EOD
-);
-___('privacy_copyright_body_3', 'EN', <<<EOD
-Future Invaders is not affiliated with Microsoft, and does not endorse or sponsor the use of Microsoft's products or services.
-EOD
-);
-___('privacy_copyright_body_3', 'FR', <<<EOD
-Future Invaders n'est pas affilié à Microsoft, et ne soutient ni n'est sponsorisé par Microsoft.
-EOD
-);
-___('privacy_copyright_body_4', 'EN', <<<EOD
 The Future Invaders website is {{link|tools/source|open sourced}}, and its source code is subject to the MIT license: anyone can use part or all of the Future Invaders website's source code to create their own websites, as long as they credit the original author.
 EOD
 );
-___('privacy_copyright_body_4', 'FR', <<<EOD
+___('privacy_copyright_body_2', 'FR', <<<EOD
 Le site Internet de Future Invaders est {{link|tools/source|open source}}. Son code source est soumis à la licence MIT : n'importe qui est libre d'utiliser une partie ou l'intégralité du code source de ce site Internet pour créer son propre site Internet, à condition de créditer l'auteur originel du code.
 EOD
 );
-___('privacy_copyright_body_5', 'EN', <<<EOD
+___('privacy_copyright_body_3', 'EN', <<<EOD
 © Future Invaders / Éric Bisceglia 2024 - {{1}}
 EOD
 );
-___('privacy_copyright_body_5', 'FR', <<<EOD
+___('privacy_copyright_body_3', 'FR', <<<EOD
 © Future Invaders / Éric Bisceglia 2024 - {{1}}
 EOD
 );
@@ -280,11 +264,11 @@ Future Invaders a été créé par {{external|https://e-bis.fr/games/fr.html|Ér
 EOD
 );
 ___('credits_game_body_2', 'EN', <<<EOD
-All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|game/gdd|can be accessed here}}.
+All the game's mechanics, rules, backstory, and some card designs were initially outlined in a game design document, which {{link|tools/gdd|can be accessed here}}.
 EOD
 );
 ___('credits_game_body_2', 'FR', <<<EOD
-Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|game/gdd|peut être consulté ici}}.
+Toutes les mécaniques, règles, l'univers du jeu et certaines cartes ont été initialement détaillés dans un "game design document", qui {{link|tools/gdd|peut être consulté ici}}.
 EOD
 );
 ___('credits_game_body_3', 'EN', <<<EOD
@@ -322,19 +306,11 @@ EOD
 ___('credits_art_title',  'EN', "Art credits");
 ___('credits_art_title',  'FR', "Crédits artistiques");
 ___('credits_art_body_1', 'EN', <<<EOD
-Some of the game's early prototype artworks were generated using Microsoft Image Creator.
+All of the game's art has been hand drawn by Bad.
 EOD
 );
 ___('credits_art_body_1', 'FR', <<<EOD
-Certaines des illustrations des premiers prototypes du jeu ont été générées par Microsoft Image Creator.
-EOD
-);
-___('credits_art_body_2', 'EN', <<<EOD
-Everything else has been hand drawn by Bad.
-EOD
-);
-___('credits_art_body_2', 'FR', <<<EOD
-Tout le reste a été dessiné à la main par Bad.
+Tout l'art du jeu a été dessiné à la main par Bad.
 EOD
 );
 

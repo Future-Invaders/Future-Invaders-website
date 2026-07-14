@@ -267,7 +267,7 @@ $arsenal_cards_extra = cards_list(  sort_by:  'extra'                           
         </li>
         <?php if($arsenal_data['printex_'.$lowerlang]): ?>
         <li>
-          <?=__link('img/print/arsenals/'.$lowerlang.'/'.$arsenal_data['printex_'.$lowerlang], __('arsenal_print_extra'), popup: true)?>
+          <?=__link('img/print/arsenals/'.$lowerlang.'/all_arsenals.pdf', __('arsenal_print_extra'), popup: true)?>
         </li>
         <?php endif; ?>
       </ul>

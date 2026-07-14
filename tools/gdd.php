@@ -4,11 +4,11 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../inc/includes.inc.php';  # Core
-include_once './../lang/game.lang.php';   # Translations
+include_once './../lang/tools.lang.php';   # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "game/gdd";
+$page_url         = "tools/gdd";
 $page_title_en    = "Design document";
 $page_title_fr    = "Document de design";
 $page_description = "The design document which spawned the sci-fi card battling game Future Invaders";

@@ -177,10 +177,10 @@ ___('arsenal_print_body_1',   'FR', <<<EOD
 Une fois que vous avez pris connaissance du {{link|tools/print|processus d'impression maison}}, vous pouvez télécharger puis imprimer cet arsenal chez vous :
 EOD
 );
-___('arsenal_print_cards',    'EN', "Main & reserves cards");
-___('arsenal_print_cards',    'FR', "Cartes et réserves de l'arsenal");
-___('arsenal_print_extra',    'EN', "Extra arsenal cards");
-___('arsenal_print_extra',    'FR', "Cartes additionnelles");
+___('arsenal_print_cards',    'EN', "Print all cards in this arsenal");
+___('arsenal_print_cards',    'FR', "Imprimer les cartes de cet arsenal");
+___('arsenal_print_extra',    'EN', "Extra cards (all arsenals)");
+___('arsenal_print_extra',    'FR', "Cartes additionnelles (tous les arsenaux)");
 
 
 // Arsenal list

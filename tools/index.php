@@ -45,6 +45,15 @@ $menu_tools_selected = true;
   </div>
 
   <div class="bigpadding_top">
+    <a href="<?=$path?>tools/gdd">
+      <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
+        <?=__('menu_designdoc')?>
+      </h2>
+      <img src="<?=$path?>img/banners/banner_designdoc.png" alt="<?=__('menu_designdoc')?>">
+    </a>
+  </div>
+
+  <div class="bigpadding_top">
     <a href="<?=$path?>tools/source">
       <h2 class="tinypadding_bot tinypadding_top spaced black align_center uppercase">
         <?=__('menu_source')?>

@@ -317,64 +317,35 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                  DESIGN DOCUMENT                                                  */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Design doc dev page
-___('design_doc_dev_title',   'EN', "Design document");
-___('design_doc_dev_title',   'FR', "Document de design");
-___('design_doc_dev_body_1',  'EN', <<<EOD
-Are you curious to see how a game is born? Or how it evolves over time? In the spirit of {{link|tools/source|transparency}}, Future Invaders' design document is available to the public.
-EOD
-);
-___('design_doc_dev_body_1',  'FR', <<<EOD
-Êtes-vous curieux de voir comment un jeu naît ? Ou comment il évolue au fil du temps ? Dans un esprit de {{link|tools/source|transparence}}, le document de design de Future Invaders est partagé publiquement sur le site.
-EOD
-);
-___('design_doc_dev_body_2',  'EN', <<<EOD
-In the coming months, a new, improved version of this document will be added, serving as a supplement to the original version. Until then, only the original document is available. Some of its contents are outdated, compared to the current state of the game.
-EOD
-);
-___('design_doc_dev_body_2',  'FR', <<<EOD
-Une version mise à jour de ce document est prévue dans les mois à venir, en complément de la version actuelle. En attendant, seul le document original est disponible, ce qui signifie que certains contenus de ce document ne sont pas à jour.
-EOD
-);
-___('design_doc_dev_english', 'EN', <<<EOD
-The design document is only available in English, it currently has no French translation.
-EOD
-);
-___('design_doc_dev_english', 'FR', <<<EOD
-Le document de design est uniquement disponible en anglais, il n'a pas de traduction française pour le moment.
-EOD
-);
-___('design_doc_dev_link',    'EN', <<<EOD
-{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Click here to read the design document}}.
-EOD
-);
-___('design_doc_dev_link',    'FR', <<<EOD
-{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Cliquez ici pour lire le document de design}}.
-EOD
-);
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                 PUBLISH THIS GAME                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
 // Publish this game!
 ___('publish_title',  'EN', "Publish this game!");
-___('publish_title',  'FR', "Éditez ce jeu !");
-___('publish_body',   'EN', <<<EOD
-Are you a board or card game publisher looking for a new project? Future Invaders could be your next success story! Years of design and development have already gone into the game, with only the final steps remaining. Below is a Q&A addressing common questions, followed by contact information if you're interested in further discussing the publishing process.
+___('publish_title',  'FR', "Publiez ce jeu !");
+___('publish_body_1', 'EN', <<<EOD
+Are you a board or card game publisher looking for your next project?
 EOD
 );
-___('publish_body',   'FR', <<<EOD
-Êtes-vous un éditeur de jeux de cartes ou de société à la recherche d'un nouveau projet ? Future Invaders pourrait bien être votre prochain succès ! Des années de développement ont déjà été consacrées à ce jeu, seules les étapes finales restent. Vous trouverez ci-dessous une FAQ couvrant les questions les plus courantes, ainsi qu'une adresse de contact si vous souhaitez en discuter plus en détail.
+___('publish_body_1', 'FR', <<<EOD
+Êtes-vous un éditeur de jeux de cartes ou de société à la recherche de votre prochain projet ?
+EOD
+);
+___('publish_body_2', 'EN', <<<EOD
+{{link|index|Future Invaders}} could be your next success story!
+EOD
+);
+___('publish_body_2', 'FR', <<<EOD
+{{link|index|Future Invaders}} pourrait bien être votre prochain succès !
+EOD
+);
+___('publish_body_3', 'EN', <<<EOD
+Below is a short Q&A answering common questions, followed by contact details if you're interested in further discussing the game.
+EOD
+);
+___('publish_body_3', 'FR', <<<EOD
+Vous trouverez ci-dessous une FAQ répondant aux questions les plus courantes, ainsi qu'une adresse de contact si vous souhaitez discuter du jeu plus en détail.
 EOD
 );
 
@@ -382,12 +353,84 @@ EOD
 // Sales pitch
 ___('publish_question_pitch', 'EN', "What is the sales pitch for Future Invaders?");
 ___('publish_question_pitch', 'FR', "Quel est l'argumentaire de vente de Future Invaders ?");
-___('publish_answer_pitch',   'EN', <<<EOD
-Quick to learn, challenging to master. Fewer rules than the average tactical card game. Little equipment required, all you need are 30 cards and a few dice. Strict design restrictions to avoid replicating the "unfun" aspects of the genre. Near future science-fiction, an underused theme in card games. Years of future content already planned and designed. With universal acclaim from both new and experienced playtesters, this game is primed for success!
+___('publish_answer_pitch_1', 'EN', <<<EOD
+Easy to learn, but challenging to master.
 EOD
 );
-___('publish_answer_pitch',   'FR', <<<EOD
-Rapide à apprendre, difficile à maîtriser. Moins de règles que le jeu de cartes tactique moyen. Peu d'équipement nécessaire, 30 cartes et quelques dés suffisent. Des règles de conception strictes évitent les éléments "anti-fun" des autres jeux. Science-fiction située dans le future proche, thème rare dans les jeux de cartes. Des années de contenus futurs déjà planifiés. Un succès unanime auprès de testeurs débutants comme confirmés.
+___('publish_answer_pitch_1', 'FR', <<<EOD
+Rapide à apprendre, mais difficile à maîtriser.
+EOD
+);
+___('publish_answer_pitch_2', 'EN', <<<EOD
+Fewer rules than most tactical card games.
+EOD
+);
+___('publish_answer_pitch_2', 'FR', <<<EOD
+Moins de règles que les autres jeux de cartes tactiques.
+EOD
+);
+___('publish_answer_pitch_3', 'EN', <<<EOD
+Unified rules for both duels and multiplayer, without affecting balance.
+EOD
+);
+___('publish_answer_pitch_3', 'FR', <<<EOD
+Les mêmes règles s'appliquent aux duels et parties multijoueur, sans affecter l'équilibrage.
+EOD
+);
+___('publish_answer_pitch_4', 'EN', <<<EOD
+Low complexity makes it accessible to players unfamiliar with card games.
+EOD
+);
+___('publish_answer_pitch_4', 'FR', <<<EOD
+Une complexité faible, le rendant accessible aux joueurs qui n'ont pas l'habitude des jeux de cartes.
+EOD
+);
+___('publish_answer_pitch_5', 'EN', <<<EOD
+Minimal setup, all you need are 40 cards and a few dice.
+EOD
+);
+___('publish_answer_pitch_5', 'FR', <<<EOD
+Peu d'équipement nécessaire, 40 cartes et quelques dés suffisent.
+EOD
+);
+___('publish_answer_pitch_6', 'EN', <<<EOD
+{{link|game/features|Innovative mechanics}} never seen before in the genre.
+EOD
+);
+___('publish_answer_pitch_6', 'FR', <<<EOD
+Quelques {{link|game/features|mécaniques innovantes}} jamais vues dans un jeu de cartes.
+EOD
+);
+___('publish_answer_pitch_7', 'EN', <<<EOD
+Strict design principles that prevent and eliminate "unfun" elements.
+EOD
+);
+___('publish_answer_pitch_7', 'FR', <<<EOD
+Des restrictions de conception strictes pour éviter les éléments "anti-fun" du genre.
+EOD
+);
+___('publish_answer_pitch_8', 'EN', <<<EOD
+Near future science-fiction setting with no existing IP, well recieved by playtesters.
+EOD
+);
+___('publish_answer_pitch_8', 'FR', <<<EOD
+Un univers de science-fiction situé dans un future proche, thème qui plait aux testeurs.
+EOD
+);
+___('publish_answer_pitch_9', 'EN', <<<EOD
+Years of playtesting and refinement, earning praise from both newcomer and veteran playtesters.
+EOD
+);
+___('publish_answer_pitch_9', 'FR', <<<EOD
+Des années de playtesting, en ajustant le jeu jusqu'à plaire aux débutants comme aux confirmés.
+EOD
+);
+___('publish_answer_pitch_10', 'EN', <<<EOD
+Years of future content already planned and ready for development.
+EOD
+);
+___('publish_answer_pitch_10', 'FR', <<<EOD
+Des années de contenu futur déjà planifié et prêt à être développé.
 EOD
 );
 
@@ -396,24 +439,24 @@ EOD
 ___('publish_question_audience',  'EN', "What is the target audience for Future Invaders?");
 ___('publish_question_audience',  'FR', "Quel est le public cible de Future Invaders ?");
 ___('publish_answer_audience',    'EN', <<<EOD
-Casual to midcore board and card game players. This game appeals to people looking for an accessible entry into tactical card games, or to those who already enjoy the genre but want a fresh, back-to-basics experience.
+Future Invaders targets casual to midcore board and card game players. It appeals to those looking for an accessible entry point into tactical card games, or to those who already enjoy the genre but want a fresh, back-to-basics experience.
 EOD
 );
 ___('publish_answer_audience',    'FR', <<<EOD
-Des joueurs de jeux de cartes ou de société allant de "casual" à "midcore". Ce jeu est destiné à ceux qui cherchent une porte d'entrée dans les jeux de cartes tactiques, ainsi qu'à ceux qui aiment déjà le genre et cherchent une expérience qui revient à ses fondamentaux.
+Des joueurs de jeux de cartes ou de société allant du profil "casual" au "midcore". Le jeu s'adresse à ceux qui cherchent une porte d'entrée vers les jeux de cartes tactiques, ainsi qu'à ceux qui apprécient déjà le genre et recherchent une expérience revenant aux fondamentaux du genre.
 EOD
 );
 
 
 // How is it different
 ___('publish_question_difference',  'EN', "How is Future Invaders different from other card games?");
-___('publish_question_difference',  'FR', "En quoi Future Invaders est différent des autres jeux ?");
+___('publish_question_difference',  'FR', "En quoi Future Invaders est-il différent des autres jeux ?");
 ___('publish_answer_difference',    'EN', <<<EOD
- Playtesting shows strong interest in two main areas: the setting, which offers a near-future sci-fi world unconnected to existing media franchises, and the mechanics, which simplify gameplay compared to modern card games while still allowing for creative and complex interactions.
+Playtesting has shown strong interest in two main areas: the setting, a near-future sci-fi world independent of any existing media franchise, and the clarity of its mechanics, which simplify gameplay compared to modern card games while still allowing for creative and complex interactions.
 EOD
 );
 ___('publish_answer_difference',    'FR', <<<EOD
-Les séances de playtesting ont montré un fort intérêt pour deux aspects du jeu : son univers, de la science-fiction située dans le futur proche sans pour autant être lié à une franchise existante, et ses mécaniques, plus simples que les jeux de cartes modernes, tout en permettant des interactions complexes et créatives.
+Les séances de playtest ont montré un fort intérêt pour deux aspects du jeu en particulier : son univers, une science-fiction située dans un futur proche, indépendante de toute franchise existante, et la clarté de ses mécaniques, plus simples que celles des jeux de cartes modernes, tout en permettant des interactions complexes et créatives.
 EOD
 );
 
@@ -422,50 +465,63 @@ EOD
 ___('publish_question_free',  'EN', "Why publish a game that's available for free?");
 ___('publish_question_free',  'FR', "Pourquoi publier un jeu disponible gratuitement ?");
 ___('publish_answer_free',    'EN', <<<EOD
- The current beta version is available for free as print-and-play to help generate interest and get players to try the game. Most playtesters have expressed a desire to buy a professionally printed version, showing that the free version will not reduce future sales.
+The current beta version is available as a free print-and-play edition to generate interest and encourage players to try the game. Most playtesters have expressed interest in purchasing a professionally printed version, showing that the free version will not reduce future sales.
 EOD
 );
 ___('publish_answer_free',    'FR', <<<EOD
-La version beta actuelle est imprimable gratuitement chez soi, dans le but de susciter l'intérêt des gens et de les inciter à essayer le jeu. La majorité des testeurs ont exprimé leur souhait d'acheter une version imprimée professionnellement, ce qui montre que la gratuité actuelle n'affectera pas les ventes futures.
+La version beta actuelle est disponible gratuitement en version imprimable, afin d'inciter des joueurs à essayer le jeu, et de créer de l'intérêt pour son futur. La majorité des testeurs ont exprimé leur souhait d'acheter une version imprimée de manière professionnelle, ce qui montre que la gratuité actuelle n'affectera pas les ventes futures.
 EOD
 );
 
 
-// Which business model
-___('publish_question_model',  'EN', "What is this game's business model?");
-___('publish_question_model',  'FR', "Quel est le modèle économique du jeu ?");
-___('publish_answer_model',    'EN', <<<EOD
-The tactical card game market is crowded with the "random booster" model, which many playtesters have criticized. Future Invaders will be sold as prebuilt decks of 45 cards. The core set includes 12 such decks, and each expansion will add 12 to 16 more. Special packages of 150 and 300 cards will also be available for "draft mode". This model has received positive feedback from playtesters, who have expressed a willingness to buy 2 to 10 items per expansion, but remains open to discussion.
+// Development status
+___('publish_question_status',  'EN', "What is the current development status?");
+___('publish_question_status',  'FR', "Quel est l'état actuel du développement du jeu ?");
+___('publish_answer_status',    'EN', <<<EOD
+The game's development is fully complete. Years of playtesting and rebalancing have already been completed, and the core set is ready for release. The only remaining tasks are to fine-tune the appearance of the cards and rulebook, and to finalize the box set designs.
 EOD
 );
-___('publish_answer_model',    'FR', <<<EOD
-Le marché des jeux de cartes tactiques est dominé par le modèle des "boosters aléatoires", critiqué par de nombreux testeurs. Future Invaders se vendra sous forme d'arsenaux pré-assemblés de 45 cartes, avec 12 paquets dans le set de base, et 12 à 16 par extension future. Des collections de 150 et 300 cartes seront également disponibles pour le mode "draft". Ce modèle a reçu des retours positifs des testeurs, qui se disent prêts à acheter 2 à 10 paquets par extension, bien que le modèle reste ouvert à discussion.
+___('publish_answer_status',    'FR', <<<EOD
+Le développement du jeu est terminé. Des années de playtests et d'équilibrage ont déjà eu lieu, et la version initiale est prête à être publiée. Les seules tâches restantes sont d'ajuster l'apparence des cartes et du livret de règles, et de concevoir les boîtes du jeu.
 EOD
 );
 
 
 // Long term plans
 ___('publish_question_plans',  'EN', "What are the long-term plans for Future Invaders?");
-___('publish_question_plans',  'FR', "Quels sont les plans au long terme ?");
+___('publish_question_plans',  'FR', "Quels sont les plans à long terme ?");
 ___('publish_answer_plans',    'EN', <<<EOD
-Multiple future expansions have been drafted, with new card designs already done. Each expansion will introduce a new major mechanic, refreshing gameplay along with major progress in the game's story and worldbuilding. Discussing future plans for the game would act as a spoiler to its players. If you are looking to know more, this topic will have to be discussed privately.
+Several future expansions have already been drafted. Each will introduce a major new mechanic, refreshing gameplay while advancing the game's story and worldbuilding. Discussing these plans publicly would spoil future content for players. Further details can be discussed privately.
 EOD
 );
 ___('publish_answer_plans',    'FR', <<<EOD
-Plusieurs extensions futures ont déjà été conçues, incluant de nombreuses nouvelles cartes. Chaque extension introduira une nouvelle mécanique majeure, qui rafraichira l'expérience de jeu, tout en faisant progresser son histoire et son univers. Pour plus de détails sur les projets futurs, une discussion en privé serait plus appropriée afin d'éviter les spoilers publics.
+Plusieurs extensions futures ont déjà été conçues, incluant de nombreuses nouvelles cartes. Chaque extension introduira une nouvelle mécanique majeure, qui rafraîchira l'expérience de jeu tout en faisant progresser l'histoire et l'univers du jeu. Pour davantage de détails sur le futur du jeu, une discussion privée serait préférable afin d'éviter les spoilers publics.
+EOD
+);
+
+
+// Visuals and graphics
+___('publish_question_graphics',  'EN', "Are the visuals and artworks finished?");
+___('publish_question_graphics',  'FR', "Les visuels et illustrations sont-ils terminés ?");
+___('publish_answer_graphics',    'EN', <<<EOD
+Every card features {{link|game/art|its own artwork}}, all hand-drawn by the game's designer. These illustrations can be kept as they are, improved, or replaced. The card layouts, however, are unfinished and will require additional design work to refine and polish them.
+EOD
+);
+___('publish_answer_graphics',    'FR', <<<EOD
+Chaque carte possède {{link|game/art|sa propre illustration}}, toutes dessinées par le créateur du jeu. Ces illustrations peuvent être conservées telles quelles, améliorées ou remplacées. La mise en page des cartes est toutefois incomplète et nécessitera l'intervention d'un graphiste pour être améliorée et finalisée.
 EOD
 );
 
 
 // Intellectual property
-___('publish_question_ip',  'EN', "What is the status of the game's intellectual property?");
-___('publish_question_ip',  'FR', "Quel est le statut de la propriété intellectuelle du jeu ?");
+___('publish_question_ip',  'EN', "Who owns the rights to Future Invaders?");
+___('publish_question_ip',  'FR', "Qui détient les droits de Future Invaders ?");
 ___('publish_answer_ip',    'EN', <<<EOD
-The IP is currently owned by the author, Éric Bisceglia. The Future Invaders card game is meant to be the centerpiece of a larger universe, which will include free online games and novellas developed by the author. Publishing the game would entail shared IP rights, with card game rights going to the publisher, while the author retains rights to produce non-commercial works within its universe.
+The intellectual property, artwork, and worldbuilding of Future Invaders are original creations of Éric Bisceglia. I am open to licensing agreements for publication, while retaining creative ownership of the work.
 EOD
 );
 ___('publish_answer_ip',    'FR', <<<EOD
-L'auteur, Éric Bisceglia, détient actuellement la propriété intellectuelle. Future Invaders sera au cœur d'un univers comprenant d'autres jeux en ligne gratuits ainsi que des nouvelles, développés par l'auteur. La publication du jeu implique un partage des droits : les droits sur le jeu de cartes reviendront à l'éditeur, tandis que l'auteur conservera le droit de créer des contenus non commerciaux dans l'univers du jeu.
+La propriété intellectuelle, les illustrations et l'univers de Future Invaders sont des créations originales d'Éric Bisceglia. Je suis ouvert à des accords de licence pour la publication, tout en conservant la propriété intellectuelle de l'œuvre.
 EOD
 );
 
@@ -474,11 +530,11 @@ EOD
 ___('publish_question_website',  'EN', "How about this website?");
 ___('publish_question_website',  'FR', "Qu'en est-il de ce site web ?");
 ___('publish_answer_website',    'EN', <<<EOD
-Designing a complete website for a game is a long and complex task. Having an already completed website will save a lot of development time, and its ownership can be transferred if desired, although I am willing to continue developing it in the future.
+Designing a complete website for a game takes time and effort. Having a fully functional website already in place can save significant development time, and ownership can be transferred if desired. I'm open to continuing its development myself in the future.
 EOD
 );
 ___('publish_answer_website',    'FR', <<<EOD
-Le développement complet d'un site pour le jeu est déjà réalisé, un atout qui économisera du temps de développement. Sa propriété peut être transférée si nécessaire, bien que je sois disposé à continuer à le gérer.
+Le développement complet du site du jeu est déjà achevé. Sa propriété peut être transférée si nécessaire, et je suis disposé à continuer à le gérer et le développer.
 EOD
 );
 
@@ -487,11 +543,24 @@ EOD
 ___('publish_question_self',  'EN', "Why not self-publish Future Invaders?");
 ___('publish_question_self',  'FR', "Pourquoi ne pas auto-publier Future Invaders ?");
 ___('publish_answer_self',    'EN', <<<EOD
-Future Invaders is envisioned as a long-term project, not a one-off game. Crowdfunding could fund the initial core set but wouldn't guarantee the quality or stability that comes with an established publisher.
+Future Invaders is currently a one-man project. Working with a publisher would turn it into a team effort and further improve the game's quality.
 EOD
 );
 ___('publish_answer_self',    'FR', <<<EOD
-Future Invaders est envisagé comme un projet à long terme. Bien que le crowdfunding pourrait financer le lancement du jeu, il n'apporterait pas la stabilité ni la qualité qu'un éditeur établi peut garantir sur le long terme.
+Future Invaders est actuellement un projet individuel. Passer par un éditeur en ferait un travail d'équipe, ce qui contribuerait à en améliorer la qualité.
+EOD
+);
+
+
+// Try
+___('publish_question_try', 'EN', "Can we try playing the game?");
+___('publish_question_try', 'FR', "Pouvons-nous essayer le jeu ?");
+___('publish_answer_try',   'EN', <<<EOD
+You can try Future Invaders right now! A complete print-and-play edition is available on the website. I can also send you a playtesting kit, or organize a demo session anywhere in France.
+EOD
+);
+___('publish_answer_try',   'FR', <<<EOD
+Une version imprimable complète du jeu est disponible sur le site. Je peux également vous envoyer un kit de playtest sur demande, ou me déplacer avec le matériel pour organiser une session de test n'importe où en France.
 EOD
 );
 
@@ -500,10 +569,10 @@ EOD
 ___('publish_question_contact', 'EN', "How can I contact you?");
 ___('publish_question_contact', 'FR', "Peut-on discuter ?");
 ___('publish_answer_contact',   'EN', <<<EOD
-If you're interested in publishing the game, please contact me at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+If you're interested in discussing the game, you can reach me at {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
 EOD
 );
 ___('publish_answer_contact',   'FR', <<<EOD
-Si vous êtes intéressé par la publication du jeu, contactez-moi à l’adresse {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
+Si vous souhaitez échanger à propos du jeu, vous pouvez me contacter via {{external|mailto:bisceglia.eric@gmail.com|bisceglia.eric@gmail.com}}.
 EOD
 );

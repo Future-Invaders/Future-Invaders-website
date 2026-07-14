@@ -46,15 +46,7 @@ $year = date('Y');
   </p>
 
   <p>
-    <?=__('privacy_copyright_body_3')?>
-  </p>
-
-  <p>
-    <?=__('privacy_copyright_body_4')?>
-  </p>
-
-  <p>
-    <?=__('privacy_copyright_body_5', preset_values: array($year))?>
+    <?=__('privacy_copyright_body_3', preset_values: array($year))?>
   </p>
 
 </div>

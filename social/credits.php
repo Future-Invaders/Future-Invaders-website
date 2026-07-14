@@ -66,10 +66,6 @@ $page_description = "Credits for the card game Future Invaders";
     <?=__('credits_art_body_1')?>
   </p>
 
-  <p>
-    <?=__('credits_art_body_2')?>
-  </p>
-
 </div>
 
 <?php /***************************************************************************************************************/

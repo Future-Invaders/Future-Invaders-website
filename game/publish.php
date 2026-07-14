@@ -10,7 +10,7 @@ include_once './../lang/game.lang.php';  # Translations
 $page_lang        = array('FR', 'EN');
 $page_url         = "game/publish";
 $page_title_en    = "Publish this game!";
-$page_title_fr    = "Éditez ce jeu !";
+$page_title_fr    = "Publiez ce jeu !";
 $page_description = "For publishers wondering why they should publish the card game Future Invaders... just do it!";
 
 
@@ -34,17 +34,54 @@ $page_description = "For publishers wondering why they should publish the card g
     <?=__('publish_title')?>
   </h2>
 
-  <p class="tinypadding_bot">
-    <?=__('publish_body')?>
+  <p>
+    <?=__('publish_body_1')?>
+  </p>
+
+  <p>
+    <?=__('publish_body_2')?>
+  </p>
+
+  <p class="smallpadding_bot">
+    <?=__('publish_body_3')?>
   </p>
 
   <h5 class="bigpadding_top">
     <?=__('publish_question_pitch')?>
   </h5>
 
-  <p class="tinypadding_bot">
-    <?=__('publish_answer_pitch')?>
-  </p>
+  <ul class="smallpadding_top tinypadding_bot">
+    <li>
+      <?=__('publish_answer_pitch_1')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_2')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_3')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_4')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_5')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_6')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_7')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_8')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_9')?>
+    </li>
+    <li>
+      <?=__('publish_answer_pitch_10')?>
+    </li>
+  </ul>
 
   <h5 class="bigpadding_top">
     <?=__('publish_question_audience')?>
@@ -71,11 +108,11 @@ $page_description = "For publishers wondering why they should publish the card g
   </p>
 
   <h5 class="bigpadding_top">
-    <?=__('publish_question_model')?>
+    <?=__('publish_question_status')?>
   </h5>
 
   <p class="tinypadding_bot">
-    <?=__('publish_answer_model')?>
+    <?=__('publish_answer_status')?>
   </p>
 
   <h5 class="bigpadding_top">
@@ -84,6 +121,14 @@ $page_description = "For publishers wondering why they should publish the card g
 
   <p class="tinypadding_bot">
     <?=__('publish_answer_plans')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('publish_question_graphics')?>
+  </h5>
+
+  <p class="tinypadding_bot">
+    <?=__('publish_answer_graphics')?>
   </p>
 
   <h5 class="bigpadding_top">
@@ -108,6 +153,14 @@ $page_description = "For publishers wondering why they should publish the card g
 
   <p class="tinypadding_bot">
     <?=__('publish_answer_self')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('publish_question_try')?>
+  </h5>
+
+  <p class="tinypadding_bot">
+    <?=__('publish_answer_try')?>
   </p>
 
   <h5 class="bigpadding_top">

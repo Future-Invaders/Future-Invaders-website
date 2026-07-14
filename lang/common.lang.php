@@ -948,7 +948,7 @@ ___('menu_updates',   'FR', "Dernières nouveautés");
 ___('menu_designdoc', 'EN', "Game design document");
 ___('menu_designdoc', 'FR', "Document de design");
 ___('menu_publish',   'EN', "Publish this game!");
-___('menu_publish',   'FR', "Éditez ce jeu !");
+___('menu_publish',   'FR', "Publiez ce jeu !");
 
 // Banner menu entries: Guides
 ___('menu_howtoplay',   'EN', "How to play");

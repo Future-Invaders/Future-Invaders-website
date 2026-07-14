@@ -294,3 +294,48 @@ ___('tabletop_simulator_tips_body_6', 'FR', <<<EOD
 Si vous préférez un exemple visuel, une vidéo montrant une partie de Future Invaders dans Tabletop Simulator est disponible {{external_popup|https://www.youtube.com/watch?v=0ZrrbsrncRk|sur la chaîne YouTube officielle de Future Invaders}}.
 EOD
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  DESIGN DOCUMENT                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Design doc dev page
+___('design_doc_dev_title',   'EN', "Design document");
+___('design_doc_dev_title',   'FR', "Document de design");
+___('design_doc_dev_body_1',  'EN', <<<EOD
+Are you curious to see how a game is born? Or how it evolves over time? In the spirit of {{link|tools/source|transparency}}, Future Invaders' design document is available to the public.
+EOD
+);
+___('design_doc_dev_body_1',  'FR', <<<EOD
+Êtes-vous curieux de voir comment un jeu naît ? Ou comment il évolue au fil du temps ? Dans un esprit de {{link|tools/source|transparence}}, le document de design de Future Invaders est partagé publiquement sur le site.
+EOD
+);
+___('design_doc_dev_body_2',  'EN', <<<EOD
+In the coming months, a new, improved version of this document will be added, serving as a supplement to the original version. Until then, only the original document is available. Some of its contents are outdated, compared to the current state of the game.
+EOD
+);
+___('design_doc_dev_body_2',  'FR', <<<EOD
+Une version mise à jour de ce document est prévue dans les mois à venir, en complément de la version actuelle. En attendant, seul le document original est disponible, ce qui signifie que certains contenus de ce document ne sont pas à jour.
+EOD
+);
+___('design_doc_dev_english', 'EN', <<<EOD
+The design document is only available in English, it currently has no French translation.
+EOD
+);
+___('design_doc_dev_english', 'FR', <<<EOD
+Le document de design est uniquement disponible en anglais, il n'a pas de traduction française pour le moment.
+EOD
+);
+___('design_doc_dev_link',    'EN', <<<EOD
+{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Click here to read the design document}}.
+EOD
+);
+___('design_doc_dev_link',    'FR', <<<EOD
+{{external_popup|https://e-bis.fr/games/documents/Futureinvaders/|Cliquez ici pour lire le document de design}}.
+EOD
+);
